@@ -1,0 +1,13 @@
+# Cross-Cutting Architectural Needs
+
+Cross-cutting needs, or concerns, are aspects of the solution that affect the other subsystem within a solution and which cannot be separated from these subsystems.
+
+There are multiple cross-cutting needs for IoT solutions that are critical for success, including: 1) security requirements; including user management and auditing, device connectivity, in-transit telemetry, and at rest security, 2) logging and monitoring for an IoT cloud application is critical for determining health and for troubleshooting failures both for individual subsystems and the application as a whole, and 3) high availability and disaster recovery which is used to rapidly recover from systemic failures.
+
+![Cross-cutting Needs](../../Linked_Image_Files/M01_L02_CrossCuttingNeedsAndSubsystemsOfAnIoTArchitecture.JPG "Cross-cutting Needs")
+
+**Security**: Security is a critical consideration in each of the subsystems. Protecting IoT solutions requires secure provisioning of devices, secure connectivity between devices, edge devices, and the cloud, secure access to the backend solutions, and secure data protection in the cloud during processing and storage (encryption at rest).  
+
+**Logging and monitoring**: Logging actions and monitoring activity associated with your IoT solution is critical for determining system uptime and troubleshooting failures.
+
+**High availability and disaster recovery**: High availability and disaster recovery (HA/DR) focuses on ensuring an IoT system is always available, including from failures resulting from disasters. The technology used in IoT subsystems have different failover and cross-region support characteristics. For IoT applications, this can result in requiring hosting of duplicate services and duplicating application data across regions depending on acceptable failover downtime and data loss.
