@@ -1313,4 +1313,6 @@ Each truck is simulated by one running copy of the device app. So, you need mult
 
 1. Using the dashboard for each truck, try ordering the trucks to different customers. Using the **Location** map on each dashboard, verify the trucks are heading in the right direction!
 
-## Exercise 8: Clean Up Your Resources
+Congratulations on completing the lab!
+
+We suggest that you clean up your resources.
