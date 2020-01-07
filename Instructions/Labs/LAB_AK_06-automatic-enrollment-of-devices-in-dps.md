@@ -6,7 +6,7 @@ Our asset tracking solution is getting bigger, and provisioning devices one by o
 
 ## In This Lab
 
-In this lab, you will setup a Group Enrollment within Device Provisioning Service (DPS) using a Root CA x.509 certificate chain. You will also configure a simulated IoT Device that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Device will also be configured to handle changes to the Device Twin Desired Property state as configured initially through DPS, and modified via Azure IoT Hub. Finally, you will retire the IoT Device and the Group Enrollment with DPS.
+In this lab, you will setup a Group Enrollment within Device Provisioning Service (DPS) using a CA x.509 certificate. You will also configure a simulated IoT Device that will authenticate with DPS using a Device Certificate signed by the CA Certificate. The IoT Device will also be configured to handle changes to the Device Twin Desired Property state as configured initially through DPS, and modified via Azure IoT Hub. Finally, you will retire the IoT Device and the Group Enrollment with DPS.
 
 This lab includes:
 
@@ -138,7 +138,7 @@ In this exercise, you will generate an x.509 CA Certificate using OpenSSL within
 
     For additional instructions on using this helper script, and for instructions on how to use PowerShell instead of Bash, please see this link: <https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md>
 
-    > **Warning:** Certificates created by this helper script **MUST NOT** be used for Production. They contain hard-coded passwords ("*1234*"), expire after 30 days, and most importantly are provided for demonstration purposes to help you quickly understand CA Certificates. When building products against CA Certificates, you'll need to use your own security best practices for certification creation and lifetime management.
+    > **Warning:** Certificates created by this helper script **MUST NOT** be used for Production. They contain hard-coded passwords ("*1234*"), expire after 30 days, and most importantly are provided for demonstration purposes to help you quickly understand CA Certificates. When building products against CA Certificates, you'll need to use your own security best practices for certificate creation and lifetime management.
 
 1. The first x.509 certificates needed are CA and intermediate certificates. These can be generated using the `certGen.sh` helper script by passing the `create_root_and_intermediate` option.
 
@@ -148,7 +148,7 @@ In this exercise, you will generate an x.509 CA Certificate using OpenSSL within
     ./certGen.sh create_root_and_intermediate
     ```
 
-1. The previous command generated a CA Root Certificate named `azure-iot-test-only.root.ca.cert.pem` is located within the `./certs` directory.
+1. The previous command generated a Root CA Certificate named `azure-iot-test-only.root.ca.cert.pem` is located within the `./certs` directory.
 
     Run the following command within the **Azure Cloud Shell** to download this certificate to your local machine so it can be uploaded to DPS.
 
@@ -356,7 +356,7 @@ In this exercise, you will configure a Simulated Device written in C# to connect
 
     > [!NOTE] For the purpose of this unit, the **Password** is hard coded. In a _Production_ device, the password will need to be stored in a more secure manner. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).
     >
-    > An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with both attestation mechanisms the provisioning service supports.
+    > An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with all attestation mechanisms the provisioning service supports.
 
 1. Locate the `public static int Main` method. This is the execution entry for the **Simulated Device**
 
@@ -648,7 +648,7 @@ In this exercise, you will execute the Simulated Device. When the device is run 
 
 ## Exercise 7: Retire Group Enrollment
 
-In this exercise, you will retire an Enrollment Group and it's devices from both the Device Provisioning Service and Azure IoT Hub.
+In this exercise, you will retire an Enrollment Group and its devices from both the Device Provisioning Service and Azure IoT Hub.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
