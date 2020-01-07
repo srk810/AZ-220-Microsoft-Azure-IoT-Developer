@@ -151,9 +151,9 @@ The `iot` Azure CLI modules includes several commands for managing IoT Devices w
     HostName={IoTHubName}.azure-devices.net;DeviceId=SimulatedDevice1;SharedAccessKey={SharedAccessKey}
     ```
 
-## Exercise 3: Configure a Simulated Device (C#) 
+## Exercise 3: Configure and Test a Simulated Device (C#) 
 
-In this exercise you will configure a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise.
+In this exercise you will configure a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise. You will then test the device and ensurethat IoT Hub is receiving telemetry from the device as expected.
 
 ### Task 1: Open the C# Code Project
 
@@ -200,9 +200,9 @@ In this exercise you will configure a simulated device written in C# to connect 
     10/25/2019 6:10:19 PM > Sending message: {"temperature":25.77350195766124,"humidity":67.27347029711747}
     ```
 
-## Exercise 4: Verify Telemetry Stream sent to Azure IoT HUb
+### Task 3: Verify Telemetry Stream sent to Azure IoT HUb
 
-In this exercise you will use the Azure CLI to verify telemetry sent by the simulated device is being received by Azure IoT Hub.
+In this task, you will use the Azure CLI to verify telemetry sent by the simulated device is being received by Azure IoT Hub.
 
 1. Run the following command in the **Azure Cloud Shell** (or a different command-line window), to view a stream of the event messages being sent to the Azure IoT Hub endpoint by the Simulated Device.
 
