@@ -1,4 +1,4 @@
-# Individual Enrollment of Device in DPS
+# Individual Enrollment of a Device in DPS
 
 ## Lab Scenario
 
@@ -8,12 +8,12 @@ When a new box enters the system, it is equipped with the new IoT Device. The de
 
 ## In This Lab
 
-In this lab, you will, create an Individual Enrollment within Azure Device Provisioning Service (DPS) to automatically connect a pre-built simulated device to Azure IoT Hub. You will also fully retire the device by removing it from both DPS and IoT Hub.
+In this lab, you will, create an individual enrollment within Azure Device Provisioning Service (DPS) to automatically connect a pre-built simulated device to Azure IoT Hub. You will also fully retire the device by removing it from both DPS and IoT Hub.
 
 This lab includes:
 
 * Verify Lab Prerequisites
-* Create New Individual Enrollment in DPS
+* Create New individual enrollment in DPS
 * Configure Simulated Device
 * Test Simulated Device
 * Retire the Device
@@ -103,7 +103,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
     Once the script has completed, you will be ready to continue with the lab.
 
-## Exercise 2: Create new Individual Enrollment (Symmetric keys) in DPS
+## Exercise 2: Create new individual enrollment (Symmetric keys) in DPS
 
 In this exercise, you will create a new individual enrollment for a device within the Device Provisioning Service (DPS) using _symmetric key attestation_.
 
@@ -176,7 +176,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 ### Task 2: Validate the enrollment
 
-3. In the **Manage enrollments** pane, click on the **Individual Enrollments** tab to view the list of individual device enrollments.
+3. In the **Manage enrollments** pane, click on the **individual enrollments** tab to view the list of individual device enrollments.
 
 4.  In the list, click on the **DPSSimulatedDevice1** individual enrollment that was just created to view the enrollment details.
 
@@ -192,7 +192,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 ## Exercise 3: Configure Simulated Device
 
-In this exercise, you will configure a Simulated Device written in C# to connect to Azure IoT using the Individual Enrollment created in the previous unit. You will also add code to the Simulated Device that will read and update device configuration based on the device twin within Azure IoT Hub.
+In this exercise, you will configure a Simulated Device written in C# to connect to Azure IoT using the individual enrollment created in the previous unit. You will also add code to the Simulated Device that will read and update device configuration based on the device twin within Azure IoT Hub.
 
 The simulated device created in this unit is for a an asset tracking solution that will have Iot Device with sensors located within a transport box to track shipments in transit. The sensor telemetry from the device sent to Azure IoT Hub includes Temperature, Humidity, Pressure, and Latitude/Longitude coordinates of the transport box.
 
@@ -219,7 +219,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
     Remember that this was the the **Registration ID** of for the individual enrollment that was created in the Device Provisioning Service.
 
-2. Locate the `individualEnrollmentPrimaryKey` and `individualEnrollmentSecondaryKey` variables, and replace their values with the **Primary Key** and **Secondary Key** values that were copied from the Enrollment Details for the Individual Enrollment for the device that was created in the Device Enrollment Service.
+2. Locate the `individualEnrollmentPrimaryKey` and `individualEnrollmentSecondaryKey` variables, and replace their values with the **Primary Key** and **Secondary Key** values that were copied from the Enrollment Details for the individual enrollment for the device that was created in the Device Enrollment Service.
 
 3. Review the source code for the simulated device, and take notice of the following items:
 
@@ -285,7 +285,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 10. Now the simulated device is all setup to be configured by the device twin within Azure IoT Hub.
 
     > [!NOTE]
-    > If you need help with pasting code in the `Program.cs` file, please refer to the `/LabFiles-Completed` folder for the full source code for the Simulated Device with the device twin configuration code. When using this completed code sample, be sure to configure the ID Scope, Registration ID, and Individual Enrollment Keys.
+    > If you need help with pasting code in the `Program.cs` file, please refer to the `/LabFiles-Completed` folder for the full source code for the Simulated Device with the device twin configuration code. When using this completed code sample, be sure to configure the ID Scope, Registration ID, and individual enrollment Keys.
 
 ## Exercise 4: Test the Simulated Device
 
@@ -340,11 +340,11 @@ In this exercise, you will run the Simulated Device and verify it's sending sens
 
     _Be sure to replace the **{IoTHubName}** placeholder with the name of your Azure IoT Hub._
 
-    Keep the Simulated Device running for the next task.
+    Keep the simulated device running for the next task.
 
 ### Task 2: Change the device configuration through its twin
 
-With the Simulated Device running, the `telemetryDelay` configuration can be updated by editing the device twin Desired State within Azure IoT Hub. This can be done by configuring the Device in the Azure IoT Hub within the Azure portal.
+With the simulated device running, the `telemetryDelay` configuration can be updated by editing the device twin Desired State within Azure IoT Hub. This can be done by configuring the Device in the Azure IoT Hub within the Azure portal.
 
 1. Open the **Azure Portal** if it is not already open, and navigate to your **Azure IoT Hub** service.
 
@@ -354,7 +354,7 @@ With the Simulated Device running, the `telemetryDelay` configuration can be upd
 
     > [!IMPORTANT] Make sure you select the device from this lab.
 
-1. On the Simulated Device blade, click the **device twin** button at the top of the blade.
+1. On the device blade, click the **Device Twin** button at the top of the blade.
 
     Within the **Device twin** blade, there is an editor with the full JSON for the device twin. This enables you to view and/or edit the device twin state directly within the Azure portal.
 
@@ -396,7 +396,7 @@ With the Simulated Device running, the `telemetryDelay` configuration can be upd
 
 1. Again close the **Device twin** blade.
 
-1. Close the Simulated Device blade to return back to the IoT Hub blade.
+1. Close the simulated device blade to return back to the IoT Hub blade.
 
 ## Exercise 5: Retire the Device
 
@@ -416,16 +416,16 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. On the Device Provisioning Service settings pane on the left side, click **Manage enrollments**.
 
-1. In the Manage enrollments pane, click on the **Individual Enrollments** link to view the list of individual device enrollments.
+1. In the Manage enrollments pane, click on the **individual enrollments** link to view the list of individual device enrollments.
 
 1. Select the `DPSSimulatedDevice1` individual device enrollment by checking the box next to it in the list, then click **Delete** from the top of the blade.
 
     > [!NOTE]
-    > Deleting the Individual Enrollment from DPS will permanently remove the enrollment. To temporarily disable the enrollment, you can set the **Enable entry** setting to **Disable** within the **Enrollment Details** for the Individual Enrollment.
+    > Deleting the individual enrollment from DPS will permanently remove the enrollment. To temporarily disable the enrollment, you can set the **Enable entry** setting to **Disable** within the **Enrollment Details** for the individual enrollment.
 
 1. On the **Remove enrollment** prompt, click **Yes** to confirm that you want to delete this device enrollment from the Device Provisioning Service.
 
-    The Individual Enrollment is now removed from the Device Provisioning Service (DPS). To complete the device retirement, the **Device ID** for the Simulated Device also must be removed from the **Azure IoT Hub** service.
+    The individual enrollment is now removed from the Device Provisioning Service (DPS). To complete the device retirement, the **Device ID** for the Simulated Device also must be removed from the **Azure IoT Hub** service.
 
 ### Task 2: Retire the device from the IoT Hub
 
