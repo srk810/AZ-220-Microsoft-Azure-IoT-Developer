@@ -105,7 +105,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
 ## Exercise 2: Create new Individual Enrollment (Symmetric keys) in DPS
 
-In this exercise, you will create a new Individual Enrollment for a device within the Device Provisioning Service (DPS) using Symmetric key attestation.
+In this exercise, you will create a new individual enrollment for a device within the Device Provisioning Service (DPS) using _symmetric key attestation_.
 
 ### Task 1: Create the enrollment
 
@@ -151,9 +151,7 @@ In this exercise, you will create a new Individual Enrollment for a device withi
 
     This field gives you high-level control over the re-provisioning behavior, where the same device (as indicated through the same Registration ID) submits a later provisioning request after already being provisioned successfully at least once.
 
-    This contains JSON data that represents the initial configuration of desired properties for the device.
-
-5. In the **Initial device twin State** field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"2"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
+5. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"2"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
 
     The final JSON will be like the following:
 
@@ -204,7 +202,9 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 1. On the **AZ-220-DPS-_{YOUR_ID}_** blade, navigate to the **Overview** pane.
 
-1. Within the **Overview** pane, copy the **ID Scope** for the **Device Provisioning Service**, and save it for reference later.  (There is a copy button to the right of the value that will appear when you hover over the value.)
+1. Within the **Overview** pane, copy the **ID Scope** for the Device Provisioning Service, and save it for reference later.  (There is a copy button to the right of the value that will appear when you hover over the value.)
+
+    The **ID Scope** will be similar to this value: `0ne0004E52G`
 
 1. Using **Visual Studio Code**, open the `/LabFiles` folder.
 
