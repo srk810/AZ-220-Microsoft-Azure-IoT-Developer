@@ -1,3 +1,8 @@
+---
+lab:
+    title: 'Getting Started with Azure IoT Services'
+    module: 'AZ-220T02-A: Introduction to IoT and Azure IoT Services'
+---
 # Getting Started with Azure IoT Services
 
 ## Lab Scenario
