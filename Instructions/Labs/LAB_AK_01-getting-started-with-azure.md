@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Getting Started with Azure'
+    module: 'AZ-220: Implement the IoT solution infrastructure'
+---
+
 # Getting Started with Azure
 
 ## Lab Scenario
