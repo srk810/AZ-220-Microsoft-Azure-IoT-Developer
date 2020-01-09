@@ -1,10 +1,10 @@
 ---
 lab:
-    title: 'Remotely monitor and control devices with Azure IoT Hub'
+    title: 'How to manage your Azure IoT Hub'
     module: 'AZ-220T17-A: Solution Testing, Diagnostics, and Logging'
 ---
 
-# Remotely monitor and control devices with Azure IoT Hub
+# How to manage your Azure IoT Hub
 
 Our asset tracking solution is getting bigger, and provisioning devices one by one (even through DPS) cannot scale. We want to use DPS to enroll many devices automatically and securely using x.509 certificate authentication. Within our solution, we will use sensors to track our assets being transported. Each time a sensor is added in a transportation box, it will auto provision through DPS. We want to have a metric for the warehouse manager of how many boxes were "tagged" and need to count the Device Connected events from IoT Hub.
 
@@ -22,9 +22,6 @@ In this lab, you will:
 
 
 ## Exercise 1: Verify Lab Prerequisites
-
-
-
 
 
 ## Exercise 2: Set Up and Use Metrics and Diagnostic Logs with an IoT Hub
