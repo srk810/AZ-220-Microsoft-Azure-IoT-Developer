@@ -1,6 +1,6 @@
 # Scenario Overview
 
-In this course, we use Azure IoT platform services such as Azure IoT Hub, Device Provisioning Services, and the Azure IoT device SDKs to build a custom IoT solution from scratch. At the end of the course we will dive into IoT Central, which is a managed IoT application platform, to build and deploy a secure, enterprise-grade IoT solution. 
+In this course, we use Azure IoT platform services such as Azure IoT Hub, Device Provisioning Services, and the Azure IoT device SDKs to build a custom IoT solution from scratch. At the end of the course we will dive into IoT Central, which is a managed IoT application platform, to build and deploy a secure, enterprise-grade IoT solution.
 
 Throughout this course, you will be acting in the role of an Azure IoT Developer helping to build multiple IoT Solutions. You are employed by Contoso, a global company that specializes in making and selling gourmet cheese. They are ready to start their own digital transformation journey to improve their processes across the whole company, which includes their cheese making process on the factory floor, fleeting management, and monitoring conditions of assets.
 

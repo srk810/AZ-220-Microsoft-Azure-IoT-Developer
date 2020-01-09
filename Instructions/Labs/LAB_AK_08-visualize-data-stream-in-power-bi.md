@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Visualize a Data Stream in Power BI'
+    module: 'AZ-220T08-A: Message Processing and Analytics'
+---
+
 # Visualize a Data Stream in Power BI
 
 > [!NOTE] This lab is a continuation of Lab 7 - Device Message Routing. 

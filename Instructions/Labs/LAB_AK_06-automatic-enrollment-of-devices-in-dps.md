@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Automatically provision IoT devices securely and at scale with DPS'
+    module: 'AZ-220T06-A: Device Provisioning at Scale'
+---
+
 # Automatically provision IoT devices securely and at scale with DPS
 
 ## Lab Scenario

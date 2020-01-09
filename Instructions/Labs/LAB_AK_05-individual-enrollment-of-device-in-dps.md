@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Individual Enrollment of a Device in DPS'
+    module: 'AZ-220T05-A: Device Provisioning at Scale'
+---
+
 # Individual Enrollment of a Device in DPS
 
 ## Lab Scenario

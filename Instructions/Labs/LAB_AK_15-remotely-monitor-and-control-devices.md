@@ -1,4 +1,10 @@
-# Remotely monitor and control devices with Azure IoT Hub (L15)
+---
+lab:
+    title: 'Remotely monitor and control devices with Azure IoT Hub'
+    module: 'AZ-220T15-A: Device Management'
+---
+
+# Remotely monitor and control devices with Azure IoT Hub
 
 ## Lab Scenario
 

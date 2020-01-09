@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Introduction to Azure IoT Edge'
+    module: 'AZ-220T11-A: Azure IoT Edge Deployment Process'
+---
+
 # Introduction to Azure IoT Edge
 
 ## Lab Scenario

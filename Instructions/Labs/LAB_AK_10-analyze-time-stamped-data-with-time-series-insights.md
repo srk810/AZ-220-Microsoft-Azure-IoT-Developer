@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Explore and analyze time stamped data with Time Series Insights'
+    module: 'AZ-220T10-A: Insights and Business Integration'
+---
+
 # Explore and analyze time stamped data with Time Series Insights
 
 ## Lab Scenario

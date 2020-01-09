@@ -1,3 +1,10 @@
+---
+lab:
+    title: 'Automate IoT devices management with Azure IoT Hub
+'
+    module: 'AZ-220T16-A: Device Management'
+---
+
 # Automate IoT devices management with Azure IoT Hub
 
 Azure IoT Hub is a cloud service designed to be your cloud gateway for IoT devices. It allows securely connect millions of devices and establish a bidirectional communication to not only collect data from sensors, but also allow for remote monitoring and management of the devices.

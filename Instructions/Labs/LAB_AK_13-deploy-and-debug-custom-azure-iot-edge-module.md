@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Develop, Deploy and debug a custom module on Azure IoT Edge with VS Code'
+    module: 'AZ-220T13-A: Azure IoT Edge Modules'
+---
+
 # Develop, Deploy and debug a custom module on Azure IoT Edge with VS Code
 
 ## Lab Scenario

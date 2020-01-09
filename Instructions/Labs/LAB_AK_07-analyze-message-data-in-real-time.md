@@ -1,3 +1,9 @@
+---
+lab:
+    title: 'Device Message Routing'
+    module: 'AZ-220T07-A: Message Processing and Analytics'
+---
+
 # Device Message Routing
 
 ## Lab Scenario
