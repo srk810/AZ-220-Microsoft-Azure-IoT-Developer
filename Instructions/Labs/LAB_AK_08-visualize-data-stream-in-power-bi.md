@@ -168,7 +168,7 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
     The Azure Marketplace is a collection of all the resources you can create in Azure. The marketplace contains resources from both Microsoft and the community.
 
-2. In the Search textbox, type **Event Hubs**.
+2. In the Search textbox, type **Event Hubs** and press **Enter**.
 
 3. On the search results panel under the textbox, click **Event Hubs**.
 
