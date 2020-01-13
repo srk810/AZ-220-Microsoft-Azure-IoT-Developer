@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Getting Started with Azure'
-    module: 'AZ-220T01-A: Introduction to IoT and Azure IoT Services'
+    module: 'Module 1: Introduction to IoT and Azure IoT Services'
 ---
 
 # Getting Started with Azure

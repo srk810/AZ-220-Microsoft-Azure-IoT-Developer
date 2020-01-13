@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Device Message Routing'
-    module: 'AZ-220T07-A: Message Processing and Analytics'
+    module: 'Module 4: Message Processing and Analytics'
 ---
 
 # Device Message Routing

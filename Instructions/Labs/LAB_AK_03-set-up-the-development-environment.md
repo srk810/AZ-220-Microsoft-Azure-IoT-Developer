@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Setup the Development Environment'
-    module: 'AZ-220T03-A: Devices and Device Communication'
+    module: 'Module 2: Devices and Device Communication'
 ---
 
 # Setup the Development Environment

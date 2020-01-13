@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Connect IoT Device to Azure'
-    module: 'AZ-220T04-A: Devices and Device Communication'
+    module: 'Module 2: Devices and Device Communication'
 ---
 
 # Connect IoT Device to Azure

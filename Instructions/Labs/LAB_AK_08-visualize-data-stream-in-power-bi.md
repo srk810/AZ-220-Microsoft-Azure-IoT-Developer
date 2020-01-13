@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Visualize a Data Stream in Power BI'
-    module: 'AZ-220T08-A: Message Processing and Analytics'
+    module: 'Module 4: Message Processing and Analytics'
 ---
 
 # Visualize a Data Stream in Power BI
