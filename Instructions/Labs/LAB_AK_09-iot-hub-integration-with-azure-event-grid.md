@@ -39,37 +39,35 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. On the **Logic App** item, click **Create**.
 
-1. On the **Create Logic App** blade, enter a globally unique name in the Registry **name** field.
-
-    To provide a globally unique name, enter **AZ-220-LogicApp-_{YOUR-ID}_**.
+2. On the **Logic App** blade, in the **Name** field, enter **AZ-220-LogicApp-_{YOUR-ID}_**.
 
     For example: **AZ-220-LogicApp-CP191218**
 
     The name of your Azure Logic App must be globally unique because it is a publicly accessible resource that you must be able to access from any IP connected device.
 
-1. In the **Resource group** dropdown, select **Use Existing**, then select the **AZ-220-RG** resource group.
+3. In the **Resource group** dropdown, select **Use Existing**, then select the **AZ-220-RG** resource group.
 
-1. In the **Location** dropdown, choose the same Azure region that was used for the resource group.
+4. In the **Location** dropdown, choose the same Azure region that was used for the resource group.
 
-2. Leave **Log Analytics** set to **Off**.
+5. Leave **Log Analytics** set to **Off**.
 
-3. Click **Create**.
+6. Click **Create**.
 
     > [!NOTE] It will take a minute or two for the Logic App deployment to complete.
 
-4. Navigate to the **Logic App** resource that was just deployed.
+7. Navigate to the **Logic App** resource that was just deployed.
 
-5. When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed.
+8. When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed.
 
     If this doesn't come up automatically, click on the **Logic app designer** link under the **Development Tools** section on the **Logic App** blade.
 
-6. Select the **When a HTTP request is received** trigger under the **Start with a common trigger** section.
+9. Select the **When a HTTP request is received** trigger under the **Start with a common trigger** section.
 
-7. The **Logic Apps Designer** will open with the visual designer displayed, and with the **When a HTTP request is received** trigger selected.
+10. The **Logic Apps Designer** will open with the visual designer displayed, and with the **When a HTTP request is received** trigger selected.
 
-8. On the **When a HTTP request is received** trigger, under the **Request Body JSON Schema** textbox, click the **Use sample payload to generate schema** link.
+11. On the **When a HTTP request is received** trigger, under the **Request Body JSON Schema** textbox, click the **Use sample payload to generate schema** link.
 
-9. When prompted, paste in the following sample JSON into the textbox and click **Done**.
+12. When prompted, paste in the following sample JSON into the textbox and click **Done**.
 
     ```json
      [{
@@ -119,27 +117,27 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
     This sample JSON is an example of the JSON that Event Grid will POST to the Web Hook endpoint for the Logic App once it's created. This sample includes the IoT Hub Message Telemetry properties for the IoT Device that will be sending telemetry messages.
 
-10. Notice the **Request Body JSON Schema** box is now populated with a JSON schema that was automatically generated based on the sample JSON that was pasted in.
+13. Notice the **Request Body JSON Schema** box is now populated with a JSON schema that was automatically generated based on the sample JSON that was pasted in.
 
-11. Click the **+ New step** button below the **When a HTTP request is received** trigger.
+14. Click the **+ New step** button below the **When a HTTP request is received** trigger.
 
-12. Enter `Outlook.com` into the search box, then locate and select the **Send an email (V2) (Preview)** action for the **Outlook.com** connector.
+15. Enter `Outlook.com` into the search box, then locate and select the **Send an email (V2) (Preview)** action for the **Outlook.com** connector.
 
     > [!NOTE] These instructions walk through configuring the Logic App to send an email using an **Outlook.com** email address. Alternatively, the Logic App can also be configured to send email using the Office 365 Outlook or Gmail connectors as well.
 
-13. On the **Outlook.com** Connector, click the **Sign in** button, and follow the prompts to authenticate with an existing Outlook.com account.
+16. On the **Outlook.com** Connector, click the **Sign in** button, and follow the prompts to authenticate with an existing Outlook.com account.
 
-14. If prompted to **Let this app access your info**, click **Yes**. 
+17. If prompted to **Let this app access your info**, click **Yes**. 
 
-15. In the **Send an email (V2) (Preview)** action, on the **To** field, enter an email address to send email messages to.
+18. In the **Send an email (V2) (Preview)** action, on the **To** field, enter an email address to send email messages to.
 
     Enter an email address where you can receive emails; such as the Outlook.com account used for this connector.
 
     The Outlook.com account that was authenticated will be used to send the emails from that account. You can actually enter any email address you want to send the notifications to.
 
-16. For the **Subject**, fill in `IoT Hub alert:`.
+19. For the **Subject**, fill in `IoT Hub alert:`.
 
-17. Next, begin work on the **Body**.  Your desired conent is the following:
+20. Next, begin work on the **Body**.  Your desired conent is the following:
    `This is an automated email to inform you that: {eventType} occurred at {eventTime} IoT Hub: {hubName} Device ID: {deviceID} Connection state: {connectionState}`
    Each curly-braces entry should be dynamic content.  If you can't see the Dynamic content, select the **Add dynamic content** hyperlink under the **Body** text box. If it doesn't show you the fields you want, click *more* in the Dynamic content screen to include the fields from the previous action.
    When you add the first dynamic content value, because the input data schema is for an array, the Logic Apps Designer will automatically change the e-mail action to be nested inside of a **For each** action.  When this happens, the **Send an email (V2) (Preview)** action will collapse; simply click on it to open it up again and continue editing the body.
