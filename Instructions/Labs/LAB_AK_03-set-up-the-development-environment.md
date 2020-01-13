@@ -89,6 +89,12 @@ Azure CLI 2.0 is a command-line tool that is designed to make scripting Azure-re
 1. On the Install Azure CLI 2.0 page, select the install option for your OS, and then follow the on-screen instructions to install the Azure CLI tool.
 
     We will be providing detailed instructions for using the Azure CLI 2.0 tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
+    
+1. Open a new command-line / terminal window use the following command to install the Azure CLI extension for IoT:
+
+    ```
+    az extension add --name azure-cli-iot-ext
+    ```
 
 ### Task 4: Install Azure PowerShell
 
