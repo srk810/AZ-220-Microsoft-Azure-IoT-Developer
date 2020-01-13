@@ -66,7 +66,7 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
 
     The editor will now show the contents of the **lab-setup.azcli** file.
 
-1.  In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+1.  In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash
