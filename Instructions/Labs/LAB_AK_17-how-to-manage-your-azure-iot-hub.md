@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'How to manage your Azure IoT Hub'
-    module: 'AZ-220T17-A: Solution Testing, Diagnostics, and Logging'
+    title: 'Lab 17: How to manage your Azure IoT Hub'
+    module: 'Module 9: Solution Testing, Diagnostics, and Logging'
 ---
 
 # How to manage your Azure IoT Hub

@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Setup the Development Environment'
+    title: 'Lab 03: Setup the Development Environment'
     module: 'Module 2: Devices and Device Communication'
 ---
 

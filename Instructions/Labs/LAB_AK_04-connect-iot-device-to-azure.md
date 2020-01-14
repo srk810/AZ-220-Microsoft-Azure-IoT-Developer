@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Connect IoT Device to Azure'
+    title: 'Lab 04: Connect IoT Device to Azure'
     module: 'Module 2: Devices and Device Communication'
 ---
 

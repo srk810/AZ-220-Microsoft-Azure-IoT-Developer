@@ -2,7 +2,7 @@
 lab:
     title: 'Automate IoT devices management with Azure IoT Hub
 '
-    module: 'AZ-220T16-A: Device Management'
+    module: 'Module 8: Device Management'
 ---
 
 # Automate IoT devices management with Azure IoT Hub

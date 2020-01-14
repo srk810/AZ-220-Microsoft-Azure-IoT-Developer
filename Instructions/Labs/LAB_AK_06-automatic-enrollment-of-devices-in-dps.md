@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Automatically provision IoT devices securely and at scale with DPS'
+    title: 'Lab 06: Automatically provision IoT devices securely and at scale with DPS'
     module: 'Module 3: Device Provisioning at Scale'
 ---
 

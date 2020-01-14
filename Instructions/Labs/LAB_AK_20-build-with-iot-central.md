@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'Build with IoT Central'
-    module: 'AZ-220T20-A: Build with IoT Central'
+    title: 'Lab 20: Build with IoT Central'
+    module: 'Module 11: Build with IoT Central'
 ---
 
 # Create your first Azure IoT Central App

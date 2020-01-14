@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Device Message Routing'
+    title: 'Lab 07: Device Message Routing'
     module: 'Module 4: Message Processing and Analytics'
 ---
 

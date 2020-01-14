@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'Integrate IoT Hub with Event Grid'
-    module: 'AZ-220T09-A: Insights and Business Integration'
+    title: 'Lab 09: Integrate IoT Hub with Event Grid'
+    module: 'Module 5: Insights and Business Integration'
 ---
 
 # Integrate IoT Hub with Event Grid

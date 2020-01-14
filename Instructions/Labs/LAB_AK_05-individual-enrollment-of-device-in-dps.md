@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Individual Enrollment of a Device in DPS'
+    title: 'Lab 05: Individual Enrollment of a Device in DPS'
     module: 'Module 3: Device Provisioning at Scale'
 ---
 

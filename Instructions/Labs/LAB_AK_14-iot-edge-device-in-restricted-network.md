@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'Run an IoT Edge device in restricted network and offline'
-    module: 'AZ-220T14-A: Azure IoT Edge Module'
+    title: 'Lab 14: Run an IoT Edge device in restricted network and offline'
+    module: 'Module 7: Azure IoT Edge Module'
 ---
 
 # Run an IoT Edge device in restricted network and offline

@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'Detect if your IoT Device was Tampered with Azure Security Center for IoT'
-    module: 'AZ-220T19-A: Azure Security Center and IoT Security'
+    title: 'Lab 19: Detect if your IoT Device was Tampered with Azure Security Center for IoT'
+    module: 'Module 10: Azure Security Center and IoT Security'
 ---
 
 # Detect if your IoT Device was Tampered with Azure Security Center for IoT

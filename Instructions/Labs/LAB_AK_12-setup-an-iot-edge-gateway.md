@@ -1,7 +1,7 @@
 ---
 lab:
-    title: 'Setup an IoT Edge Gateway'
-    module: 'AZ-220T12-A: Azure IoT Edge Deployment Process'
+    title: 'Lab 12: Setup an IoT Edge Gateway'
+    module: 'Module 6: Azure IoT Edge Deployment Process'
 ---
 
 # Setup an IoT Edge Gateway
