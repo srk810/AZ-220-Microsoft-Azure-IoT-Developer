@@ -93,7 +93,7 @@ private string _rgName = "AZ-220-RG";
 private string _iotHubName = $"AZ-220-HUB-{_yourId}";
 ```
 
-Again, `private string _yourId = "{YOUR-ID}";` should be updated to `private string _yourId = "{CAH191216}";` - you do not change `{_yourId}`.
+Again, `private string _yourId = "{YOUR-ID}";` should be updated to `private string _yourId = "CAH191216";` - you do not change `_yourId`.
 
 ## Exercise 2: Create an IoT Hub using the Azure portal
 
