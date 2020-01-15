@@ -41,6 +41,8 @@ You can find a processed, formatted version of the Markdown files at https://aka
 
 ### Known Issues in the Current Beta release
 
+**Please** refer to the current open issues to be sure that a new issue doesn't duplicate an existing issue.  The following are known issues that are not in the open issues as we are working on them already:
+
 * The initial lab setup - where to find the source files, where to find the scripts, etc. - is not in the instructions right now.
 
 * At least one lab requires running the setup script although it should always be a "catch up," not required.
