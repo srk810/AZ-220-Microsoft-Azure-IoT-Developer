@@ -51,9 +51,9 @@ This lab assumes the following resources are available:
 1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
 
     ```bash
-    mkdir lab9
-    mv lab-setup.azcli lab9
-    cd lab9
+    mkdir lab10
+    mv lab10-setup.azcli lab10
+    cd lab10
     ```
 
 1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
