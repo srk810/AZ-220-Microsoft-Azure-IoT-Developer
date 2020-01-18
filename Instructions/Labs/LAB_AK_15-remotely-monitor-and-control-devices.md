@@ -47,8 +47,9 @@ In this lab you will:
 * Implement a direct method, to communicate settings to the remote device
 * Implement device twins, to maintain remote device properties
 
+## Lab Instructions
 
-## Exercise 1: Create a custom Azure IoT Hub, using the IoT Hub portal
+### Exercise 1: Create a custom Azure IoT Hub, using the IoT Hub portal
 
 This lab assumes the following resources are available:
 
@@ -93,9 +94,11 @@ To create these resources, please update and execute the **lab-setup.azcli** scr
 1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH121119**, and set `Location` to the location that makes sense for your resources.
 
     > [!NOTE] The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    >
     > ```bash
     > az account list-locations -o Table
     > ```
+    >
     > ```text
     > DisplayName           Latitude    Longitude    Name
     > --------------------  ----------  -----------  ------------------
@@ -142,14 +145,14 @@ To create these resources, please update and execute the **lab-setup.azcli** scr
     ```
 
     Copy these values to a local text file - you will need them for the coding portion of this lab.
-    
+
 You've now completed the preparatory work for this module, the next steps are all coding and testing. Before we advance though, a quick knowledge check!
 
-## Exercise 2: Write Code to Send and Receive Telemetry
+### Exercise 2: Write Code to Send and Receive Telemetry
 
 At the end of this unit, you'll be sending and receiving telemetry.
 
-# Create an app to send telemetry
+#### Task 1: Create an app to send telemetry
 
 1. To use C# in Visual Studio Code, ensure both [.NET Core](https://dotnet.microsoft.com/download), and the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp) are installed.
 
@@ -184,7 +187,7 @@ At the end of this unit, you'll be sending and receiving telemetry.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
 
-## Add Code to Send Telemetry
+#### Task 2: Add Code to Send Telemetry
 
 This section adds code to send telemetry from a simulated device. The device sends temperature (in degrees fahrenheit) and humidity (in percentages), regardless of whether any back-end app is listening or not.
 
@@ -351,7 +354,7 @@ This section adds code to send telemetry from a simulated device. The device sen
 
 1. Save the **Program.cs** file.
 
-## Test your Code to Send Telemetry
+#### Task 3: Test your Code to Send Telemetry
 
 1. To run the app in the terminal, enter the following command:
 
@@ -371,9 +374,11 @@ This section adds code to send telemetry from a simulated device. The device sen
 
 1. You can leave this app running, as it's needed for the next section.
 
-## Create a Second App to Receive Telemetry
+### Exercise 2: Create a Second App to Receive Telemetry
 
 Now we have a device pumping out telemetry, we need to listen for that telemetry with a back-end app, also connected to our IoT Hub.
+
+#### Task 1: Create an app to receive telemetry
 
 1. As the device app is running in a copy of Visual Studio Code, you will need to open a new instance of Visual Studio Code.
 
@@ -408,9 +413,9 @@ Now we have a device pumping out telemetry, we need to listen for that telemetry
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
 
-## Add Code to Receive Telemetry
+#### Task 2: Add Code to Receive Telemetry
 
-This section adds code to receive telemetry from the IoT Hub Event Hub endpoint. 
+This section adds code to receive telemetry from the IoT Hub Event Hub endpoint.
 
 1. If it isn't already open in Visual Studio Code, open the **Program.cs** file for the device app.
 
@@ -530,7 +535,7 @@ This section adds code to receive telemetry from the IoT Hub Event Hub endpoint.
 
 1. Save the **Program.cs** file.
 
-## Test your Code to Receive Telemetry
+#### Task 3: Test your Code to Receive Telemetry
 
 This test is important, checking whether your back-end app is picking up the telemetry being sent out by your simulated device. Remember your device app is still running, and sending telemetry.
 
@@ -558,26 +563,23 @@ This test is important, checking whether your back-end app is picking up the tel
 
 Completing this unit is great progress. you've an app sending telemetry from a device, and a back-end app acknowledging receipt of the data. This unit covers the monitoring side of our scenario. The next step handles the control side - what to do when issues arise with the data. Clearly, there are issues, we're getting temperature and humidity alerts!
 
-
-
-
-## Exercise 3: Write Code to Invoke a Direct Method
+### Exercise 3: Write Code to Invoke a Direct Method
 
 In this unit, we'll add code to the device app for a direct method to turn on the fan. Next, we add code to the back-end service app to invoke this direct method.
 
 Calls from the back-end app to invoke direct methods can include multiple parameters as part of the payload. Direct methods are typically used to turn features of the device off and on, or specify settings for the device.
 
-**Handle Error Conditions**
+#### Handle Error Conditions
 
 There are several error conditions that need to be checked for when a device receives instructions to run a direct method. One of these checks is simply to respond with an error if the fan is in a failed state. Another error condition to report is when an invalid parameter is received. Clear error reporting is important, given the potential remoteness of the device.
 
-**Invoke a Direct Method**
+#### Invoke a Direct Method
 
 Direct methods require that the back-end app prepares the parameters, then makes a call specifying a single device to invoke the method. The back-end app will then wait for, and report, a response.
 
 The device app contains the functional code for the direct method. The function name is registered with the IoT client for the device. This process ensures the client knows what function to run when the call comes from the IoT Hub (there could be many direct methods).
 
-## Add Code to Define a Direct Method in the Device App
+#### Task 1: Add Code to Define a Direct Method in the Device App
 
 1. Return to the Visual Studio Code instance that is running the **cheesecavedevice** app.
 
@@ -657,7 +659,7 @@ The device app contains the functional code for the direct method. The function 
 
 You've completed what is needed at the device end of things. Next, we need to add code to the back-end service.
 
-## Add Code to Call a Direct Method in the Back End App
+#### Task 2: Add Code to Call a Direct Method in the Back End App
 
 1. Return to the Visual Studio Code instance that is running the **cheesecaveoperator** app.
 
@@ -719,7 +721,7 @@ You've completed what is needed at the device end of things. Next, we need to ad
 
 You have now completed the code changes to support the **SetFanState** direct method.
 
-## Test the direct method
+#### Task 3: Test the direct method
 
 To test the method, start the apps in the correct order. We can't invoke a direct method that hasn't been registered!
 
@@ -737,11 +739,7 @@ To test the method, start the apps in the correct order. We can't invoke a direc
 
 You are now successfully monitoring and controlling a remote device. We have turned on the fan, which will slowly move the environment in the cave to our initial desired settings. However, we might like to remotely specify those desired settings. We could specify desired settings with a direct method (which is a valid approach). Or we could use another feature of IoT Hub, called device twins. Let's look into the technology of device twins.
 
-
-
-
-
-## Exercise 4: Write Code for Device Twins
+### Exercise 4: Write Code for Device Twins
 
 In this exercise, we'll add some code to both the device app and back-end service app, to show device twin synchronization in operation.
 
@@ -756,7 +754,7 @@ Device twins are designed for querying, and automatically synchronizing, with th
 
 There is some overlap between the functionality of device twins and direct methods. We could set desired properties using direct methods, which might seem an intuitive way of doing things. However, using direct methods would require the back-end app to record those settings explicitly, if they ever needed to be accessed. Using device twins, this information is stored and maintained by default.
 
-## Add Code To Use Device Twins To Synchronize Device Properties
+#### Task 1: Add Code To Use Device Twins To Synchronize Device Properties
 
 1. Return to the Visual Studio Code instance that is running the **cheesecaveoperator** app.
 
@@ -812,7 +810,7 @@ There is some overlap between the functionality of device twins and direct metho
 
 1. Save the **Program.cs** file.
 
-## Add Code to Synchronize Device Twin Settings for the Device
+#### Task 2: Add Code to Synchronize Device Twin Settings for the Device
 
 1. Return to the Visual Studio Code instance that is running the **cheesecavedevice** app.
 
@@ -865,13 +863,13 @@ There is some overlap between the functionality of device twins and direct metho
 
 > [!NOTE] Now you have added device twins to your app, you can reconsider having explicit variables such as **desiredHumidity**. Instead, you can use the variables in the device twin object.
 
-## Test the Device Twins
+#### Task 3: Test the Device Twins
 
-To test the method, start the apps in the correct order. 
+To test the method, start the apps in the correct order.
 
 1. Start the **cheesecavedevice** device app. It will begin writing to the terminal, and telemetry will appear.
 
-1. Start the **cheesecaveoperator** back-end app. 
+1. Start the **cheesecaveoperator** back-end app.
 
 1. Now check the console output for the **cheesecavedevice** device app, confirming the device twin synchronized correctly.
 

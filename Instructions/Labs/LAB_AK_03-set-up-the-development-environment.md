@@ -18,11 +18,13 @@ In this lab you will:
 * Install the VSCode extensions for developing Azure IoT solutions.
 * Verify your Development Environment setup
 
-## Exercise 1: Install Developer Tools and Products
+## Lab Instructions
+
+### Exercise 1: Install Developer Tools and Products
 
  > [!NOTE] Check with you Instructor to understand if the lab hosting environment has already been prepared with some or all of the required tools.
 
-### Task 1: Install .NET Core
+#### Task 1: Install .NET Core
 
 .NET Core is a cross-platform version of .NET for building websites, services, and console apps.
 
@@ -51,7 +53,7 @@ In this lab you will:
     * [Release Notes](https://aka.ms/netcore3releasenotes)
     * [Tutorials](https://aka.ms/dotnet-tutorials)
 
-## Task 2: Install Visual Studio Code
+#### Task 2: Install Visual Studio Code
 
 Visual Studio Code is a lightweight but powerful source code editor which runs on your desktop and is available for Windows, macOS and Linux. It comes with built-in support for JavaScript, TypeScript and Node.js and has a rich ecosystem of extensions for other languages (such as C++, C#, Java, Python, PHP, Go) and run times (such as .NET and Unity).
 
@@ -80,7 +82,7 @@ Visual Studio Code is a lightweight but powerful source code editor which runs o
 
     For detailed instructions on installing Visual Studio Code, see the Microsoft Visual Studio Code Installation Instruction guide here: <https://code.visualstudio.com/Docs/editor/setup>
 
-### Task 3: Install Azure CLI
+#### Task 3: Install Azure CLI
 
 Azure CLI 2.0 is a command-line tool that is designed to make scripting Azure-related tasks easier. It also enables you to flexibly query data, and it supports long-running operations as non-blocking processes.
 
@@ -89,14 +91,14 @@ Azure CLI 2.0 is a command-line tool that is designed to make scripting Azure-re
 1. On the Install Azure CLI 2.0 page, select the install option for your OS, and then follow the on-screen instructions to install the Azure CLI tool.
 
     We will be providing detailed instructions for using the Azure CLI 2.0 tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
-    
+
 1. Open a new command-line / terminal window use the following command to install the Azure CLI extension for IoT:
 
-    ```
+    ```bash
     az extension add --name azure-cli-iot-ext
     ```
 
-### Task 4: Install Azure PowerShell
+#### Task 4: Install Azure PowerShell
 
 Azure PowerShell is designed for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. You can use it in your browser with Azure Cloud Shell, or you can install it on your local machine and use it in any PowerShell session. If you are running Azure PowerShell locally, you need to have Windows PowerShell configured.
 
@@ -140,7 +142,7 @@ Azure PowerShell is designed for managing and administering Azure resources from
 
     We will be providing detailed instructions for using the Azure PowerShell tools during the labs in this course, but if you want more information now, see [Getting started with Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/get-started-azureps?view=azurermps-5.7.0)
 
-### Task 5: Verify Development Environment Setup
+#### Task 5: Verify Development Environment Setup
 
 You should verify that the development environment has been set up successfully. Once this is complete, you will be ready to start building your IoT solutions.
 

@@ -8,23 +8,25 @@ lab:
 
 ## Lab Scenario
 
-Our asset tracking solution is getting bigger, and provisioning devices one by one cannot scale. We want to use Device Provisioning Service to enroll many devices automatically and securely using x.509 certificate authentication.
+Our asset tracking solution is getting bigger, and provisioning devices one by one cannot scale. We want to use Device Provisioning Service to enroll many devices automatically and securely using X.509 certificate authentication.
 
 ## In This Lab
 
-In this lab, you will setup a _group enrollment_ within Device Provisioning Service (DPS) using a CA x.509 certificate. You will also configure a simulated IoT device that will authenticate with DPS using a device certificate signed by the CA Certificate. The IoT device will also be configured to handle changes to the device twin's desired properties as configured initially through DPS, and then modified via Azure IoT Hub. Finally, you will retire the IoT device and the group enrollment with DPS.
+In this lab, you will setup a _group enrollment_ within Device Provisioning Service (DPS) using a CA X.509 certificate. You will also configure a simulated IoT device that will authenticate with DPS using a device certificate signed by the CA Certificate. The IoT device will also be configured to handle changes to the device twin's desired properties as configured initially through DPS, and then modified via Azure IoT Hub. Finally, you will retire the IoT device and the group enrollment with DPS.
 
 This lab includes:
 
 * Verify Lab Prerequisites
-* Generate and Configure x.509 CA Certificates using OpenSSL
+* Generate and Configure X.509 CA Certificates using OpenSSL
 * Create Group Enrollment in DPS
-* Configure simulated device with x.509 Certificate
+* Configure simulated device with X.509 Certificate
 * Handle device twin desired property Changes
 * Automatic Enrollment of simulated device
 * Retire Group Enrollment of simulated device
 
-## Exercise 1: Verify Lab Prerequisites
+## Lab Instructions
+
+### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes the following resources are available:
 
@@ -80,7 +82,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
     ```
 
     > [!NOTE] The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
-
+    >
     > ```bash
     > az account list-locations -o Table
     >
@@ -109,11 +111,11 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
     Once the script has completed, you will be ready to continue with the lab.
 
-## Exercise 2: Generate and Configure x.509 CA Certificates using OpenSSL
+### Exercise 2: Generate and Configure X.509 CA Certificates using OpenSSL
 
-In this exercise, you will generate an x.509 CA Certificate using OpenSSL within the Azure Cloud Shell. This certificate will be used to configure the Group Enrollment within the Device Provisioning Service (DPS).
+In this exercise, you will generate an X.509 CA Certificate using OpenSSL within the Azure Cloud Shell. This certificate will be used to configure the Group Enrollment within the Device Provisioning Service (DPS).
 
-### Task 1: Generate the certificates
+#### Task 1: Generate the certificates
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -123,7 +125,7 @@ In this exercise, you will generate an x.509 CA Certificate using OpenSSL within
 
     > [!NOTE] Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this unit you will use some helper scripts written for the *Bash* shell.
 
-1. Within the Azure Cloud Shell, run the following commands that will download a helper script for using *OpenSSL* to generate x.509 CA Certificates. They will be placed within the `~/certificates` directory inside your Cloud Shell storage.
+1. Within the Azure Cloud Shell, run the following commands that will download a helper script for using *OpenSSL* to generate X.509 CA Certificates. They will be placed within the `~/certificates` directory inside your Cloud Shell storage.
 
     ```sh
     # create certificates directory
@@ -148,7 +150,7 @@ In this exercise, you will generate an x.509 CA Certificate using OpenSSL within
 
 1. Review the contents of the script you downloaded using whatever tool you'd prefer (`more`, `code`, `vi`, etc.) to validate the code you downloaded.
 
-1. The first x.509 certificates needed are CA and intermediate certificates. These can be generated using the `certGen.sh` helper script by passing the `create_root_and_intermediate` option.
+1. The first X.509 certificates needed are CA and intermediate certificates. These can be generated using the `certGen.sh` helper script by passing the `create_root_and_intermediate` option.
 
     Run the following command within the `~/certificates` directory of the **Azure Cloud Shell** to generate the CA and intermediate certificates:
 
@@ -164,38 +166,37 @@ In this exercise, you will generate an x.509 CA Certificate using OpenSSL within
     download ~/certificates/certs/azure-iot-test-only.root.ca.cert.pem
     ```
 
-### Task 2: Configurate your DPS to trust the root certificate
+#### Task 2: Configurate your DPS to trust the root certificate
 
 1. Navigate to your **Device Provisioning Service** (DPS) named `AZ-220-DPS-_{YOUR-ID}_` within the Azure portal.
 
-2. On the left side of the **Device Provisioning Service** blade, in the **Settings** section, click the **Certificates** link.
+1. On the left side of the **Device Provisioning Service** blade, in the **Settings** section, click the **Certificates** link.
 
-3. On the **Certificates** pane, click the **Add** button at the top to start process of uploading the x.509 CA Certificate to the DPS service.
+1. On the **Certificates** pane, click the **Add** button at the top to start process of uploading the X.509 CA Certificate to the DPS service.
 
-5. On the **Add Certificate** pane, for **Certificate Name**, enter a logical name for the _Root CA Certificate_ into the field. For example, `root-ca-cert`.
+1. On the **Add Certificate** pane, for **Certificate Name**, enter a logical name for the _Root CA Certificate_ into the field. For example, `root-ca-cert`.
 
-    [!NOTE] This name could be the same as the name of the certificate file, or something different. This is a logical name that has no correlation to the _Common Name_ within the x.509 CA Certificate.
+    [!NOTE] This name could be the same as the name of the certificate file, or something different. This is a logical name that has no correlation to the _Common Name_ within the X.509 CA Certificate.
 
-4. For the **Certificate .pem or .cer file.** upload field, select the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that you just downloaded.
+1. For the **Certificate .pem or .cer file.** upload field, select the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that you just downloaded.
 
-6. Click **Save**.
+1. Click **Save**.
 
-    Once the x.509 CA Certificate has been uploaded, the _Certificates_ pane will display the certificate with the _Status_ of _Unverified_. Before this CA Certificate can be used to authenticate devices to DPS, you will need to verify **Proof of Possession** of the certificate.
+    Once the X.509 CA Certificate has been uploaded, the _Certificates_ pane will display the certificate with the _Status_ of _Unverified_. Before this CA Certificate can be used to authenticate devices to DPS, you will need to verify **Proof of Possession** of the certificate.
 
-7. To start the process of verifying **Proof of Possession** of the certificate, click on the **CA Certificate** that was just uploaded to open the **Certificate Details** pane for it.
+1. To start the process of verifying **Proof of Possession** of the certificate, click on the **CA Certificate** that was just uploaded to open the **Certificate Details** pane for it.
 
-8. On the **Certificate Details** pane, click on the **Generate Verification Code** button.  (You may need to scroll to see it.)
+1. On the **Certificate Details** pane, click on the **Generate Verification Code** button.  (You may need to scroll to see it.)
 
-9.  Copy the newly generated **Verification Code** that is displayed above the _Generate Verification Code_ button.  The button to the right of the _Verification Code_ textbox will do this for you.
+1. Copy the newly generated **Verification Code** that is displayed above the _Generate Verification Code_ button.  The button to the right of the _Verification Code_ textbox will do this for you.
 
     _Proof of Possession_ of the CA certificate is provided to DPS by uploading a certificate generated from the CA certificate with the verifcation code that was just generated within DPS. This is how you provide proof that you actually own the CA Certificate.
 
     > [!IMPORTANT] You will need to leave the **Certificate Details** pane open while you generate the verification certificate. If you close the pane, you will invalidate the verification code, and will need to generate a new one.
 
-10. Open the **Azure Cloud Shell**, if it's not still open from earlier, and navigate to the `~/certificates` directory.
+1. Open the **Azure Cloud Shell**, if it's not still open from earlier, and navigate to the `~/certificates` directory.
 
-
-11. Run the following command, passing in your copied verification code, to create the verification certificate:
+1. Run the following command, passing in your copied verification code, to create the verification certificate:
 
     ```sh
     ./certGen.sh create_verification_certificate <verification-code>
@@ -219,19 +220,19 @@ In this exercise, you will generate an x.509 CA Certificate using OpenSSL within
 
     [!NOTE] Depending on the web browser, you may be prompted to allow multiple downloads at this point.  If there appears to be no response to your download command, make sure there's not a prompt elsewhere on the screen asking for permission to allow the download.
 
-12. Go back to the **Certificate Details** pane for the CA certificate within DPS.
+1. Go back to the **Certificate Details** pane for the CA certificate within DPS.
 
-13. For **Verification Certificate .pem or .cer file.**, select the newly created, and downloaded, verification certificate file, named `verification-code.cert.pem`.
+1. For **Verification Certificate .pem or .cer file.**, select the newly created, and downloaded, verification certificate file, named `verification-code.cert.pem`.
 
-14. Click **Verify**.
+1. Click **Verify**.
 
-15. Verify that in the **Certificates** pane, the **Status** for the certificate is now displayed as _Verified_.  You may need to use the **Refresh** button at the top of the pane (to the right of the **Add** button) to see this change.
+1. Verify that in the **Certificates** pane, the **Status** for the certificate is now displayed as _Verified_.  You may need to use the **Refresh** button at the top of the pane (to the right of the **Add** button) to see this change.
 
-## Exercise 3: Create Group Enrollment (x.509 Certificate) in DPS
+### Exercise 3: Create Group Enrollment (X.509 Certificate) in DPS
 
 In this exercise, you will create a new individual enrollment for a device within the Device Provisioning Service (DPS) using _certificate attestation_.
 
-### Task 1: Create the enrollment
+#### Task 1: Create the enrollment
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -253,21 +254,21 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Leave the **Secondary Certificate** dropdown set to **No certificate selected**.
 
-2. Leave **Select how you want to assign devices to hubs** as **Evenly weighted distribution**.
-   
+1. Leave **Select how you want to assign devices to hubs** as **Evenly weighted distribution**.
+
    As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment.
 
-3. Notice that the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub is selected within the **Select the IoT hubs this device can be assigned to:** dropdown.
-   
+1. Notice that the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub is selected within the **Select the IoT hubs this device can be assigned to:** dropdown.
+
    This field specifies the IoT Hub(s) this device can be assigned to.
 
-4. Leave **Select how you want device data to be handled on re-provisioning** as the default value of **Re-provision and migrate data**.
+1. Leave **Select how you want device data to be handled on re-provisioning** as the default value of **Re-provision and migrate data**.
 
     This field gives you high-level control over the re-provisioning behavior, where the same device (as indicated through the same Registration ID) submits a later provisioning request after already being provisioned successfully at least once.
 
-2. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-*{YOUR-ID}*** IoT Hub selected. This will ensure when the device is provisioned, it gets added to this IoT Hub.
+1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-*{YOUR-ID}*** IoT Hub selected. This will ensure when the device is provisioned, it gets added to this IoT Hub.
 
-5. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"1"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
+1. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"1"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
 
     The final JSON will be like the following:
 
@@ -288,23 +289,23 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     Generally, you'll want to enable new enrollment entries and keep them enabled.
 
-2. At the top of the **Add Enrollment** blade, click **Save**.
+1. At the top of the **Add Enrollment** blade, click **Save**.
 
-### Task 2: Validate the enrollment
+#### Task 2: Validate the enrollment
 
 1. In the **Manage enrollments** pane, click on the **Enrollment Groups** tab to view the list of enrollment groups in DPS.
 
-4. In the list, click on the **simulated-devices** enrollment group that was just created to view the enrollment group details.
+1. In the list, click on the **simulated-devices** enrollment group that was just created to view the enrollment group details.
 
-5. In the **Enrollment Group Details** blade, locate the **Certificate Type**, and notice it's set to **CA Certificate**. Also, notice the **Primary Certificate** information is displayed, including the ability to update the certificates if needed.
+1. In the **Enrollment Group Details** blade, locate the **Certificate Type**, and notice it's set to **CA Certificate**. Also, notice the **Primary Certificate** information is displayed, including the ability to update the certificates if needed.
 
-6. Locate the **Initial Device Twin State**, and notice the JSON for the Device Twin Desired State contains the `telemetryDelay` property set to the value of `"1"`.
+1. Locate the **Initial Device Twin State**, and notice the JSON for the Device Twin Desired State contains the `telemetryDelay` property set to the value of `"1"`.
 
-7.  Close the **Enrollment Group Details** pane.
+1. Close the **Enrollment Group Details** pane.
 
-## Exercise 4: Configure simulated device with x.509 certificate
+### Exercise 4: Configure simulated device with X.509 certificate
 
-In this exercise, you will configure a simulated device written in C# to connect to your Azure IoT Hub via your Device Provisioning Service (DPS) using an x.509 certificate. This exercise will also introduce you to the workflow within the **simulated device** source code within the `/LabFiles` directory, and how it works to authenticate with DPS and send messages to IoT Hub.
+In this exercise, you will configure a simulated device written in C# to connect to your Azure IoT Hub via your Device Provisioning Service (DPS) using an X.509 certificate. This exercise will also introduce you to the workflow within the **simulated device** source code within the `/LabFiles` directory, and how it works to authenticate with DPS and send messages to IoT Hub.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -320,25 +321,25 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     The `~/certificates` directory is where the `certGen.sh` helper scripts was downloaded to and used to generate the CA Certificate for DPS previously. This helper script will also be used to generate a device certificate within the CA Certificate chain.
 
-1. Run the following command to generate an _x.509 device certificate_ within the CA certificate chain with the device name of `simulated-device1`. This certificate will generate a leaf device x.509 certificate for your simulated device. This certificate will be signed by the CA certificate generated previously, and will be used to authenticate the device with the Device Provisioning Service (DPS).
+1. Run the following command to generate an _X.509 device certificate_ within the CA certificate chain with the device name of `simulated-device1`. This certificate will generate a leaf device X.509 certificate for your simulated device. This certificate will be signed by the CA certificate generated previously, and will be used to authenticate the device with the Device Provisioning Service (DPS).
 
     ```sh
     ./certGen.sh create_device_certificate simulated-device1
     ```
 
-    Notice the device id of `simulated-device1` is passed to the `create_device_certificate` command of the `certGen.sh` script. This command will create a new x.509 certificate that's signed by the CA certificate and has the specified device id set within the _common name_, or `CN=`, value of the device certificate.
+    Notice the device id of `simulated-device1` is passed to the `create_device_certificate` command of the `certGen.sh` script. This command will create a new X.509 certificate that's signed by the CA certificate and has the specified device id set within the _common name_, or `CN=`, value of the device certificate.
 
-    Once the `create_device_certificate` command has completed, the generated x.509 device certificate will be named `new-device.cert.pfx`, and will be located within the `/certs` sub-directory.
+    Once the `create_device_certificate` command has completed, the generated X.509 device certificate will be named `new-device.cert.pfx`, and will be located within the `/certs` sub-directory.
 
     > [!NOTE] This command overwrites the existing certificate. If you want to create a certificate for multiple devices, ensure you copy the `new-device.cert.pfx` each time.
 
-1. Run the following command to download the generated x.509 device certificate from the Cloud Shell to your local machine:
+1. Run the following command to download the generated X.509 device certificate from the Cloud Shell to your local machine:
 
     ```sh
     download ~/certificates/certs/new-device.cert.pfx
     ```
 
-    The simulated device will be configured to use this x.509 device certificate to authenticate with the Device Provisioning Service.
+    The simulated device will be configured to use this X.509 device certificate to authenticate with the Device Provisioning Service.
 
 1. Within the Azure portal, navigate to the **Device Provisioning Service** blade, and the **Overview** pane.
 
@@ -346,7 +347,7 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     The **ID Scope** will be similar to this value: `0ne0004E52G`
 
-1. Copy the downloaded `new-device.cert.pfx` x.509 device certificate file to the `/LabFiles` directory; within the root directory along-side the `Program.cs` file. The **simulated device** project will need to access this certificate file when authenticating to the Device Provisioning Service.
+1. Copy the downloaded `new-device.cert.pfx` X.509 device certificate file to the `/LabFiles` directory; within the root directory along-side the `Program.cs` file. The **simulated device** project will need to access this certificate file when authenticating to the Device Provisioning Service.
 
     After copied, the certificate file will be located in the following location:
 
@@ -393,43 +394,43 @@ In this exercise, you will configure a simulated device written in C# to connect
    private static string dpsIdScope = "<DPS-ID-Scope>";
    ```
 
-2. Locate the `s_certificateFileName` variable. Notice the value to this variable is set to `new-device.cert.pfx`. This is the name of the x.509 device certificate file that was copied to the `/LabFiles` directory after it was previously generated using the `certGen.sh` helper script within the Cloud Shell. This variable tells the simulated device program code what file contains the x.509 device certificate to use when authenticating with the Device Provisioning Service.
+1. Locate the `s_certificateFileName` variable. Notice the value to this variable is set to `new-device.cert.pfx`. This is the name of the X.509 device certificate file that was copied to the `/LabFiles` directory after it was previously generated using the `certGen.sh` helper script within the Cloud Shell. This variable tells the simulated device program code what file contains the X.509 device certificate to use when authenticating with the Device Provisioning Service.
 
-3. Locate the `s_certificatePassword` variable. This variable contains the password for the x.509 device certificate. Notice that it's already set to `1234`, as this is the default password used by the `certGen.sh` helper script when generating the x.509 certificates.
+1. Locate the `s_certificatePassword` variable. This variable contains the password for the X.509 device certificate. Notice that it's already set to `1234`, as this is the default password used by the `certGen.sh` helper script when generating the X.509 certificates.
 
     > [!NOTE] For the purpose of this unit, the password is hard coded. In a _production_ device, the password will need to be stored in a more secure manner, such as in an Azure Key Vault. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).
     >
     > An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with all attestation mechanisms the provisioning service supports.
 
-4. Locate the `public static int Main` method. This is the execution entry for the simulated device.
+1. Locate the `public static int Main` method. This is the execution entry for the simulated device.
 
-    This method contains code that initiates the use of the x.509 device certificate by calling the `LoadProvisioningCertificate` method to load the certificate. The `LoadProvisioningCertificate` method returns an `X509Certificate2` object that contains the x.509 device certificate from the `new-device.cert.pfx` file.
+    This method contains code that initiates the use of the X.509 device certificate by calling the `LoadProvisioningCertificate` method to load the certificate. The `LoadProvisioningCertificate` method returns an `X509Certificate2` object that contains the X.509 device certificate from the `new-device.cert.pfx` file.
 
-5. Locate the `LoadProvisioningCertificate` method, and review the necessary code to load an x.509 certificate from the `new-device.cert.pfx` file.
+1. Locate the `LoadProvisioningCertificate` method, and review the necessary code to load an X.509 certificate from the `new-device.cert.pfx` file.
 
-6. Notice the `public static int Main` method also contains code that initiates a `security` `SecurityProviderX509Certificate` object for the x.509 Device Certificate. It also creates a `transport` `ProvisioningTransportHandlerAmqp` object that defines the simulated device will be using AMQP as the communications protocol when connecting to Azure IoT Hub.
+1. Notice the `public static int Main` method also contains code that initiates a `security` `SecurityProviderX509Certificate` object for the X.509 Device Certificate. It also creates a `transport` `ProvisioningTransportHandlerAmqp` object that defines the simulated device will be using AMQP as the communications protocol when connecting to Azure IoT Hub.
 
-7. Notice the `ProvisioningDeviceClient.Create` method is passed the `security` and `transport` objects, as well as the DPS ID scope and DPS global device endpoint, that will be used to register the device with the Device Provisioning Service.
+1. Notice the `ProvisioningDeviceClient.Create` method is passed the `security` and `transport` objects, as well as the DPS ID scope and DPS global device endpoint, that will be used to register the device with the Device Provisioning Service.
 
-8. Notice the `ProvisioningDeviceLogic` object is instantiated by passing it the `ProvisioningDeviceClient` (`provClient`) and `security` objects.
+1. Notice the `ProvisioningDeviceLogic` object is instantiated by passing it the `ProvisioningDeviceClient` (`provClient`) and `security` objects.
 
     The `ProvisioningDeviceLogic` is a class define within the simulated device that contains code for the device logic. It contains code for running the device by reading from the simulated device sensors, and sending device-to-cloud messages to Azure IoT Hub. It will also be modified later to contain code that updates the device according to changes to device twin desired properties that are sent to the device from the cloud.
 
-9. Locate the `ProvisioningDeviceLogic.RunAsync` method.
+1. Locate the `ProvisioningDeviceLogic.RunAsync` method.
 
-10. Notice the code that calls the `ProvisioningDeviceClient.RegisterAsync` method. This method Registers the device using the Device Provisioning Service and assigns it to an Azure IoT Hub.
+1. Notice the code that calls the `ProvisioningDeviceClient.RegisterAsync` method. This method Registers the device using the Device Provisioning Service and assigns it to an Azure IoT Hub.
 
     ```csharp
     DeviceRegistrationResult result = await _provClient.RegisterAsync().ConfigureAwait(false);
     ```
 
-11. Notice the code that instantiates a new `DeviceAuthenticationWithX509Certificate` object. This is a Device Authentication object that will be used to authenticate the simulated device to Azure IoT Hub using the x.509 Device Certificate. The constructor is being passed the device ID for the device that was registered in DPS, as well as the x.509 device certificate to authenticate the device.
+1. Notice the code that instantiates a new `DeviceAuthenticationWithX509Certificate` object. This is a Device Authentication object that will be used to authenticate the simulated device to Azure IoT Hub using the X.509 Device Certificate. The constructor is being passed the device ID for the device that was registered in DPS, as well as the X.509 device certificate to authenticate the device.
 
     ```csharp
     var auth = new DeviceAuthenticationWithX509Certificate(result.DeviceId, (_security as SecurityProviderX509).GetAuthenticationCertificate());
     ```
 
-12. Notice the code that calls the `DeviceClient.Create` method to create a new IoT `DeviceClient` object that is used to communicate with the Azure IoT Hub service.
+1. Notice the code that calls the `DeviceClient.Create` method to create a new IoT `DeviceClient` object that is used to communicate with the Azure IoT Hub service.
 
     ```csharp
     using (iotClient = DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp))
@@ -438,23 +439,23 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     Notice this code also passes the value of `TransportType.Amqp`, telling the `DeviceClient` to communicate with the Azure IoT Hub using the AMQP protocol. Alternatively, Azure IoT Hub can be connected to and communicated with using the MQTT or HTTP protocols, depending on network architecture, device requirements, etc.
 
-13. Notice the call to the `SendDeviceToCloudMessagesAsync` method. This is a method defined within the simulated device code, and is where the device logic is located to read from simulated sensors and to send device-to-cloud messages to Azure IoT Hub. This method also contains a loop that continues to execute while the simulated device is running.
+1. Notice the call to the `SendDeviceToCloudMessagesAsync` method. This is a method defined within the simulated device code, and is where the device logic is located to read from simulated sensors and to send device-to-cloud messages to Azure IoT Hub. This method also contains a loop that continues to execute while the simulated device is running.
 
     ```csharp
     await SendDeviceToCloudMessagesAsync(iotClient);
     ```
 
-14. Notice the call to the `DeviceClient.CloseAsync` method. This method closes the `DeviceClient` object, thus closing the connection with Azure IoT Hub. This is the last line of code executed when the simulated device shuts down.
+1. Notice the call to the `DeviceClient.CloseAsync` method. This method closes the `DeviceClient` object, thus closing the connection with Azure IoT Hub. This is the last line of code executed when the simulated device shuts down.
 
     ```csharp
     await iotClient.CloseAsync().ConfigureAwait(false);
     ```
 
-15. Locate the `SendDeviceToCloudMessagesAsync` method.
+1. Locate the `SendDeviceToCloudMessagesAsync` method.
 
-16. Notice the code within the `SendDeviceToCloudMessagesAsync` method contains a `while` loop that has code to generate simulated sensor readings, and then send that data to Azure IoT Hub in a device-to-cloud message.
+1. Notice the code within the `SendDeviceToCloudMessagesAsync` method contains a `while` loop that has code to generate simulated sensor readings, and then send that data to Azure IoT Hub in a device-to-cloud message.
 
-17. Next, notice the simulated sensor readings are combined into a JSON object using the following code:
+1. Next, notice the simulated sensor readings are combined into a JSON object using the following code:
 
     ```csharp
         var telemetryDataPoint = new
@@ -470,7 +471,7 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     ```
 
-18. Moving on, notice that there is a line of code that adds a `temperatureAlert` property to the device-to-cloud `Message`. The value of the property is being set to a `boolean` value representing whether the _temperature_ sensor reading is greater than 30.
+1. Moving on, notice that there is a line of code that adds a `temperatureAlert` property to the device-to-cloud `Message`. The value of the property is being set to a `boolean` value representing whether the _temperature_ sensor reading is greater than 30.
 
     ```csharp
     message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
@@ -478,15 +479,15 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     This code is a simple example of how to add properties to the `Message` object before sending it to the Azure IoT Hub. This can be used to add additional metadata to the messages that are being send, in addition to the message body content.
 
-19. After that is the call to the `DeviceClient.SendEventAsync` method. This method accepts the `Message` to send as a parameter, then does the work of sending the device-to-cloud message to Azure IoT Hub.
+1. After that is the call to the `DeviceClient.SendEventAsync` method. This method accepts the `Message` to send as a parameter, then does the work of sending the device-to-cloud message to Azure IoT Hub.
 
     ```csharp
     await deviceClient.SendEventAsync(message);
     ```
 
-20. Notice the last line of code within the `SendDeviceToCloudMessagesAsync` method, that performs a simply delay using the `_telemetryDelay` variable to define how many seconds to wait until sending the next simulated sensor reading.
+1. Notice the last line of code within the `SendDeviceToCloudMessagesAsync` method, that performs a simply delay using the `_telemetryDelay` variable to define how many seconds to wait until sending the next simulated sensor reading.
 
-## Exercise 5: Handle device twin desired property Changes
+### Exercise 5: Handle device twin desired property Changes
 
 In this exercise, you will modify the simulated device source code to include an event handler to update device configurations based on device twin desired property changes sent to the device from Azure IoT Hub.
 
@@ -496,7 +497,7 @@ The Device Provisioning Service (DPS) contains the initial device twin desired p
 
 When the device twin desired properties are updated for a device within Azure IoT Hub, the desired changes are sent to the IoT Device using the `DesiredPropertyUpdateCallback` event using the C# SDK. Handling this event within device code enables the devices configuration and properties to be updated as desired by easily managing the Device Twin state for the device within Azure IoT Hub.
 
-This set of steps will be very similar to steps in earlier labs for working with a simulated device, because the concepts and processes are the same.  The method used for authentication of the provisioning process doesn't change the handing of device twin property changes once the device is provisioned. 
+This set of steps will be very similar to steps in earlier labs for working with a simulated device, because the concepts and processes are the same.  The method used for authentication of the provisioning process doesn't change the handing of device twin property changes once the device is provisioned.
 
 1. Using **Visual Studio Code**, open the `/LabFiles` folder if it's not still open.
 
@@ -505,7 +506,7 @@ This set of steps will be very similar to steps in earlier labs for working with
 1. Locate the `RunAsync` method.
    This is the method that connects the simulated device to Azure IoT Hub using a `DeviceClient` object. You will be adding code immediately after the device connects to Azure IoT Hub that integrates an `DesiredPropertyUpdateCallback` event handler for the device to receive to device twin desired property changes.
 
-2. Locate the `// TODO 1` comment within the **RunAsync** method, and paste in the following code that calls the `SetDesiredPropertyUpdateCallbackAsync` method to setup the `DesiredPropertyUpdateCallback` event handler to receive device twin desired property changes.
+1. Locate the `// TODO 1` comment within the **RunAsync** method, and paste in the following code that calls the `SetDesiredPropertyUpdateCallbackAsync` method to setup the `DesiredPropertyUpdateCallback` event handler to receive device twin desired property changes.
 
     ```csharp
     // TODO 1: Setup OnDesiredPropertyChanged Event Handling to receive Desired Properties changes
@@ -515,7 +516,7 @@ This set of steps will be very similar to steps in earlier labs for working with
 
     Notice this code is configuring the `DeviceClient` to call a method named `OnDesiredPropertyChanged` when device twin property change events are received.
 
-3. Now that the `SetDesiredPropertyUpdateCallbackAsync` method was used to setup the event handler, the method named `OnDesiredPropertyChanged` that it's configured to call needs to be defined.  To define the `OnDesiredPropertyChanged` method, paste in the following code to the `ProvisioningDeviceLogic` class, below the `RunAsync` method:
+1. Now that the `SetDesiredPropertyUpdateCallbackAsync` method was used to setup the event handler, the method named `OnDesiredPropertyChanged` that it's configured to call needs to be defined.  To define the `OnDesiredPropertyChanged` method, paste in the following code to the `ProvisioningDeviceLogic` class, below the `RunAsync` method:
 
     ```csharp
         private async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
@@ -562,11 +563,11 @@ This set of steps will be very similar to steps in earlier labs for working with
 
     In this case, the `OnDesiredPropertyChanged` event handler method is being reused to keep the configuration of the `telemetryDelay` property based on the device twin desired properties to a single place. This will help make the code easier to maintain over time.
 
-## Exercise 6: Test the Simulated Device
+### Exercise 6: Test the Simulated Device
 
-In this exercise, you will run the simulated device. When the device is started for the first time, it will connect to the Device Provisioning Service (DPS) and automatically be enrolled using the configured group enrollment. Once enrolled into the DPS group enrollment, the device will be automatically registered within the Azure IoT Hub device registry. Once enrolled and registered, the device will begin communicating with Azure IoT Hub securely using the configured x.509 certificate authentication.
+In this exercise, you will run the simulated device. When the device is started for the first time, it will connect to the Device Provisioning Service (DPS) and automatically be enrolled using the configured group enrollment. Once enrolled into the DPS group enrollment, the device will be automatically registered within the Azure IoT Hub device registry. Once enrolled and registered, the device will begin communicating with Azure IoT Hub securely using the configured X.509 certificate authentication.
 
-### Task 1: Build and run the device
+#### Task 1: Build and run the device
 
 1. Using **Visual Studio Code**, open the `/LabFiles` folder if it's not still open.
 
@@ -596,7 +597,7 @@ In this exercise, you will run the simulated device. When the device is started 
     > ...
     > ```
 
-1. When the simulated device application runs, the **Terminal** will display the Console output from the app. Notice the x.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub, and the device twin desired properties are loaded.
+1. When the simulated device application runs, the **Terminal** will display the Console output from the app. Notice the X.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub, and the device twin desired properties are loaded.
 
     ```text
     localmachine:LabFiles User$ dotnet run
@@ -631,15 +632,15 @@ In this exercise, you will run the simulated device. When the device is started 
 
     Keep the simulated device running for the next task.
 
-### Task 2: Change the device configuration through its twin
+#### Task 2: Change the device configuration through its twin
 
 With the simulated device running, the `telemetryDelay` configuration can be updated by editing the device twin Desired State within Azure IoT Hub. This can be done by configuring the Device in the Azure IoT Hub within the Azure portal.
 
 1. Open the **Azure Portal** if it is not already open, and navigate to your **Azure IoT Hub** service.
 
-2. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click on **IoT devices**.
+1. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click on **IoT devices**.
 
-3. Within the list of IoT devices, click on the **Device ID** (likely **simulated-device1**) for the Simulated Device.
+1. Within the list of IoT devices, click on the **Device ID** (likely **simulated-device1**) for the Simulated Device.
 
     > [!IMPORTANT] Make sure you select the device from this lab.
 
@@ -692,23 +693,23 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. To exit the simulated device app within the **Terminal** window, press **Ctrl-C**.
 
-6. In the Azure Portal, close the **Device twin** blade. 
+1. In the Azure Portal, close the **Device twin** blade.
 
 1. Still in the Azure Portal, on the Simulated Device blade, again click the **Device Twin** button.
 
 1. This time, locate the JSON for the `properties.reported` object.
-   
+
     This contains the state reported by the device. Notice the `telemetryDelay` property exists here as well, and is also set to `2`.  There is also a `$metadata` value that shows you when the value was reported data was last updated and when the specific reported value was last updated.
 
 1. Again close the **Device twin** blade.
 
 1. Close the simulated device blade to return back to the IoT Hub blade.
 
-## Exercise 7: Retire Group Enrollment
+### Exercise 7: Retire Group Enrollment
 
 In this exercise, you will retire the enrollment group and its devices from both the Device Provisioning Service and Azure IoT Hub.
 
-### Task 1: Retire the enrollment group from the DPS
+#### Task 1: Retire the enrollment group from the DPS
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -718,41 +719,41 @@ In this exercise, you will retire the enrollment group and its devices from both
 
 1. On the Device Provisioning Service settings pane on the left side, click **Manage enrollments**.
 
-2. Click on **simulated-devices** in the list of **Enrollment Groups**.
+1. Click on **simulated-devices** in the list of **Enrollment Groups**.
 
-3. On the **Enrollment Group Details** blade, locate the **Enable entry** option and set it to **Disable**, then click **Save** at the top of the blade.
+1. On the **Enrollment Group Details** blade, locate the **Enable entry** option and set it to **Disable**, then click **Save** at the top of the blade.
 
-    Disabling the Group Enrollment within DPS allows you to temporarily disable devices within this Enrollment Group. This provides a temporary blacklist of the x.509 certificate used by these devices.
+    Disabling the Group Enrollment within DPS allows you to temporarily disable devices within this Enrollment Group. This provides a temporary blacklist of the X.509 certificate used by these devices.
 
-4. To permanently delete the Enrollment Group, you must delete the enrollment group from DPS. To do this, check the box next to the **simulated-devices** **Group Name** on the **Manage enrollments** pane if it is not already checked, then click the **Delete** button at the top.
+1. To permanently delete the Enrollment Group, you must delete the enrollment group from DPS. To do this, check the box next to the **simulated-devices** **Group Name** on the **Manage enrollments** pane if it is not already checked, then click the **Delete** button at the top.
 
-5. When prompted to confirm the action to **Remove enrollment**, click **Yes**.
-   
+1. When prompted to confirm the action to **Remove enrollment**, click **Yes**.
+
    Once deleted, the Group Enrollment is completely removed from DPS, and would need to be recreated to add it back.
 
     > [!NOTE] If you delete an enrollment group for a certificate, devices that have the certificate in their certificate chain might still be able to enroll if a different, enabled enrollment group still exists for the root certificate or another intermediate certificate higher up in their certificate chain.
 
-### Task 2: Retire the device from the IoT Hub
+#### Task 2: Retire the device from the IoT Hub
 
 Once the enrollment group has been removed from the Device Provisioning Service (DPS), the device registration will still exist within Azure IoT Hub. To fully retire the devices, you will need to remove that registration as well.
 
 1. Within the Azure portal, on your resource group tile, click **AZ-220-HUB-_{YOUR-ID}_** to navigate to the Azure IoT Hub.
 
-8.  On the **IoT Hub** blade, on the left side, under the **Explorers** section, click on the **IoT devices** link.
+1. On the **IoT Hub** blade, on the left side, under the **Explorers** section, click on the **IoT devices** link.
 
-9.  Notice that the **simulated-device1** device ID still exists within the Azure IoT Hub device registry.
+1. Notice that the **simulated-device1** device ID still exists within the Azure IoT Hub device registry.
 
-10. To remove the device, check box next to it in the list, then click the **Delete** button at the top of the pane.
+1. To remove the device, check box next to it in the list, then click the **Delete** button at the top of the pane.
 
-11. When prompted with "_Are you certain you wish to delete selected device(s)_", click **Yes** to confirm and perform the deletion.
+1. When prompted with "_Are you certain you wish to delete selected device(s)_", click **Yes** to confirm and perform the deletion.
 
-### Task 3: Verify the retirement
+#### Task 3: Verify the retirement
 
 With the group enrollment deleted from the Device Provisioning Service, and the device deleted from the Azure IoT Hub device registry, the device(s) have fully been removed from the solution.
 
-1.  Run the simulated device again by executing the `dotnet run` command within the Visual Studio Code **Terminal** window.
+1. Run the simulated device again by executing the `dotnet run` command within the Visual Studio Code **Terminal** window.
 
-    Now that the group enrollment and registered device have been deleted, the simulated device will no longer be able to provision nor connect. When the application attempts to use the configured x.509 certificate to connect to DPS, it will return a `ProvisioningTransportException` error message.
+    Now that the group enrollment and registered device have been deleted, the simulated device will no longer be able to provision nor connect. When the application attempts to use the configured X.509 certificate to connect to DPS, it will return a `ProvisioningTransportException` error message.
 
     ```txt
     Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=simulated-device1; PrivateKey: True

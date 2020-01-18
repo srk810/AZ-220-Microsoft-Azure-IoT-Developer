@@ -6,9 +6,9 @@ lab:
 
 # Visualize a Data Stream in Power BI
 
-> [!NOTE] This lab is a continuation of Lab 7 - Device Message Routing. 
-
+> [!NOTE] This lab is a continuation of Lab 7 - Device Message Routing.
 > [!IMPORTANT] This lab has several service prerequisites that are not related to the Azure subscription you were given for the course:
+>
 > 1. The ability to sign in to a "Work or School Account" (Azure Active Directory account)
 > 2. You must know your account sign-in name, which may not match your e-mail address.
 > 3. Access to Power BI, which could be through:
@@ -59,17 +59,6 @@ The fourth tile includes time as the x-axis. This tile allows you to compare the
 
 Let's create the Event Hub, create the second route, update the SQL query, create a Power BI dashboard, and let it all run!
 
-
-
-
-
-
-
-
-
-
-
-
 ## In This Lab
 
 This lab includes:
@@ -82,13 +71,15 @@ This lab includes:
 * Add Telemetry Route
 * Create a dashboard to visualize data anomalies, using Power BI
 
-## Exercise 1: Sign Up For PowerBI
+## Lab Instructions
+
+### Exercise 1: Sign Up For PowerBI
 
 Power BI can be your personal data analysis and visualization tool, and can also serve as the analytics and decision engine behind group projects, divisions, or entire corporations. Later on in this lab, you will visualize data using PowerBI. This article explains how to sign up for Power BI as an individual.
 
 >**Note:** If you already have a PowerBI subscription, you can skip to the next step.
 
-### Task 1: Understand Supported Email Addresses
+#### Task 1: Understand Supported Email Addresses
 
 Before you start the sign-up process, it's important to learn which types of email addresses that you can use to sign-up for Power BI:
 
@@ -98,9 +89,9 @@ Before you start the sign-up process, it's important to learn which types of ema
 
 * You can sign-up for Power BI with .gov or .mil addresses, but this requires a different process. For more info, see [Enroll your US Government organization in the Power BI service](https://docs.microsoft.com/en-us/power-bi/service-govus-signup).
 
-### Task 2: Sign up for a Power BI Account
+#### Task 2: Sign up for a Power BI Account
 
-Follow these steps to sign up for a Power BI account. Once you complete this process you will have a Power BI (free) license which you can use to try Power BI on your own using My Workspace, consume content from a Power BI workspace assigned to a Power BI Premium capacity or initiate an individual Power BI Pro Trial. 
+Follow these steps to sign up for a Power BI account. Once you complete this process you will have a Power BI (free) license which you can use to try Power BI on your own using My Workspace, consume content from a Power BI workspace assigned to a Power BI Premium capacity or initiate an individual Power BI Pro Trial.
 
 1. In your browser, navigate to the [sign-up page](https://signup.microsoft.com/signup?sku=a403ebcc-fae0-4ca2-8c8c-7a907fd6c235).
 
@@ -130,7 +121,7 @@ Follow these steps to sign up for a Power BI account. Once you complete this pro
 
 Now you have access to Power BI, you are ready to route real-time telemetry data to a Power BI dashboard.
 
-## Exercise 2: Verify Lab Prerequisites
+### Exercise 2: Verify Lab Prerequisites
 
 As we need some real-time telemetry, you need to ensure the Device Simulator app from the previous lab is running.
 
@@ -152,11 +143,11 @@ As we need some real-time telemetry, you need to ensure the Device Simulator app
 
 1. You can leave this app running, as it's needed for the next section.
 
-## Exercise 3: Add Azure Event Hub Route and Anomaly Query
+### Exercise 3: Add Azure Event Hub Route and Anomaly Query
 
 In this exercise, we're going to add a query to the Stream Analytics job, and then use Microsoft Power BI to visualize the output from the query. The query searches for spikes and dips in the vibration data, reporting anomalies. We must create the second route, after first creating an instance of an Event Hubs namespace.
 
-### Task 1: Create an Event Hubs Namespace
+#### Task 1: Create an Event Hubs Namespace
 
 In this task, you will use the Azure portal to create an Event Hubs resource.
 
@@ -168,45 +159,45 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
     The Azure Marketplace is a collection of all the resources you can create in Azure. The marketplace contains resources from both Microsoft and the community.
 
-2. In the Search textbox, type **Event Hubs** and press **Enter**.
+1. In the Search textbox, type **Event Hubs** and press **Enter**.
 
-3. On the search results panel under the textbox, click **Event Hubs**.
+1. On the search results panel under the textbox, click **Event Hubs**.
 
-4. To begin the process of creating your new Event Hubs resource, click **Create event hubs namespace**.
+1. To begin the process of creating your new Event Hubs resource, click **Create event hubs namespace**.
 
     The **Create Namespace** blade will be displayed.
 
-5. On the **Create Namespace** blade, under **Name**, enter **vibrationNamespace** plus a unique identifier (your initials and today's date) - i.e. **vibrationNamespaceCAH191212**
+1. On the **Create Namespace** blade, under **Name**, enter **vibrationNamespace** plus a unique identifier (your initials and today's date) - i.e. **vibrationNamespaceCAH191212**
 
     This name must be globally unique.
 
-6. Under **Pricing tier**, select **Standard**.
+1. Under **Pricing tier**, select **Standard**.
 
    > [!NOTE] Choosing the standard pricing tier enables _Kafka_. The Event Hubs for Kafka feature provides a protocol head on top of Azure Event Hubs that is binary compatible with Kafka versions 1.0 and later for both reading from and writing to Kafka topics. You can learn more about Event Huibs and Apache Kafka [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-for-kafka-ecosystem-overview). We will not be using Kafka in this lab.
 
-7. Leave **Make this namespace zone redundant** unchecked.
+1. Leave **Make this namespace zone redundant** unchecked.
 
     > [!NOTE] Checking this option enables enhanced availability by spreading replicas across availability zones within one region at no additional cost - however we don't need this capability for the lab.
 
-8. Under **Subscription**, select the subscription you are using for this lab.
+1. Under **Subscription**, select the subscription you are using for this lab.
 
-9. Under **Resource group**, select the resource group you are using for this lab - **AZ-220-RG**.
+1. Under **Resource group**, select the resource group you are using for this lab - **AZ-220-RG**.
 
-10. Under **Location**, choose the region you are using for all lab work.
+1. Under **Location**, choose the region you are using for all lab work.
 
-11. Under **Throughput units**, set the value to 1.
+1. Under **Throughput units**, set the value to 1.
 
     This lab does not generate sufficient data to warrant increasing the number of units.
 
-12. Leave **Enable Auto-Inflate** unchecked.
+1. Leave **Enable Auto-Inflate** unchecked.
 
     > [!NOTE] Auto-Inflate automatically scales the number of Throughput Units assigned to your Event Hubs Namespace when your traffic exceeds the capacity of the Throughput Units assigned to it. You can specify a limit to which the Namespace will automatically scale. We do not require this feature for this lab.
 
-13. To create the resource, click **Create**, and wait for the resource to be deployed. This can take a few minutes.
+1. To create the resource, click **Create**, and wait for the resource to be deployed. This can take a few minutes.
 
 Now we have an Event Hubs Namespace, we can create and Event Hubs instance.
 
-### Task 2: Create an Event Hubs Instance
+#### Task 2: Create an Event Hubs Instance
 
 1. Navigate back to the Azure Portal home page.
 
@@ -214,31 +205,29 @@ Now we have an Event Hubs Namespace, we can create and Event Hubs instance.
 
     The **Overview** pane of the **Event Hubs Namespace** blade will be displayed.
 
-2. To create an Event Hubs Instance, at the top of the pane, click **+ Event Hub**.
+1. To create an Event Hubs Instance, at the top of the pane, click **+ Event Hub**.
 
     The **Create Event Hub** blade will be displayed.
 
-3. On the **Create Event Hub** blade, under **Name**, enter **vibrationeventhubinstance**.
+1. On the **Create Event Hub** blade, under **Name**, enter **vibrationeventhubinstance**.
 
-4. Leave **Partition Count** set to **1**.
+1. Leave **Partition Count** set to **1**.
 
     > [!NOTE] Partitions are a data organization mechanism that relates to the downstream parallelism required in consuming applications. The number of partitions in an event hub directly relates to the number of concurrent readers you expect to have. You can increase the number of partitions beyond 32 by contacting the Event Hubs team. The partition count is not changeable, so you should consider long-term scale when setting partition count. In this lab, we only require 1.
 
-5. Leave **Message Retention** set to **1**.
+1. Leave **Message Retention** set to **1**.
 
     > [!NOTE] This is the retention period for events. You can set the retention period between 1 and 7 days. For this lab, we only require the minimum retention.
 
-6. Leave **Capture** set to **Off**.
+1. Leave **Capture** set to **Off**.
 
     > [!NOTE] Azure Event Hubs Capture enables you to automatically deliver the streaming data in Event Hubs to an Azure Blob storage or Azure Data Lake Store account of your choice, with the added flexibility of specifying a time or size interval. We do not require this feature for the lab.
 
-7. To create the Azure Hubs Instance, click **Create**. Wait for the resource to be deployed.
+1. To create the Azure Hubs Instance, click **Create**. Wait for the resource to be deployed.
 
-## Exercise 4: Create Real-Time Message Route
+### Exercise 4: Create Real-Time Message Route
 
 Now that we have an Event Hubs Namespace and an Event Hub, we can start to build the route itself.
-
-## Create a Route to an Event Hub
 
 In this task we will add a message route to our IoT Hub that will send telemetry messages to the Event Hub Instance we just created.
 
@@ -252,23 +241,23 @@ In this task we will add a message route to our IoT Hub that will send telemetry
 
 1. On the **Add a route** blade, under **Name**, enter **vibrationTelemetryRoute**.
 
-2. To the right of the **Endpoint** dropdown, click **+ Add endpoint**. This time, select **Event hubs** for the type of endpoint.
+1. To the right of the **Endpoint** dropdown, click **+ Add endpoint**. This time, select **Event hubs** for the type of endpoint.
 
-3. On the **Add an event hub endpoint** blade, under **Endpoint name**, enter **vibrationTelemetryEndpoint**.
+1. On the **Add an event hub endpoint** blade, under **Endpoint name**, enter **vibrationTelemetryEndpoint**.
 
-4. Under **Event hub namespace**, select the namespace you created earlier - i.e. **vibrationNamespaceCAH191212**.
+1. Under **Event hub namespace**, select the namespace you created earlier - i.e. **vibrationNamespaceCAH191212**.
 
-5. Under **Event hub instance**, select the namespace you created earlier - i.e. **vibrationeventhubinstance**.
+1. Under **Event hub instance**, select the namespace you created earlier - i.e. **vibrationeventhubinstance**.
 
-6. To create the endpoint, click **Create**, and wait for the success message.
+1. To create the endpoint, click **Create**, and wait for the success message.
 
     You will be returned to the **Add a route** blade and the **Endpoint** value will have been updated.
 
-7. Under **Data source**, ensure **Device Telemetry Messages** is selected.
+1. Under **Data source**, ensure **Device Telemetry Messages** is selected.
 
-8. Under **Enable route**, ensure **Enable** is selected.
+1. Under **Enable route**, ensure **Enable** is selected.
 
-9. Under **Routing query**, replace the existing query with the following:
+1. Under **Routing query**, replace the existing query with the following:
 
     ```sql
     sensorID = "VSTel"
@@ -276,9 +265,9 @@ In this task we will add a message route to our IoT Hub that will send telemetry
 
     You may recall that the earlier sent "VSLog" messages to the logging storage. This message route will be sending "VSTel" (the telemetry) to the Event Hubs Instance.
 
-10. To create the message route, click **Save**.
+1. To create the message route, click **Save**.
 
-11. Once the **Message routing** blade is displayed, verify you have two routes that match the following:
+1. Once the **Message routing** blade is displayed, verify you have two routes that match the following:
 
     | Name | Data Source | Routing Query | Endpoint | Enabled |
     |:-----|:------------|:--------------|:---------|:--------|
@@ -287,11 +276,11 @@ In this task we will add a message route to our IoT Hub that will send telemetry
 
 We are now ready to update the Azure Stream Analytics job to hand the real-time device telemetry.
 
-## Exercise 5: Add Telemetry Route
+### Exercise 5: Add Telemetry Route
 
 With this new IoT Hub route in place, we need to update our Stream Analytics job to handle the telemetry stream.
 
-### Task 1: Add a New Input to the Job
+#### Task 1: Add a New Input to the Job
 
 1. Return to your Azure Portal dashboard, and click on the **vibrationJob** you created in an earlier section.
 
@@ -327,7 +316,7 @@ With this new IoT Hub route in place, we need to update our Stream Analytics job
 
     The **Inputs** list should be updated to show the new input.
 
-### Task 2: Add a New Output
+#### Task 2: Add a New Output
 
 1. To create an output, in the left hand navigation, under **Job topology**, click **Outputs**.
 
@@ -353,7 +342,7 @@ With this new IoT Hub route in place, we need to update our Stream Analytics job
 
     The **Outputs** list will be updated with the new output.
 
-## Update the SQL query for the Job
+#### Task 3: Update the SQL query for the Job
 
 1. In the left hand navigation, under **Job topology**, click **Query**.
 
@@ -397,15 +386,17 @@ With this new IoT Hub route in place, we need to update our Stream Analytics job
 
 1. In the left navigation area, to navigate back to the home page of the job, click **Overview**.
 
-2. To start the job again, click **Start** and then, at the bottom of the **Start job** pane, click **Start**.
+1. To start the job again, click **Start** and then, at the bottom of the **Start job** pane, click **Start**.
 
 In order for a human operator to make much sense of the output from this query, we need to visualize the data in a friendly way. One way of doing this visualization is to create a Power BI dashboard.
 
-## Exercise 6: Create a Power BI Dashboard
+### Exercise 6: Create a Power BI Dashboard
 
 Now let's create a dashboard to visualize the query, using Microsoft Power BI.
 
-1. In your browser, navigate to https://app.powerbi.com/.
+#### Task 1: Create a New Dashboard
+
+1. In your browser, navigate to <https://app.powerbi.com/.>
 
 1. Once Power BI has opened, using the left navigation area, select the workspace you chose above.
 
@@ -421,7 +412,7 @@ Now let's create a dashboard to visualize the query, using Microsoft Power BI.
 
     The new dashboard will be displayed as an essentially blank page.
 
-## Add the Vibration Gauge Tile
+#### Task 2: Add the Vibration Gauge Tile
 
 1. To add the vibration gauge, at the top of the blank dashboard, click **+ Add tile**.
 
@@ -449,7 +440,7 @@ Now let's create a dashboard to visualize the query, using Microsoft Power BI.
 
 1. To reduce the size of the tile, move your mouse over the bottom-right corner of the tile and click-and-drag the resize icon. Make the tile as small as you can.
 
-### Add the SpikeAndDipScore Clustered Bar Chart Tile
+#### Task 3: Add the SpikeAndDipScore Clustered Bar Chart Tile
 
 1. To add the SpikeAndDipScore Clustered Bar Chart, at the top of the blank dashboard, click **+ Add tile**.
 
@@ -479,7 +470,7 @@ Now let's create a dashboard to visualize the query, using Microsoft Power BI.
 
 1. Again, reduce the size of the tile by moving your mouse over the bottom-right corner of the tile and click-and-drag the resize icon. Make the tile as small as you can.
 
-## Add the IsSpikeAndDipAnomaly Card Tile
+#### Task 4: Add the IsSpikeAndDipAnomaly Card Tile
 
 1. To add the IsSpikeAndDipAnomaly Card, at the top of the blank dashboard, click **+ Add tile**.
 
@@ -505,7 +496,7 @@ Now let's create a dashboard to visualize the query, using Microsoft Power BI.
 
 1. Again, reduce the size of the tile by moving your mouse over the bottom-right corner of the tile and click-and-drag the resize icon. Make the tile as small as you can.
 
-## Rearrange the Tiles
+#### Task 5: Rearrange the Tiles
 
 1. Using drag-and-drop, arrange the tiles on the left of the dashboard in the following order:
 
@@ -513,7 +504,7 @@ Now let's create a dashboard to visualize the query, using Microsoft Power BI.
     * Is Anomaly?
     * Vibration
 
-## Add Anomalies Over The Hour Line Chart Tile
+#### Task 6: Add Anomalies Over The Hour Line Chart Tile
 
 Now create a fourth tile, the `Anomalies Over the Hour` line chart.  This one is a bit more complex.
 
@@ -553,7 +544,6 @@ Now create a fourth tile, the `Anomalies Over the Hour` line chart.  This one is
 
 13. Let the job run for a while, several minutes at least before the ML model will kick in. Compare the console output of the device app, with the Power BI dashboard. Are you able to correlate the forced and increasing vibrations to a run of anomaly detections?
 
-If you're seeing an active Power BI dashboard, you've just  completed this lab. Great work. 
+If you're seeing an active Power BI dashboard, you've just  completed this lab. Great work.
 
 > [!NOTE] Before you go, don't forget to close Visual Studio Code - this will exit the device app if it is still running.
-

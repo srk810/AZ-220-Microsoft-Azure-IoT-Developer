@@ -31,13 +31,13 @@ IoT Edge solution development in VS Code
 * Create and customize an Edge module
 * Deploy modules to Edge device
 
+## Lab Instructions
 
+### Exercise 1: Verify Lab Prerequisites
 
-## Exercise 1: Verify Lab Prerequisites
+[tbd]
 
-
-
-## Exercise 2: Install Azure IoT EdgeHub Dev Tool
+### Exercise 2: Install Azure IoT EdgeHub Dev Tool
 
 In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
@@ -66,7 +66,7 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
 Now we have configured the python environment and installed these tools, we are now ready to create an Azure Container Registry which will be used to store our custom IoT Edge Module.
 
-## Exercise 3: Create Azure Container Registry
+### Exercise 3: Create Azure Container Registry
 
 Azure Container Registry provides storage of private Docker images for container deployments. The service is a managed, private Docker registry service based on the open-source Docker Registry 2.0. Azure Container Registry is used to store and manage your private Docker container images.
 
@@ -126,7 +126,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 Now that we have created the Azure Container Registry, we can create a custom IoT Edge Module container that will be store in the registry.
 
-## Exercise 4: Create Custom Edge Module in C#
+### Exercise 4: Create Custom Edge Module in C#
 
 In this exercise, you will create an Azure IoT Edge Solution that contains a custom Azure IoT Edge Module written in C#.
 
@@ -249,7 +249,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
 We have now created and configured a sample custom module. Next, we will debug it in the IoT Edge Simulator.
 
-## Exercise 5: Debug in Attach Mode with IoT Edge Simulator
+### Exercise 5: Debug in Attach Mode with IoT Edge Simulator
 
 In this exercise, you will build and run a custom IoT Edge Module solution using the IoT Edge Simulator from within Visual Studio Code.
 
@@ -369,7 +369,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 Now that the module has been created and tested in the IoT Edge simulator, it is time to deploy it to the cloud.
 
-## Exercise 6: Deploy IoT Edge Solution
+### Exercise 6: Deploy IoT Edge Solution
 
 In this exercise, you will build and publish the custom IoT Edge Module into the Azure Container Registry (ACR) service. Once published to ACR, the custom module will then be made available to be deployed to any IoT Edge Device.
 

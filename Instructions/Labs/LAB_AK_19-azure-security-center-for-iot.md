@@ -24,11 +24,13 @@ We will be enabling the Azure Security Center for IoT to be able to see securely
 * Install C#-based Security Agent on a Linux Device
 * Configure Solution
 
-## Exercise 1: Verify Lab Prerequisites
+## Lab Instructions
 
+### Exercise 1: Verify Lab Prerequisites
 
+[tbd]
 
-## Exercise 2: Create an IoT Hub using the Azure portal
+### Exercise 2: Create an IoT Hub using the Azure portal
 
 In this task, you will use the Azure portal to create an IoT Hub resource.
 
@@ -126,11 +128,11 @@ In this task, you will use the Azure portal to create an IoT Hub resource.
 
     You should see that your Resource group tile lists your new IoT Hub.
 
-## Exercise 3: Enable Azure Security Center for IoT Hub
+### Exercise 3: Enable Azure Security Center for IoT Hub
 
 The Azure Security Center for IoT Hub unifies security management and enables end-to-end threat detection and analysis across hybrid cloud workloads and your Azure IoT solution.
 
-## Enable Azure Security Center for IoT Hub
+#### Task 1: Enable Azure Security Center for IoT Hub
 
 You will enable the **Azure Security Center for IoT Hub**. 
 
@@ -140,7 +142,7 @@ You will enable the **Azure Security Center for IoT Hub**.
 
 1. Under **Security** menu on the left side, to onboard Azure Security Center for IoT Hub, click on any of the Security blades, such as **Overview**, and click **Secure your IoT solution**.
 
-## Log Analytics creation
+#### Task 2: Log Analytics creation
 
 When Azure Security Center for IoT is turned on, a default Azure Log Analytics workspace is created to store raw security events, alerts, and recommendations for your IoT devices, IoT Edge, and IoT Hub.
 
@@ -152,9 +154,9 @@ To change the workspace configuration of Log Analytics:
 
 By default, turning on the Azure Security Center for IoT solution automatically secures all IoT Hubs under your Azure subscription.
 
-## Exercise 4: Create and Register a New Device
+### Exercise 4: Create and Register a New Device
 
-## Create a new IoT Device
+#### Task 1: Create a new IoT Device
 
 You are going to now create a new IoT device that will later be used to measure vibrations on a new conveyor belt. For this lab, you will be using a VM to act like an IoT device.
 
@@ -186,7 +188,7 @@ You are going to now create a new IoT device that will later be used to measure 
 
     > [!NOTE] Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
 
-## Register New Devices
+#### Task 2: Register New Devices
 
 A device must be registered with your IoT hub before it can connect.
 
@@ -206,7 +208,7 @@ A device must be registered with your IoT hub before it can connect.
 
 1. Click **Save**.
 
-## Exercise 5: Create a Security Module Twin
+### Exercise 5: Create a Security Module Twin
 
 Azure Security Center for IoT offers full integration with your existing IoT device management platform, enabling you to manage your device security status as well as make use of existing device control capabilities. Azure Security Center for IoT integration is achieved by making use of the IoT Hub twin mechanism.
 
@@ -246,7 +248,7 @@ In this task, you will be creating a security module twin manually.
     > [!NOTE] Example of what an IoT Hub hostname looks like: AZ-220-HUB-CAH102119.azure-devices.net
 
 
-## Exercise 6: Deploy Azure Security Center for IoT C# Security Agent
+### Exercise 6: Deploy Azure Security Center for IoT C# Security Agent
 
 Azure Security Center for IoT provides reference architecture for security agents that log, process, aggregate, and send security data through IoT Hub. You will be adding a security agent for C# to deploy on your simulated device (Linux VM). There are C and C# based agents. C agents are recommended for devices with more restricted or minimal device resources.
 
@@ -257,7 +259,7 @@ Security agents support the following features:
 * Authenticate with existing device identity, or a dedicated module identity. See Security agent authentication methods to learn more.
 * Configure remotely through use of the **azureiotsecurity** module twin. To learn more, see Configure an Azure Security Center for IoT agent.
 
-## Logging into IoT Device - Linux VM
+#### Task 1: Logging into IoT Device - Linux VM
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -284,7 +286,7 @@ Security agents support the following features:
     ```cmd/sh
     demouser@IoTDeviceLinuxVM:~$
     ```
-## Install Linux prerequisites
+#### Task 2: Install Linux prerequisites
 
 Every Azure Security Center for IoT security agent flavor offers the same set of features, and supports similar configuration options. For the C#-based security agent we need auditd installed.
 
@@ -294,7 +296,7 @@ Every Azure Security Center for IoT security agent flavor offers the same set of
     sudo apt-get install auditd audispd-plugins
     ```
 
-## Add Symmetric Keys to your device
+#### Task 3: Add Symmetric Keys to your device
 
 With the C agent you will be connecting to your IoT Hub. This means you will need your device's symmetric key or certificate information. For this lab, you will be using the symmetric key as authentication and will store in a temporary text document on the device. To do this you will need to do the following:
 
@@ -318,7 +320,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
 
     > [!NOTE] To check if you added the correct Primary key into the file, Open your file with `nano s.key`command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
 
-## Installing Security Agent
+#### Task 4: Installing Security Agent
 
 1. Download the recent version of Security Agent for C# to your device.
 
@@ -371,10 +373,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
 
 Now that your Azure Security Center for IoT device agents on your devices are installed, the agents will be able to collect, aggregate and analyze raw security events from your devices.
 
-
-
-
-## Exercise 7: Configure Solution Management
+### Exercise 7: Configure Solution Management
 
 Azure Security Center for IoT provides comprehensive end-to-end security for Azure-based IoT solutions.
 
@@ -396,7 +395,7 @@ In addition to automatic relationship detection, you can also pick and choose wh
 
 After defining all of the resource relationships, Azure Security Center for IoT leverages Azure Security Center to provide you security recommendations and alerts for these resources.
 
-## View Azure Security Center for IoT in Action
+#### Task 1: View Azure Security Center for IoT in Action
 
 Now that you have your the security agent installed on your device and your solution configure, take some time to check out Azure Security Center for IoT different views. 
 

@@ -21,7 +21,9 @@ In this lab, you will do the following:
 * You will then configure and run a pre-built Simulated Device written in C# to connect to Azure IoT Hub and send Device-to-Cloud telemetry messages.
 * Verify the device telemetry is being received by Azure IoT Hub using the Azure CLI.
 
-## Exercise 1: Verify Lab Prerequisites
+## Lab Instructions
+
+### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes the following resources are available:
 
@@ -36,7 +38,7 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
 
 1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. If you are prompted about setting up storage for Cloud Shell, accept the defaults. 
+1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
 1. To ensure the Azure Shell is using **Bash**, ensure the dropdown selected value in the top-left is **Bash**.
 
@@ -66,7 +68,7 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
 
     The editor will now show the contents of the **lab-setup.azcli** file.
 
-1.  In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash
@@ -78,7 +80,7 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
     ```
 
     > [!NOTE] The `{YOUR-LOCATION}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
-
+    >
     > ```bash
     > az account list-locations -o Table
     >
@@ -107,19 +109,19 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
 
 Once the script has completed, you will be ready to continue with the lab.
 
-## Exercise 2: Create Azure IoT Hub Device ID using Azure CLI
+### Exercise 2: Create Azure IoT Hub Device ID using Azure CLI
 
 The `iot` Azure CLI modules includes several commands for managing IoT Devices within Azure IoT Hub under the `az iot hub device-identity` command group. These commands can be used to manage IoT Devices within scripts or directly from the command-line / terminal.
 
-### Task 1: Create the IoT Hub Device ID
+#### Task 1: Create the IoT Hub Device ID
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal. 
+1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal.
 
-1. If you are prompted about setting up storage for Cloud Shell, accept the defaults. 
+1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
 1. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
 
@@ -141,7 +143,7 @@ The `iot` Azure CLI modules includes several commands for managing IoT Devices w
     >az iot hub list -o table
     >```
 
-### Task 2: Get the Device Connection String
+#### Task 2: Get the Device Connection String
 
 1. Within the Cloud Shell, run the following Azure CLI command to get _device connection string_ for the Device ID that was just added to the IoT Hub. This connection string will be used to connect the Simulated Device to the Azure IoT Hub.
 
@@ -157,17 +159,17 @@ The `iot` Azure CLI modules includes several commands for managing IoT Devices w
     HostName={IoTHubName}.azure-devices.net;DeviceId=SimulatedDevice1;SharedAccessKey={SharedAccessKey}
     ```
 
-## Exercise 3: Configure and Test a Simulated Device (C#) 
+### Exercise 3: Configure and Test a Simulated Device (C#)
 
 In this exercise you will configure a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise. You will then test the device and ensurethat IoT Hub is receiving telemetry from the device as expected.
 
-### Task 1: Open the C# Code Project
+#### Task 1: Open the C# Code Project
 
 1. Using **Visual Studio Code**, open the `/LabFiles` folder.
 
     Check with your instructor to locate the code project, either in the GitHub folder or on the Host PC.
 
-### Task 2: Update the Device Connection String
+#### Task 2: Update the Device Connection String
 
 1. Open the `SimulatedDevice.cs` file.
 
@@ -206,7 +208,7 @@ In this exercise you will configure a simulated device written in C# to connect 
     10/25/2019 6:10:19 PM > Sending message: {"temperature":25.77350195766124,"humidity":67.27347029711747}
     ```
 
-### Task 3: Verify Telemetry Stream sent to Azure IoT HUb
+#### Task 3: Verify Telemetry Stream sent to Azure IoT HUb
 
 In this task, you will use the Azure CLI to verify telemetry sent by the simulated device is being received by Azure IoT Hub.
 

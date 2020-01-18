@@ -20,7 +20,7 @@ In order to make these decisions, you'll need an up-to-date picture of all that 
 
 IoT Central provides all you need to handle this scenario. 
 
-# In This Lab
+## In This Lab
 
 In this lab you will:
 
@@ -29,13 +29,15 @@ In this lab you will:
 * Create a programming project to simulate a refrigerated truck, with routes selected by Azure Maps, using Visual Studio Code, or Visual Studio
 * Monitor and command the simulated device, from an IoT Central dashboard
 
-## Exercise 1: Create a Custom IoT Central app
+## Lab Instructions
+
+### Exercise 1: Create a Custom IoT Central app
 
 1. Navigate to [Azure IoT Central](https://apps.azureiotcentral.com/?azure-portal=true). It's a good idea to bookmark this URL, as it's the home for all your IoT Central apps.
 
 1. Click on **Build**, then **Custom apps**.
 
-1. Your **Application name** can be any friendly name, such as "Refrigerated Trucks". However, the **URL** _must_ be unique, which is why you'll add a unique ID to the end of the URL for the app. For example, `refrigerated-trucks-<your id>`, replacing `<your id>` with some unique ID.
+1. Your **Application name** can be any friendly name, such as "Refrigerated Trucks". However, the **URL** _must_ be unique, which is why you'll add a unique ID to the end of the URL for the app. For example, `refrigerated-trucks-<your id>` replacing _`<your id>`_ with an all-lowercase version of your unique ID.
 
 1. Leave the **Application template** as **Preview application**.
 
@@ -49,13 +51,13 @@ The next time you visit your Azure central home page, select **My apps** in the 
 
 You've now created the app. The next step is to specify a _device template_.
 
-## Exercise 2: Create Device Template
+### Exercise 2: Create Device Template
 
 The data communicated between a remote device, and IoT Central, is specified in a _device template_. The device template encapsulates all the details of the data, so that both the device and IoT Central have all they need to make sense of the communication.
 
 In this Lab, you'll create a device template for a refrigerated truck.
 
-## Create a device template
+#### Task 1: Create a device template
 
 1. Within the [Azure IoT Central](https://apps.azureiotcentral.com/?azure-portal=true) portal (which you may still have open), select **Device Templates** from the menu on the left-hand side.
 
@@ -79,7 +81,7 @@ In this Lab, you'll create a device template for a refrigerated truck.
 
 An interface defines a set of _capabilities_. We have quite a few to create, to define a refrigerated truck.
 
-### Add sensor telemetry
+#### Task 2: Add sensor telemetry
 
 Telemetry is the data values transmitted by sensors. The most important sensor in our refrigerated truck, monitors the temperature of the contents.
 
@@ -101,7 +103,7 @@ Telemetry is the data values transmitted by sensors. The most important sensor i
 
 Let's add the rest of the template.
 
-### Add state telemetry
+#### Task 3: Add state telemetry
 
 States are important, they let the operator know what is going on. A state in IoT Central is a name associated with a range of values. In addition, you later get to choose a color to associate with each value.
 
@@ -143,7 +145,7 @@ States are important, they let the operator know what is going on. A state in Io
     | Semantic type | State |
     | Value schema | String |
 
-### Add event telemetry
+#### Task 4: Add event telemetry
 
 Events are issues triggered by the device, and communicated to the IoT Central app. Events can be one of three types: _Error_, _Warning_, or _Informational_.
 
@@ -161,7 +163,7 @@ Another event might be just to acknowledge, and record, the customer ID that a t
     | Semantic type | Event |
     | Schema | String |
 
-### Add location telemetry
+#### Task 5: Add location telemetry
 
 A location is probably the most important, and yet one of the easiest measurements to add to a device template. Under the hood, it consists of a latitude, longitude, and an optional altitude, for the device.
 
@@ -175,7 +177,7 @@ A location is probably the most important, and yet one of the easiest measuremen
     | Semantic type | Location |
     | Schema | Geopoint |
 
-### Add properties
+#### Task 6: Add properties
 
 A property of a device is typically a constant value, that is communicated to the IoT Central app when communication is first initiated. In our refrigerated truck scenario, a good example of a property is the license plate of the truck, or some similar unique truck ID.
 
@@ -207,7 +209,7 @@ A property is a single value. If more complex sets of data need to be transmitte
     | Writable | On |
     | Unit |  <sup>o</sup>C  |
 
-### Add commands
+#### Task 7: Add commands
 
 Commands are sent by the operator of the IoT Central app to the remote devices. Commands are similar to writable properties, but a command can contain any number of input fields, whereas a writable property is limited to a single value.
 
@@ -247,7 +249,7 @@ For refrigerated trucks, there are two commands you should add: a command to del
 
 Before going any further carefully double check your interface. After an interface has been published, there are very limited editing options. It's important to get it right before publishing. If you click on the name of the device template, in the menu that ends with the **Views** option, you'll get a summary of the capabilities.
 
-## Publish the template
+#### Task 8: Publish the template
 
 1. Click **Save** again, if you've made any changes since the last time you saved.
 
@@ -257,11 +259,11 @@ Preparing a device template does take some care and some time.
 
 In the next task, you use the capabilities of the device template to prepare a controllers dashboard. Preparing views can be done before, or after, a device template is published.
 
-## Exercise 3: Monitor Simulated Device
+### Exercise 3: Monitor Simulated Device
 
 You'll first create a dashboard showing all the capabilities of the device template. Next, you'll create a real device, and record the connection settings needed for the remote device app.
 
-## Create a rich dashboard
+#### Task 1: Create a rich dashboard
 
 1. Click on the **Views** menu option, then on **Visualizing the device**.
 
@@ -283,7 +285,7 @@ You can create as many views as you want to, giving each a friendly name. For th
 
 The next step is to create a device.
 
-## Create a real device
+#### Task 2: Create a real device
 
 By "real" IoT Central understands that there's a remote app running. The app can be in a real device, taking input from real sensors, or running a simulation. Both options are treated as a connection to a _real_ device.
 
@@ -307,7 +309,7 @@ By "real" IoT Central understands that there's a remote app running. The app can
 
 The next step is to create the keys that will allow a remote device to communicate with this app.
 
-### Record the connection keys
+#### Task 3: Record the connection keys
 
 1. Click **Connect** in the top-right menu. Do _not_ click **Connect to gateway**.
 
@@ -319,7 +321,7 @@ The next step is to create the keys that will allow a remote device to communica
 
 Leave the IoT portal open in your browser, waiting as it is.
 
-## Exercise 4: Create a free Azure Maps account
+### Exercise 4: Create a free Azure Maps account
 
 If you do not already have an Azure Maps account, you'll need to create one.
 
@@ -380,19 +382,17 @@ If you do not already have an Azure Maps account, you'll need to create one.
 </html>
 ```
 
-## Next steps
-
 You've now completed the preparatory steps of connecting your first IoT Central app to real devices. Good work!
 
 The next step is to create the device app.
 
-## Exercise 5: Create a Programming Project for a Real Device
+### Exercise 5: Create a Programming Project for a Real Device
 
 In this task, you are going to create a programming project to simulate a sensor device in a refrigerated truck. This simulation enables you to test the code long before requiring a real truck!
 
 IoT Central treats this simulation as "real" because the communication code between the device app and the IoT Central app is the same for a real truck. In other words, if you do run a refrigerated truck company, you would start with simulated code similar to the code in this task. After this code works to your satisfaction, the simulation-specific code would be replaced with code that receives sensor data. This limited update makes writing the following code a valuable experience.
 
-## Create the device app
+#### Task 1: Create the device app
 
 Using Visual Studio Code, build the device sensor app.
 
@@ -431,7 +431,7 @@ Using Visual Studio Code, build the device sensor app.
 
 1. Add all the code that follows to the Program.cs file.
 
-## Write the device app
+#### Task 2: Write the device app
 
 In the blank Program.cs file, insert the following code. Each additional section of code should be appended to the end of the file, in the order listed here.
 
@@ -1152,11 +1152,11 @@ In the blank Program.cs file, insert the following code. Each additional section
 
 Fantastic! You are now ready to test your code.
 
-## Exercise 6: Test Your IoT Central Device
+### Exercise 6: Test Your IoT Central Device
 
 Working through this task is an exciting time in IoT Central development! Finally, you get to check whether all the moving parts you've created work together.
 
-## Test the device app and IoT Central app together
+#### Task 1: Test the device app and IoT Central app together
 
 To fully test the refrigerated truck device, it helps to break down the testing into a number of discreet checks:
 
@@ -1184,7 +1184,7 @@ To begin the testing, with your [Azure IoT Central](https://apps.azureiotcentral
 
 A console screen should open, with the text: **Starting Truck number 1**.
 
-### 1. Confirm the device app connects to Azure IoT Central
+#### Task 2: Confirm the device app connects to Azure IoT Central
 
 1. If one of the next lines on the console is **Device successfully connected to Azure IoT Central** you've made the connection. If you do not get this message, it usually means either the IoT Central app isn't running, or the connection key strings aren't correct.
 
@@ -1192,13 +1192,13 @@ A console screen should open, with the text: **Starting Truck number 1**.
 
 If all goes well, go straight into the second test.
 
-### 2. Confirm the telemetry functions send data on the specified interval
+#### Task 3: Confirm the telemetry functions send data on the specified interval
 
 1. A console message should appear every five seconds, with the contents temperature.
 
 1. Watch the telemetry for a short while, and mentally prepare for the main test of this lab!
 
-### 3. Confirm the data is picked up correctly by IoT Central
+#### Task 4: Confirm the data is picked up correctly by IoT Central
 
 1. To verify the data is being received at IoT Central, make sure your IoT Central pp is open, and the device selected. If not, select the **Devices** entry in the left-hand menu. Double-click the real device (**RefrigeratedTruck - 1**), in the list of devices.
 
@@ -1210,11 +1210,9 @@ If all goes well, go straight into the second test.
 
 If all is well, this is great progress. The truck is at its base, in the correct state, and waiting for a command.
 
-# Continue the tests of your IoT Central device
+Next, we complete the app testing.
 
-In this task, we complete the app testing.
-
-### 4. Confirm the command to send the truck to a specified customer works as expected
+#### Task 5. Confirm the command to send the truck to a specified customer works as expected
 
 Now for the best fun of all.
 
@@ -1233,19 +1231,19 @@ Now for the best fun of all.
 
 Great progress! Take a moment to just watch the map update, and your truck deliver its contents.
 
-### 5. Confirm the command to recall the truck works as expected
+#### Task 6. Confirm the command to recall the truck works as expected
 
 1. When the truck returns to base, and is reloaded with contents, it's state will be **ready**. Try issuing another delivery command. Choose another customer ID.
 
 1. Issue a recall command before the truck reaches its customer, to check the truck responds to this command.
 
-### 6. Check customer and conflict events are transmitted correctly
+#### Task 7. Check customer and conflict events are transmitted correctly
 
 To test a conflict event, send a command that you know doesn't make sense.
 
 1. With your truck at the base, issue a Recall command. The truck should respond with the "already at base" event.
 
-### 7. Check the truck properties, and change the optimal temperature
+#### Task 8. Check the truck properties, and change the optimal temperature
 
 1. The simplest test is to check the **Truck ID** tile. This tile should have picked up the **Truck number 1** message when the apps were started.
 
@@ -1263,15 +1261,13 @@ To test a conflict event, send a command that you know doesn't make sense.
 
 1. Navigate back, via **Devices** to your dashboard. Verify the **Optimal temperature** has been set to -10, in the tile on the dashboard.
 
-## Next steps
-
 With the testing for one truck complete, it is time to consider expanding our IoT Central system.
 
-## Exercise 7: Create multiple devices
+### Exercise 7: Create multiple devices
 
 In this task, we consider what steps would be necessary to add multiple trucks to our system.
 
-## Add multiple devices to the IoT Central app
+#### Task 1: Add multiple devices to the IoT Central app
 
 1. To add multiple devices, start in the [Azure IoT Central](https://apps.azureiotcentral.com/?azure-portal=true) app, clicking **Devices** in the left-hand menu.
 
@@ -1289,7 +1285,7 @@ In this task, we consider what steps would be necessary to add multiple trucks t
 
 Repeat this process to create as many devices as you need.
 
-## Provision the new devices
+#### Task 2: Provision the new devices
 
 1. Double-click on **RefrigeratedTruck - 2**, and then click **Connect** (top right of your IoT Central screen).
 
@@ -1301,7 +1297,7 @@ Repeat this process to create as many devices as you need.
 
 1. When you have completed connecting all new trucks, notice that the **Provisioning Status** is still **Registered**. Not until you make the connection will this change.
 
-## Create new apps for each new device
+#### Task 3: Create new apps for each new device
 
 Each truck is simulated by one running copy of the device app. So, you need multiple versions of this app running simultaneously.
 
@@ -1313,7 +1309,7 @@ Each truck is simulated by one running copy of the device app. So, you need mult
 
 1. Set each project app running.
 
-## Verify the telemetry from all the devices
+#### Task 4: Verify the telemetry from all the devices
 
 1. Verify that the one dashboard you created works for all trucks.
 

@@ -17,13 +17,15 @@ In this lab, you will become familiar with the Azure portal and you will setup a
 * Explore the Azure Portal
 * Create an Azure Dashboard and Resource Group
 
-## Exercise 1: Explore the Azure Portal and Dashboard
+## Lab Instructions
+
+### Exercise 1: Explore the Azure Portal and Dashboard
 
 Before you begin working with the Azure IoT services, it's good to be familiar with how Azure itself works.
 
 Although we commonly refer to Azure as a 'cloud', it is actually a web portal that is designed to make Azure resources accessible from a single web site. All of Azure is accessible through the Azure portal.
 
-### Task 1: Examine the Azure portal Home page
+#### Task 1: Examine the Azure portal Home page
 
 1. In your Web browser, to open your Azure portal, navigate to the [portal.azure.com](http://portal.azure.com).
 
@@ -32,7 +34,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 1. In the upper left corner of the portal window, to open the portal menu, click the hamburger menu icon.
 
     At the top of the portal menu, you should see a section containing four menu options:
-    
+
     * The **Create a resource** button opens a page displaying the services available through the Azure Marketplace, many of which provide free options. Notice that services are grouped by technology, including "Internet of Things", and that a search box is provided.
     * The **Home** button opens a customized page that displays links to Azure services, your recently accessed services, and other tools.
     * The **Dashboard** button opens a page displaying your default (or most recently used) dashboard. You will be creating a dashboard later in this lab.
@@ -55,7 +57,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
     You can also use the portal menu to perform some simple navigation. You will have a chance to try out some options for portal navigation shortly.
 
-### Task 2: Explore the Azure Service options
+#### Task 2: Explore the Azure Service options
 
 1. Open the portal menu, and then click **All services**.
 
@@ -98,7 +100,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
     The favorites that you've added are enough to get you started, but you can use the _Internet of Things_ category to add additional favorites to the portal menu if you want.
 
-### Task 3: Examine the Toolbar menu
+#### Task 3: Examine the Toolbar menu
 
 1. Notice the toolbar at the top of the portal that runs the full width of the window.
 
@@ -129,7 +131,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
     If *you* are using a paid Azure subscription and you are responsible for billing (you are the Account Administrator), you can use these instructions to set up billing alerts.
 
-## Exercise 2: Create an Azure Dashboard and Resource Group
+### Exercise 2: Create an Azure Dashboard and Resource Group
 
 On the Azure portal, dashboards are used to present a customized view of your resources. Information is displayed through the use of tiles which can be arranged and sized to help you organize your resources in useful ways. You can create many different dashboards that provide different views and serve different purposes.
 Each tile that you place on your dashboard exposes one or more of your resources. In addition to tiles that expose the data of an individual resource, you can create a tile for something called a resource group.
@@ -141,7 +143,7 @@ In the following tasks, you will:
 * create a custom dashboard that you can use during this course
 * create a Resource Group and add a Resource Group tile to your dashboard
 
-### Task 1: Create a Dashboard
+#### Task 1: Create a Dashboard
 
 1. In a Web browser, navigate to your Azure portal.
 
@@ -161,7 +163,7 @@ In the following tasks, you will:
 
     You should see an empty dashboard at this point.
 
-### TAsk 2: Create a Resource Group and add a Resource Group tile to your Dashboard
+#### Task 2: Create a Resource Group and add a Resource Group tile to your Dashboard
 
 1. On the portal menu, click **Resource groups**
 
@@ -185,7 +187,6 @@ In the following tasks, you will:
     The name of the resource group must be **unique** within your subscription. A green check mark will appear if the name that you enter has not already been used and confirms to resource group naming rules.
 
     >**Tip:** The Azure documentation describes all Azure [naming rules and restrictions](https://docs.microsoft.com/en-us/azure/architecture/best-practices/resource-naming).
-
 
 1. In the **Region** dropdown, select a region that is near you.  
 

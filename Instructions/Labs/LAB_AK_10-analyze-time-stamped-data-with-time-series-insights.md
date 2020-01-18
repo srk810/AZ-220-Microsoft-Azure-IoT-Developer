@@ -20,7 +20,9 @@ lab:
 * Connect to IoT Hub with Time Series Insights (TSI)
 * Create and deploy TSI resources by using templates with Time Series Insights 
 
-## Exercise 1: Verify Lab Prerequisites
+## Lab Instructions
+
+### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes the following resources are available:
 
@@ -101,7 +103,7 @@ This lab assumes the following resources are available:
 1. Once complete, the **Connection Strings** for all 3 IoT Devices, starting with "HostName=", are displayed. Copy all three of these connection strings into a text document, and save for later reference.
 
 
-## Exercise 2: Setup Time Series Insights
+### Exercise 2: Setup Time Series Insights
 
 Azure Time Series Insights (TSI) is an end-to-end platform-as-a-service (PaaS) offering used to collect, process, store, analyze, and query data from Internet of Things (IoT) solutions at scale. TSI is designed for ad hoc data exploration and operational analysis of data that's highly contextualized and optimized for time series.
 
@@ -168,7 +170,7 @@ In this exercise, you will setup Time Series Insights (TSI) integration with Azu
 
 21. Notice the configuration of the event source matches what was set when the Time Series Insights resource was created.
 
-## Exercise 3: Run Simulated IoT Devices
+### Exercise 3: Run Simulated IoT Devices
 
 In this exercise, you will run the Simulated Thermostat device so it starts sending telemetry events to Azure IoT Hub.
 
@@ -219,7 +221,7 @@ In this exercise, you will run the Simulated Thermostat device so it starts send
 
     > [!NOTE] In production the shipping container would on change transport methods during the normal course of shipping. For the simulated scenario in this lab, it's performed every 30 seconds to give a short enough data duration that will fit during the course of performing the steps in this lab.
 
-## Exercise 4: View Time Series Insights Explorer
+### Exercise 4: View Time Series Insights Explorer
 
 In this exercise, you will be introduced to working with time series data using the Time Series Insights (TSI) Explorer.
 
