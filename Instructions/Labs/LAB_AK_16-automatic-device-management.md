@@ -36,7 +36,7 @@ This lab assumes the following resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-{YOUR-ID} |
+| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | IoT Device | SimulatedSolutionThermostat |
 
 To create these resources, please update and execute the **lab-setup.azcli** script before starting the lab.

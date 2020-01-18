@@ -35,7 +35,7 @@ This lab assumes the following resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-{YOUR-ID} |
+| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | IoT Device | SimulatedThermostat |
 
 If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
@@ -43,7 +43,7 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
 >**Note:** You will need the **SimulatedDevice** connection string. You can obtain that by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id SimulatedThermostat -o tsv
+> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id SimulatedThermostat -o tsv
 > ```
 
 #### Task 1: Execute Setup Script
@@ -173,10 +173,10 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 1. First the IoT Edge Device Identity needs to be created. This will be the **IoT Edge Gateway**, or the Parent IoT Device. Run the following command to create a new **IoT Edge Device Identity** within Azure IoT Hub:
 
     ```sh
-    az iot hub device-identity create --edge-enabled --hub-name AZ-220-HUB-{YOUR_ID} --auth-method shared_private_key --device-id IoTEdgeGateway
+    az iot hub device-identity create --edge-enabled --hub-name AZ-220-HUB-_{YOUR-ID}_ --auth-method shared_private_key --device-id IoTEdgeGateway
     ```
 
-    > [!NOTE] Be sure to replace the **AZ-220-HUB-{YOUR-ID}** IoT Hub name with the name of your Azure IoT Hub.
+    > [!NOTE] Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     Notice the `az iot hub device-identity create` command is called by passing in several parameters:
 
@@ -223,10 +223,10 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 1. Run the following command to retrieve the **Connection String** from IoT Hub for the **IoTEdgeGateway** Device, and **copy** the connection string value for reference later:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id IoTEdgeGateway -o tsv
+    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id IoTEdgeGateway -o tsv
     ```
 
-    > [!NOTE] Be sure to replace the **AZ-220-HUB-{YOUR-ID}** IoT Hub name with the name of your Azure IoT Hub.
+    > [!NOTE] Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     Notice the `az iot hub device-identity show-connection-string` command is called by passing in several parameters:
 
@@ -245,10 +245,10 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 1. To create the first child device, run the following command:
 
     ```sh
-    az iot hub device-identity create -n AZ-220-HUB-{YOUR-ID} --device-id ChildDevice1 --pd IoTEdgeGateway
+    az iot hub device-identity create -n AZ-220-HUB-_{YOUR-ID}_ --device-id ChildDevice1 --pd IoTEdgeGateway
     ```
 
-    > [!NOTE] Be sure to replace the **AZ-220-HUB-{YOUR-ID}** IoT Hub name with the name of your Azure IoT Hub.
+    > [!NOTE] Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     This command is passed the following parameters:
 
@@ -297,10 +297,10 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 1. Run the following command to retrieve the **Connection String** from IoT Hub for the **IoTEdgeGateway** Device, and **copy** the connection string value for reference later:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id ChildDevice1 -o tsv
+    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id ChildDevice1 -o tsv
     ```
 
-    > [!NOTE] Be sure to replace the **AZ-220-HUB-{YOUR-ID}** IoT Hub name with the name of your Azure IoT Hub.
+    > [!NOTE] Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
 1. Now you have an IoT Edge Device and a Child IoT Device registered within Azure IoT Hub. The **IoT Device** is configured with the **IoT Edge Device** as its parent. This configuration will enable the Child IoT Device to connect to and communicate with the Parent IoT Edge Device; instead of connecting directly with Azure IoT Hub. Configuring the IoT device topology this way enables Offline capable scenarios where the IoT Device and IoT Edge Device can keep working even when connectivity to Azure IoT Hub is broken.
 
@@ -464,7 +464,7 @@ The `timeToLiveSecs` property for the Edge Hub can be specified in the Deploymen
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-HUB-{YOUR-ID}** to navigate to the Azure IoT Hub.
+1. On your Resource group tile, click **AZ-220-HUB-_{YOUR-ID}_** to navigate to the Azure IoT Hub.
 
 1. On the IoT Hub summary blade, click **IoT Edge** under the Automatic Device Management section. This section of the IoT Hub blade allows you to manage the IoT Edge devices connected to the IoT Hub.
 
@@ -700,7 +700,7 @@ In this exercise, you will monitor events from the **ChildIoTDevice** are being 
 1. Run the following command within the **Azure Cloud Shell** to start monitoring the Events being received by the Azure IoT Hub:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name AZ-220-HUB-{Your-ID}
+    az iot hub monitor-events --hub-name AZ-220-HUB-_{YOUR-ID}_
     ```
 
     Be sure to replace the `{Your-ID}` placeholder with your unique suffix for our Azure IoT Hub instance.
@@ -729,7 +729,7 @@ In this exercise, you will monitor events from the **ChildIoTDevice** are being 
 
 1. Within the **Azure portal**, navigate to the **AZ-220-IoTEdgeResources** resource group.
 
-1. In the list of resources, to open the **Network Security Group**   for the **AZ220EdgeVM{YOUR-ID}** virtual machine, click **AZ220EdgeVM{YOUR_ID}NSG**.
+1. In the list of resources, to open the **Network Security Group**   for the **AZ220EdgeVM{YOUR-ID}** virtual machine, click **AZ220EdgeVM{YOUR-ID}NSG**.
 
 1. On the **Network security group** blade, click on the **Outbound security rules** link under the **Settings** section.
 
@@ -779,7 +779,7 @@ In this exercise, you will monitor events from the **ChildIoTDevice** are being 
 1. Run the `az iot hub monitor-events` command again within the **Azure Cloud Shell** to start monitoring the Events being received by the Azure IoT Hub:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name AZ-220-HUB-{Your-ID}
+    az iot hub monitor-events --hub-name AZ-220-HUB-_{YOUR-ID}_
     ```
 
     Be sure to replace the `{Your-ID}` placeholder with your unique suffix for our Azure IoT Hub instance.

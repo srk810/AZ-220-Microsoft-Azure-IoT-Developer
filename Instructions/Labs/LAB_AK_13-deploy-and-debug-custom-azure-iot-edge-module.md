@@ -21,7 +21,6 @@ This lab includes the following prerequisites for the development machine (lab h
 * Docker Community Edition installed on development machine
   * [Download Docker Desktop for Mac and Windows](https://www.docker.com/products/docker-desktop)
 
-
 ## In This Lab
 
 IoT Edge solution development in VS Code
@@ -86,7 +85,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. On the **Create container registry** blade, enter a globally unique name in the **Registry name** field.
 
-    To provide a globally unique name, enter **AZ220ACR{YOUR-ID}**.
+    To provide a globally unique name, enter **AZ220ACR_{YOUR-ID}_**.
 
     For example: **AZ220ACRCP120419**
 
@@ -114,19 +113,19 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. Click **Create**.
 
-1. Once created, navigate to the **AZ220ACR{YOUR-ID}** resource.
+1. Once created, navigate to the **AZ220ACR_{YOUR-ID}_** resource.
 
 1. In order to determine the admin username and password, under **Settings**, click **Access keys**.
 
     Make a note of the following values:
 
     * **Login server**
-    * **Username** - this is the admin username and will match the ACR name - **AZ220ACR{YOUR-ID}**
+    * **Username** - this is the admin username and will match the ACR name - **AZ220ACR_{YOUR-ID}_**
     * **password** - this is the admin password
 
 Now that we have created the Azure Container Registry, we can create a custom IoT Edge Module container that will be store in the registry.
 
-### Exercise 4: Create Custom Edge Module in C#
+### Exercise 4: Create Custom Edge Module in C\#
 
 In this exercise, you will create an Azure IoT Edge Solution that contains a custom Azure IoT Edge Module written in C#.
 
@@ -144,7 +143,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
 1. Enter a name for the custom IoT Edge Module, such as `ObjectCountingModule`. This will be the name of the new IoT Edge Module that is being created.
 
-1. Provide the name of the Docker image repository for the module. This will be the Docker repository where the IoT Edge Module docker image will be published. Replace the `localhost:5000` part of the default `localhost:5000/objectcountermodule` repository location with the name of the Azure Container Registry server - similar to `az220acr{your-id}.azurecr.io
+1. Provide the name of the Docker image repository for the module. This will be the Docker repository where the IoT Edge Module docker image will be published. Replace the `localhost:5000` part of the default `localhost:5000/objectcountermodule` repository location with the name of the Azure Container Registry server - similar to `az220acr{your-id}.azurecr.io`
 
     The Docker image repository location will be in the following format:
 
@@ -154,8 +153,8 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     Be sure to replace the placeholders with the appropriate values:
 
-    - `<acr-name>`: Replace with the name fo the Azure Container Registry service.
-    - `<module-name>`: Replace with the name of the custom Azure IoT Edge Module that's being created.
+    * `<acr-name>`: Replace with the name fo the Azure Container Registry service.
+    * `<module-name>`: Replace with the name of the custom Azure IoT Edge Module that's being created.
 
     > [!NOTE] The default Docker image repository in Visual Studio Code is set to `localhost:5000/<your module name>`. If you were to use a local Docker registry for testing, then **localhost** is fine.
 
@@ -172,9 +171,9 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     The placeholders in the above values are defined as follows:
 
-    - `<registry-name>`: The name of your Docker registry.
-    - `<registry-username>`: The username to use for accessing your Docker registry.
-    - `<registry-password>`: The password to use for accessing your Docker registry.
+    * `<registry-name>`: The name of your Docker registry.
+    * `<registry-username>`: The username to use for accessing your Docker registry.
+    * `<registry-password>`: The password to use for accessing your Docker registry.
 
     Within the `.env` file, notice that the `<registry-name>` has already been added to the configuration values within the file. The value added will match the name of the Docker registry specified when creating the IoT Edge Solution.
 
@@ -188,15 +187,15 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
 1. Scroll through the `deployment.template.json` deployment manifest file, and notice the following sections within the `properties.desired` section of the `$edgeAgent` element:
 
-    - `systemModules` - This defines Docker images to use for the `$edgeAgent` and `$edgeHub` system modules that are part of the IoT Edge runtime.
+    * `systemModules` - This defines Docker images to use for the `$edgeAgent` and `$edgeHub` system modules that are part of the IoT Edge runtime.
 
-    - `modules` - This defines the various modules that will be deployed and run on the IoT Edge device (or a group of devices).
+    * `modules` - This defines the various modules that will be deployed and run on the IoT Edge device (or a group of devices).
 
 1. Notice that within the `modules` section for the `$edgeAgent`, there are two modules defines.
 
-    - `ObjectCounterModule`: This is the custom IoT Edge Module that is being created as part of this new IoT Edge Solution.
+    * `ObjectCounterModule`: This is the custom IoT Edge Module that is being created as part of this new IoT Edge Solution.
 
-    - `SimulatedTemperatureSensor`: This defines the Simulated Temperature Sensor module to be deployed to the IoT Edge device.
+    * `SimulatedTemperatureSensor`: This defines the Simulated Temperature Sensor module to be deployed to the IoT Edge device.
 
 1. Notice the `$edgeHub` section of the deployment manifest JSON. This section defines the desired properties (via `properties.desired` element) that includes the message routes for communicating messages between the IoT Edge Modules and finally to Azure IoT Hub service.
 
@@ -257,7 +256,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-HUB-{YOUR-ID}** to navigate to the Azure IoT Hub.
+1. On your Resource group tile, click **AZ-220-HUB-_{YOUR-ID}_** to navigate to the Azure IoT Hub.
 
 1. In the left hand navigation area, under **Settings**, click **Shared access policies**.
 
@@ -265,7 +264,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. In the **iothubowner** detail pane, copy the value for **Connection string--primary key**.
 
-    Paste this value into a text file using notebook - you will need it below.
+    Paste this value into a text file using notebook * you will need it below.
 
 1. On the IoT Hub summary blade, click **IoT Edge** under the Automatic Device Management section. This section of the IoT Hub blade allows you to manage the IoT Edge devices connected to the IoT Hub.
 
@@ -315,10 +314,10 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 1. Run the following command within the **Azure Cloud Shell** to monitor the messages being sent to Azure IoT Hub from the _SimulatedDevice_ running in the IoT Edge Simulator on your local machine:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name "AZ-220-HUB-{YOUR-ID}"
+    az iot hub monitor-events --hub-name "AZ-220-HUB-_{YOUR-ID}_"
     ```
 
-    Be sure to replace the `AZ-220-HUB-{YOUR-ID}` value in the above command with the name of your **Azure IoT Hub** service.
+    Be sure to replace the `AZ-220-HUB-_{YOUR-ID}_` value in the above command with the name of your **Azure IoT Hub** service.
 
 1. With everything still running, notice the output of the previous command in the **Cloud Shell** will display a JSON representation of the messages being received by the Azure IoT Hub.
 
@@ -392,7 +391,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ220ACR{YOUR-ID}** to navigate to the Azure Container Registry (ACR) service.
+1. On your Resource group tile, click **AZ220ACR_{YOUR-ID}_** to navigate to the Azure Container Registry (ACR) service.
 
 1. Click on the **Repositories** link under the **Services** section.
 
@@ -422,7 +421,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     objectcountermodule:0.0.1-amd64
     ```
 
-1. Navigate to the Azure IoT Hub (`AZ-220-HUB-{YOUR-ID}`) resource. With the custom `objectcountermodule` IoT Edge Module published to Azure Container Registry (ACR), the next step is to create a new IoT Edge Device within IoT Hub and configure it to run the new custom IoT Edge Module.
+1. Navigate to the Azure IoT Hub (`AZ-220-HUB-_{YOUR-ID}_`) resource. With the custom `objectcountermodule` IoT Edge Module published to Azure Container Registry (ACR), the next step is to create a new IoT Edge Device within IoT Hub and configure it to run the new custom IoT Edge Module.
 
 1. On the **IoT Hub** blade, click on the **IoT Edge** link under the **Automatic Device Management** section.
 
@@ -442,10 +441,10 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
 1. On the **Set modules** pane, within the **Container Registry Settings** section of the _Add Modules_ tab, enter the following values:
 
-    - **Name**: Enter the **Registry name** of the Azure Container Registry
-    - **Address**: Enter the **Login server** (or DNS name) of the Azure Container Registry service (ex: `az220acrcp1119.azurecr.io`)
-    - **User Name**: Enter the **Username** for the Azure Container Registry service
-    - **Password**: Enter the **Password** for the Azure Container Registry service
+    * **Name**: Enter the **Registry name** of the Azure Container Registry
+    * **Address**: Enter the **Login server** (or DNS name) of the Azure Container Registry service (ex: `az220acrcp1119.azurecr.io`)
+    * **User Name**: Enter the **Username** for the Azure Container Registry service
+    * **Password**: Enter the **Password** for the Azure Container Registry service
 
     > [!NOTE] The Azure Container Registry (ACR) service _Registry name_, _Login server_, _Username_, and _Password_ can be found on the **Access keys** pane for the service.
 
@@ -453,7 +452,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
 1. On the **IoT Edge Custom Modules** pane, enter `objectcountermodule` into the **Name** field
 
-    - **Image URI**: Enter the name of the Docker image for the custom IoT Edge Module that was copied previously. (ex: `objectcountermodule:0.0.1-amd64`)
+    * **Image URI**: Enter the name of the Docker image for the custom IoT Edge Module that was copied previously. (ex: `objectcountermodule:0.0.1-amd64`)
 
 1. Enter the full URI for the `objectcountermodule` IoT Edge Module hosted within Azure Container Registry into the **Image URI** field.
 
@@ -465,9 +464,9 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
     Be sure to replace the placeholders within the above **Image URI** format with the appropriate values:
 
-    - `<container-registry-login-server>` - The **Login server**, or DNS name, for the Azure Container Registry service.
-    - `<repository-name>` - The **Repository name** for the Custom IoT Edge Module's Docker image, that was copied previously.
-    - `<tag>` - The **Tag** for the Custom IoT Edge Module's Docker image, that was copied previously.
+    * `<container-registry-login-server>` * The **Login server**, or DNS name, for the Azure Container Registry service.
+    * `<repository-name>` * The **Repository name** for the Custom IoT Edge Module's Docker image, that was copied previously.
+    * `<tag>` * The **Tag** for the Custom IoT Edge Module's Docker image, that was copied previously.
 
     The resulting **Image URI** to be entered into the field will be similar to the following:
 
@@ -481,13 +480,13 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
 1. Within the **Specify Routes**, the editor will display the configured default route for the IoT Edge Device. At this time, it should be configured with a route that sends all messages from all modules to Azure IoT Hub:
 
-    - Name: **route**
-    - Value: `FROM /messages/* INTO $upstream`
+    * Name: **route**
+    * Value: `FROM /messages/* INTO $upstream`
 
     Delete this route by clicking the trasj icon to the right of the route and then add the two following routes:
 
     | Name | VALUE |
-    | :--- | :--- |
+    | :--* | :--* |
     | AllMessagesToObjectCounterModule | FROM /* INTO BrokeredEndpoint(\"/modules/objectcountermodule/inputs/input1\") |
     | ObjectCounterModuleToIoTHub | FROM /messages/modules/objectcountermodule/outputs/* INTO $upstream |
 
@@ -504,11 +503,11 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     This route specifies the **Destination** value of `$upstream`. This sends all messages from the Source of this route to the Azure IoT Hub service within Microsoft Azure.
 
     > [!NOTE] For more information on the configuration of Message Routing with Azure IoT Hub and IoT Edge Module, reference the following links:
-    > - [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition)
-    > - [IoT Hub message routing query syntax](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-routing-query-syntax)
+    > * [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition)
+    > * [IoT Hub message routing query syntax](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-routing-query-syntax)
 
 1. Click **Next: Review + create**.
 
 1. On the **Review Deployment** step, click **Create**.
 
-This completes the development of a sample custom IoT Edge Module - `objectcountermodule`. Now that an IoT Edge Device is register, the modules specified and the routes configured, the `objectcountermodule` is ready to be deployed once the associated IoT Edge Device is connected to the Azure IoT Hub as shown in previous labs.
+This completes the development of a sample custom IoT Edge Module * `objectcountermodule`. Now that an IoT Edge Device is register, the modules specified and the routes configured, the `objectcountermodule` is ready to be deployed once the associated IoT Edge Device is connected to the Azure IoT Hub as shown in previous labs.

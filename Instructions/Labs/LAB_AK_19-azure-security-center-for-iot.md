@@ -73,12 +73,12 @@ In this task, you will use the Azure portal to create an IoT Hub resource.
     As we saw previously, Azure is supported by a series of datacenters that are placed in regions all around the world. When you create something in Azure, you deploy it to one of these datacenter locations.
 
     > [!NOTE] For the current list of Regions that support Event Grid, see the following link: [Products available by region](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=event-grid&regions=all)
-
+    >
     > [!NOTE] When picking a datacenter to host your app, keep in mind that picking a datacenter close to your end users will decrease load/response times. If you are on the other side of the world from your end users, you should not be picking the datacenter nearest you.
 
 1. To the right of IoT Hub Name, enter a globally unique name for your IoT Hub.
 
-    To provide a globally unique name, enter **AZ-220-HUB-{YOUR-ID}** (remember to replace **{YOUR-ID}** with the unique ID you created in Lab 1.).
+    To provide a globally unique name, enter **AZ-220-HUB-_{YOUR-ID}_** (remember to replace **{YOUR-ID}** with the unique ID you created in Lab 1.).
 
     For example: **AZ-220-HUB-CAH102119**
 
@@ -134,9 +134,9 @@ The Azure Security Center for IoT Hub unifies security management and enables en
 
 #### Task 1: Enable Azure Security Center for IoT Hub
 
-You will enable the **Azure Security Center for IoT Hub**. 
+You will enable the **Azure Security Center for IoT Hub**.
 
-1. On the Azure portal menu, click Dashboard and open your IoT Hub - **AZ-220-HUB-{YOUR-ID}**.
+1. On the Azure portal menu, click Dashboard and open your IoT Hub - **AZ-220-HUB-_{YOUR-ID}_**.
 
    You can also use the portal search bar by entering your IoT Hub name and then select your IoT Hub resource once it is listed.
 
@@ -247,7 +247,6 @@ In this task, you will be creating a security module twin manually.
 
     > [!NOTE] Example of what an IoT Hub hostname looks like: AZ-220-HUB-CAH102119.azure-devices.net
 
-
 ### Exercise 6: Deploy Azure Security Center for IoT C# Security Agent
 
 Azure Security Center for IoT provides reference architecture for security agents that log, process, aggregate, and send security data through IoT Hub. You will be adding a security agent for C# to deploy on your simulated device (Linux VM). There are C and C# based agents. C agents are recommended for devices with more restricted or minimal device resources.
@@ -283,16 +282,17 @@ Security agents support the following features:
 
 1. Once connected, the terminal will change to show the name of the Linux VM, similar to the following. This tells you which VM you are connected to.
 
-    ```cmd/sh
+    ```bash
     demouser@IoTDeviceLinuxVM:~$
     ```
+
 #### Task 2: Install Linux prerequisites
 
 Every Azure Security Center for IoT security agent flavor offers the same set of features, and supports similar configuration options. For the C#-based security agent we need auditd installed.
 
-1. Install auditd (The Linux Audit daemon) on your Linux VM. 
+1. Install auditd (The Linux Audit daemon) on your Linux VM.
 
-    ```cmd/sh
+    ```bash
     sudo apt-get install auditd audispd-plugins
     ```
 
@@ -314,7 +314,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
 
 1. Create device Authentication type file with your **vm-device01** device's **Primary Key**.
 
-    ```cmd/sh
+    ```bash
     echo "<primary_key>" > s.key
     ```
 
@@ -324,25 +324,25 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
 
 1. Download the recent version of Security Agent for C# to your device.
 
-    ```cmd/sh
+    ```bash
     wget https://github.com/Azure/Azure-IoT-Security-Agent-CS/releases/download/0.0.6/ubuntu-18.04-x64.tar.gz
     ```
 
 1. Extract the contents of the package and navigate to the /Install folder.
 
-    ```cmd/sh
+    ```bash
     tar -xzvf ubuntu-18.04-x64.tar.gz && cd Install
     ```
 
 1. Add running permissions to the `InstallSecurityAgent` script by running the following commands
 
-    ```cmd/sh
+    ```bash
     chmod +x InstallSecurityAgent.sh
     ```
 
 1. Next, run the following command with root privileges. You will need to switch out for your authentication parameters.
 
-    ```cmd/sh
+    ```bash
     sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f <Insert file location of your s.key file> -hn <Insert your IoT Hub host name> -di vm-device01
     ```
 
@@ -361,7 +361,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
 
 1. Check the deployment of the Azure Security Center for IoT Agent status by running the following command. Your Azure Security Center for IoT Agent should now be active and running.
 
-    ```cmd/sh
+    ```bash
     systemctl status ASCIoTAgent.service
     ```
 
@@ -369,7 +369,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
 
 1. Navigate back to the Azure portal to your  **vm-device01**. TO do that, go in your IoT Hub, locate IoT devices under Explorers. Click on **vm-device01**.
 
-1. Notice that your **azureiotsecurity** Module is now on **Connected** state. 
+1. Notice that your **azureiotsecurity** Module is now on **Connected** state.
 
 Now that your Azure Security Center for IoT device agents on your devices are installed, the agents will be able to collect, aggregate and analyze raw security events from your devices.
 
@@ -397,7 +397,7 @@ After defining all of the resource relationships, Azure Security Center for IoT 
 
 #### Task 1: View Azure Security Center for IoT in Action
 
-Now that you have your the security agent installed on your device and your solution configure, take some time to check out Azure Security Center for IoT different views. 
+Now that you have your the security agent installed on your device and your solution configure, take some time to check out Azure Security Center for IoT different views.
 
 1. Navigate **Overview** under Security. You will see start to see an overview of the health of your devices, hubs, and other resources. You can see the Built-in real-time monitoring, recommendations and alerts that were enabled right when you turn on your Azure IoT Security Center.
 

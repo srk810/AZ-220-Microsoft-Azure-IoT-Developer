@@ -196,7 +196,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Locate the **Initial device twin State**, and notice the JSON for the device twin Desired State contains the `telemetryDelay` property set to the value of `"2"`.
 
-1. Close the **DPSSimulatedDevice1** view to return to the **AZ-220-DPS-_{YOUR_ID}_** blade.
+1. Close the **DPSSimulatedDevice1** view to return to the **AZ-220-DPS-_{YOUR-ID}_** blade.
 
 ### Exercise 3: Configure Simulated Device
 
@@ -208,7 +208,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 #### Task 1: Create the Simulated Device
 
-1. On the **AZ-220-DPS-_{YOUR_ID}_** blade, navigate to the **Overview** pane.
+1. On the **AZ-220-DPS-_{YOUR-ID}_** blade, navigate to the **Overview** pane.
 
 1. Within the **Overview** pane, copy the **ID Scope** for the Device Provisioning Service, and save it for reference later.  (There is a copy button to the right of the value that will appear when you hover over the value.)
 

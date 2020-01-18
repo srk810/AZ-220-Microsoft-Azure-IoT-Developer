@@ -10,6 +10,8 @@ Our asset tracking solution is getting bigger, and provisioning devices one by o
 
 In this lab, you will setup a Group Enrollment within Device Provisioning Service (DPS) using a Root CA x.509 certificate chain. You will configure the linked IoT Hub to using monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. Additionally you will create an alert that will be triggered based upon the average number of devices connected. You will the configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
 
+## Lab Introduction
+
 In this lab, you will:
 
 * Verify Lab Prerequisites
@@ -19,6 +21,8 @@ In this lab, you will:
 * Download and run an app that simulates IoT devices connecting via X509 and sending messages to the hub.
 * Run the app until the alerts begin to fire.
 * View the metrics results and check the diagnostic logs.
+
+## Lab Instructions
 
 ### Exercise 1: Verify Lab Prerequisites
 
@@ -94,7 +98,7 @@ In order to complete this lab, you will need to reuse a number of resources from
     az iot dps linked-hub create --dps-name $DPSName -g $RGName --connection-string $IoTHubConnectionString --location $Location
 
     # Create a Storage Account
-    az storage account create --name $StorageAccountName --resource-group $RGName --location=$Location --sku Standard_LRS -o Table 
+    az storage account create --name $StorageAccountName --resource-group $RGName --location=$Location --sku Standard_LRS -o Table
 
     StorageConnectionString=$( az storage account show-connection-string --name $StorageAccountName -o tsv )
     ```
@@ -127,7 +131,6 @@ In order to complete this lab, you will need to reuse a number of resources from
     > [!NOTE] If the IoT Hub and DPS resources already exist, you will see red warnings stating the name is not available - you can ignore these errors.
 
 You have now ensured the resources are available for this lab. Next, we shall setup monitoring and logging.
-
 
 ### Exercise 3: Enable Logging
 
@@ -231,7 +234,7 @@ Now set up some metrics to watch for when messages are sent to the hub.
 
     Your screen now shows the minimized metric for Telemetry messages sent, plus the new metric for avg connected devices. Notice that the chart title has updated to reflect both metrics.
 
-    > [!NOTE]  To edit the chart title, click the **pencil** to the right of the title. 
+    > [!NOTE]  To edit the chart title, click the **pencil** to the right of the title.
 
 1. Under the updated **Chart Title**, in the toolbar, click **Pin to dashboard**. Note that you can choose to pin to the current dashboard or choose another. Select the dashboard you created in the first lab - "AZ-220-RG".
 
@@ -315,7 +318,6 @@ In this task we are going to add an alert that will inform the warehouse manager
 
     > [!NOTE] An action group is a collection of notification preferences defined by the owner of an Azure subscription. An action group name must be unique within the Resource Group is is associated with. Azure Monitor and Service Health alerts use action groups to notify users that an alert has been triggered. Various alerts may use the same action group or different action groups depending on the user's requirements. You may configure up to 2,000 action groups in a subscription. You can learn more about creating and managing Action Groups [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/action-groups).
 
-
 1. Next to **Action group name**, enter **AZ-220 Email Action Group**.
 
     > [!NOTE] An action group name must be unique within the Resource Group is is associated with.
@@ -347,7 +349,6 @@ In this task we are going to add an alert that will inform the warehouse manager
 1. Finally, there is the option to **Enable the common alert schema** - select **Yes**.
 
    > [!NOTE] There are many benefits to using the Common Alert Schema. It standardizes the consumption experience for alert notifications in Azure today. Historically, the three alert types in Azure today (metric, log, and activity log) have had their own email templates, webhook schemas, etc. With the common alert schema, you can now receive alert notifications with a consistent schema. You can learn more about the Common ALert6 Schema [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-common-schema).
-
    > **Important:** Given the benefits, you may wonder why the common alert schema is not enabled by default - well, when you select **Yes** you will see a warning **Enabling the common alert schema might break any existing integrations.** Bear this in mind in your own environments.
 
 1. To save the **Email/SMS/Push/Voice** action configuration, click **OK**.
@@ -558,7 +559,7 @@ The first x.509 certificates needed are CA and intermediate certificates. These 
 
 1. In the **Primary Certificate** dropdown, select the **CA Certificate** that was uploaded to DPS previously.
 
-1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-{YOUR-ID}** IoT Hub selected. This will ensure when the device is provisioned, it gets added to this IoT Hub.
+1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub selected. This will ensure when the device is provisioned, it gets added to this IoT Hub.
 
 1. In the Initial Device Twin State field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"1"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
 
@@ -578,10 +579,6 @@ The first x.509 certificates needed are CA and intermediate certificates. These 
 1. Click **Save**
 
 Now that the environment is setup, it's time to generate our device certificates.
-
-
-
-
 
 ### Exercise 6: Simulate Devices
 
@@ -609,7 +606,7 @@ We will now generate and download 10 device certificates.
     ```bash
     #!/bin/bash
 
-    # Generate 10 device certificates 
+    # Generate 10 device certificates
     # Rename for each device
     # download from the Cloud CLI
     pushd ~/certificates
@@ -618,8 +615,8 @@ We will now generate and download 10 device certificates.
         chmod +w ./certs/new-device.cert.pem
         ./certGen.sh create_device_certificate asset-track$i
         sleep 5
-        cp ./certs/new-device.cert.pfx ./certs/new-asset-track$i.cert.pfx 
-        download ./certs/new-asset-track$i.cert.pfx 
+        cp ./certs/new-device.cert.pfx ./certs/new-asset-track$i.cert.pfx
+        download ./certs/new-asset-track$i.cert.pfx
     done
     popd
     ```
@@ -728,7 +725,6 @@ This app is very similar to the app used in the earlier lab **L06-Automatic Enro
 
     ![Email Alert](../../Linked_Image_Files/M99-L17-04-email-alert.png)
 
-
 1. Once the alerts have arrived, you can exit the application by either hitting **CTRL+C** in the Visual Studio Code terminal, or by closing Visual Studio Code.
 
     > [!NOTE] When the devices are disconnected, you will receive messages informing you the alert has been resolved.
@@ -797,7 +793,7 @@ Earlier, you set up your diagnostic logs to be exported to blob storage. Let's c
 
     The **Overview** for the storage account will be displayed.
 
-1. Scroll down until you can see the metrics charts for the Storage Account: *Total egress*, *Toral ingress*, *Average latency* and *Request breakdown*. 
+1. Scroll down until you can see the metrics charts for the Storage Account: *Total egress*, *Toral ingress*, *Average latency* and *Request breakdown*.
 
     You should see that there is activity displayed.
 

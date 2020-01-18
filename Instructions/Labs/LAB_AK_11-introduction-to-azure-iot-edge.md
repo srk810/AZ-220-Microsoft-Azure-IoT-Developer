@@ -203,7 +203,7 @@ In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Mo
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-HUB-{YOUR-ID}** to navigate to the Azure IoT Hub.
+1. On your Resource group tile, click **AZ-220-HUB-_{YOUR-ID}_** to navigate to the Azure IoT Hub.
 
 1. Under **Automatic Device Management**, click on **IoT Edge**.
 
@@ -396,7 +396,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. On the **New** blade, select the **Internet of Things** category under **Azure Marketplace**, then click on **Stream Analytics job**.
 
-1. On the **New Stream Analytics job** blade, enter **AZ-220-ASA-{YOUR-ID}** into the **Job name** field followed by your initials and the current date to make sure it's a unique name.
+1. On the **New Stream Analytics job** blade, enter **AZ-220-ASA-_{YOUR-ID}_** into the **Job name** field followed by your initials and the current date to make sure it's a unique name.
 
 1. In the **Resource group** field, select the existing **AZ-220-RG** group in the **Resource group** field.
 
@@ -485,7 +485,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 #### Task 5: Deploy the Stream Analytics Job
 
-1. In the Azure Portal, navigate to the **AZ-220-HUB-{YOUR-ID}** Azure IoT Hub resource.
+1. In the Azure Portal, navigate to the **AZ-220-HUB-_{YOUR-ID}_** Azure IoT Hub resource.
 
 1. In the left side navigation, click **IoT Edge** under the **Automatic Device Management** section.
 
@@ -497,7 +497,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 1. In the **Edge job** dropdown, select the **Steam Analytics job** that was created previously.
 
-    > [!NOTE] The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **AZ-220-ASA-{YOUR-ID}** job again. The **Save** button should then become enabled.
+    > [!NOTE] The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **AZ-220-ASA-_{YOUR-ID}_** job again. The **Save** button should then become enabled.
 
 1. Click **Save**. Deployment may take a few moments.
 
