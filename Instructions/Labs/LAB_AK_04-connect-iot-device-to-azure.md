@@ -1,10 +1,10 @@
 ---
 lab:
-    title: 'Lab 04: Connect IoT Device to Azure'
+    title: 'Lab 04: Connect an IoT Device to Azure'
     module: 'Module 2: Devices and Device Communication'
 ---
 
-# Connect IoT Device to Azure
+# Connect an IoT Device to Azure
 
 ## Lab Scenario
 
@@ -14,7 +14,7 @@ In the past, temperature and humidity data was collected by factory floor worker
 
 Contoso has decided to launch an automated system that uses IoT devices to monitor temperature and humidity. The rate at which telemetry data is communicated will be adjustable to help ensure that their manufacturing process is under control as batches of cheese proceed through environmentally sensitive processes.
 
-To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device with temperature and humidity sensors to IoT Hub.
+To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device (that includes temperature and humidity sensors) to IoT Hub.
 
 ## In This Lab
 
@@ -37,7 +37,7 @@ This lab assumes that the following resources are available:
 | Resource Group | AZ-220-RG |
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 
-If these resources are not available, please execute the **lab-setup.azcli** script before starting the lab.
+If these resources are not available, please execute the **lab-setup.azcli** script before starting the lab. The script 
 
 > **Note**:  The **lab-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
