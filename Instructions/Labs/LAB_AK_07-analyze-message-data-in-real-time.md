@@ -512,10 +512,10 @@ The following app simulates a conveyor belt, and reports vibration sensor data e
 
 The architecture of our vibration monitoring system requires data be sent to two destinations: storage and analysis. Azure IoT provides a great method of directing data to the right service, through *message routing*.
 
-In our scenario, we need create two routes:
+In our scenario, we need to create two routes:
 
 * the first route will be to storage for achiving data
-* the second route will to an Event Hub for anomoly detection
+* the second route will to an Event Hub for anomaly detection
 
 Since message routes are best built and tested one at a time, this exercise will focus on the storage route. We'll call this route the "logging" route, and it involves digging a few levels deep into the creation of Azure resources. All the features required to build this route are available in the Azure portal.
 
@@ -634,7 +634,7 @@ The next step will be to verify that the logging route is working.
 
 ### Exercise 4: Logging Route Azure Stream Analytics Job
 
-To verify that the logging route is working as expected, we will create a Stream Analytics job that routes logging messages to Blob storage.
+To verify that the logging route is working as expected, we will create a Stream Analytics job that routes logging messages to Blob storage, which can then be validated using Storage Explorer in the Azure Portal.
 
 This will enable us to verify that our route includes the following settings:
 
@@ -643,6 +643,8 @@ This will enable us to verify that our route includes the following settings:
 * **Routing query** - sensorID = "VSLog"
 * **Endpoint** - vibrationLogEndpoint
 * **Enabled** - true
+
+It may seem odd to be routing data to storage, then again sending it to storage through Azure Stream Analytics.  In a production scenario, you wouldn't have both paths long-term.  Instead, the second path that we're creating here would not exist.  We're using it here simply as a way to demonstrate Azure Stream Analytics in an easy-to-validate way in a lab environment.
 
 #### Task 1: Create the Stream Analytics Job
 
