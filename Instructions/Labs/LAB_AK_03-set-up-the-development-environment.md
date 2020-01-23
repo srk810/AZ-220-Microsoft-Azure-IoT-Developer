@@ -8,7 +8,7 @@ lab:
 
 ## Lab Scenario
 
-As one of the developers at Contoso, setting up your development environment is an important step before starting to build in IoT solution. Azure IoT offers multiple developer tools and support across top IDEs.
+As one of the developers at Contoso, setting up your development environment is an important step before starting to build in IoT solution. You have found that Microsoft provides a number of tools that can be used to develop and support your IoT solutions. You need to prepare a work environment that you can use to develop your IoT solution, both on the Azure cloud side and for your local work environment. Your team has decided to use Visual Studio Code as the primary coding tool for device management.
 
 ## In This Lab
 

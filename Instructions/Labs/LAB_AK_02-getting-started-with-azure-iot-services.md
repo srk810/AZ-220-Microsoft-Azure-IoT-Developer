@@ -3,15 +3,16 @@ lab:
     title: 'Lab 02: Getting Started with Azure IoT Services'
     module: 'Module 1: Introduction to IoT and Azure IoT Services'
 ---
+
 # Getting Started with Azure IoT Services
 
 ## Lab Scenario
 
-As an Azure IoT Developer for a leading gourmet cheese company named Contoso, you are tasked to start exploring Azure IoT services needed for connecting future devices.
+You are an Azure IoT Developer working for Contoso, a company that crafts and distributes gourmet cheeses. You have been tasked with exploring Azure and the Azure IoT services that will be used in the IoT solution that the company is planning to implement. You have become familiar with the Azure portal and created a resource group for your project. Now you need to begin your investigation of Azure IoT services.
 
 ## In This Lab
 
-In this lab, you will explore and create services needed to connect and provision future IoT devices. The lab includes the following exercises:
+In this lab, you will begin exploring the Azure IoT services that will be used to provision and connect IoT devices for your solution (IoT Hub and IoT Hub Device Provisioning Service). The lab includes the following exercises:
 
 * Naming Resources with Unique Names
 * Create an IoT Hub using the Azure portal
@@ -130,13 +131,13 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
     Notice the list of _Useful Links_ displayed on this blade.
 
-1. In the list of links, click **Documentation** to open a new browser tab.
+1. In the list of links, notice that there is a link to Documentation.
 
-    The _IoT Hub Documentation_ page is the root page for IoT Hub resources and documentation. You can use this page to explore current documentation and find tutorials and other resources that will help you to explore activities that are outside the scope of this course. We will refer you to the docs.microsoft.com site throughout this course for additional reading on specific topics.
+    No need to explore this documentation now, but it is worth noting. The _IoT Hub Documentation_ page is the root page for IoT Hub resources and documentation. You can use this page to explore current documentation and find tutorials and other resources that will help you to explore activities that are outside the scope of this course. We will refer you to the docs.microsoft.com site throughout this course for additional reading on specific topics.
+
+    If you did open the documentation link, use your browser to close the documentation tab and navigate back to the Azure portal tab.
 
 #### Task 2: Create an IoT Hub with required property settings
-
-1. Use your browser to close the documentation tab and navigate back to the Azure portal tab.
 
 1. To begin the process of creating your new IoT Hub, click **Create**.
 
@@ -270,7 +271,7 @@ IoT Hub's capabilities help you build scalable, full-featured IoT solutions such
 
     > **Note**:  This lab exercise is only intended to be an introduction to the IoT Hub service and get you more comfortable with the UI, so don't worry if you feel a bit overwhelmed at this point. We will be walking you through the process of configuring and managing your IoT Hub, devices, and communications as this course continues.
 
-### Exercise 4: Create an Device Provisioning Service using the Azure portal
+### Exercise 4: Create a Device Provisioning Service using the Azure portal
 
 The Azure IoT Hub Device Provisioning Service is a helper service for IoT Hub that enables zero-touch, just-in-time provisioning to the right IoT hub without requiring human intervention. The Device Provisioning Service provides the following:
 

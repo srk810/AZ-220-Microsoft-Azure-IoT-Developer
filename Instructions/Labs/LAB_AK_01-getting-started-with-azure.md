@@ -8,7 +8,9 @@ lab:
 
 ## Lab Scenario
 
-You are an Azure IoT Developer for a leading gourmet cheese company named Contoso. You need to prepare the work environment that you will use to develop your IoT solution, on the Azure cloud side as well as your local device environment. Your team has decided to use Visual Studio Code as the primary coding tool for device management.
+You are an Azure IoT Developer for a leading gourmet cheese company named Contoso. Contoso evaluated the business opportunity for IoT and concluded that there are significant benefits that they can achieve. They selected Microsoft Azure IoT based on their evaluations.
+
+To get started, you need to become familiar with the Azure tools.
 
 ## In This Lab
 
@@ -134,6 +136,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 ### Exercise 2: Create an Azure Dashboard and Resource Group
 
 On the Azure portal, dashboards are used to present a customized view of your resources. Information is displayed through the use of tiles which can be arranged and sized to help you organize your resources in useful ways. You can create many different dashboards that provide different views and serve different purposes.
+
 Each tile that you place on your dashboard exposes one or more of your resources. In addition to tiles that expose the data of an individual resource, you can create a tile for something called a resource group.
 
 A resource group is a logical group that contains related resources for a project or application. The resource group can include all the resources for the solution, or only those resources that you want to manage as a group. You decide how you want to allocate resources to resource groups based on what makes the most sense for your organization. Generally, add resources that share the same lifecycle to the same resource group so you can easily deploy, update, and delete them as a group.
