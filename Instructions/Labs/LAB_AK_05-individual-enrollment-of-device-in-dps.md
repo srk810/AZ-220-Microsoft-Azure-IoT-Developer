@@ -81,7 +81,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
     Location="{YOUR-LOCATION}"
     ```
 
-    > [!NOTE] The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -99,7 +99,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE] You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resources required for this lab, enter the following command:
 
@@ -220,7 +220,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 1. Locate the `dpsIdScope` variable, and replace the value with the **ID Scope** of the Device Provisioning Service.
 
-    > [!NOTE]
+    > **Note**: 
     > The **ID Scope** for the **Device Provisioning Service** can be retrieved from within the Azure portal, by navigating to the DPS resource, then copying the **ID Scope** value on the **Overview** pane.
 
 1. Locate the `registrationId` variable, and replace the value with `DPSSimulatedDevice1`.
@@ -292,7 +292,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 1. Now the simulated device is all setup to be configured by the device twin within Azure IoT Hub.
 
-    > [!NOTE]
+    > **Note**: 
     > If you need help with pasting code in the `Program.cs` file, please refer to the `/LabFiles-Completed` folder for the full source code for the Simulated Device with the device twin configuration code. When using this completed code sample, be sure to configure the ID Scope, Registration ID, and individual enrollment Keys.
 
 ### Exercise 4: Test the Simulated Device
@@ -428,7 +428,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. Select the `DPSSimulatedDevice1` individual device enrollment by checking the box next to it in the list, then click **Delete** from the top of the blade.
 
-    > [!NOTE]
+    > **Note**: 
     > Deleting the individual enrollment from DPS will permanently remove the enrollment. To temporarily disable the enrollment, you can set the **Enable entry** setting to **Disable** within the **Enrollment Details** for the individual enrollment.
 
 1. On the **Remove enrollment** prompt, click **Yes** to confirm that you want to delete this device enrollment from the Device Provisioning Service.
@@ -451,6 +451,6 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. On the **Are you certain you wish to delete selected device(s)** prompt, click **Yes** to confirm that you want to delete this device from Azure IoT Hub.
 
-    > [!NOTE] Deleting the device ID from IoT Hub will permanently remove the device registration. To temporarily disable the device from connecting to IoT Hub, you can set the **Enable connection to IoT Hub** to **Disable** within the properties for the device.
+    > **Note**:  Deleting the device ID from IoT Hub will permanently remove the device registration. To temporarily disable the device from connecting to IoT Hub, you can set the **Enable connection to IoT Hub** to **Disable** within the properties for the device.
 
 Now that the Device Enrollment has been removed from the Device Provisioning Service, and the matching Device ID has been removed from the Azure IoT Hub, the simulated device has been fully retired from the solution.

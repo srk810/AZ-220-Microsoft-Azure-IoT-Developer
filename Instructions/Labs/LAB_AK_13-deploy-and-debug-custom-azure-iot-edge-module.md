@@ -42,7 +42,7 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
 1. To develop Azure IoT Edge modules with C#, you will need to install the Azure IoT EdgeHub Dev Tool. This tool required Python 2.7, 3.6, or 3.7 to be installed.
 
-    > [!NOTE] Currently, the Azure IoT EdgeHub Dev Tool uses a docker-py library that is not compatible with Python 3.8.
+    > **Note**:  Currently, the Azure IoT EdgeHub Dev Tool uses a docker-py library that is not compatible with Python 3.8.
 
 1. To install Python, navigate to [https://www.python.org/downloads/](https://www.python.org/downloads/), then download and install Python.
 
@@ -53,7 +53,7 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
     python get-pip.py
     ```
 
-    > [!NOTE] If you have issues installing Pip, please reference the official Pip installation instructions here: [https://pip.pypa.io/en/stable/installing/](https://pip.pypa.io/en/stable/installing/).
+    > **Note**:  If you have issues installing Pip, please reference the official Pip installation instructions here: [https://pip.pypa.io/en/stable/installing/](https://pip.pypa.io/en/stable/installing/).
 
 1. Run the following command to install [Azure IoT EdgeHub Dev Tool](https://pypi.org/project/iotedgehubdev/)
 
@@ -61,7 +61,7 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
     pip install iotedgehubdev
     ```
 
-    > [!NOTE] If you have multiple Python including pre-installed Python 2.7 (for example, on Ubuntu or macOS), make sure you are using the correct `pip` or `pip3` to install `iotedgehubdev`.
+    > **Note**:  If you have multiple Python including pre-installed Python 2.7 (for example, on Ubuntu or macOS), make sure you are using the correct `pip` or `pip3` to install `iotedgehubdev`.
 
 Now we have configured the python environment and installed these tools, we are now ready to create an Azure Container Registry which will be used to store our custom IoT Edge Module.
 
@@ -99,7 +99,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
     * The _Registry name_ field is a required field.
 
-    > [!NOTE] Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**01**' or '**02**' as necessary to achieve a globally unique name.
+    > **Note**:  Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**01**' or '**02**' as necessary to achieve a globally unique name.
 
 1. In the **Resource group** dropdown, select the **AZ-220-RG** resource group.
 
@@ -156,7 +156,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
     * `<acr-name>`: Replace with the name fo the Azure Container Registry service.
     * `<module-name>`: Replace with the name of the custom Azure IoT Edge Module that's being created.
 
-    > [!NOTE] The default Docker image repository in Visual Studio Code is set to `localhost:5000/<your module name>`. If you were to use a local Docker registry for testing, then **localhost** is fine.
+    > **Note**:  The default Docker image repository in Visual Studio Code is set to `localhost:5000/<your module name>`. If you were to use a local Docker registry for testing, then **localhost** is fine.
 
 1. Once the new **IoT Edge Solution** has been created, Visual Studio Code will open the solution. In the **Explorer** pane, notice the files and directories that were created as part of the new IoT Edge Solution.
 
@@ -179,7 +179,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
 1. Within the `.env` file, replace the `<registry-username>` placeholder with the **Registry name** (_aka Username_) of the Azure Container Registry that was previously created, and replace the `<registry-password>` placeholder with the **password** for the Azure Container Registry.
 
-    > [!NOTE] The Azure Container Registry **Username** and **password** values can be found by accessing the **Access keys** pane for the **Azure Container Registry** service within the Azure portal.
+    > **Note**:  The Azure Container Registry **Username** and **password** values can be found by accessing the **Access keys** pane for the **Azure Container Registry** service within the Azure portal.
 
 1. Open the `deployment.template.json` file within the root IoT Edge Solution directory. This file is the **deployment manifest** for the IoT Edge Solution. The deployment manifest tells an IoT Edge device (or a group of devices) which modules to install and how to configure them. The deployment manifest includes the _desired properties_ for each module twin. IoT edge devices report back the _reported properties_ for each module.
 
@@ -446,7 +446,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     * **User Name**: Enter the **Username** for the Azure Container Registry service
     * **Password**: Enter the **Password** for the Azure Container Registry service
 
-    > [!NOTE] The Azure Container Registry (ACR) service _Registry name_, _Login server_, _Username_, and _Password_ can be found on the **Access keys** pane for the service.
+    > **Note**:  The Azure Container Registry (ACR) service _Registry name_, _Login server_, _Username_, and _Password_ can be found on the **Access keys** pane for the service.
 
 1. On the **Set modules** pane, within the **Deployment Modules** section of the _Add Modules_ tab, click the **Add** button and select **IoT Edge Module**.
 
@@ -502,7 +502,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
     This route specifies the **Destination** value of `$upstream`. This sends all messages from the Source of this route to the Azure IoT Hub service within Microsoft Azure.
 
-    > [!NOTE] For more information on the configuration of Message Routing with Azure IoT Hub and IoT Edge Module, reference the following links:
+    > **Note**:  For more information on the configuration of Message Routing with Azure IoT Hub and IoT Edge Module, reference the following links:
     > * [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition)
     > * [IoT Hub message routing query syntax](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-routing-query-syntax)
 

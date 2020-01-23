@@ -72,9 +72,9 @@ In this task, you will use the Azure portal to create an IoT Hub resource.
 
     As we saw previously, Azure is supported by a series of datacenters that are placed in regions all around the world. When you create something in Azure, you deploy it to one of these datacenter locations.
 
-    > [!NOTE] For the current list of Regions that support Event Grid, see the following link: [Products available by region](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=event-grid&regions=all)
+    > **Note**:  For the current list of Regions that support Event Grid, see the following link: [Products available by region](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=event-grid&regions=all)
     >
-    > [!NOTE] When picking a datacenter to host your app, keep in mind that picking a datacenter close to your end users will decrease load/response times. If you are on the other side of the world from your end users, you should not be picking the datacenter nearest you.
+    > **Note**:  When picking a datacenter to host your app, keep in mind that picking a datacenter close to your end users will decrease load/response times. If you are on the other side of the world from your end users, you should not be picking the datacenter nearest you.
 
 1. To the right of IoT Hub Name, enter a globally unique name for your IoT Hub.
 
@@ -92,7 +92,7 @@ In this task, you will use the Azure portal to create an IoT Hub resource.
 
     * The _IoT Hub Name_ field is a required field.
 
-    > [!NOTE] Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**-01**' or '**-02**' as necessary to achieve a globally unique name.
+    > **Note**:  Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**-01**' or '**-02**' as necessary to achieve a globally unique name.
 
 1. At the top of the blade, click **Size and scale**.
 
@@ -104,7 +104,7 @@ In this task, you will use the Azure portal to create an IoT Hub resource.
 
     The **S1** tier that we are using in this course allows a total of 400,000 messages per unit per day and provides the all of the services that are required in this training. We won't actually need 400,000 messages per unit per day, but we will be using features provided at this tier level, such as Cloud-to-device commands, Device management, and IoT Edge. IoT Hub also offers a free tier that is meant for testing and evaluation. It has all the capabilities of the standard tier, but limited messaging allowances. However, you cannot upgrade from the free tier to either basic or standard.
 
-    > [!NOTE] The "S1 - Standard" tier has a cost of $25.00 USD per month per unit. We will be specifying 1 unit.
+    > **Note**:  The "S1 - Standard" tier has a cost of $25.00 USD per month per unit. We will be specifying 1 unit.
 
     For details about the other tier options, see [Choosing the right IoT Hub tier for your solution](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling)).
 
@@ -186,7 +186,7 @@ You are going to now create a new IoT device that will later be used to measure 
 
 1. Once validation passes, click **Create** to begin deploying the virtual machine.
 
-    > [!NOTE] Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
+    > **Note**:  Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
 
 #### Task 2: Register New Devices
 
@@ -204,7 +204,7 @@ A device must be registered with your IoT hub before it can connect.
 
 1. Type in **vm-device01** under **Device ID**. Leave the other defaults.
 
-    > [!NOTE] To make following this lab easier,you can set **Device ID** to **vm-device01**.
+    > **Note**:  To make following this lab easier,you can set **Device ID** to **vm-device01**.
 
 1. Click **Save**.
 
@@ -237,15 +237,15 @@ In this task, you will be creating a security module twin manually.
 
 1. In the Module Identity Name field, enter **azureiotsecurity**. Leave all over fields the same and click **Save**. You should now see **azureiotsecurity** under **Module Identities** for your device.
 
-    > [!NOTE] The Module Identity must be called **azureiotsecurity** and not another unique name.
+    > **Note**:  The Module Identity must be called **azureiotsecurity** and not another unique name.
 
 1. While you are viewing the **vm-device01** information, copy the device's **Primary Key** to use later.
 
-    > [!NOTE] Make sure to copy the device's **Primary Key** and not the connection string.
+    > **Note**:  Make sure to copy the device's **Primary Key** and not the connection string.
 
 1. Navigate back to your IoT Hub, click on **Overview**.  Copy your IoT Hub hostname.
 
-    > [!NOTE] Example of what an IoT Hub hostname looks like: AZ-220-HUB-CAH102119.azure-devices.net
+    > **Note**:  Example of what an IoT Hub hostname looks like: AZ-220-HUB-CAH102119.azure-devices.net
 
 ### Exercise 6: Deploy Azure Security Center for IoT C# Security Agent
 
@@ -318,7 +318,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
     echo "<primary_key>" > s.key
     ```
 
-    > [!NOTE] To check if you added the correct Primary key into the file, Open your file with `nano s.key`command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
+    > **Note**:  To check if you added the correct Primary key into the file, Open your file with `nano s.key`command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
 
 #### Task 4: Installing Security Agent
 
@@ -365,7 +365,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
     systemctl status ASCIoTAgent.service
     ```
 
-    > [!NOTE] If your Azure Security Center for IoT Agent isn't running or active, please check out [Deploy Azure Security Center for IoT C# based security agent for Linux Guide Troubleshooting Section](https://docs.microsoft.com/en-us/azure/asc-for-iot/how-to-deploy-linux-cs).
+    > **Note**:  If your Azure Security Center for IoT Agent isn't running or active, please check out [Deploy Azure Security Center for IoT C# based security agent for Linux Guide Troubleshooting Section](https://docs.microsoft.com/en-us/azure/asc-for-iot/how-to-deploy-linux-cs).
 
 1. Navigate back to the Azure portal to your  **vm-device01**. TO do that, go in your IoT Hub, locate IoT devices under Explorers. Click on **vm-device01**.
 

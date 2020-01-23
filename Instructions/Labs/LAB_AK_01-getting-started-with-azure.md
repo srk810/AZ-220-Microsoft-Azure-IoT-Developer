@@ -89,7 +89,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
     Use the same process to add the following services to your favorites: **Device Provisioning Services**, **Function App**, **Stream Analytics jobs**, and **Azure Cosmos DB**.
 
-    > [!NOTE] You can remove a service from the list of your favorite services by clicking the star of a selected service.
+    > **Note**:  You can remove a service from the list of your favorite services by clicking the star of a selected service.
 
 1. On the left side of the _All services_ page, under _Categories_, click **General**.
 
@@ -206,7 +206,7 @@ In the following tasks, you will:
 
 1. In the list of named resource groups, click the box to the left of the **AZ-220-RG** resource group that your just created.
 
-    > [!NOTE] You don't want to open the resource group in a new blade, you just want to select it (check mark on the left).
+    > **Note**:  You don't want to open the resource group in a new blade, you just want to select it (check mark on the left).
 
 1. On the right side of the screen, click the ellipsis (...) corresponding to your resource group, and then click **Pin to dashboard**
 

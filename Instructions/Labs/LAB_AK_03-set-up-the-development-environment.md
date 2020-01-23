@@ -22,7 +22,7 @@ In this lab you will:
 
 ### Exercise 1: Install Developer Tools and Products
 
- > [!NOTE] Check with you Instructor to understand if the lab hosting environment has already been prepared with some or all of the required tools.
+ > **Note**:  Check with you Instructor to understand if the lab hosting environment has already been prepared with some or all of the required tools.
 
 #### Task 1: Install .NET Core
 
@@ -71,7 +71,7 @@ Visual Studio Code is a lightweight but powerful source code editor which runs o
 
     By default, Visual Studio Code is installed in the "C:\Program Files (x86)\Microsoft VS Code" folder location (for a 64-bit machine). The setup process should only take about a minute.
 
-    > [!NOTE] .NET Framework 4.5 is required for Visual Studio Code when installing on Windows. If you are using Windows 7, please ensure [.NET Framework 4.5](https://www.microsoft.com/en-us/download/details.aspx?id=30653) is installed.
+    > **Note**:  .NET Framework 4.5 is required for Visual Studio Code when installing on Windows. If you are using Windows 7, please ensure [.NET Framework 4.5](https://www.microsoft.com/en-us/download/details.aspx?id=30653) is installed.
 
 1. In Visual Studio Code, click the **Extensions** button on the left side of the window.
 
@@ -120,7 +120,7 @@ Azure PowerShell is designed for managing and administering Azure resources from
 
     If you are prompted to install a newer version of the NuGet provider, type **Y** and then press Enter.
 
-    > [!NOTE] If you re-run the command that we used above to determine the installed version of PowerShellGet, you should see that PowerShellGet version 1.6.0 (or higher) is now installed.
+    > **Note**:  If you re-run the command that we used above to determine the installed version of PowerShellGet, you should see that PowerShellGet version 1.6.0 (or higher) is now installed.
 
 1. To install the Azure Resource Manager modules from the PowerShell Gallery, enter the following command:
 
@@ -128,7 +128,7 @@ Azure PowerShell is designed for managing and administering Azure resources from
 
     If you see a message stating that "You are installing the modules from an untrusted repository", type **A** and then press Enter.
 
-    > [!NOTE] Once again, it can take a minute for the installation to begin, so just give it a chance.
+    > **Note**:  Once again, it can take a minute for the installation to begin, so just give it a chance.
 
     The AzureRM module is a rollup module for the Azure Resource Manager cmdlets. When you install the AzureRM module, any Azure PowerShell module not previously installed is downloaded and installed from the PowerShell Gallery.
 

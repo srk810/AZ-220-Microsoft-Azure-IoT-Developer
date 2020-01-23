@@ -29,7 +29,7 @@ This lab assumes the following resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-{YOUR-ID} |
+| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | Device ID | SimulatedThermostat |
 
 1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
@@ -70,7 +70,7 @@ This lab assumes the following resources are available:
 
 1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH121119**, and set `Location` to the location that makes sense for your resources.
 
-    > [!NOTE] The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -90,7 +90,7 @@ This lab assumes the following resources are available:
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE] You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with a Device ID of **SimulatedThermostat**, and display the device connection string, enter the following command:
 
@@ -158,7 +158,7 @@ In this exercise, you will setup Time Series Insights (TSI) integration with Azu
 
 16. Click the **Create** button.
 
-    > [!NOTE] Deployment of Time Series Insights (TSI) will take a couple minutes to complete.
+    > **Note**:  Deployment of Time Series Insights (TSI) will take a couple minutes to complete.
 
 17. Once **Time Series Insights** is deployed, navigate to your **AZ-220-TSI** resource.
 
@@ -219,7 +219,7 @@ In this exercise, you will run the Simulated Thermostat device so it starts send
     12/27/2019 8:51:40 PM > CONTAINER transport changed to: TRUCK
     ```
 
-    > [!NOTE] In production the shipping container would on change transport methods during the normal course of shipping. For the simulated scenario in this lab, it's performed every 30 seconds to give a short enough data duration that will fit during the course of performing the steps in this lab.
+    > **Note**:  In production the shipping container would on change transport methods during the normal course of shipping. For the simulated scenario in this lab, it's performed every 30 seconds to give a short enough data duration that will fit during the course of performing the steps in this lab.
 
 ### Exercise 4: View Time Series Insights Explorer
 

@@ -81,7 +81,7 @@ To create these resources, please update and execute the **lab-setup.azcli** scr
 
 1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CP123019**, and set `Location` to the location that makes sense for your resources.
 
-    > [!NOTE] The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -101,7 +101,7 @@ To create these resources, please update and execute the **lab-setup.azcli** scr
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE] You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with a Device ID of **SimulatedSolutionThermostat**, and display the device connection string, enter the following command:
 
@@ -388,7 +388,7 @@ In this exercise, you will create a simple simulator that will manage the device
 
     ```
 
-    > [!NOTE]
+    > **Note**: 
     > Read through the comments in the code, noting how the device reacts to device twin changes to execute a firmware update based on the configuration shared in the desired Property "firmware". You can also note the function that will report the current firmware update status through the reported properties of the device twin.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder, so ensure you are in the fwupdatedevice folder.
@@ -420,7 +420,7 @@ You should see the following output in the terminal (where "mydevice" is the dev
     mydevice: Current firmware version: 1.0.0
 ```
 
-> [!NOTE]
+> **Note**: 
 > Make sure to put "" around your connection string. For example: "HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=SimulatedSolutionThermostat;SharedAccessKey={}="
 
 #### Task 2: Create the device management configuration

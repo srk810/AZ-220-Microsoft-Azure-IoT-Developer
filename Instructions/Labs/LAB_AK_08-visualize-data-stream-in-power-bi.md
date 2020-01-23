@@ -6,7 +6,7 @@ lab:
 
 # Visualize a Data Stream in Power BI
 
-> [!NOTE] This lab is a continuation of Lab 7 - Device Message Routing.
+> **Note**:  This lab is a continuation of Lab 7 - Device Message Routing.
 > [!IMPORTANT] This lab has several service prerequisites that are not related to the Azure subscription you were given for the course:
 >
 > 1. The ability to sign in to a "Work or School Account" (Azure Active Directory account)
@@ -137,7 +137,7 @@ As we need some real-time telemetry, you need to ensure the Device Simulator app
 
     ![Console Output](../../Linked_Image_Files/M99-L07-vibration-telemetry.png)
 
-    > [!NOTE] Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
+    > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
 1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
 
@@ -173,11 +173,11 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
 1. Under **Pricing tier**, select **Standard**.
 
-   > [!NOTE] Choosing the standard pricing tier enables _Kafka_. The Event Hubs for Kafka feature provides a protocol head on top of Azure Event Hubs that is binary compatible with Kafka versions 1.0 and later for both reading from and writing to Kafka topics. You can learn more about Event Huibs and Apache Kafka [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-for-kafka-ecosystem-overview). We will not be using Kafka in this lab.
+   > **Note**:  Choosing the standard pricing tier enables _Kafka_. The Event Hubs for Kafka feature provides a protocol head on top of Azure Event Hubs that is binary compatible with Kafka versions 1.0 and later for both reading from and writing to Kafka topics. You can learn more about Event Huibs and Apache Kafka [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-for-kafka-ecosystem-overview). We will not be using Kafka in this lab.
 
 1. Leave **Make this namespace zone redundant** unchecked.
 
-    > [!NOTE] Checking this option enables enhanced availability by spreading replicas across availability zones within one region at no additional cost - however we don't need this capability for the lab.
+    > **Note**:  Checking this option enables enhanced availability by spreading replicas across availability zones within one region at no additional cost - however we don't need this capability for the lab.
 
 1. Under **Subscription**, select the subscription you are using for this lab.
 
@@ -191,7 +191,7 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
 1. Leave **Enable Auto-Inflate** unchecked.
 
-    > [!NOTE] Auto-Inflate automatically scales the number of Throughput Units assigned to your Event Hubs Namespace when your traffic exceeds the capacity of the Throughput Units assigned to it. You can specify a limit to which the Namespace will automatically scale. We do not require this feature for this lab.
+    > **Note**:  Auto-Inflate automatically scales the number of Throughput Units assigned to your Event Hubs Namespace when your traffic exceeds the capacity of the Throughput Units assigned to it. You can specify a limit to which the Namespace will automatically scale. We do not require this feature for this lab.
 
 1. To create the resource, click **Create**, and wait for the resource to be deployed. This can take a few minutes.
 
@@ -213,15 +213,15 @@ Now we have an Event Hubs Namespace, we can create and Event Hubs instance.
 
 1. Leave **Partition Count** set to **1**.
 
-    > [!NOTE] Partitions are a data organization mechanism that relates to the downstream parallelism required in consuming applications. The number of partitions in an event hub directly relates to the number of concurrent readers you expect to have. You can increase the number of partitions beyond 32 by contacting the Event Hubs team. The partition count is not changeable, so you should consider long-term scale when setting partition count. In this lab, we only require 1.
+    > **Note**:  Partitions are a data organization mechanism that relates to the downstream parallelism required in consuming applications. The number of partitions in an event hub directly relates to the number of concurrent readers you expect to have. You can increase the number of partitions beyond 32 by contacting the Event Hubs team. The partition count is not changeable, so you should consider long-term scale when setting partition count. In this lab, we only require 1.
 
 1. Leave **Message Retention** set to **1**.
 
-    > [!NOTE] This is the retention period for events. You can set the retention period between 1 and 7 days. For this lab, we only require the minimum retention.
+    > **Note**:  This is the retention period for events. You can set the retention period between 1 and 7 days. For this lab, we only require the minimum retention.
 
 1. Leave **Capture** set to **Off**.
 
-    > [!NOTE] Azure Event Hubs Capture enables you to automatically deliver the streaming data in Event Hubs to an Azure Blob storage or Azure Data Lake Store account of your choice, with the added flexibility of specifying a time or size interval. We do not require this feature for the lab.
+    > **Note**:  Azure Event Hubs Capture enables you to automatically deliver the streaming data in Event Hubs to an Azure Blob storage or Azure Data Lake Store account of your choice, with the added flexibility of specifying a time or size interval. We do not require this feature for the lab.
 
 1. To create the Azure Hubs Instance, click **Create**. Wait for the resource to be deployed.
 
@@ -302,7 +302,7 @@ With this new IoT Hub route in place, we need to update our Stream Analytics job
 
 1. Under **Event Hub policy name**, ensure **RootManageSharedAccessKey** is selected.
 
-    > [!NOTE] The **Event Hub policy key** is populated and read-only.
+    > **Note**:  The **Event Hub policy key** is populated and read-only.
 
 1. Under **Event Hub Consumer group**, leave it blank - this will use the `$Default` Consumer group.
 
@@ -369,7 +369,7 @@ With this new IoT Hub route in place, we need to update our Stream Analytics job
     FROM AnomalyDetectionStep
     ```
 
-    > [!NOTE] This first section of this query takes the vibration data, and examines the previous 120 seconds worth. The `AnomalyDetection_SpikeAndDip` function will return a `Score` parameter, and an `IsAnomaly` parameter. The score is how certain the ML model is that the given value is an anomaly, specified as a percentage. If the score exceeds 95%, the `IsAnomaly` parameter has a value of 1, otherwise `IsAnomaly` has a value of 0. Notice the 120 and 95 parameters in the first section of the query. The second section of the query sends the time, vibration, and anomaly parameters to `vibrationBI`.
+    > **Note**:  This first section of this query takes the vibration data, and examines the previous 120 seconds worth. The `AnomalyDetection_SpikeAndDip` function will return a `Score` parameter, and an `IsAnomaly` parameter. The score is how certain the ML model is that the given value is an anomaly, specified as a percentage. If the score exceeds 95%, the `IsAnomaly` parameter has a value of 1, otherwise `IsAnomaly` has a value of 0. Notice the 120 and 95 parameters in the first section of the query. The second section of the query sends the time, vibration, and anomaly parameters to `vibrationBI`.
 
 1. Verify that the query editor on lists 2 Inputs and Outputs:
 
@@ -400,7 +400,7 @@ Now let's create a dashboard to visualize the query, using Microsoft Power BI.
 
 1. Once Power BI has opened, using the left navigation area, select the workspace you chose above.
 
-    > [!NOTE] At the time of writing a *New Look* is in preview. The steps in this task have been written assuming the *New Look* is **Off**. To turn off the *New Look*, at the top right of the screen, ensure the toggle reads **New look off**.
+    > **Note**:  At the time of writing a *New Look* is in preview. The steps in this task have been written assuming the *New Look* is **Off**. To turn off the *New Look*, at the top right of the screen, ensure the toggle reads **New look off**.
 
 1. Under **Datasets** verify that `vibrationDataset` is displayed. If not, you might have to wait a short time for this list to populate.
 
@@ -540,10 +540,10 @@ Now create a fourth tile, the `Anomalies Over the Hour` line chart.  This one is
 
 12. There's a latency with so many routes and connections, but are you now seeing the vibration data coming through?
 
-    > [!NOTE] If no data appears, check you are running the device app and  the analytics job is running.
+    > **Note**:  If no data appears, check you are running the device app and  the analytics job is running.
 
 13. Let the job run for a while, several minutes at least before the ML model will kick in. Compare the console output of the device app, with the Power BI dashboard. Are you able to correlate the forced and increasing vibrations to a run of anomaly detections?
 
 If you're seeing an active Power BI dashboard, you've just  completed this lab. Great work.
 
-> [!NOTE] Before you go, don't forget to close Visual Studio Code - this will exit the device app if it is still running.
+> **Note**:  Before you go, don't forget to close Visual Studio Code - this will exit the device app if it is still running.

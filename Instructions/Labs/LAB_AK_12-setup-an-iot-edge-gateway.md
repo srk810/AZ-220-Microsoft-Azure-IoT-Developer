@@ -65,7 +65,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. Under **Size**, click **Change size**. In the displayed list of sizes, select **DS1_v2** and click **Select**.
 
-    > [!NOTE] Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
+    > **Note**:  Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
 1. Under **Administrator account**, select the **Password** option for **Authentication type**.
 
@@ -77,7 +77,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. Once validation passes, click **Create** to begin deploying the virtual machine.
 
-    > [!NOTE] Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
+    > **Note**:  Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
 
 ### Exercise 3: Generate and Configure IoT Edge Device CA Certificates
 
@@ -111,7 +111,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
     git clone https://github.com/Azure/iotedge.git
     ```
 
-    > [!NOTE] The [Azure/iotedge](https://github.com/Azure/iotedge) open source project is the official open source project for Azure IoT Edge. This project contains source code for the Edge Agent, Edge Hub, and IoT Edge Security Daemon; in addition to the helper script used in this unit.
+    > **Note**:  The [Azure/iotedge](https://github.com/Azure/iotedge) open source project is the official open source project for Azure IoT Edge. This project contains source code for the Edge Agent, Edge Hub, and IoT Edge Security Daemon; in addition to the helper script used in this unit.
 
 1. Run the following commands to create a working directory named `~/certificates` that will be used for generating the certificates, then move to that directory:
 
@@ -174,7 +174,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
     ~/certificates/private/iot-edge-device-ca-MyEdgeDeviceCA.key.pem
     ```
 
-    > [!NOTE] Now that the IoT Edge Device CA certificate has been generated, do not re-run the previous command that generates the root CA certificate. Doing so will overwrite the existing certificate with a new one that will no longer match the `MyEdgeDeviceCA` IoT Edge Device CA certificate that was just generated.
+    > **Note**:  Now that the IoT Edge Device CA certificate has been generated, do not re-run the previous command that generates the root CA certificate. Doing so will overwrite the existing certificate with a new one that will no longer match the `MyEdgeDeviceCA` IoT Edge Device CA certificate that was just generated.
 
 1. To confirm that the Azure IoT Edge Runtime is installed on the VM, run the following command:
 
@@ -224,7 +224,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
     | `device_ca_pk` | This is the Device CA Private Key for the IoT Edge Device. |
     | `trusted_ca_certs` | This is the Root CA Certificate. This certificate must contain all the trusted CA certificates required for Edge module communications.|
 
-    > [!NOTE] Here are some tips for using **vi** when editing the `config.yaml` file:
+    > **Note**:  Here are some tips for using **vi** when editing the `config.yaml` file:
     > * Press the `i` key to put the editor into Insert mode, then you will be able to make changes.
     > * Press `Esc` to go stop Insert mode and return to Normal mode.
     > * To Save and Quit, type `:x`, and press `Enter`.
@@ -298,7 +298,7 @@ In this exercise, you will create a new IoT Edge Device identity in Azure IoT Hu
 
     The `FROM /*` part of the message route will match all device-to-cloud messages or twin change notifications from any module or leaf device. Then, the `INTO $upstream` tells the route to send those messages to the Azure IoT Hub.
 
-    > [!NOTE] To learn more about configuring message routing within Azure IoT Edge, reference the [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/azure/iot-edge/module-composition#declare-routes#declare-routes) documentation article.
+    > **Note**:  To learn more about configuring message routing within Azure IoT Edge, reference the [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/azure/iot-edge/module-composition#declare-routes#declare-routes) documentation article.
 
 1. Click the **Next: Review + create >** button.
 
@@ -342,7 +342,7 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
     This is a sample SSH command that will be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. Now that the DNS name label has been configured, the command is formatted similar to `ssh demouser@AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com`.
 
-    > [!NOTE] If a "_Host key verification failed_" messages displays, then use the VM's **IP Address** with the `ssh` command to connect tot he virtual machine.
+    > **Note**:  If a "_Host key verification failed_" messages displays, then use the VM's **IP Address** with the `ssh` command to connect tot he virtual machine.
 
 1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
 
@@ -366,7 +366,7 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
     The `hostname` setting configures the Edge Hub server hostname. Regardless of the case used for this setting, a lowercase value is used to configure the Edge Hub server. This is also the hostname that downstream IoT devices will need to use when connecting to the IoT Edge Gateway for the encrypted communication to work properly.
 
-    > [!NOTE] Here are some tips for using **vi** when editing the `config.yaml` file:
+    > **Note**:  Here are some tips for using **vi** when editing the `config.yaml` file:
     > * Press `Esc` and enter `/` followed by a search string, then press enter to search
     > * Pressing `n` will cycle through matches.
     > * Press the `i` key to put the editor into Insert mode, then you will be able to make changes.

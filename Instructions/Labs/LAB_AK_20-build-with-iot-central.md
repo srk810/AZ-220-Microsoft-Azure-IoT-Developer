@@ -74,7 +74,7 @@ In this Lab, you'll create a device template for a refrigerated truck.
 
 1. For **Create a capability model**, click **Custom**. You should now see a screen similar to the following image.
 
-    > [!NOTE]
+    > **Note**: 
     > Take note of a few important elements that you have created. Including that the template is in Draft form, and the locations of the **+ Add interface**, **Views**, and **Publish** controls.
 
 1. You are now ready to add the specifics of the device template. Click **Add interface**, then **Custom**, to start building from a blank interface.
@@ -435,7 +435,7 @@ Using Visual Studio Code, build the device sensor app.
 
 In the blank Program.cs file, insert the following code. Each additional section of code should be appended to the end of the file, in the order listed here.
 
-   > [!NOTE]
+   > **Note**: 
    > If you would like to skip this task, and load all of the code into your app, then download and copy all of the contents of Program.cs from [MicrosoftDocs/mslearn-your-first-iot-central-app](https://github.com/MicrosoftDocs/mslearn-your-first-iot-central-app) into the Program.cs file of your project. If you copy this code (and replace the connection and subscription strings) then go straight to the next task, and start testing!
 
 1. Add the `using` statements, including for Azure IoT Central and Azure Maps.
@@ -693,7 +693,7 @@ In the blank Program.cs file, insert the following code. Each additional section
             }
     ```
 
-    > [!NOTE]
+    > **Note**: 
     > The key call here is `var directions = azureMapsServices.GetRouteDirections(req).Result;`. The `directions` structure is complex. Consider setting a breakpoint in this method, and examining the contents of `directions`.
 
 1. Add the direct method to deliver to a customer.
@@ -761,7 +761,7 @@ In the blank Program.cs file, insert the following code. Each additional section
         }
     ```
 
-    > [!NOTE]
+    > **Note**: 
     > The device responds with a conflict, if the device isn't in the correct state. The command itself is acknowledged at the end of the method. The recall command that follows in the next step handles things similarly.
 
 1. Add the recall direct method.
@@ -972,7 +972,7 @@ In the blank Program.cs file, insert the following code. Each additional section
         }
     ```
 
-    > [!NOTE]
+    > **Note**: 
     > This function is called every time interval. The actual time interval is set at 5 seconds, though the _simulated time_ (the number of simulated seconds you specify that has passed each time this function is called) is set by the global `static double interval = 60`. Setting this value at 60 means the simulation runs at a rate of 60 divided by 5, or 12 times real time. To lower the simulated time, reduce `interval` to, say, 30 (for a simulation that runs at six times real-time). Setting `interval` at 5 would run the simulation in real-time. Though realistic, this speed would be a bit slow, given the real driving times to the customer destinations.
 
 1. Add the methods to send truck telemetry. Send events too, if any have occurred.
@@ -1030,7 +1030,7 @@ In the blank Program.cs file, insert the following code. Each additional section
         }
     ```
 
-    > [!NOTE]
+    > **Note**: 
     > The `SendTruckTelemetryAsync` is an important function, handling the sending of telemetry, states, and events to IoT Central. Note the use of JSON strings to send the data.
 
 1. Add the code to handle settings and properties. You only have one setting and one property in our app, though if there are more, they are easily added.
@@ -1066,7 +1066,7 @@ In the blank Program.cs file, insert the following code. Each additional section
         }
     ```
 
-    > [!NOTE]
+    > **Note**: 
     > This section of code is generic to most C# apps that communicate with IoT Central. To add additional properties or settings, add to `reportedProperties`, or create a new setting string, and check on `desiredProperties`, respectively. No other code changes are usually needed.
 
 1. Add the `Main` function.
@@ -1147,7 +1147,7 @@ In the blank Program.cs file, insert the following code. Each additional section
     }
     ```
 
-    > [!NOTE]
+    > **Note**: 
     > Direct methods are set in the client using statements such as `s_deviceClient.SetMethodHandlerAsync("cmdGoTo", CmdGoToCustomer, null).Wait();`.
 
 Fantastic! You are now ready to test your code.
@@ -1222,7 +1222,7 @@ Now for the best fun of all.
 
 1. In the console for the device app, you should both see  **New customer** event, and a **Route found** message.
 
-   > [!NOTE]
+   > **Note**: 
    > If you see a message including the text **Access denied due to invalid subscription key**, then check your subscription key to Azure Maps.
 
 1. In the dashboard **Location** tile, is your truck on its way? You might have to wait a short time for the apps to sync up.

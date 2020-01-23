@@ -88,7 +88,7 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
 
 1. In the editor, update the values of the `{YOUR-ID}` and `Location` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CP123019**, and set `Location` to the location that makes sense for your resources.
 
-    > [!NOTE] The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -108,7 +108,7 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE] You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with a Device ID of **SimulatedThermostat**, and display the device connection string, enter the following command:
 
@@ -148,7 +148,7 @@ In this unit you will deploy an Ubuntu Server VM with Azure IoT Edge runtime sup
     The first command above accepts the terms and conditions of use for VM image. The second command  actually creates the VM within the resource group specified above. Remember to update `AZ220EdgeVM{YOUR-ID}` with your unique id and replace `{YOUR-PASSWORD-HERE}` with a suitably secure password.
 
     >**Note**: In production, you may elect to generate SSH keys rather than use the username/password approach. You can learn more about Linux VMs and SSH here: [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed).
-    > [!NOTE] Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
+    > **Note**:  Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
 
 ### Exercise 3: Setup IoT Edge Parent with Child IoT Devices
 
@@ -176,7 +176,7 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
     az iot hub device-identity create --edge-enabled --hub-name AZ-220-HUB-_{YOUR-ID}_ --auth-method shared_private_key --device-id IoTEdgeGateway
     ```
 
-    > [!NOTE] Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     Notice the `az iot hub device-identity create` command is called by passing in several parameters:
 
@@ -226,7 +226,7 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
     az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id IoTEdgeGateway -o tsv
     ```
 
-    > [!NOTE] Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     Notice the `az iot hub device-identity show-connection-string` command is called by passing in several parameters:
 
@@ -248,7 +248,7 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
     az iot hub device-identity create -n AZ-220-HUB-_{YOUR-ID}_ --device-id ChildDevice1 --pd IoTEdgeGateway
     ```
 
-    > [!NOTE] Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     This command is passed the following parameters:
 
@@ -300,7 +300,7 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
     az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id ChildDevice1 -o tsv
     ```
 
-    > [!NOTE] Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
 1. Now you have an IoT Edge Device and a Child IoT Device registered within Azure IoT Hub. The **IoT Device** is configured with the **IoT Edge Device** as its parent. This configuration will enable the Child IoT Device to connect to and communicate with the Parent IoT Edge Device; instead of connecting directly with Azure IoT Hub. Configuring the IoT device topology this way enables Offline capable scenarios where the IoT Device and IoT Edge Device can keep working even when connectivity to Azure IoT Hub is broken.
 
@@ -359,7 +359,7 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
 
     A notification will appear when the file upload has completed.
 
-    > [!NOTE] These two scripts are helper scripts that will assist in setting up the Azure IoT Edge on Ubuntu VM to be a Transparent Gateway device. These scripts are meant to be used for development purposes in this lab, and are not meant for production use.
+    > **Note**:  These two scripts are helper scripts that will assist in setting up the Azure IoT Edge on Ubuntu VM to be a Transparent Gateway device. These scripts are meant to be used for development purposes in this lab, and are not meant for production use.
 
 1. You can verify that the files have been uploaded by listing the content of the current directory by entering the `ls` command.
 
@@ -444,7 +444,7 @@ These are the TCP/IP port numbers for the supported protocols:
     | `{nsg-name}` | Enter the name of the **Network Security Group**.
     | `{resource-group}` | Enter the name of the **Resource group** for the virtual machine.
 
-    > [!NOTE] In production, it's best practice to only open inbound communication to the communication protocol(s) in use by your IoT devices. If your devices only use MQTT, then only open inbound communication for that port. This will help limit the surface attack area of open ports that could be exploited.
+    > **Note**:  In production, it's best practice to only open inbound communication to the communication protocol(s) in use by your IoT devices. If your devices only use MQTT, then only open inbound communication for that port. This will help limit the surface attack area of open ports that could be exploited.
 
 1. With the **Inbound rules** added to the **Network Security Group** (NSG), the Child IoT Device will be allowed to communicate with the IoT Edge Gateway virtual machine.
 
@@ -486,7 +486,7 @@ The `timeToLiveSecs` property for the Edge Hub can be specified in the Deploymen
 
 1. On the **Runtime Settings** pane, locate the **Store and forward configuration - time to live (seconds)** field for the **Edge Hub** module, then change the value to `1209600`. This specifies a message time to live of 2 weeks on the IoT Edge Device.
 
-    > [!NOTE] There are several considerations to make when configuring the **Message Time-to-Live** (TTL) for the Edge Hub (`$edgeHub`) module. When the IoT Edge Device is disconnected, the messages are stored on the local device. You need to calculate how much data will be stored during the TTL period, and make sure there is enough storage on the device for that much data. The amount of storage and TTL configured will need to meet the solutions requirements so that important data is not lost; if possible.
+    > **Note**:  There are several considerations to make when configuring the **Message Time-to-Live** (TTL) for the Edge Hub (`$edgeHub`) module. When the IoT Edge Device is disconnected, the messages are stored on the local device. You need to calculate how much data will be stored during the TTL period, and make sure there is enough storage on the device for that much data. The amount of storage and TTL configured will need to meet the solutions requirements so that important data is not lost; if possible.
     >
     >If the device does not have enough storage, then you need to configure a shorter TTL. Once the age of a message reaches the TTL time limit, it will be deleted if it has not yet been sent to Azure IoT Hub.
 
@@ -800,8 +800,8 @@ In this exercise, you will monitor events from the **ChildIoTDevice** are being 
 
 1. Once the **IoTEdgeGateway** IoT Edge Transparent Gateway is able to resume connectivity with Azure IoT Hub, it will sync the event telemetry from all connected child devices. This includes the saved telemetry that couldn't be sent while disconnected, and all telemetry still being sent to the gateway.
 
-    > [!NOTE] The IoT Edge Gateway device will take a couple minutes to reconnect to Azure IoT Hub and resume sending telemetry. After waiting a couple minutes, you will see events showing up in the `az iot hub monitor-events` command output again.
+    > **Note**:  The IoT Edge Gateway device will take a couple minutes to reconnect to Azure IoT Hub and resume sending telemetry. After waiting a couple minutes, you will see events showing up in the `az iot hub monitor-events` command output again.
 
 In this lab we have demonstrated that an Azure IoT Edge Gateway can utilize local storage to retain messages that can't be sent due to an interruption in the connection to the IoT Hub. Once connection is reestablished, we saw that messages are then sent.
 
-> [!NOTE] Once you have finished with the lab, ensure you exit the device simulation application by pressing **CTRL+C** in the terminal.
+> **Note**:  Once you have finished with the lab, ensure you exit the device simulation application by pressing **CTRL+C** in the terminal.

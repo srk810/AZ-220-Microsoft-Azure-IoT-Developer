@@ -81,7 +81,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
     Location="{YOUR-LOCATION}"
     ```
 
-    > [!NOTE] The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -99,7 +99,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE] You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resources required for this lab, enter the following command:
 
@@ -123,7 +123,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 1. Open the **Azure Cloud Shell** by clicking the **Terminal** icon within the top header bar of the Azure portal, and select the **Bash** shell option.
 
-    > [!NOTE] Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this unit you will use some helper scripts written for the *Bash* shell.
+    > **Note**:  Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this unit you will use some helper scripts written for the *Bash* shell.
 
 1. Within the Azure Cloud Shell, run the following commands that will download a helper script for using *OpenSSL* to generate X.509 CA Certificates. They will be placed within the `~/certificates` directory inside your Cloud Shell storage.
 
@@ -331,7 +331,7 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     Once the `create_device_certificate` command has completed, the generated X.509 device certificate will be named `new-device.cert.pfx`, and will be located within the `/certs` sub-directory.
 
-    > [!NOTE] This command overwrites the existing certificate. If you want to create a certificate for multiple devices, ensure you copy the `new-device.cert.pfx` each time.
+    > **Note**:  This command overwrites the existing certificate. If you want to create a certificate for multiple devices, ensure you copy the `new-device.cert.pfx` each time.
 
 1. Run the following command to download the generated X.509 device certificate from the Cloud Shell to your local machine:
 
@@ -398,7 +398,7 @@ In this exercise, you will configure a simulated device written in C# to connect
 
 1. Locate the `s_certificatePassword` variable. This variable contains the password for the X.509 device certificate. Notice that it's already set to `1234`, as this is the default password used by the `certGen.sh` helper script when generating the X.509 certificates.
 
-    > [!NOTE] For the purpose of this unit, the password is hard coded. In a _production_ device, the password will need to be stored in a more secure manner, such as in an Azure Key Vault. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).
+    > **Note**:  For the purpose of this unit, the password is hard coded. In a _production_ device, the password will need to be stored in a more secure manner, such as in an Azure Key Vault. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).
     >
     > An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with all attestation mechanisms the provisioning service supports.
 
@@ -581,7 +581,7 @@ In this exercise, you will run the simulated device. When the device is started 
     dotnet run
     ```
 
-    > [!NOTE] When running `dotnet run` for the simulated device, if a `ProvisioningTransportException` exception is displayed, the most common cause is an _Invalid certificate_ error. If this happens, ensure the CA Certificate in DPS, and the Device Certificate for the simulated device application are configured correctly.
+    > **Note**:  When running `dotnet run` for the simulated device, if a `ProvisioningTransportException` exception is displayed, the most common cause is an _Invalid certificate_ error. If this happens, ensure the CA Certificate in DPS, and the Device Certificate for the simulated device application are configured correctly.
     >
     > ```text
     > localmachine:LabFiles User$ dotnet run
@@ -731,7 +731,7 @@ In this exercise, you will retire the enrollment group and its devices from both
 
    Once deleted, the Group Enrollment is completely removed from DPS, and would need to be recreated to add it back.
 
-    > [!NOTE] If you delete an enrollment group for a certificate, devices that have the certificate in their certificate chain might still be able to enroll if a different, enabled enrollment group still exists for the root certificate or another intermediate certificate higher up in their certificate chain.
+    > **Note**:  If you delete an enrollment group for a certificate, devices that have the certificate in their certificate chain might still be able to enroll if a different, enabled enrollment group still exists for the root certificate or another intermediate certificate higher up in their certificate chain.
 
 #### Task 2: Retire the device from the IoT Hub
 

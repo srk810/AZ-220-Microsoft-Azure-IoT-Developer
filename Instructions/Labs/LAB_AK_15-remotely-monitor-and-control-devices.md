@@ -93,7 +93,7 @@ To create these resources, please update and execute the **lab-setup.azcli** scr
 
 1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH121119**, and set `Location` to the location that makes sense for your resources.
 
-    > [!NOTE] The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -113,7 +113,7 @@ To create these resources, please update and execute the **lab-setup.azcli** scr
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE] You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with an ID of **CheeseCaveID**, and display the device connection string, enter the following command:
 
@@ -183,7 +183,7 @@ At the end of this unit, you'll be sending and receiving telemetry.
 
 1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
 
-    > [!NOTE] If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
+    > **Note**:  If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
 
@@ -368,7 +368,7 @@ This section adds code to send telemetry from a simulated device. The device sen
 
     ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-telemetry.png)
 
-    > [!NOTE] Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
+    > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
 1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
 
@@ -409,7 +409,7 @@ Now we have a device pumping out telemetry, we need to listen for that telemetry
 
 1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
 
-    > [!NOTE] If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
+    > **Note**:  If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
 
@@ -547,13 +547,13 @@ This test is important, checking whether your back-end app is picking up the tel
 
    This command will run the **Program.cs** file in the current folder.
 
-   > [!NOTE] You can ignore the warning about the unused variable `s_serviceConnectionString` - we will be using that variable shortly.
+   > **Note**:  You can ignore the warning about the unused variable `s_serviceConnectionString` - we will be using that variable shortly.
 
 1. You should quickly see console output, and immediately respond if it successfully connects to IoT Hub. If not, carefully check your IoT Hub service connection string, noting that this string should be the service connection string, and not any other.:
 
     ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-telemetry-received.png)
 
-    > [!NOTE] Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
+    > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
 1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
 
@@ -628,7 +628,7 @@ The device app contains the functional code for the direct method. The function 
     }
     ```
 
-    > [!NOTE] This code defines the implementation of the direct method and is executed when the direct method is invoked. The fan has three states: *on*, *off*, and *failed*. The method above sets the fan to either of the first two of these states. If the payload text doesn't match one of these two, or the fan is in a failed state, an error is returned.
+    > **Note**:  This code defines the implementation of the direct method and is executed when the direct method is invoked. The fan has three states: *on*, *off*, and *failed*. The method above sets the fan to either of the first two of these states. If the payload text doesn't match one of these two, or the fan is in a failed state, an error is returned.
 
 1. To register the direct method, add the following lines of code to the Main method, after creating the device client.
 
@@ -705,7 +705,7 @@ You've completed what is needed at the device end of things. Next, we need to ad
     }
     ```
 
-    > [!NOTE] This code is used to invoke the **SetFanState** direct method on the device app.
+    > **Note**:  This code is used to invoke the **SetFanState** direct method on the device app.
 
 1. Add the following code to the **Main** method, before creating the receivers to listen for messages:
 
@@ -715,7 +715,7 @@ You've completed what is needed at the device end of things. Next, we need to ad
     InvokeMethod().GetAwaiter().GetResult();
     ```
 
-    > [!NOTE] This code creates the client we used to connect to the IoT Hub so we can invoke the direct method on the device.
+    > **Note**:  This code creates the client we used to connect to the IoT Hub so we can invoke the direct method on the device.
 
 1. Save the **Program.cs** file.
 
@@ -729,7 +729,7 @@ To test the method, start the apps in the correct order. We can't invoke a direc
 
 1. Start the **cheesecaveoperator** back-end app. This app immediately calls the direct method. Do you notice it's handled by the back-end app, with output similar to the following?
 
-    > [!NOTE] If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **cheesecavedevice** and started the app.
+    > **Note**:  If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **cheesecavedevice** and started the app.
 
     ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-direct-method-sent.png)
 
@@ -796,7 +796,7 @@ There is some overlap between the functionality of device twins and direct metho
     }
     ```
 
-    > [!NOTE] The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates thew twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1".
+    > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates thew twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1".
 
 1. Now, add the following lines to the **Main** method, before the lines creating a service client.
 
@@ -806,7 +806,7 @@ There is some overlap between the functionality of device twins and direct metho
     SetTwinProperties().Wait();
     ```
 
-    > [!NOTE] Read the comments in this section of code.
+    > **Note**:  Read the comments in this section of code.
 
 1. Save the **Program.cs** file.
 
@@ -846,7 +846,7 @@ There is some overlap between the functionality of device twins and direct metho
     }
     ```
 
-    > [!NOTE] This code defines handler invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
+    > **Note**:  This code defines handler invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
 
 1. To register the desired property changed handler, add the following lines after the statements creating a handler for the direct method:
 
@@ -861,7 +861,7 @@ There is some overlap between the functionality of device twins and direct metho
 
 1. Save the **Program.cs** file.
 
-> [!NOTE] Now you have added device twins to your app, you can reconsider having explicit variables such as **desiredHumidity**. Instead, you can use the variables in the device twin object.
+> **Note**:  Now you have added device twins to your app, you can reconsider having explicit variables such as **desiredHumidity**. Instead, you can use the variables in the device twin object.
 
 #### Task 3: Test the Device Twins
 
@@ -881,4 +881,4 @@ To test the method, start the apps in the correct order.
 
 The code given in this module isn't industrial quality. It does show how to use direct methods, and device twins. However, the messages are sent only when the back-end service app is first run. Typically, a back-end service app would require a browser interface, for an operator to send direct methods, or set device twin properties, when required.
 
-> [!NOTE] Before you go, don't forget to close both instances of Visual Studio Code - this will exit the apps if they are still running.
+> **Note**:  Before you go, don't forget to close both instances of Visual Studio Code - this will exit the apps if they are still running.

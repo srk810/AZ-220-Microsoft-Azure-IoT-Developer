@@ -83,7 +83,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
 1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH121119**, and set `Location` to the location that makes sense for your resources.
 
-    > [!NOTE] The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -103,7 +103,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE] You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with an ID of **VibrationSensorId**, and display the device connection string, enter the following command:
 
@@ -174,7 +174,7 @@ Later in this lab you will complete a small amount of SQL coding.
 
 1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
 
-    > [!NOTE] If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
+    > **Note**:  If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
 
@@ -474,7 +474,7 @@ The following app simulates a conveyor belt, and reports vibration sensor data e
 
 1. Save the **Program.cs** file.
 
-    > [!NOTE] The code is also available in the `/labFiles` folder - remember to replace the `<your device connection string>`.
+    > **Note**:  The code is also available in the `/labFiles` folder - remember to replace the `<your device connection string>`.
 
 #### Task 3: Test your Code to Send Telemetry
 
@@ -490,7 +490,7 @@ The following app simulates a conveyor belt, and reports vibration sensor data e
 
     ![Console Output](../../Linked_Image_Files/M99-L07-vibration-telemetry.png)
 
-    > [!NOTE] Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
+    > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
 1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
 
@@ -564,7 +564,7 @@ In this exercise, you will create and test the logging route.
 
 1. On the **Create Storage** pane, under **Name**, enter **vibrationstore** and add your initials and today's date - **vibrationstorecah191211**.
 
-    > [!NOTE] This field can only contain lower-case letters and numbers, must be between 3 and 24 characters, and must be unique.
+    > **Note**:  This field can only contain lower-case letters and numbers, must be between 3 and 24 characters, and must be unique.
 
 1. Under **Account kind**, select **StorageV2 (general purpose V2)**.
 
@@ -606,7 +606,7 @@ In this exercise, you will create and test the logging route.
 
 1. Under **Encoding**, note there are two options and that **AVRO** is selected.
 
-    > [!NOTE] By default IoT Hub writes the content in Avro format, which has both a message body property and a message property. The Avro format is not used for any other endpoints. Although the Avro format is great for data and message preservation, it's a challenge to use it to query data. In comparison, JSON or CSV format is much easier for querying data. IoT Hub now supports writing data to Blob storage in JSON as well as AVRO.
+    > **Note**:  By default IoT Hub writes the content in Avro format, which has both a message body property and a message property. The Avro format is not used for any other endpoints. Although the Avro format is great for data and message preservation, it's a challenge to use it to query data. In comparison, JSON or CSV format is much easier for querying data. IoT Hub now supports writing data to Blob storage in JSON as well as AVRO.
 
 1. The final field **File name format** specifies the pattern used to write the data to files in storage. The various tokens are replace with values as the file is created.
 
@@ -698,7 +698,7 @@ It may seem odd to be routing data to storage, then again sending it to storage 
 
 1. Under **Shared access policy name**, ensure **iothubowner** is selected.
 
-    > [!NOTE] The **Shared access policy key** is populated and read-only.
+    > **Note**:  The **Shared access policy key** is populated and read-only.
 
 1. Under **Consumer group**, ensure **$Default** is selected.
 
@@ -728,7 +728,7 @@ It may seem odd to be routing data to storage, then again sending it to storage 
 
 1. Under **Storage account**, choose the storage account you created earlier - **vibrationstore** plus your initials and date.
 
-    > [!NOTE] The **Storage account key** is automatically populated and read-only.
+    > **Note**:  The **Storage account key** is automatically populated and read-only.
 
 1. Under **Container**, ensure **Use existing** is selected and select **vibrationcontainer** from the dropdown list.
 
@@ -742,7 +742,7 @@ It may seem odd to be routing data to storage, then again sending it to storage 
 
 1. Under **Format**, ensure **Line separated**.
 
-    > [!NOTE] This setting stores each record as a JSON object on each line and, taken as a whole, results in a file that is an invalid JSON record. The other option, **Array**, ensures that the entire document is formatted as a JSON array where each record is an item in the array. This allows the entire file to be parsed as valid JSON.
+    > **Note**:  This setting stores each record as a JSON object on each line and, taken as a whole, results in a file that is an invalid JSON record. The other option, **Array**, ensures that the entire document is formatted as a JSON array where each record is an item in the array. This allows the entire file to be parsed as valid JSON.
 
 1. Leave **Minimum rows** blank.
 
@@ -793,7 +793,7 @@ Now for the fun part. Does the telemetry your device app is pumping out work its
 
 1. For added reassurance that all the data is getting to the account, open the storage in **Storage Explorer (preview)**. You can find links to **Storage Explorer (preview)** in multiple locations; the easiest to find is probably in the left hand navigation area.
 
-    > [!NOTE] The Storage Explorer is currently in preview mode, so its exact mode of operation may change.
+    > **Note**:  The Storage Explorer is currently in preview mode, so its exact mode of operation may change.
 
 1. In **Storage Explorer (preview)**, under **BLOB CONTAINERS**, select **vibrationcontainer**.
 
