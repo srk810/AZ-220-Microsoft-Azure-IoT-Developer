@@ -18,7 +18,7 @@ You will add Time Series Insights to the solution to quickly store, visualize, a
 * Create an Azure Time Series Insights (TSI) environment
 * Create IoT Hub and simulated device (using CLI)
 * Connect to IoT Hub with Time Series Insights (TSI)
-* Create and deploy TSI resources by using templates with Time Series Insights 
+* Create and deploy TSI resources by using templates with Time Series Insights
 
 ## Lab Instructions
 
@@ -28,9 +28,11 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| Device ID | SimulatedThermostat |
+| Resource Group | `AZ-220-RG` |
+| IoT Hub | `AZ-220-HUB-{YOUR-ID}` |
+| Device ID | `TruckDevice` |
+| Device ID | `AirplaneDevice` |
+| Device ID | `ContainerDevice` |
 
 1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
@@ -50,7 +52,7 @@ This lab assumes the following resources are available:
 
 1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
 
-1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
+1. To create a directory for this lab, move **lab10-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
 
     ```bash
     mkdir lab10
@@ -58,17 +60,17 @@ This lab assumes the following resources are available:
     cd lab10
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
+1. To ensure the **lab10-setup.azcli** has the execute permission, enter the following commands:
 
     ```bash
-    chmod +x lab-setup.azcli
+    chmod +x lab10-setup.azcli
     ```
 
-1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab9** to expand it and then select **lab-setup.azcli**.
+1. To edit the **lab10-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab10** to expand it and then select **lab10-setup.azcli**.
 
-    The editor will now show the contents of the **lab-setup.azcli** file.
+    The editor will now show the contents of the **lab10-setup.azcli** file.
 
-1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH121119**, and set `Location` to the location that makes sense for your resources.
+1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH191211**, and set `Location` to the location you have been using for your labs.
 
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
@@ -92,16 +94,15 @@ This lab assumes the following resources are available:
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with a Device ID of **SimulatedThermostat**, and display the device connection string, enter the following command:
+1. To create a resource group named **AZ-220-RG**, create an IoT Hub named `AZ-220-HUB-{YourID}`, add the three device IDs, and display the device connection string, enter the following command:
 
     ```bash
-    ./lab-setup.azcli
+    ./lab10-setup.azcli
     ```
 
     This will take a few minutes to run. You will see JSON output as each step completes.
 
-1. Once complete, the **Connection Strings** for all 3 IoT Devices, starting with "HostName=", are displayed. Copy all three of these connection strings into a text document, and save for later reference.
-
+1. Once complete, the **Connection Strings** for all 3 IoT Devices, starting with `HostName=`, are displayed. Copy all three of these connection strings into a text document, and save for later reference.
 
 ### Exercise 2: Setup Time Series Insights
 
@@ -121,64 +122,63 @@ In this exercise, you will setup Time Series Insights (TSI) integration with Azu
 
 1. On the **Time Series Insights** item, click **Create**.
 
-2. On the **Create Time Series Insights** blade, in the **Environment name** field, enter `AZ-220-TSI`.
+1. On the **Create Time Series Insights** blade, in the **Environment name** field, enter `AZ-220-TSI`.
 
-3. On the **Resource group** dropdown, select the **AZ-220-RG** resource group.
+1. On the **Resource group** dropdown, select the **AZ-220-RG** resource group.
 
-4. On the **Location** dropdown, select the Azure region used by your resource group.
+1. On the **Location** dropdown, select the Azure region used by your resource group.
 
-5. On the **Tier** field, select the **S1** pricing tier, and leave the **Capacity** at the default of `1`.
+1. On the **Tier** field, select the **S1** pricing tier if it is not selected, and leave the **Capacity** at the default of `1`.
 
-6. Click **Next: Event Source**.
+1. Click **Next: Event Source**.
 
-7. In the **EVENT SOURCE DETAILS** section, select **Yes** on the **Create an event source?** option.
+1. In the **EVENT SOURCE DETAILS** section, set the **Create an event source?** option to **Yes** if it is not already selected.
 
-8. Enter `AZ-220-HUB-_{YOUR-ID}_` in the **Name** field to specify a unique name for this Event Source.
+1. In the **Name** field, enter `AZ-220-HUB-{YOUR-ID}` to specify a unique name for this Event Source.
 
+1. In the **Source type** dropdown, select **IoT Hub**.
 
-9. In the **Source type** dropdown, select **IoT Hub**.
+1. In the **Select a hub** dropdown, select the **Select existing** option. This will allow you to select an existing IoT Hub that's already been provisioned.
 
-10. In the **Select a hub** dropdown, select the **Select existing** option. This will allow you to select an existing IoT Hub that's already been provisioned.
+1. In the **IoT Hub name** dropdown, select the **AZ-220-HUB-_{YOUR_ID}_** Azure IoT Hub service that's already been provisioned.
 
-11. In the **IoT Hub name** dropdown, select the `AZ-220-HUB-_{YOUR-ID}_` Azure IoT Hub service that's already been provisioned.
-
-12. In the **IoT Hub access policy name** dropdown, select the **iothubowner** option.
+1. In the **IoT Hub access policy name** dropdown, select the **iothubowner** option.
 
     In a production environment, it's best practice to create a new _Access Policy_ within Azure IoT Hub to use for configuring Time Series Insights (TSI) access. This will enable the security of TSI to be managed independently of any other services connected to the same Azure IoT Hub.  We are not doing that here for convenience reasons.
 
-13. Under the **CONSUMER GROUP** section, next to the **IoT Hub consumer group** dropdown, click the **New** button.
+1. Under the **CONSUMER GROUP** section, next to the **IoT Hub consumer group** dropdown, click the **New** button.
 
-14. In the **IoT Hub consumer group** box, enter `tsievents`, and then to the right of the textbox, click **Add**.
+1. In the **IoT Hub consumer group** box, enter `tsievents`, and then to the right of the textbox, click **Add**.
 
     This will add a new _Consumer Group_ to use for this Event Source. The Consumer Group needs to be used exclusively for this Event Source, as there can only be a single active reader from a given Consumer Group at a time.
 
-15. In the **TIMESTAMP** section, leave the **Property Name** blank.
+1. In the **TIMESTAMP** section, leave the **Property Name** blank.
 
-15. Click the **Review + create** button.
+1. Click the **Review + create** button.
 
-16. Click the **Create** button.
+1. Click the **Create** button.
 
     > **Note**:  Deployment of Time Series Insights (TSI) will take a couple minutes to complete.
 
-17. Once **Time Series Insights** is deployed, navigate to your **AZ-220-TSI** resource.
+1. Once **Time Series Insights** is deployed, navigate to your **AZ-220-TSI** resource.
 
-18. On the **Time Series Insights environment** blade, under the **Settings** section, click on the **Event Sources** link.
+1. On the **Time Series Insights environment** blade, under the **Settings** section, click on the **Event Sources** link.
 
-19. On the **Event Sources** pane, notice the **AZ-220-HUB-_{YOUR-ID}_** Event Source in the list. This is the event source that was configured when the TSI resource was created.
+1. On the **Event Sources** pane, notice the **AZ-220-HUB-_{YOUR-ID}_** Event Source in the list. This is the event source that was configured when the TSI resource was created.
 
-20. Click the **AZ-220-HUB-_{YOUR-ID}_** event source in the list to view the event source details.
+1. Click the **AZ-220-HUB-_{YOUR-ID}_** event source in the list to view the event source details.
 
-21. Notice the configuration of the event source matches what was set when the Time Series Insights resource was created.
+    Notice the configuration of the event source matches what was set when the Time Series Insights resource was created.
 
 ### Exercise 3: Run Simulated IoT Devices
 
-In this exercise, you will run the Simulated Thermostat device so it starts sending telemetry events to Azure IoT Hub.
+In this exercise, you will run the simulated devices so they starts sending telemetry events to Azure IoT Hub.
 
 1. Within **Visual Studio Code**, open the **LabFiles** directory for this lab.
 
 1. Open the **DeviceSimulation.cs** file.
 
-1. Locate the variable for the Container, Truck, and Airplane **Connection Strings**, and change their values to the **Azure IoT Hub Connection Strings** for the IoT Devices registered in IoT Hub.
+1. Locate the variable for the Container, Truck, and Airplane connection strings, and change their values to the Azure IoT Hub connection strings for the IoT Devices registered in IoT Hub.
 
     ```csharp
     private readonly static string connectionString_Truck = "{Your Truck device connection string here}";
@@ -198,7 +198,7 @@ In this exercise, you will run the Simulated Thermostat device so it starts send
     dotnet run
     ```
 
-1. Once the **SimulatedThermostat** device is running, it will begin outputting telemetry data to the Terminal. This will be the telemetry data that it is sending to Azure IoT Hub.
+1. Once the **DeviceSimulation** app is running, it will begin outputting telemetry data to the terminal. This will be the telemetry data that it is sending to Azure IoT Hub.
 
     The **Terminal** output when the **DeviceSimulation** app is running will look similar to the following:
 
@@ -213,7 +213,7 @@ In this exercise, you will run the Simulated Thermostat device so it starts send
 
 1. Leave the **DeviceSimulation** app running for the remaining duration of this lab. This will ensure device telemetry from the three devices (Container, Truck, and Airplane) remain being sent to Azure IoT Hub.
 
-1. Once the **DeviceSimulation** app is running for greater than 30 seconds, you will see output that the **Container** device is changing transport methods between **Truck** and **Airplane** every 30 seconds. The **Terminal** output will look like the following when this happens:
+8. Once the **DeviceSimulation** app is running for greater than 30 seconds, you will see output that the **Container** device is changing transport methods between **Truck** and **Airplane** every 30 seconds. The **Terminal** output will look like the following when this happens:
 
     ```text
     12/27/2019 8:51:40 PM > CONTAINER transport changed to: TRUCK
@@ -231,11 +231,13 @@ In this exercise, you will be introduced to working with time series data using 
 
 1. On your Resource group tile, click the **AZ-220-TSI** Time Series Insights (TSI) resource.
 
-1. On the **Time Series Insights environment** blade, click the **Go to Environment** button at the top.
+1. On the **Time Series Insights environment** blade, on the **Overview** pane, click the **Go to Environment** button at the top.
 
 1. This will open the **Time Series Insights Explorer** in a new browser tab.
 
-1. On the **Analyze** view within TSI Explorer, locate the **MEASURE** dropdown within the box for creating new queries, and select the `temperature` value.
+1. If the screen has an option to enable the **Preview**, set **Preview** to **On**.
+
+1. On the **Analyze** view within TSI Explorer (the left-hand side of the screen will show an icon of a graph), within the query edit area, locate the **MEASURE** dropdown, and select the `temperature` value.
 
 1. Within the **SPLIT BY** dropdown, select the `iothub-connection-device-id` value. This will split the graph to show the telemetry from each of the IoT Devices separately on the graph.
 
@@ -249,7 +251,7 @@ In this exercise, you will be introduced to working with time series data using 
 
 1. You can see the list of **Device IDs** to the left of the graph. Hovering the mouse over a specific Device ID will highlight it's data on the graph display.
 
-1. As you watch the graph data auto-refresh as telemetry is streaming into the system from the simulated devices, notice that the spikes in **temperature** of the **ContainerDevice** correlate with the temperature spikes of the **TruckDevice**. This gives you an indication that the ContainerDevice is being transported by Truck at those times.
+1. As you watch the graph data auto-refresh as telemetry is streaming into the system from the simulated devices, notice that the spikes in **temperature** of the **ContainerDevice** correlate with the temperature spikes of either the **TruckDevice** or the **AirplaneDevice**. This gives you an indication that the ContainerDevice is being transported by Truck or Airplane at those times.
 
 1. Add another new query, by setting the **MEASURE** dropdown to `humidity`, the **SPLIT BY** dropdown to `iothub-connection-device-id`, and click **Add**.
 
