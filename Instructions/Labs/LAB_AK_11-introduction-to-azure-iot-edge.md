@@ -458,7 +458,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
     FROM
         temperature TIMESTAMP BY timeCreated
     GROUP BY TumblingWindow(second,15)
-    HAVING Avg(machine.temperature) > 500
+    HAVING Avg(machine.temperature) > 25
     ```
 
     This query looks at the events coming into the `temperature` Input, and groups by a Tumbling Windows of 15 seconds, then it checks if the average temperature value within that grouping is greater than 25. If the average is greater than 25, then it sends an event with the `command` property set to the value of `reset` to the `alert` Output.
