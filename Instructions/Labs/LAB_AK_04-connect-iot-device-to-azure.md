@@ -8,31 +8,36 @@ lab:
 
 ## Lab Scenario
 
-Contoso is known for producing high quality of cheeses. Due to the company rapidly growing in popularity and sales, they want to ensure that their cheeses stay at the same level of quality. At the moment, a worker temperature and humidity data is collected by floor workers every shift.
+Contoso is known for producing high quality cheeses. Due to the company's rapid growth in both popularity and sales, they want to take steps to ensure that their cheeses stay at the same high level of quality that their customers expect.
 
-Contoso is exploring adding an IoT device to monitor the temperature and humidity of their batches of cheeses. For the asset monitoring solution, you will be connecting an IoT device with temperature and humidity sensors (temperature, humidity) to IoT Hub.
+In the past, temperature and humidity data was collected by factory floor workers during each work shift. The company is concerned that the factory expansions will require increased monitoring as the new facilities come online and that a manual process for collecting data won't scale.
+
+Contoso has decided to launch an automated system that uses IoT devices to monitor temperature and humidity. The rate at which telemetry data is communicated will be adjustable to help ensure that their manufacturing process is under control as batches of cheese proceed through environmentally sensitive processes.
+
+To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device with temperature and humidity sensors to IoT Hub.
 
 ## In This Lab
 
 In this lab, you will do the following:
 
-* Verify Lab Prerequisites
-* Register a Device ID in Azure IoT Hub using the Azure CLI.
-* You will then configure and run a pre-built Simulated Device written in C# to connect to Azure IoT Hub and send Device-to-Cloud telemetry messages.
-* Verify the device telemetry is being received by Azure IoT Hub using the Azure CLI.
+* Verify that the lab prerequisites are met
+* Register a Device ID in Azure IoT Hub using Azure CLI
+* Configure a simulated IoT device (pre-built and written in C#) to connect to Azure IoT Hub
+* Run the simulated device in order to send Device-to-Cloud telemetry messages to the Azure IoT Hub
+* Verify that device telemetry is being received by Azure IoT Hub by using Azure CLI
 
 ## Lab Instructions
 
 ### Exercise 1: Verify Lab Prerequisites
 
-This lab assumes the following resources are available:
+This lab assumes that the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 
-If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
+If these resources are not available, please execute the **lab-setup.azcli** script before starting the lab.
 
 > **Note**:  The **lab-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
