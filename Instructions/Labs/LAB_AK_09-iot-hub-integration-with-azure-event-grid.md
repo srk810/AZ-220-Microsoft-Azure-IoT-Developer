@@ -170,7 +170,7 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
 
 1. On the **IoT Hub** blade, on the left side, click the **Events** link.
 
-31 On the **Events** pane, at the top, click the **+ Event Subscription** button.
+1. On the **Events** pane, at the top, click the **+ Event Subscription** button.
 
 1. Create the event subscription with the following values:
 
