@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Lab 08: Visualize a Data Stream in Power BI'
-    module: 'Module 4: Message Processing and Analytics'
+    module: 'Module 5: Insights and Business Integration'
 ---
 
 # Visualize a Data Stream in Power BI
