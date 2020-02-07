@@ -170,7 +170,7 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
 
 1. On the **IoT Hub** blade, on the left side, click the **Events** link.
 
-31 On the **Events** pane, at the top, click the **+ Event Subscription** button.
+1. On the **Events** pane, at the top, click the **+ Event Subscription** button.
 
 1. Create the event subscription with the following values:
 
@@ -189,11 +189,11 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
      * **Endpoint Type**: **Web Hook**
      * Click **Select an endpoint**, and then, in the **Select Web Hook** pane, under **Subscriber Endpoint**, paste the URL that you copied from your logic app, then click **Confirm Selection**.
   
-  *Do not yet click Create!*
+    *Do not yet click Create!*
   
-  When you're done, the pane should look like the following example:
+    When you're done, the pane should look like the following example:
 
-  ![Sample event subscription form](../../Linked_Image_files/MM99-L09-subscription-form.png)
+    ![Sample event subscription form](../../Linked_Image_files/MM99-L09-subscription-form.png)
 
 1. You could save the event subscription here, and receive notifications for every device that is created in your IoT hub. For this tutorial, though, let's use the optional fields to filter for specific devices. Select **Filters** at the top of the pane.
 
@@ -205,7 +205,7 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
 
    * **Value**:  Enter `devices/CheeseCave1_` to filter for device events in building 1.
   
-   Add another filter with these values:
+1. Add another filter with these values:
 
    * **Key**: Enter `Subject`.
 
