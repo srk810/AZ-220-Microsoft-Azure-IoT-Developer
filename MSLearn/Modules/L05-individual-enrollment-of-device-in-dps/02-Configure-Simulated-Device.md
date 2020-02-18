@@ -63,7 +63,7 @@ The simulated device created in this unit is for a an asset tracking solution th
 
         // Report Twin Properties
         var reportedProperties = new TwinCollection();
-        reportedProperties["telemetryDelay"] = this._telemetryDelay;
+        reportedProperties["telemetryDelay"] = this._telemetryDelay.ToString();
         await iotClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
         Console.WriteLine("Reported Twin Properties:");
         Console.WriteLine($"{reportedProperties.ToJson()}");
