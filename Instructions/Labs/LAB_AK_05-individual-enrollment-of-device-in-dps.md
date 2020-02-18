@@ -271,7 +271,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
         // Report Twin Properties
         var reportedProperties = new TwinCollection();
-        reportedProperties["telemetryDelay"] = this._telemetryDelay;
+        reportedProperties["telemetryDelay"] = this._telemetryDelay.ToString();
         await iotClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
         Console.WriteLine("Reported Twin Properties:");
         Console.WriteLine($"{reportedProperties.ToJson()}");
