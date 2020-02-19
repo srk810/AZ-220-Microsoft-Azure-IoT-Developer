@@ -35,31 +35,33 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. In the Azure Portal, click **Create a resource** open the Azure Marketplace.
+1. In the upper-left of the Azure Portal, click **Create a resource** to open the Azure Marketplace.
 
 1. On the **New** blade, in the **Search the Marketplace** box, type in and search for **Azure IoT Edge on Ubuntu**.
 
-1. In the search results, select the **Azure IoT Edge on Ubuntu** item.
-
 1. On the **Azure IoT Edge on Ubuntu** item, click **Create**.
 
-1. On the **Create a virtual machine** blade, select your Azure Subscription and use the **Create new** Resource group option to create a new Resource Group for the VM named `AZ-220-VM-RG`.
+1. On the **Create a virtual machine** blade, next to **Subscription**, select your Azure Subscription.
 
-    > **Note**:  Resource management best practices in recommend placing Virtual Machines in
+1. Next to **Resource group**, under the drop-down, select **Create new** to create a new Resource Group for the VM; name it `AZ-220-VM-RG`.
 
-1. In the **Virtual machine name** box, enter `AZ-220-VM-EDGE` for the name of the Virtual Machine.
+1. In the **Virtual machine name** box, enter `AZ-220-VM-EDGE` for the name of the virtual machine.
 
-1. In the **Region** dropdown, select the Azure Region closest to you, or the region where your Azure IoT Hub is provisioned.
+1. In the **Region** dropdown, select the region where your Azure IoT Hub is provisioned.
+
+1. Leave **Availability options** at **No infrastructure redundancy required**.
 
 1. Notice the **Image** dropdown has the **Ubuntu Server 16.04 LTS + Azure IoT Edge runtime** image selected.
 
-1. Under **Size**, click **Change size**. In the displayed list of sizes, select **DS1_v2** and click **Select**.
+1. Leave **Azure Spot instance** set to **No**.
+
+1. Under **Size**, click **Change size**. In the displayed list of sizes, select **DS1_v2** and click **Select**.  You may need to use the **Clear all filters** link to make this size available in the list.
 
     > **Note**:  Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
 1. Under **Administrator account**, select the **Password** option for **Authentication type**.
 
-1. Enter an Administrator **Username** and **Password** for the VM.
+1. Enter an administrator **Username**, **Password**, and **Confirm password** for the VM.
 
     >**Important:** Do not lose/forget these values - you cannot connect to your VM without them.
 
@@ -69,7 +71,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. Once validation passes, click **Create** to begin deploying the virtual machine.
 
-    > **Note**:  Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
+    > **Note**:  Deployment will take approximately 5 minutes to complete. You can continue on to the next exercise while it is deploying.
 
 ### Exercise 3: Create IoT Edge Device Identity in IoT Hub using Azure CLI
 
@@ -79,15 +81,15 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Open the Azure Cloud Shell by clicking the **Terminal** icon within the top header bar of the Azure portal, and select the **Bash** shell option.
+1. Open the Azure Cloud Shell by clicking the **Cloud Shell** icon within the top header bar of the Azure portal, and select the **Bash** shell option.
 
 1. Run the following Azure CLI command to create an **IoT Edge Device Identity** in Azure IoT Hub with the **Device ID** set to `myEdgeDevice`.
 
     ```cmd/sh
-    az iot hub device-identity create --hub-name {IoTHubName} --device-id myEdgeDevice --edge-enabled
+    az iot hub device-identity create --hub-name AZ-220-HUB-{YOUR-ID} --device-id myEdgeDevice --edge-enabled
     ```
 
-    Be sure to replace the `{IoTHubName}` placeholder with the name of the Azure IoT Hub in your subscription.
+    Be sure to replace the `{YOUR-ID}` placeholder with the appropriate value.
 
     > **Note**:  The IoT Edge Device Identity can also be created using the Azure Portal by navigating to **IoT Hub** -> **IoT Edge** -> **Add an IoT Edge device**.
 
@@ -126,10 +128,10 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 1. Once the IoT Edge Device Identity has been created, you can access the **Connection String** for the device by running the following Azure CLI command.
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --device-id myEdgeDevice --hub-name {IoTHubName}
+    az iot hub device-identity show-connection-string --device-id myEdgeDevice --hub-name AZ-220-HUB-_{YOUR-ID}_
     ```
 
-    Replace the `{IoTHubName}` placeholder with the name of the Azure IoT Hub in your subscription.
+    Be sure to replace the `{YOUR-ID}` placeholder with the appropriate value.
 
 1. Copy the value of the `connectionString` from the JSON output of the command, and save it for reference later. This connection string will be used to configure the IoT Edge device to connect to IoT Hub.
 
@@ -145,6 +147,8 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 
 In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
+1. Wait for the IoT Edge virtual machine to have been created.
+
 1. Navigate to the `AZ-220-VM-EDGE` IoT Edge virtual machine within the Azure Portal.
 
 1. On the **Overview** pane of the **Virtual machine** blade, click the **Connect** button at the top.
@@ -153,19 +157,21 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
     This is a sample SSH command that will be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. The command is formatted similar to `ssh demouser@52.170.205.79`.
 
-1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
+1. If Cloud Shell is not open, then at the top of the Azure Portal, click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
 
 1. Within the Cloud Shell, paste in the `ssh` command that was copied, and press **Enter**.
 
 1. When prompted with **Are you sure you want to continue connecting?**, type `yes` and press Enter. This prompt is a security confirmation since the certificate used to secure the connection to the VM is self-signed. The answer to this prompt will be remembered for subsequent connections, and is only prompted on the first connection.
 
-1. When prompted to enter the password, enter the Administrator password that was entered when the VM was provisioned.
+1. When prompted to enter the password, enter the administrator password that was entered when the VM was provisioned.
 
 1. Once connected, the terminal will change to show the name of the Linux VM, similar to the following. This tells you which VM you are connected to.
 
     ```cmd/sh
     demouser@AZ-220-VM-EDGE:~$
     ```
+
+    >> **IMPORTANT**: When you connect, you will likely be told there are outstanding OS updates for the Edge VM.  We are ignoring this for our lab purposes, but in production, you always want to be sure to keep your Edge devices up-to-date.
 
 1. To confirm that the Azure IoT Edge Runtime is installed on the VM, run the following command:
 
@@ -175,29 +181,21 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
     This command will output the version of the Azure IoT Edge Runtime that is currently installed on the virtual machine.
 
-1. You will need to run the command to configure the Edge device to connect to IoT Hub as Administrator. Run the following `sudo` command to elevate the terminal to run as Administrator:
+1. The `/etc/iotedge/configedge.sh` script is used to configure the Edge device with the Connection String necessary to connect it to Azure IoT Hub. This script is installed as part of the Azure IoT Edge Runtime.  To configure the Edge device with the device connection string for Azure IoT Hub that was copied when the IoT Edge Device ID was created, run the following command:
 
     ```cmd/sh
-    sudo su -
-    ```
-
-    > **Note**:  You will see the user id change in the shell prompt: `root@AZ-220-VM-EDGE:~$`
-
-1. The `/etc/iotedge/configedge.sh` script is used to configure the Edge device with the Connection String necessary to connect it to Azure IoT Hub. This script is installed as part of the Azure IoT Edge Runtime.
-
-1. To configure the Edge device with the **Device Connection String** for Azure IoT Hub that was copied when the IoT Edge Device ID was created, run the following command:
-
-    ```cmd/sh
-    /etc/iotedge/configedge.sh "{iot-edge-device-connection-string}"
+    sudo /etc/iotedge/configedge.sh "{iot-edge-device-connection-string}"
     ```
 
     Be sure to replace the `{iot-edge-device-connection-string}` placeholder with the Connection String you copied previously for your IoT Edge Device.
 
-1. Once this command completes, the IoT Edge Device will be configured to connect to Azure IoT Hub using the **Connection String** that was entered. The command will output a `Connection string set to ...` message that includes the Connection String that was set.
+    > **IMPORTANT**: Make sure you include the quotation marks on the command line as listed above.
+
+1. Once this command completes, the IoT Edge Device will be configured to connect to Azure IoT Hub using the connection string that was entered. The command will output a `Connection string set to ...` message that includes the Connection String that was set.
 
 ### Exercise 5: Add Edge Module to Edge Device
 
-In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Module, and deploy it to run on the IoT Edge Device.
+In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Edge Module, and deploy it to run on the IoT Edge Device.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -205,22 +203,24 @@ In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Mo
 
 1. On your Resource group tile, click **AZ-220-HUB-_{YOUR-ID}_** to navigate to the Azure IoT Hub.
 
-1. Under **Automatic Device Management**, click on **IoT Edge**.
+1. At the left of the **IoT Hub** blade, under **Automatic Device Management**, click on **IoT Edge**.
 
 1. Within the list of IoT Edge Devices, click on the `myEdgeDevice` Device ID for the Edge device that was created previously.
 
 1. On the Device summary pane for the **myEdgeDevice** IoT Edge Device, notice the **Modules** tab displays a list of the modules currently configured for the device. Currently, the IoT Edge device is configured to only run the Edge Agent (`$edgeAgent`) and Edge Hub (`$edgeHub`) modules that are part of the IoT Edge Runtime.
 
-1. On the IoT Edge Device blade, click on the **Set Modules** button at the top.
+1. At the top of the **myEdgeDevice** blade, click on the **Set Modules**.
 
-1. On the **Set modules** blade, locate the **IoT Edge Modules** sections, and click the **Add** button, then select **IoT Edge Module**.
+1. On the **Set modules on device: myEdgeDevice** blade, locate the **IoT Edge Modules** section, and click the **Add** button, then select **IoT Edge Module**.
 
-1. On the **IoT Edge Custom Modules** pane, enter the following values to add a custom module named `tempsensor` using the Image URI for a simulated temperature sensor module.
+1. On the **Add IoT Edge Module** pane, enter the following values to add a custom module named `tempsensor` using the Image URI for a simulated temperature sensor module.
 
-    * IOT Edge Module Name: `tempsensor`
-    * Image URI: `asaedgedockerhubtest/asa-edge-test-module:simulated-temperature-sensor`
+    * **IOT Edge Module Name**: `tempsensor`
+    * **Image URI**: `asaedgedockerhubtest/asa-edge-test-module:simulated-temperature-sensor`
 
-1. Select the **Module Twin Settings** tab.
+    Note that this image is a published image on Docker Hub that is provided by the product group to support this testing scenario.
+
+1. Still on the **Add IoT Edge Module** pane, select the **Module Twin Settings** tab.
 
 1. Enter the following JSON for the module twin's desired properties:
 
@@ -237,11 +237,11 @@ In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Mo
     }
     ```
 
-    This JSON configures the Edge Module by setting the **Desired** properties of its module twin.
+    This JSON configures the Edge Module by setting the desired properties of its module twin.
 
 1. Click **Add**.
 
-1. On **Modules** step, of the **Set modules on device** pane, click **Next: Routes >**.
+1. Back in the **Set modules on device: myEdgeDevice** blade, click **Next: Routes >**.
 
 1. On the **Specify Routes** step, notice the default route is already configured that will send all messages from all modules on the IoT Edge Device to IoT Hub.
 
@@ -251,7 +251,7 @@ In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Mo
 
 1. Click **Next: Review + create >**.
 
-1. On the **Review Deployment** step, notice the JSON displayed in this pane. This is JSON is the **Deployment Manifest** for the IoT Edge Device.
+1. On the **Review Deployment** step, notice the JSON displayed in this pane. This JSON is the **Deployment Manifest** for the IoT Edge Device.
 
     Under the `properties.desired` section is the `modules` section that declares the IoT Edge Modules that will be deployed to the IoT Edge Device. This includes the Image URIs of all the modules, including any container registry credentials.
 
@@ -289,7 +289,7 @@ In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Mo
         },
     ```
 
-    Lower in the JSON is a section for the **tempsensor** module, where the `properties.desired` section contains the desired properties for the configuration of the edge module.
+    Lower still in the JSON is a section for the **tempsensor** module, where the `properties.desired` section contains the desired properties for the configuration of the edge module.
 
     ```json
                 },
@@ -319,7 +319,7 @@ In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Mo
 
 1. Notice the `tempsensor` module is now updated, displaying the **Runtime Status** as **running**.
 
-1. Open a **Cloud Shell** session and connect to the `AZ-220-VM-EDGE` virtual machine using **SSH**.
+1. Open a Cloud Shell session if it is not still open.  If you are not still connected to the `AZ-220-VM-EDGE` virtual machine, connect using **SSH**.
 
 1. Within Cloud Shell, run the following command to list out all the modules currently running on the IoT Edge Device.
 
@@ -358,7 +358,7 @@ In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Mo
     iotedge restart tempsensor
     ```
 
-    You do not need to restart the module now, but if you find it stops sending telemetry later, then go back into the **Azure Cloud Shell** and run this command to reset it. Once reset, the module will start sending telemetry again.
+    You do not need to restart the module now, but if you find it stops sending telemetry later, then go back into Cloud Shell, SSH to your Edge VM, and run this command to reset it. Once reset, the module will start sending telemetry again.
 
 ### Exercise 6: Deploy Azure Stream Analytics as IoT Edge Module
 
@@ -370,21 +370,21 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. In the Azure Portal, click **Create a resource** to open the Azure Marketplace.
+1. In the upper left of the Azure Portal, click **Create a resource** to open the Azure Marketplace.
 
-1. On the **New** blade, select the **Storage** category under **Azure Marketplace**, then click on **Storage account**.
+1. On the **New** blade, select the **Storage** category under **Azure Marketplace**, then click on **Storage account - blob, file, table, queue**.  You may need to search for `Storage` to find this item.  Then, click **Create**.
 
 1. On the **Create storage account**, select the existing `AZ-220-RG` group in the **Resource group** field.
 
-1. Set the **Storage account name** field to something unique. This needs to be a globally unique name for the Azure Storage Account.
+1. Set the **Storage account name** field to **az220store_{YOUR-ID}_**.
 
-    To provide a globally unique name, enter **az220store{your-id}** - i.e. followed by your initials and the current date.
-
-    > **Note**:  Your initials must be in lower-case for this resource and no dashes.
+    > **Note**:  Your ID must be in lower-case for this resource and no dashes.
 
 1. Set the **Location** to the same Azure Region used for Azure IoT Hub.
 
-1. Click **Review + create**.
+1. Set **Replication** to **Locally-redundant storage (LRS)**.
+
+1. Leaving all other settings unchanged, click **Review + create**.
 
 1. Once validation has passed, click **Create** to deploy the Storage Account.
 
@@ -396,7 +396,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. On the **New** blade, select the **Internet of Things** category under **Azure Marketplace**, then click on **Stream Analytics job**.
 
-1. On the **New Stream Analytics job** blade, enter **AZ-220-ASA-_{YOUR-ID}_** into the **Job name** field followed by your initials and the current date to make sure it's a unique name.
+1. On the **New Stream Analytics job** blade, in the **Job name** field, enter **AZ-220-ASA-_{YOUR-ID}_**.
 
 1. In the **Resource group** field, select the existing **AZ-220-RG** group in the **Resource group** field.
 
@@ -412,41 +412,41 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. Once the **Stream Analytics job** has provisioned, navigate to the resource.
 
-1. In the left side navigation, click on **Inputs** under the **Job topology** section.
+1. In the left side navigation, under the **Job topology** section, click on **Inputs**.
 
 1. On the **Inputs** pane, click **Add stream input**, then select **Edge Hub**.
 
-1. On the **New Input** pane, enter `temperature` in the **Input alias** field.
+1. On the **New Input** pane, in the **Input alias** field, enter `temperature`.
 
 1. In the **Event serialization format** dropdown, select **JSON**. Stream Analytics needs to understand the message format. JSON is the standard format.
 
-1. In the **Encoding** dropdown, select **UTF-8**.
+1. In the **Encoding** dropdown, select **UTF-8** if it is not selected.
 
     > **Note**:  UTF-8 is the only JSON encoding supported at the time of writing.
 
-1. In the **Event compression type** dropdown, select **None**.
+1. In the **Event compression type** dropdown, select **None** if it is not selected.
 
     For this lab, compression will not be used. GZip and Deflate formats are also supported by the service.
 
 1. Click **Save**.
 
-1. In the left side navigation, click on **Outputs** under the **Job topology** section.
+1. In the left side navigation, under the **Job topology** section, click on **Outputs**.
 
 1. On the **Outputs** pane, click **Add**, then select **Edge Hub**.
 
-1. On the **New output** pane, enter `alert` in the **Output alias** field.
+1. On the **New output** pane, in the **Output alias** field, enter `alert`.
 
 1. In the **Event serialization format** dropdown, select **JSON**. Stream Analytics needs to understand the message format. JSON is the standard format, but CSV is also supported by the service.
 
-1. In the **Format** dropdown, select **Line separated**.
+1. In the **Format** dropdown, select **Line separated** if it is not already selected.
 
-1. In the **Encoding** dropdown, select **UTF-8**.
+1. In the **Encoding** dropdown, select **UTF-8** if it is not already selected.
 
     > **Note**:  UTF-8 is the only JSON encoding supported at the time of writing.
 
 1. Click **Save**.
 
-1. In the left side navigation, click on **Query** under the **Job topology** section.
+1. In the left side navigation, under the **Job topology** section, click on **Query**.
 
 1. In the **Query** pane, replace the Default query with the following:
 
@@ -465,51 +465,51 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
     For more information about the `TumblingWindow` functions, reference this link: <https://docs.microsoft.com/en-us/stream-analytics-query/tumbling-window-azure-stream-analytics>
 
-1. Click **Save query**.
+1. At the top of the query editor, click **Save query**.
 
 #### Task 4: Configure Storage Account Settings
 
 To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it needs to be associated with an Azure Blob Storage container. When the job is deployed, the job definition is exported to the storage container.
 
-1. On the **Stream Analytics job** blade, in the left side navigation, click **Storage account settings** under the **Configure** section.
+1. On the **Stream Analytics job** blade, in the left side navigation, under the **Configure** section, click **Storage account settings**.
 
 1. Click **Add storage account**.
 
-1. Select the **Select storage account from your subscription** option.
+1. Select the **Select storage account from your subscriptions** option if it is not already selected.
 
-1. In the **Storage account** dropdown, select the **az220store{your-id}** storage account that was created previously.
+1. In the **Storage account** dropdown, select the **az220store_{your-id}_** storage account that was created previously.
 
 1. Under **Container**, select **Create new**, then enter `jobdefinition` as the name of the container.
 
-1. Click **Save**.
+1. At the top of the pane, click **Save**.
 
 #### Task 5: Deploy the Stream Analytics Job
 
 1. In the Azure Portal, navigate to the **AZ-220-HUB-_{YOUR-ID}_** Azure IoT Hub resource.
 
-1. In the left side navigation, click **IoT Edge** under the **Automatic Device Management** section.
+1. In the left side navigation, under the **Automatic Device Management** section, click **IoT Edge**.
 
-1. Click on the **myEdgeDevice** IoT Edge device within the list of devices.
+1. In the list of devices, click on the **myEdgeDevice** IoT Edge device.
 
-1. On the **Device Details** pane, click the **Set Modules** button at the top.
+1. At the top of the **Device Details** pane, click the **Set Modules** button.
 
 1. On the **Add Modules** step, locate the **IoT Edge Modules** section, then click **Add** and select **Azure Stream Analytics Module**.
 
-1. In the **Edge job** dropdown, select the **Steam Analytics job** that was created previously.
+1. In the **Edge job** dropdown, select the Steam Analytics job that was created previously.
 
     > **Note**:  The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **AZ-220-ASA-_{YOUR-ID}_** job again. The **Save** button should then become enabled.
 
 1. Click **Save**. Deployment may take a few moments.
 
-1. Under the **IoT Edge Modules** section, click on the **Steam Analytics Module** that was just added.
+1. Under the **IoT Edge Modules** section, click on the Steam Analytics module that was just added.
 
 1. Notice the **Image URI** points to a standard Azure Stream Analytics image. This is the same image used for every job that gets deployed to an IoT Edge Device.
 
     ```text
-    mcr.microsoft.com/azure-stream-analytics/azureiotedge:1.0.5
+    mcr.microsoft.com/azure-stream-analytics/azureiotedge:1.0.6
     ```
 
-    > **Note**:  The version number at the end of the **Image URI** that is configured will reflect the current latest version when you created the Stream Analytics Module. At the time or writing this unit, the version was `1.0.5`.
+    > **Note**:  The version number at the end of the **Image URI** that is configured will reflect the current latest version when you created the Stream Analytics Module. At the time or writing this unit, the version was `1.0.6`.
 
 1. Leave all values as their defaults, and close the **IoT Edge Custom Modules** pane.
 
@@ -534,8 +534,8 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     The routes being defined are as follows:
 
     * The **telemetryToCloud** route sends the all messages from the `tempsensor` module output to Azure IoT Hub.
-    * The **alertsToReset** route sends all alert messages from the Stream Analytics Module output to the input of the **tempsensor** module.
-    * The **telemetryToAsa** route sends all messages from the `tempsensor` module output to the Stream Analytics Module input.
+    * The **alertsToReset** route sends all alert messages from the Stream Analytics module output to the input of the **tempsensor** module.
+    * The **telemetryToAsa** route sends all messages from the `tempsensor` module output to the Stream Analytics module input.
 
 1. Click **Next: Review + create >**.
 
@@ -578,7 +578,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 #### Task 6: View Data
 
-1. Go back to the **Cloud Shell** session where you're connected to the **IoT Edge Device** over **SSH**.
+1. Go back to the **Cloud Shell** session where you're connected to the **IoT Edge Device** over **SSH**.  If it is closed or timed out, reconnect.
 
 1. Run the following command to view a list of the modules deployed to the device:
 
@@ -605,7 +605,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     iotedge logs tempsensor
     ```
 
-1. Notice that while watching the temperature telemetry being sent by **tempsensor**, you will see the **reset** command sent by the Stream Analytics job when the `machine.temperature` reaches an average above `500` as configured in the Stream Analytics job query.
+1. Notice that while watching the temperature telemetry being sent by **tempsensor**, you will see the **reset** command sent by the Stream Analytics job when the `machine.temperature` reaches an average above `25` as configured in the Stream Analytics job query.
 
     Output of this event will look similar to the following:
 
