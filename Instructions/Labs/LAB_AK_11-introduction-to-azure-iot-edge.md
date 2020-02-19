@@ -59,7 +59,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
     > **Note**:  Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
-1. Under **Administrator account**, select the **Password** option for **Authentication type**.
+1. Under **Administrator account**, set the **Authentication type** to **Password**.
 
 1. Enter an administrator **Username**, **Password**, and **Confirm password** for the VM.
 
@@ -171,7 +171,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
     demouser@AZ-220-VM-EDGE:~$
     ```
 
-    >> **IMPORTANT**: When you connect, you will likely be told there are outstanding OS updates for the Edge VM.  We are ignoring this for our lab purposes, but in production, you always want to be sure to keep your Edge devices up-to-date.
+    > **Important:** When you connect, you will likely be told there are outstanding OS updates for the Edge VM.  We are ignoring this for our lab purposes, but in production, you always want to be sure to keep your Edge devices up-to-date.
 
 1. To confirm that the Azure IoT Edge Runtime is installed on the VM, run the following command:
 
@@ -189,7 +189,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
     Be sure to replace the `{iot-edge-device-connection-string}` placeholder with the Connection String you copied previously for your IoT Edge Device.
 
-    > **IMPORTANT**: Make sure you include the quotation marks on the command line as listed above.
+    > **Important:** Make sure you include the quotation marks on the command line as listed above.
 
 1. Once this command completes, the IoT Edge Device will be configured to connect to Azure IoT Hub using the connection string that was entered. The command will output a `Connection string set to ...` message that includes the Connection String that was set.
 
