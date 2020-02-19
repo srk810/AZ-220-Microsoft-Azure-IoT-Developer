@@ -1,4 +1,4 @@
-# AZ-220: Microsoft Azure IoT Developer - BETA
+# AZ-220: Microsoft Azure IoT Developer - Initial Public Release
 
 *Please note: Course is in Beta stage and labs are in the process of review in work in progress.  Be sure to review the known issues below before filing a new issue.  Thanks!*
 
