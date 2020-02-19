@@ -1,6 +1,6 @@
 # AZ-220: Microsoft Azure IoT Developer - Initial Public Release
 
-*Please note: Course is in Beta stage and labs are in the process of review in work in progress.  Be sure to review the known issues below before filing a new issue.  Thanks!*
+*Please note: This course is in "initial release" while the corresponding exam is in beta. The labs will be updated periodically to improve clarity as we receive your feedback. Please be patient and be sure to review the known issues below before filing a new issue.  Thanks!*
 
 - **[Download Latest Student Handbook and AllFiles Content](../../releases/latest)**
 - **Are you a MCT?** - Have a look at our [GitHub User Guide for MCTs](https://microsoftlearning.github.io/MCT-User-Guide/)
