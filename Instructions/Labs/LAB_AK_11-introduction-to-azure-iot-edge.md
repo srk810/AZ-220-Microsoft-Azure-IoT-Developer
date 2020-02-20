@@ -153,11 +153,11 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
 1. At the top of the **Overview** pane, click the **Connect** button, then click **SSH**.
 
-1. Within the **Connect via SSH with client** pane, copy the **Login using VM local account** value.
+1. Within the **Connect via SSH with client** pane, copy the **Run the example command below to connect to your VM** value.
 
     This is a sample SSH command that will be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. The command is formatted similar to `ssh username@52.170.205.79`.
 
-    > **Important**: As of the last edit of this lab, there is a bug in the Portal where you get a certificate-based sign in command rather than a username-based command.  You will need to edit the command to remove the certificate reference.
+    > **Important**: As of the last edit of this lab, there is a bug in the Portal where you get a certificate-based sign-in command rather than a username-based command.  You will need to edit the command to remove the certificate reference.
 
 1. If Cloud Shell is not open, then at the top of the Azure Portal, click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
 
