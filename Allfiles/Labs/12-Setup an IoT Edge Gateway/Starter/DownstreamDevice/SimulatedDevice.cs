@@ -20,7 +20,7 @@ namespace simulated_device
         private readonly static string s_connectionString = "{Your device connection string here}";
         
         // Async method to send simulated telemetry
-        private static async void SendDeviceToCloudMessagesAsync()
+        private static async Task SendDeviceToCloudMessagesAsync()
         {
             // Initial telemetry values
             double minTemperature = 20;
@@ -45,23 +45,23 @@ namespace simulated_device
                 // An IoT hub can filter on these properties without access to the message body.
                 message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
 
+                Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
+
                 // Send the telemetry message
                 await s_deviceClient.SendEventAsync(message);
-
-                Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
 
                 await Task.Delay(1000);
             }
         }
         private static void Main(string[] args)
         {
-            Console.WriteLine("IoT Hub Quickstarts #1 - Simulated device. Ctrl-C to exit.\n");
+            Console.WriteLine("AZ-220 Edge Hub Lab - Simulated device. Ctrl-C to exit.\n");
 
             InstallCACert();
 
             // Connect to the IoT hub using the MQTT protocol
             s_deviceClient = DeviceClient.CreateFromConnectionString(s_connectionString, TransportType.Mqtt);
-            SendDeviceToCloudMessagesAsync();
+            SendDeviceToCloudMessagesAsync().GetAwaiter().GetResult();
             Console.ReadLine();
         }
 
