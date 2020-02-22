@@ -28,7 +28,7 @@ In this unit, you will build and run a custom IoT Edge Module solution using the
 
 1. Open the **IoT Edge Solution** for the custom IoT Edge Module with **Visual Studio Code**.
 
-1. Within the **Explorer** pane, right-click the `deployment.debug.manifest.json` debugging deployment manifest file in the root directory of the IoT Edge Solution.
+1. Within the **Explorer** pane, right-click the `deployment.debug.template.json` debugging deployment manifest file in the root directory of the IoT Edge Solution.
 
 1. Select the **Build and Run IoT Edge Solution in Simulator** option.
 
