@@ -125,7 +125,9 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
     The Azure Marketplace is a collection of all the resources you can create in Azure. The marketplace contains resources from both Microsoft and the community.
 
-1. In the Search textbox, type **IoT Hub** and then press **Enter**.
+1. In the Search textbox, type **IoT** and then press **Enter**.
+
+    **Note**: Marketplace services provided by private contributors may include a cost that is not covered by a Microsoft Azure Pass or other Microsoft credit offering.
 
 1. On the search results blade, click **IoT Hub**.
 
@@ -190,13 +192,15 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
 1. To the right of **Number of S1 IoT Hub units**, ensure that **1** is selected.
 
-    As mentioned above, the pricing tier that you choose establishes the number of messages that your hub can process per unit per day. To increase the number of messages that you hub can process without moving to a higher pricing tier, you can increase the number of units. For example, if you want the IoT hub to support ingress of 700,000 messages, you choose *two* S1 tier units. For the IoT courses created by Microsoft we will be using just 1 unit.
+    As mentioned above, the pricing tier that you choose establishes the number of messages that your hub can process per unit per day. To increase the number of messages that you hub can process without moving to a higher pricing tier, you can increase the number of units. For example, if you want the IoT hub to support ingress of 800,000 messages, you choose *two* S1 tier units. For the IoT courses created by Microsoft we will be using just 1 unit.
 
 1. Under _Advanced Settings_, ensure that **Device-to-cloud partitions** is set to **4**.
 
     The number of partitions relates the device-to-cloud messages to the number of simultaneous readers of these messages. Most IoT hubs will only need four partitions, which is the default value. For this course we will create our IoT Hub using the default number of partitions.
 
 1. At the top of the blade, click **Review + create**.
+
+    Take a minute to review the settings that your provided.
 
 1. At the bottom of the blade, to finalize the creation of your IoT Hub, click **Create**.
 
@@ -240,7 +244,7 @@ IoT Hub's capabilities help you build scalable, full-featured IoT solutions such
 
 #### Task 2: View features of IoT Hub using the navigation menu
 
-1. Take a minute to scan the left-side navigation menu options.
+1. On the IoT Hub blade, take a minute to scan the left-side navigation menu options.
 
     As you would expect, these options open blades that provide access to properties and features of your IoT Hub. They also give you access to devices that are connected to your hub.
 
@@ -267,7 +271,7 @@ IoT Hub's capabilities help you build scalable, full-featured IoT solutions such
 
     Custom endpoints (such as Service Bus queue, Blob storage and the others listed here) are often used within an IoT implementation.
 
-1. Take a minute to explore some of the menu options under **Settings**
+1. Take a minute to review the menu options under **Settings**
 
     > **Note**:  This lab exercise is only intended to be an introduction to the IoT Hub service and get you more comfortable with the UI, so don't worry if you feel a bit overwhelmed at this point. We will be walking you through the process of configuring and managing your IoT Hub, devices, and communications as this course continues.
 
@@ -301,13 +305,13 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     Notice the list of _Useful Links_ displayed on this blade.
 
-1. In the list of links, click **Documentation**.
+1. In the list of links, notice that there is a link to Documentation.
 
-    The IoT Hub Device Provisioning Service Documentation page is the root page for DPS. You can use this page to explore current documentation and find tutorials and other resources that will help you to explore activities that are outside the scope of this course. We will refer you to the docs.microsoft.com site throughout this course for additional reading on specific topics.
+    Again, there is no need to explore this documentation now, but is is good to know that it is available. The IoT Hub Device Provisioning Service Documentation page is the root page for DPS. You can use this page to explore current documentation and find tutorials and other resources that will help you to explore activities that are outside the scope of this course. We will refer you to the docs.microsoft.com site throughout this course for additional reading on specific topics.
+
+    If you did open the documentation link, use your browser to close the documentation tab and navigate back to the Azure portal tab.
 
 #### Task 2: Create a Device Provisioning Service with required property settings
-
-1. Use your browser to navigate back to the Azure portal tab.
 
 1. To begin the process of creating your new DPS instance, click **Create**.
 
@@ -319,7 +323,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     For example: **AZ-220-DPS-CAH191216**
 
-1. On the _IoT Hub Device Provisioning Service_ blade, ensure that the Azure **Subscription** that you intend to use for this course is selected.
+1. Under **Subscription**, ensure that the subscription you are using for this course is selected.
 
 1. Under **Resource Group**, open the **Select existing** dropdown, and then click **AZ-220-RG**
 
@@ -361,7 +365,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. Open the IoT hub dropdown, and then click **AZ-220-HUB-_{YOUR-ID}_**.
 
-    This is the IoT Hub that you created in the previous lab.
+    This is the IoT Hub that you created in the previous exercise.
 
 1. In the Access Policy dropdown, click **iothubowner**.
 
@@ -369,7 +373,9 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. To complete the configuration, click **Save**.
 
-    You should now see the selected hub listed on the Linked IoT hubs blade. You might need to click Refresh to show Linked IoT hubs.
+    You should now see the selected hub listed on the Linked IoT hubs blade. You might need to click **Refresh** to show Linked IoT hubs.
+
+1. On the Portal menu, click **Dashboard**.
 
 ### Exercise 5: Examine the Device Provisioning Service
 
@@ -428,6 +434,6 @@ The IoT Hub Device Provisioning Service is a helper service for IoT Hub that ena
 
     An individual enrollment is an entry for a single device that may register. Individual enrollments may use either X.509 leaf certificates or SAS tokens (from a physical or virtual TPM) as attestation mechanisms. The registration ID in an individual enrollment is alphanumeric, lowercase, and may contain hyphens. Individual enrollments may have the desired IoT hub device ID specified.
 
-1. Take a minute to explore some of the other menu options under **Settings**
+1. Take a minute to review some of the other menu options under **Settings**
 
    > **Note**:  This lab exercise is only intended to be an introduction to the IoT Hub Device Provisioning Service and get you more comfortable with the UI, so don't worry if you feel a bit overwhelmed at this point. We will be covering DPS in much more detail as the course continues.
