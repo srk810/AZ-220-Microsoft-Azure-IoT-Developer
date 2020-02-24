@@ -20,7 +20,7 @@ To evaluate this asset monitoring solution prior to full scale implementation, y
 
 In this lab, you will do the following:
 
-* Verify that the lab prerequisites are met
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
 * Register a Device ID in Azure IoT Hub using Azure CLI
 * Configure a simulated IoT device (pre-built and written in C#) to connect to Azure IoT Hub
 * Run the simulated device in order to send Device-to-Cloud telemetry messages to the Azure IoT Hub
@@ -30,48 +30,67 @@ In this lab, you will do the following:
 
 ### Exercise 1: Verify Lab Prerequisites
 
-This lab assumes that the following resources are available:
+This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 
-If these resources are not available, please execute the **lab-setup.azcli** script before starting the lab. The script 
+If these resources are not available, you will need to run the **lab04-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
-> **Note**:  The **lab-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+> **Note**:  The **lab04-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
 1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
 1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. To ensure the Azure Shell is using **Bash**, ensure the dropdown selected value in the top-left is **Bash**.
+1. Verify that the Azure Shell is using **Bash**.
+
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
 1. To upload the setup script, in the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
-1. In the dropdown, select **Upload** and in the file selection dialog, navigate to the **lab-setup.azcli** file for this lab. Select the file and click **Open** to upload it.
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In Lab 3 of this course, "Setup the Development Environment", you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 04-Connect an IoT Device to Azure
+            * Setup
+
+    The lab04-setup.azcli script file is located in the Setup folder for lab 4.
+
+1. Select the **lab04-setup.azcli** file, and then click **Open**.
 
     A notification will appear when the file upload has completed.
 
 1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
 
-1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
     mkdir lab4
-    mv lab-setup.azcli lab4
+    mv lab04-setup.azcli lab4
     cd lab4
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
+    These commands will create a directory for this lab, move move the **lab04-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
+
+1. To ensure the **lab04-setup.azcli** has the execute permission, enter the following command:
 
     ```bash
-    chmod +x lab-setup.azcli
+    chmod +x lab04-setup.azcli
     ```
 
-1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab4** to expand it and then select **lab-setup.azcli**.
+1. On the Cloud Shell toolbar, to edit the **lab04-setup.azcli** file, click **Open Editor** (second button from the right - **{ }**).
 
-    The editor will now show the contents of the **lab-setup.azcli** file.
+1. In the **Files** list, to expand the lab4 folder, click **lab4**, and then click **lab04-setup.azcli**.
+
+    The editor will now show the contents of the **lab04-setup.azcli** file.
 
 1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
 
@@ -98,16 +117,16 @@ If these resources are not available, please execute the **lab-setup.azcli** scr
     > East US 2             36.6681     -78.3889     eastus2
     > ```
 
-1. To save the changes made to the file and close the editor, click **...** in the top-right of the editor window and select **Close Editor**.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**,  and then click **Close Editor**.
 
     If prompted to save, click **Save** and the editor will close.
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resources required for this lab, enter the following command:
+1. To create the resources required for this lab, enter the following command:
 
     ```bash
-    ./lab-setup.azcli
+    ./lab04-setup.azcli
     ```
 
     This will take a few minutes to run. You will see JSON output as each step completes.
