@@ -18,17 +18,17 @@ In this lab, you will, create an individual enrollment within Azure Device Provi
 
 This lab includes:
 
-* Verify Lab Prerequisites
-* Create New individual enrollment in DPS
-* Configure Simulated Device
-* Test Simulated Device
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+* Create a new Individual Enrollment in DPS
+* Configure a Simulated Device
+* Test the Simulated Device
 * Retire the Device
 
 ## Lab Instructions
 
 ### Exercise 1: Verify Lab Prerequisites
 
-This lab assumes the following resources are available:
+This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
@@ -36,41 +36,70 @@ This lab assumes the following resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
 
-If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
+If these resources are not available, you will need to run the **lab05-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
-The **lab-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+The **lab05-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. To ensure the Azure Shell is using **Bash**, ensure the dropdown selected value in the top-left is **Bash**.
+    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. To upload the setup script, in the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. Verify that the Azure Cloud Shell is using **Bash**.
 
-1. In the dropdown, select **Upload** and in the file selection dialog, navigate to the **lab-setup.azcli** file for this lab. Select the file and click **Open** to upload it.
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 05-Individual Enrollment of a Device in DPS
+            * Setup
+
+    The lab05-setup.azcli script file is located in the Setup folder for lab 5.
+
+1. Select the **lab05-setup.azcli** file, and then click **Open**.
 
     A notification will appear when the file upload has completed.
 
-1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
+1. To verify that the correct file has uploaded, enter the following command:
 
-1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
+    ```bash
+    ls
+    ```
+
+    The `ls` command lists the content of the current directory. You should see the lab05-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
     mkdir lab5
-    mv lab-setup.azcli lab5
+    mv lab05-setup.azcli lab4
     cd lab5
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
+    These commands will create a directory for this lab, move the **lab04-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
+
+1. To ensure the **lab05-setup.azcli** has the execute permission, enter the following commands:
 
     ```bash
-    chmod +x lab-setup.azcli
+    chmod +x lab05-setup.azcli
     ```
 
-1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab5** to expand it and then select **lab-setup.azcli**.
+1. On the Cloud Shell toolbar, to edit the lab05-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-    The editor will now show the contents of the **lab-setup.azcli** file.
+1. In the **Files** list, to expand the lab5 folder, click **lab5**, and then click **lab05-setup.azcli**.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    The editor will now show the contents of the **lab05-setup.azcli** file.
+
+1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+
+    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
@@ -95,16 +124,16 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
     > East US 2             36.6681     -78.3889     eastus2
     > ```
 
-1. To save the changes made to the file and close the editor, click **...** in the top-right of the editor window and select **Close Editor**.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
     If prompted to save, click **Save** and the editor will close.
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resources required for this lab, enter the following command:
+1. To create the resources required for this lab, enter the following command:
 
     ```bash
-    ./lab-setup.azcli
+    ./lab05-setup.azcli
     ```
 
     This will take a few minutes to run. You will see JSON output as each step completes.
@@ -131,35 +160,39 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. At the top of the pane, click **+ Add individual enrollment**.
 
-1. On the **Add Enrollment** blade, in the **Mechanism** dropdown, click **Symmetric Key**. This sets the attestation method to use Symmetric key authentication.
+1. On the **Add Enrollment** blade, in the **Mechanism** dropdown, click **Symmetric Key**.
 
-1. Notice the **Auto-generate keys** option is checked. This sets DPS to automatically generate both the **Primary Key** and **Secondary Key** values for the device enrollment when it's created.
+    This sets the attestation method to use Symmetric key authentication.
 
-    Optionally, un-checking this option enables custom keys to be manually entered.
+1. Just below the Mechanism setting, notice that the **Auto-generate keys** option is checked.
 
-1. In the **Registration ID** field, enter `DPSSimulatedDevice1` as the Registration ID to use for the device enrollment within DPS.
+    This sets DPS to automatically generate both the **Primary Key** and **Secondary Key** values for the device enrollment when it's created. Optionally, un-checking this option enables custom keys to be manually entered.
+
+1. In the **Registration ID** field, to specify the Registration ID to use for the device enrollment within DPS, enter **DPSSimulatedDevice1**
 
     By default, the Registration ID will be used as the IoT Hub Device ID when the device is provisioned from the enrollment. If these values need to be different, then enter the required IoT Hub Device ID in that field.
 
-1. Leave the **IoT Hub Device ID** field blank.  This will cause the IoT Hub to use the Registration ID.
+1. Leave the **IoT Hub Device ID** field blank.
 
-1. Leave **IoT Edge device** as `False`.
+    Leaving this field blank ensures that the IoT Hub will use the Registration ID as the Device ID. Don't worry if you see a default text value in the field that is not selectable, it will not be treated as an entered value.
 
-   The new device will not be an edge device.  That concept will be discussed later in the course.
+1. Leave the **IoT Edge device** field set to **False**.
 
-1. Leave **Select how you want to assign devices to hubs** as **Evenly weighted distribution**.
+   The new device will not be an edge device. Working with IoT Edge devices will be discussed later in the course.
+
+1. Leave the **Select how you want to assign devices to hubs** field set to **Evenly weighted distribution**.
 
    As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment.
 
-1. Notice that the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub is selected within the **Select the IoT hubs this device can be assigned to** dropdown.
+1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **AZ-220-HUB-_{YOUR-ID}_** IoT hub that you created.
 
-   This field specifies the IoT Hub(s) this device can be assigned to.
+   This field is used to specify the IoT Hub(s) that your _DPSSimulatedDevice1_ device can be assigned to.
 
-1. Leave **Select how you want device data to be handled on re-provisioning** as the default value of **Re-provision and migrate data**.
+1. Leave the **Select how you want device data to be handled on re-provisioning** field set to the default value of **Re-provision and migrate data**.
 
     This field gives you high-level control over the re-provisioning behavior, where the same device (as indicated through the same Registration ID) submits a later provisioning request after already being provisioned successfully at least once.
 
-1. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"2"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
+1. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to specify a property named `telemetryDelay` with the value of `"2"`.
 
     The final JSON will be like the following:
 
@@ -174,9 +207,9 @@ In this exercise, you will create a new individual enrollment for a device withi
     }
     ```
 
-    This field contains JSON data that represents the initial configuration of desired properties for the device.
+    This field contains JSON data that represents the initial configuration of desired properties for the device. The data that you entered will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
 
-1. Leave **Enable entry** set to **Enable**.
+1. Leave the **Enable entry** field set to **Enable**.
 
     Generally, you'll want to enable new enrollment entries and keep them enabled.
 
@@ -184,11 +217,13 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 #### Task 2: Validate the enrollment
 
-1. In the **Manage enrollments** pane, click on the **individual enrollments** tab to view the list of individual device enrollments.
+1. On the **Manage enrollments** blade, to view the list of individual device enrollments, click **individual enrollments**.
 
-1. In the list, click on the **DPSSimulatedDevice1** individual enrollment that was just created to view the enrollment details.
+1. Under Individual Enrollments, click **DPSSimulatedDevice1**.
 
-1. Locate the **Authentication Type** section, and notice the **Mechanism** is set to **Symmetric Key**.
+    This enables you to view the enrollment details for the individual enrollment that you just created.
+
+1. Locate the **Authentication Type** section, and notice that **Mechanism** is set to **Symmetric Key**.
 
 1. Copy the **Primary Key** and **Secondary Key** values for this device enrollment (there is a button to the right of each textbox for this purpose), and save them for reference later.
 
@@ -202,9 +237,9 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 In this exercise, you will configure a Simulated Device written in C# to connect to Azure IoT using the individual enrollment created in the previous unit. You will also add code to the Simulated Device that will read and update device configuration based on the device twin within Azure IoT Hub.
 
-The simulated device created in this unit is for a an asset tracking solution that will have Iot Device with sensors located within a transport box to track shipments in transit. The sensor telemetry from the device sent to Azure IoT Hub includes Temperature, Humidity, Pressure, and Latitude/Longitude coordinates of the transport box.
+The simulated device that you create in this exercise represents an IoT Device that will be located within a shipping container/box, and will be used to monitor Contoso products while they are in transit. The sensor telemetry from the device that will be sent to Azure IoT Hub includes Temperature, Humidity, Pressure, and Latitude/Longitude coordinates of the container. The device is part of the overall asset tracking solution.
 
-This is different than the earlier lab where a simulated device connected to Azure because in that lab, you used a shared access key to authenticate, which does not require device provisioning, but also does not give the provisioning management benefits (such as device twins), and requires fairly large distribution and management of a shared key.  In this lab, you are provisioning a unique device through the Device Provisioning Serivce.
+This is different than the earlier lab where a simulated device connected to Azure because in that lab, you used a shared access key to authenticate, which does not require device provisioning, but also does not give the provisioning management benefits (such as device twins), and requires fairly large distribution and management of a shared key.  In this lab, you are provisioning a unique device through the Device Provisioning Service.
 
 #### Task 1: Create the Simulated Device
 

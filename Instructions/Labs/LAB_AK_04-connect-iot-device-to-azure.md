@@ -49,7 +49,7 @@ If these resources are not available, you will need to run the **lab04-setup.azc
 
     The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. To upload the setup script, in the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
@@ -68,7 +68,13 @@ If these resources are not available, you will need to run the **lab04-setup.azc
 
     A notification will appear when the file upload has completed.
 
-1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
+1. To verify that the correct file has uploaded, enter the following command:
+
+    ```bash
+    ls
+    ```
+
+    The `ls` command lists the content of the current directory. You should see the lab04-setup.azcli file listed.
 
 1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
@@ -78,7 +84,7 @@ If these resources are not available, you will need to run the **lab04-setup.azc
     cd lab4
     ```
 
-    These commands will create a directory for this lab, move move the **lab04-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
+    These commands will create a directory for this lab, move the **lab04-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
 
 1. To ensure the **lab04-setup.azcli** has the execute permission, enter the following command:
 
@@ -92,7 +98,9 @@ If these resources are not available, you will need to run the **lab04-setup.azc
 
     The editor will now show the contents of the **lab04-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+
+    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash
@@ -117,7 +125,7 @@ If these resources are not available, you will need to run the **lab04-setup.azc
     > East US 2             36.6681     -78.3889     eastus2
     > ```
 
-1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**,  and then click **Close Editor**.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
     If prompted to save, click **Save** and the editor will close.
 
