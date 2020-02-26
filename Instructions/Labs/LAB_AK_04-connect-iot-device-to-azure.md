@@ -187,31 +187,66 @@ The `iot` Azure CLI modules includes several commands for managing IoT Devices w
 
 In this exercise you will configure a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise. You will then test the device and ensure that IoT Hub is receiving telemetry from the device as expected.
 
-#### Task 1: Open the C# Code Project
+#### Task 1: Open the Lab 4 Starter Code Project
 
-1. Using **Visual Studio Code**, open the `/LabFiles` folder.
+1. Open a new instance of Visual Studio Code.
 
-    Check with your instructor to locate the code project, either in the GitHub folder or on the Host PC.
+1. On the left-side menu, click **Explorer**.
+
+    The Explorer pane lists the file/folder hierarchy. Your new instance of Visual Studio Code will not have an open folder.
+
+1. On the File menu, click **Open Folder**.
+
+1. In the Open Folder dialog, navigate to the Lab 4 folder that contains the starter code project.
+
+    The local path to the Lab 4 Starter project folder should be similar to the following:
+
+    * AZ-220-Microsoft-Azure-IoT-Developer-master
+      * Allfiles
+        * Labs
+          * 04-Connect an IoT Device to Azure
+            * Starter
+
+    **Note**: You cloned the GitHub project when you set up the dev environment in Lab 3. Check with your course instructor if needed to locate your resource files.
+
+1. To open the folder, click **Starter**, and then click **Select Folder**.
+
+    The Explorer pane of Visual Studio Code should now list two C# project files:
+
+    * SimulatedDevice.cs
+    * SimulatedDevice.csproj
 
 #### Task 2: Update the Device Connection String
 
-1. Open the `SimulatedDevice.cs` file.
+1. In Visual Studio Code Explorer pane, to open the SimulatedDevice.cs file, click **SimulatedDevice.cs**.
 
-1. Locate the `s_connectionString` variable, and replace the value placeholder `{Your device connection string here}` with the **Device Connection String** that was copied previously. This will enable the Simulated Device to authenticate, connect, and communicate with the Azure IoT Hub.
+1. In the Editor view, locate the code line containing the `s_connectionString` variable.
 
-    Once configured, the variable will look similar to the following:
+    ```C#
+    private readonly static string s_connectionString = "{Your device connection string here}";
+    ```
+
+1. Replace the value placeholder `{Your device connection string here}` with the Device Connection String that you copied previously.
+
+    This will enable the Simulated Device to authenticate, connect, and communicate with the Azure IoT Hub.
+
+    Once configured, the variable will look similar to the following (with your specific connection information included):
 
     ```csharp
     private readonly static string s_connectionString = "HostName={IoTHubName}.azure-devices.net;DeviceId=SimulatedDevice1;SharedAccessKey={SharedAccessKey}";
     ```
 
-1. In Visual Studio Code, click on the **View** menu, then click **Terminal** to open the _Terminal_ pane.
+1. On the **View** menu, click **Terminal**.
 
-1. Run the following command within the **Terminal** to build and run the Simulated Device application. Be sure the terminal location is set to the directory with the `SimulatedDevice.cs` file.
+    Verify that the selected terminal shell is the windows command prompt.
+
+1. In the Terminal view, at the command prompt, enter the following command:
 
     ```cmd/sh
     dotnet run
     ```
+
+    This command will build and run the Simulated Device application. Be sure the terminal location is set to the directory with the `SimulatedDevice.cs` file.
 
     > **Note**:  If the command outputs a `Malformed Token` or other error message, then make sure the **Device Connection String** is configured correctly as the value of the `s_connectionString` variable.
 
@@ -232,11 +267,15 @@ In this exercise you will configure a simulated device written in C# to connect 
     10/25/2019 6:10:19 PM > Sending message: {"temperature":25.77350195766124,"humidity":67.27347029711747}
     ```
 
+    **Note**: Leave the simulated device app running for now. Your next task will be to verify that your IoT Hub is receiving the telemetry messages.
+
 #### Task 3: Verify Telemetry Stream sent to Azure IoT HUb
 
 In this task, you will use the Azure CLI to verify telemetry sent by the simulated device is being received by Azure IoT Hub.
 
-1. Run the following command in the **Azure Cloud Shell** (or a different command-line window), to view a stream of the event messages being sent to the Azure IoT Hub endpoint by the Simulated Device.
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+
+1. In the Azure Cloud Shell, enter the following command:
 
     ```cmd/sh
     az iot hub monitor-events --hub-name {IoTHubName} --device-id SimulatedDevice1
@@ -250,7 +289,11 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
 
     The `monitor-events` command within the `az iot hub` Azure CLI module offers the capability to monitor device telemetry & messages sent to an Azure IoT Hub from within the command-line / terminal.
 
-2. The `az iot hub monitor-events` Azure CLI command will output a JSON representation of the events that are being sent to the Azure IoT Hub. This command allows you to monitor the events being sent, and verify the device is able to connect to and communicate with the Azure IoT Hub.
+1. Notice that the `az iot hub monitor-events` Azure CLI command outputs a JSON representation of the events that are arriving at your specified Azure IoT Hub. 
+
+    This command enables you to monitor the events being sent to IoT hub. You are also verifying that the device is able to connect to and communicate with the your IoT hub.
+
+    You should see messages displayed that are similar to the following:
 
     ```cmd/sh
     Starting event monitor, filtering on device: SimulatedDevice1, use ctrl-c to stop...
@@ -268,4 +311,6 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
     }
     ```
 
-3. When finished, you can press `Ctrl-C` in both windows to stop monitoring telemetry & messages being sent to Azure IoT Hub.
+1. Once you have verified that IoT hub is receiving the telemetry, press **Ctrl-C** in the Azure Cloud Shell and Visual Studio Code windows.
+
+    Ctrl-C is used to stop the running apps. Always remember to shut down unneeded apps and jobs.
