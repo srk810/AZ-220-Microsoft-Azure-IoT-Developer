@@ -149,7 +149,7 @@ The `iot` Azure CLI modules includes several commands for managing IoT Devices w
 
 1. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
 
-1. Within the Cloud Shell, run the following command to ensure the Cloud Shell has the IoT extension installed.
+1. Within the Cloud Shell, to ensure the Cloud Shell has the IoT extension installed, run the following command:
 
     ``` sh
     az extension add --name azure-cli-iot-ext
@@ -185,7 +185,7 @@ The `iot` Azure CLI modules includes several commands for managing IoT Devices w
 
 ### Exercise 3: Configure and Test a Simulated Device (C#)
 
-In this exercise you will configure a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise. You will then test the device and ensurethat IoT Hub is receiving telemetry from the device as expected.
+In this exercise you will configure a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise. You will then test the device and ensure that IoT Hub is receiving telemetry from the device as expected.
 
 #### Task 1: Open the C# Code Project
 

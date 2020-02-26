@@ -222,11 +222,33 @@ You should verify that the development environment has been set up successfully.
 
 Your development environment should be now setup!
 
-### Exercise 3: Alternative Tool Options
+### Exercise 3: Set Up Course Lab Files and Alternative Tools
 
-**Note**: The lab activities in this course do have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
+A number of the labs in this course rely on pre-built resources, such as a code project that can be used as a starting point for the lab activity. We provide access to these lab resources through the use of a GitHub project. In addition to resources that directly support the course labs (the resources contained in the GitHub project), there are tools that can be used to support learning opportunities outside the actual course. The instructions below lead you through the configuration of both these resource types.
 
-#### Task 1: Install Azure PowerShell
+#### Task 1: Download Course Lab Files
+
+Microsoft has created a GitHub repo to provide access to lab resource files. Having these files local to the dev environment is required in some cases and convenient in many others. In this task you will be downloading and extracting the contents of the repo within your development environment.
+
+1. In your Web browser, navigate to the following location: [https://github.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer](https://github.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer)
+
+1. On the right side of the page, click **Clone or download**, and then click **Download ZIP**.
+
+1. To save the ZIP file to your dev environment, click **Save**.
+
+1. Once the file has been saved, click **Open folder**.
+
+1. Right-click the saved ZIP file, and then click **Extract all**
+
+1. Click **Browse**, and then navigate to folder location that is convenient to access.
+
+1. To extract the files, click **Extract**.
+
+    Be sure to make not of where you located the files.
+
+#### Task 2: Install Azure PowerShell
+
+**Note**: The lab activities in this course do NOT have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
 
 Azure PowerShell is designed for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. You can use it in your browser with Azure Cloud Shell, or you can install it on your local machine and use it in any PowerShell session. If you are running Azure PowerShell locally, you need to have Windows PowerShell configured.
 
