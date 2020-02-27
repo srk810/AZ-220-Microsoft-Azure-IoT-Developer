@@ -18,7 +18,7 @@ To evaluate this asset monitoring solution prior to full scale implementation, y
 
 ## In This Lab
 
-In this lab, you will do the following:
+In this lab, you will complete the following activities:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 * Register a Device ID in Azure IoT Hub using Azure CLI

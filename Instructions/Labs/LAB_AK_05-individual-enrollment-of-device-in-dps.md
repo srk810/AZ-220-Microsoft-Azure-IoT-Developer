@@ -8,15 +8,17 @@ lab:
 
 ## Lab Scenario
 
-Contoso's Asset Monitoring and Tracking Solution will require an IoT Device that has sensors for tracking location, temperature, pressure to be added in product transport boxes. This will help track products and monitor the  condition of the transport boxes to ensure the cheese products are kept in appropriate environments during delivery.
+Contoso management is pushing for an an update to their Asset Monitoring and Tracking Solution that will use an IoT device to reduce the manual data entry work that is required under the current system and provide more advanced monitoring during the shipping process.
 
-When a new box enters the system, it is equipped with the new IoT Device. The device needs to be auto-provisioned to IoT Hub using Device Provisioning Service. When the box has arrived the sensor is removed from the box and needs to be "decommissioned" through DPS.
+The proposed system will use IoT devices with integrated sensors for tracking the location, temperature, pressure of shipping containers during transit. The devices will be placed within the existing shipping containers that Contoso uses to transport their cheese, and will connect to Azure IoT Hub using vehicle provided WiFi. The new system will provide continuous monitoring of the product environment and enable a variety of notification scenarios when issues are detected.
+
+In the cheese factory, when an empty container enters the system it will be equipped with the new IoT device and then loaded with packaged cheese products. The IoT device needs to be auto-provisioned to IoT hub using Device Provisioning Service. When the container arrives at the destination, the IoT device will be retrieved and then "decommissioned" through DPS. The device will be re-used for future shipments.
+
+You have been tasked to validate the device provisioning and de-provisioning process using DPS. For the initial phase of the process you will use Individual Enrollment.
 
 ## In This Lab
 
-In this lab, you will, create an individual enrollment within Azure Device Provisioning Service (DPS) to automatically connect a pre-built simulated device to Azure IoT Hub. You will also fully retire the device by removing it from both DPS and IoT Hub.
-
-This lab includes:
+In this lab, you will complete the following activities:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 * Create a new Individual Enrollment in DPS

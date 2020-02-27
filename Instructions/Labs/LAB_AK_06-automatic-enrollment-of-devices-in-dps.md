@@ -8,15 +8,15 @@ lab:
 
 ## Lab Scenario
 
-Our asset tracking solution is getting bigger, and provisioning devices one by one cannot scale. We want to use Device Provisioning Service to enroll many devices automatically and securely using X.509 certificate authentication.
+After receiving your email describing the successful validation of the device provisioning and de-provisioning process using DPS, the management team is ready to begin rolling out the process on a larger scale.
+
+To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication.
 
 ## In This Lab
 
-In this lab, you will setup a _group enrollment_ within Device Provisioning Service (DPS) using a CA X.509 certificate. You will also configure a simulated IoT device that will authenticate with DPS using a device certificate signed by the CA Certificate. The IoT device will also be configured to handle changes to the device twin's desired properties as configured initially through DPS, and then modified via Azure IoT Hub. Finally, you will retire the IoT device and the group enrollment with DPS.
+In this lab, you will complete the following activities:
 
-This lab includes:
-
-* Verify Lab Prerequisites
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
 * Generate and Configure X.509 CA Certificates using OpenSSL
 * Create Group Enrollment in DPS
 * Configure simulated device with X.509 Certificate
@@ -28,7 +28,7 @@ This lab includes:
 
 ### Exercise 1: Verify Lab Prerequisites
 
-This lab assumes the following resources are available:
+This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
@@ -36,23 +36,46 @@ This lab assumes the following resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
 
-If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
+If these resources are not available, you will need to run the **lab06-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
-The **lab-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+The **lab06-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. To ensure the Azure Shell is using **Bash**, ensure the dropdown selected value in the top-left is **Bash**.
+    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. To upload the setup script, in the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. Verify that the Azure Cloud Shell is using **Bash**.
 
-1. In the dropdown, select **Upload** and in the file selection dialog, navigate to the **lab-setup.azcli** file for this lab. Select the file and click **Open** to upload it.
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 06-Automatic Enrollment of Device in DPS
+            * Setup
+
+    The lab06-setup.azcli script file is located in the Setup folder for lab 6.
+
+1. Select the **lab06-setup.azcli** file, and then click **Open**.
 
     A notification will appear when the file upload has completed.
 
-1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
+1. To verify that the correct file has uploaded, enter the following command:
 
-1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
+    ```bash
+    ls
+    ```
+
+    The `ls` command lists the content of the current directory. You should see the lab05-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
     mkdir lab6
@@ -60,17 +83,21 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
     cd lab6
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
+1. To ensure the **lab06-setup.azcli** has the execute permission, enter the following commands:
 
     ```bash
-    chmod +x lab-setup.azcli
+    chmod +x lab06-setup.azcli
     ```
 
-1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab5** to expand it and then select **lab-setup.azcli**.
+1. On the Cloud Shell toolbar, to edit the lab06-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-    The editor will now show the contents of the **lab-setup.azcli** file.
+1. In the **Files** list, to expand the lab6 folder, click **lab6**, and then click **lab06-setup.azcli**.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    The editor will now show the contents of the **lab05-setup.azcli** file.
+
+1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+
+    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
@@ -95,16 +122,16 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
     > East US 2             36.6681     -78.3889     eastus2
     > ```
 
-1. To save the changes made to the file and close the editor, click **...** in the top-right of the editor window and select **Close Editor**.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
     If prompted to save, click **Save** and the editor will close.
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resources required for this lab, enter the following command:
+1. To create the resources required for this lab, enter the following command:
 
     ```bash
-    ./lab-setup.azcli
+    ./lab06-setup.azcli
     ```
 
     This will take a few minutes to run. You will see JSON output as each step completes.
