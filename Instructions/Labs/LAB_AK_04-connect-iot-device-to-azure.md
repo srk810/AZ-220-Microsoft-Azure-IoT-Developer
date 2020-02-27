@@ -277,7 +277,7 @@ In this exercise you will configure a simulated device written in C# to connect 
 
     **Note**: Leave the simulated device app running for now. Your next task will be to verify that your IoT Hub is receiving the telemetry messages.
 
-#### Task 3: Verify Telemetry Stream sent to Azure IoT HUb
+#### Task 3: Verify Telemetry Stream sent to Azure IoT Hub
 
 In this task, you will use the Azure CLI to verify telemetry sent by the simulated device is being received by Azure IoT Hub.
 
