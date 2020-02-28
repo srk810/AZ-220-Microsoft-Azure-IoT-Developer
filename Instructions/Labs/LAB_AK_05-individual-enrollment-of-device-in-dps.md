@@ -8,13 +8,13 @@ lab:
 
 ## Lab Scenario
 
-Contoso management is pushing for an an update to their Asset Monitoring and Tracking Solution that will use an IoT device to reduce the manual data entry work that is required under the current system and provide more advanced monitoring during the shipping process.
+Contoso management is pushing for an an update to their Asset Monitoring and Tracking Solution that will use IoT devices to reduce the manual data entry work that is required under the current system and provide more advanced monitoring during the shipping process. The solution relies on the ability to provision and de-provision IoT devices. The best option for managing the provisioning requirements appears to be DSP.
 
 The proposed system will use IoT devices with integrated sensors for tracking the location, temperature, pressure of shipping containers during transit. The devices will be placed within the existing shipping containers that Contoso uses to transport their cheese, and will connect to Azure IoT Hub using vehicle provided WiFi. The new system will provide continuous monitoring of the product environment and enable a variety of notification scenarios when issues are detected.
 
-In the cheese factory, when an empty container enters the system it will be equipped with the new IoT device and then loaded with packaged cheese products. The IoT device needs to be auto-provisioned to IoT hub using Device Provisioning Service. When the container arrives at the destination, the IoT device will be retrieved and then "decommissioned" through DPS. The device will be re-used for future shipments.
+In Contoso's cheese packaging facility, when an empty container enters the system it will be equipped with the new IoT device and then loaded with packaged cheese products. The IoT device needs to be auto-provisioned to IoT hub using Device Provisioning Service. When the container arrives at the destination, the IoT device will be retrieved and then "decommissioned" through DPS. The device will be re-used for future shipments.
 
-You have been tasked to validate the device provisioning and de-provisioning process using DPS. For the initial phase of the process you will use Individual Enrollment.
+You have been tasked with validating the device provisioning and de-provisioning process using DPS. For the initial phase of the process you will use an Individual Enrollment approach.
 
 ## In This Lab
 
@@ -42,7 +42,7 @@ If these resources are not available, you will need to run the **lab05-setup.azc
 
 The **lab05-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
-1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
     If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
@@ -85,23 +85,23 @@ The **lab05-setup.azcli** script is written to run in a **bash** shell environme
     cd lab5
     ```
 
-    These commands will create a directory for this lab, move the **lab04-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
+    These commands will create a directory for this lab, move the **lab05-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
 
-1. To ensure the **lab05-setup.azcli** has the execute permission, enter the following commands:
+1. To ensure the **lab05-setup.azcli** script has the execute permission, enter the following command:
 
     ```bash
     chmod +x lab05-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab05-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to edit the lab06-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **Files** list, to expand the lab5 folder, click **lab5**, and then click **lab05-setup.azcli**.
+1. In the **Files** list, to expand the lab6 folder and open the script file, click **lab5**, and then click **lab05-setup.azcli**.
 
     The editor will now show the contents of the **lab05-setup.azcli** file.
 
 1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
 
-    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash

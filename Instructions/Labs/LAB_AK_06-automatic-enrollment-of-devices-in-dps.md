@@ -8,7 +8,7 @@ lab:
 
 ## Lab Scenario
 
-After receiving your email describing the successful validation of the device provisioning and de-provisioning process using DPS, the management team is ready to begin rolling out the process on a larger scale.
+After validating the device provisioning and de-provisioning process using an Individual Enrollment, the management team has asked you to begin rolling out the process on a larger scale.
 
 To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication.
 
@@ -40,7 +40,7 @@ If these resources are not available, you will need to run the **lab06-setup.azc
 
 The **lab06-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
-1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
     If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
@@ -58,7 +58,7 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
 
     * Allfiles
       * Labs
-          * 06-Automatic Enrollment of Device in DPS
+          * 06-Automatic Enrollment of Devices in DPS
             * Setup
 
     The lab06-setup.azcli script file is located in the Setup folder for lab 6.
@@ -67,23 +67,23 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
 
     A notification will appear when the file upload has completed.
 
-1. To verify that the correct file has uploaded, enter the following command:
+1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
 
     ```bash
     ls
     ```
 
-    The `ls` command lists the content of the current directory. You should see the lab05-setup.azcli file listed.
+    The `ls` command lists the content of the current directory. You should see the lab06-setup.azcli file listed.
 
 1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
     mkdir lab6
-    mv lab-setup.azcli lab6
+    mv lab06-setup.azcli lab6
     cd lab6
     ```
 
-1. To ensure the **lab06-setup.azcli** has the execute permission, enter the following commands:
+1. To ensure the **lab06-setup.azcli** script has the execute permission, enter the following command:
 
     ```bash
     chmod +x lab06-setup.azcli
@@ -91,13 +91,13 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
 
 1. On the Cloud Shell toolbar, to edit the lab06-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **Files** list, to expand the lab6 folder, click **lab6**, and then click **lab06-setup.azcli**.
+1. In the **Files** list, to expand the lab6 folder and open the script file, click **lab6**, and then click **lab06-setup.azcli**.
 
-    The editor will now show the contents of the **lab05-setup.azcli** file.
+    The editor will now show the contents of the **lab06-setup.azcli** file.
 
 1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
 
-    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
@@ -144,15 +144,21 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 #### Task 1: Generate the certificates
 
-1. If necessary, log in to your Azure portal using your Azure account credentials.
+1. If necessary, log in to the [Azure portal](https://portal.azure.com) using the Azure account credentials that you are using for this course.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Open the **Azure Cloud Shell** by clicking the **Terminal** icon within the top header bar of the Azure portal, and select the **Bash** shell option.
+1. In the top right of the portal window, to open the Azure Cloud Shell, click **Cloud Shell**.
+
+    The Cloud Shell button has an icon that appears to represent a command prompt - **`>_`**.
+
+    A Cloud Shell window will open near the bottom of the display screen.
+
+1. In the upper left corner of the Cloud Shell window, ensure that **Bash** is selected as the environment option.
 
     > **Note**:  Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this unit you will use some helper scripts written for the *Bash* shell.
 
-1. Within the Azure Cloud Shell, run the following commands that will download a helper script for using *OpenSSL* to generate X.509 CA Certificates. They will be placed within the `~/certificates` directory inside your Cloud Shell storage.
+1. At the Cloud Shell command prompt, to download Azure IoT helper scripts, enter the following commands:
 
     ```sh
     # create certificates directory
@@ -169,9 +175,9 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
     chmod 700 certGen.sh
     ```
 
-    These helper scripts are being downloaded from the `Azure/azure-iot-sdk-c` open source project hosted on Github. This is an open source project that's a part of the Azure IoT SDK. The `certGen.sh` helper script will help demonstrate the purpose of CA Certificates without diving into the specifics of OpenSSL configuration that's outside the scope of this unit.
+    These helper scripts are being downloaded from the `Azure/azure-iot-sdk-c` open source project hosted on Github. This is an open source project that's a part of the Azure IoT SDK. The `certGen.sh` helper script will help demonstrate the purpose of CA Certificates without diving into the specifics of OpenSSL configuration that's outside the scope of this lab.
 
-    For additional instructions on using this helper script, and for instructions on how to use PowerShell instead of Bash, please see this link: <https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md>
+    For additional instructions on using this helper script, and for instructions on how to use PowerShell instead of Bash, please see this link: [https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md](https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md)
 
     > [!WARNING] Certificates created by this helper script **MUST NOT** be used for Production. They contain hard-coded passwords ("*1234*"), expire after 30 days, and most importantly are provided for demonstration purposes to help you quickly understand CA Certificates. When building products against CA Certificates, you'll need to use your own security best practices for certificate creation and lifetime management.
 
