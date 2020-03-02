@@ -66,7 +66,7 @@ In this task, you will create a custom dashboard that you can use during this co
 
 1. In the list of named resource groups, click the box to the left of the **AZ-220-RG** resource group that your just created.
 
-    > [!NOTE] You don't want to open the resource group in a new blade, you just want to select it (check mark on the left).
+    > **Note**: You don't want to open the resource group in a new blade, you just want to select it (check mark on the left).
 
 1. On the right side of the screen, click the ellipsis (...) corresponding to your resource group, and then click **Pin to dashboard**
 

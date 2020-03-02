@@ -76,7 +76,7 @@ In this unit, you will build and publish the custom IoT Edge Module into the Azu
     - **User Name**: Enter the **Username** for the Azure Container Registry service
     - **Password**: Enter the **Password** for the Azure Container Registry service
 
-    > [!NOTE] The Azure Container Registry (ACR) service _Registry name_, _Login server_, _Username_, and _Password_ can be found on the **Access keys** pane for the service.
+    > **Note**: The Azure Container Registry (ACR) service _Registry name_, _Login server_, _Username_, and _Password_ can be found on the **Access keys** pane for the service.
 
 1. On the **Set modules** pane, within the **Deployment Modules** section of the _Add Modules_ tab, click the **Add** button and select **IoT Edge Module**.
 
@@ -132,7 +132,7 @@ In this unit, you will build and publish the custom IoT Edge Module into the Azu
 
     This route specifies the **Destination** value of `$upstream`. This sends all messages from the Source of this route to the Azure IoT Hub service within Microsoft Azure.
 
-    > [!NOTE] For more information on the configuration of Message Routing with Azure IoT Hub and IoT Edge Module, reference the following links:
+    > **Note**: For more information on the configuration of Message Routing with Azure IoT Hub and IoT Edge Module, reference the following links:
     > - [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition)
     > - [IoT Hub message routing query syntax](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-routing-query-syntax)
 

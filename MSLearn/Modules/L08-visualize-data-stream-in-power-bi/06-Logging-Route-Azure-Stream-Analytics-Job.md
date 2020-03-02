@@ -50,7 +50,7 @@ In the following steps you will create a Stream Analytics job that routes loggin
 
 1. Under **Shared access policy name**, ensure **iothubowner** is selected.
 
-    > [!NOTE] The **Shared access policy key** is populated and read-only.
+    > **Note**: The **Shared access policy key** is populated and read-only.
 
 1. Under **Consumer group**, ensure **$Default** is selected.
 
@@ -80,7 +80,7 @@ In the following steps you will create a Stream Analytics job that routes loggin
 
 1. Under **Storage account**, choose the storage account you created earlier - **vibrationstore** plus your initials and date.
 
-    > [!NOTE] The **Storage account key** is automatically populated and read-only.
+    > **Note**: The **Storage account key** is automatically populated and read-only.
 
 1. Under **Container**, ensure **Use existing** is selected and select **vibrationcontainer** from the dropdown list.
 
@@ -92,7 +92,7 @@ In the following steps you will create a Stream Analytics job that routes loggin
 
 1. Under **Format**, ensure **Line separated**.
 
-    > [!NOTE] This setting stores each record as a JSON object on each line and, taken as a whole, results in a file that is an invalid JSON record. The other option, **Array**, ensures that the entire document is formatted as a JSON array where each record is an item in the array. This allows the entire file to be parsed as valid JSON.
+    > **Note**: This setting stores each record as a JSON object on each line and, taken as a whole, results in a file that is an invalid JSON record. The other option, **Array**, ensures that the entire document is formatted as a JSON array where each record is an item in the array. This allows the entire file to be parsed as valid JSON.
 
 1. Leave **Minimum rows** blank.
 
@@ -143,7 +143,7 @@ Now for the fun part. Does the telemetry your device app is pumping out work its
 
 1. For added reassurance that all the data is getting to the account, open the storage in **Storage Explorer**. You can find links to **Storage Explorer** in multiple locations, the easiest to find is probably in the left hand navigation area.
 
-    > [!NOTE] The Storage Explorer is currently in preview mode, so its exact mode of operation may change.
+    > **Note**: The Storage Explorer is currently in preview mode, so its exact mode of operation may change.
 
 1. In **Storage Explorer**, under **BLOB CONTAINERS**, select **vibrationcontainer**.
 

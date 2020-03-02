@@ -26,7 +26,7 @@ In this unit, you will configure a Simulated Device written in C# to connect to 
 
 1. Once the `create_device_certificate` command has completed, then generated **x.509 Device Certificate** will be named `new-device.cert.pfx` and will be located within the `/certs` sub-directory.
 
-    > [!NOTE] This command overwrites the existing certificate. If you want to create a certificate for multiple devices, ensure you copy the `new-device.cert.pfx` each time.
+    > **Note**: This command overwrites the existing certificate. If you want to create a certificate for multiple devices, ensure you copy the `new-device.cert.pfx` each time.
 
     Run the following command to download the generated **x.509 Device Certificate** from the Cloud Shell to your local machine:
 
@@ -89,7 +89,7 @@ In this unit, you will configure a Simulated Device written in C# to connect to 
 
 1. Locate the `s_certificatePassword` variable. This variable contains the **Password** for the **x.509 Device Certificate**. Notice that it's already set to `1234`, as this is the default password used by the `certGen.sh` helper script when generating the x.509 certificates.
 
-    > [!NOTE] For the purpose of this unit, the **Password** is hard coded. In a _Production_ device, the password will need to be stored in a more secure manner. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).
+    > **Note**: For the purpose of this unit, the **Password** is hard coded. In a _Production_ device, the password will need to be stored in a more secure manner. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).
     >
     > An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with both attestation mechanisms the provisioning service supports.
 

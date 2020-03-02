@@ -33,7 +33,7 @@ At the end of this unit, you'll be sending and receiving telemetry.
 
 1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
 
-    > [!NOTE] If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
+    > **Note**: If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
 
@@ -218,7 +218,7 @@ This section adds code to send telemetry from a simulated device. The device sen
 
     ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-telemetry.png)
 
-    > [!NOTE] Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
+    > **Note**: Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
 1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
 
@@ -257,7 +257,7 @@ Now we have a device pumping out telemetry, we need to listen for that telemetry
 
 1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
 
-    > [!NOTE] If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
+    > **Note**: If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
 
@@ -395,13 +395,13 @@ This test is important, checking whether your back-end app is picking up the tel
 
    This command will run the **Program.cs** file in the current folder.
 
-   > [!NOTE] You can ignore the warning about the unused variable `s_serviceConnectionString` - we will be using that variable shortly.
+   > **Note**: You can ignore the warning about the unused variable `s_serviceConnectionString` - we will be using that variable shortly.
 
 1. You should quickly see console output, and immediately respond if it successfully connects to IoT Hub. If not, carefully check your IoT Hub service connection string, noting that this string should be the service connection string, and not any other.:
 
     ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-telemetry-received.png)
 
-    > [!NOTE] Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
+    > **Note**: Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
 1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
 

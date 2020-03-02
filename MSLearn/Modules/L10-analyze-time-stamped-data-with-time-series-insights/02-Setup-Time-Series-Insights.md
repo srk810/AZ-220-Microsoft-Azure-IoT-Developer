@@ -51,7 +51,7 @@ In this unit, you will setup Time Series Insights (TSI) integration with Azure I
 
 1. Click the **Create** button.
 
-    > [!NOTE] Deployment of Time Series Insights (TSI) will take a couple minutes to complete.
+    > **Note**: Deployment of Time Series Insights (TSI) will take a couple minutes to complete.
 
 1. Once **Time Series Insights** is deployed, navigate to the **AZ-220-TSI** resource.
 

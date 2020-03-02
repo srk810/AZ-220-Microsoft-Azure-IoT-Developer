@@ -22,7 +22,7 @@ In this task, you will install Azure PowerShell
 
     If you are prompted to install a newer version of the NuGet provider, type **Y** and then press Enter.
 
-    > [!NOTE] If you re-run the command that we used above to determine the installed version of PowerShellGet, you should see that PowerShellGet version 1.6.0 (or higher) is now installed.
+    > **Note**: If you re-run the command that we used above to determine the installed version of PowerShellGet, you should see that PowerShellGet version 1.6.0 (or higher) is now installed.
 
 1. To install the Azure Resource Manager modules from the PowerShell Gallery, enter the following command:
 
@@ -30,7 +30,7 @@ In this task, you will install Azure PowerShell
 
     If you see a message stating that "You are installing the modules from an untrusted repository", type **A** and then press Enter.
 
-    > [!NOTE] Once again, it can take a minute for the installation to begin, so just give it a chance.
+    > **Note**: Once again, it can take a minute for the installation to begin, so just give it a chance.
 
     The AzureRM module is a rollup module for the Azure Resource Manager cmdlets. When you install the AzureRM module, any Azure PowerShell module not previously installed is downloaded and installed from the PowerShell Gallery.
 

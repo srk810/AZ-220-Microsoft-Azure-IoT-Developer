@@ -14,23 +14,23 @@ In **Lab 6-Automatic Enrollment of Devices in DPS** you configured DPS to use X5
 
 1. Navigate to the "AZ-220-RG" resource group and look for a **Device Provisioning Service** named **AZ-220-DPS-{YOUR INITIALS and DATE}**.
 
-    > [!NOTE] If the DPS does not exist, return to the **Setup Resources** task earlier in this lab.
+    > **Note**: If the DPS does not exist, return to the **Setup Resources** task earlier in this lab.
 
 1. To review the configuration of the DPS service, click  **AZ-220-DPS-{YOUR INITIALS and DATE}**.
 
 1. To verify the certificate configuration, in the left hand navigation area, under **Settings**, click **Certificates**.
 
-    > [!NOTE] If the certificates list is empty, jump to the **Verify OpenSSL** section
+    > **Note**: If the certificates list is empty, jump to the **Verify OpenSSL** section
 
 1. Examine the certificate entry and ensure the **Status** for the certificate in the **Certificates** pane is displayed as **Verified**.
 
-    > [!NOTE] If the certificate status is **Unverified**, click the certificate to view the details, then click **Delete**. Enter the **Certificate Name** to confirm the deletion and click **OK**. Jump to the **Verify OpenSSL** section.
+    > **Note**: If the certificate status is **Unverified**, click the certificate to view the details, then click **Delete**. Enter the **Certificate Name** to confirm the deletion and click **OK**. Jump to the **Verify OpenSSL** section.
 
 1. To verify the group enrollment, in the left navigation area, under **Settings** select **Manage enrollments**.
 
 1. In the **Manage enrollments** pane, click on the **Enrollment Groups** link to view the list of enrollment groups in DPS.
 
-    > [!NOTE] Does the **simulated-devices** enrollment group **exist**? If so jump to the **Generate Device Certificates** in the next task.
+    > **Note**: Does the **simulated-devices** enrollment group **exist**? If so jump to the **Generate Device Certificates** in the next task.
 
 1. If the  **simulated-devices** enrollment group does not exist, continue with the **Verify OpenSSL** section below.
 
@@ -103,7 +103,7 @@ The first x.509 certificates needed are CA and intermediate certificates. These 
 
 1. On the **Certificates** pane, click the **Add** button at the top to start process of uploading the x.509 CA Certificate to the DPS service.
 
-    > [!NOTE] If see an existing certificate, select and delete it.
+    > **Note**: If see an existing certificate, select and delete it.
 
 1. On the **Add Certificate** pane, select the x.509 CA Certificate file in the **Certificate .pem or .cer file** upload field. This is the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that was just downloaded.
 
@@ -121,7 +121,7 @@ The first x.509 certificates needed are CA and intermediate certificates. These 
 
 1. Copy the newly generated **Verification Code** that is displayed above the _Generate_ button.
 
-    > [!NOTE] You will need to leave the **Certificate Details** pane **Open** while you generate the Verification Certificate. If you close the pane, you will invalidate the Verification Code and will need to generate a new one.
+    > **Note**: You will need to leave the **Certificate Details** pane **Open** while you generate the Verification Certificate. If you close the pane, you will invalidate the Verification Code and will need to generate a new one.
 
 1. Open the **Azure Cloud Shell**, if it's not still open from earlier, and navigate to the `~/certificates` directory.
 

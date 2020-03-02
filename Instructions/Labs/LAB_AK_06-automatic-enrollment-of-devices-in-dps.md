@@ -158,7 +158,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
     > **Note**:  Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this unit you will use some helper scripts written for the *Bash* shell.
 
-1. At the Cloud Shell command prompt, to download Azure IoT helper scripts, enter the following commands:
+1. At the Cloud Shell command prompt, to download the Azure IoT helper scripts that you will be using, enter the following commands:
 
     ```sh
     # create certificates directory
@@ -175,31 +175,42 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
     chmod 700 certGen.sh
     ```
 
-    These helper scripts are being downloaded from the `Azure/azure-iot-sdk-c` open source project hosted on Github. This is an open source project that's a part of the Azure IoT SDK. The `certGen.sh` helper script will help demonstrate the purpose of CA Certificates without diving into the specifics of OpenSSL configuration that's outside the scope of this lab.
+    The helper script and supporting files are being downloaded from the `Azure/azure-iot-sdk-c` open source project hosted on Github. This is an open source project that's a part of the Azure IoT SDK. The `certGen.sh` helper script will help demonstrate the purpose of CA Certificates without diving into the specifics of OpenSSL configuration that's outside the scope of this lab.
 
     For additional instructions on using this helper script, and for instructions on how to use PowerShell instead of Bash, please see this link: [https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md](https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md)
 
-    > [!WARNING] Certificates created by this helper script **MUST NOT** be used for Production. They contain hard-coded passwords ("*1234*"), expire after 30 days, and most importantly are provided for demonstration purposes to help you quickly understand CA Certificates. When building products against CA Certificates, you'll need to use your own security best practices for certificate creation and lifetime management.
+    > **WARNING**: Certificates created by this helper script **MUST NOT** be used for Production. They contain hard-coded passwords ("*1234*"), expire after 30 days, and most importantly are provided for demonstration purposes to help you quickly understand CA Certificates. When building products against CA Certificates, you'll need to use your own security best practices for certificate creation and lifetime management.
 
-1. Review the contents of the script you downloaded using whatever tool you'd prefer (`more`, `code`, `vi`, etc.) to validate the code you downloaded.
+1. Review the contents of the script file that you downloaded.
 
-1. The first X.509 certificates needed are CA and intermediate certificates. These can be generated using the `certGen.sh` helper script by passing the `create_root_and_intermediate` option.
+    You can use the editor that's built-in to the Cloud Shell to review the script file.
 
-    Run the following command within the `~/certificates` directory of the **Azure Cloud Shell** to generate the CA and intermediate certificates:
+    * In the Cloud Shell, to open the editor, click **`{}`**.
+    * In the FILES list, click **certificates**, and then click **certGen.sh**
+
+    > **Note**: If you are experienced with other text file viewing tools in the Bash environment, such as the `more` or `vi` commands, you could also use those tools.
+
+    The first X.509 certificates needed are the root CA and intermediate certificates.
+
+1. To generate the root and intermediate certificates, enter the following command:
 
     ```sh
     ./certGen.sh create_root_and_intermediate
     ```
 
-1. The previous command generated a Root CA Certificate named `azure-iot-test-only.root.ca.cert.pem` is located within the `./certs` directory.
+    Notice that you ran the script with the `create_root_and_intermediate` option. This command assumes that you are running the script from within the `~/certificates` directory.
 
-    Run the following command within the **Azure Cloud Shell** to download this certificate to your local machine so it can be uploaded to DPS.
+    This command generated a Root CA Certificate named `azure-iot-test-only.root.ca.cert.pem` and placed it within a `./certs` directory (under the certificates directory that you created).
+
+1. To download the root certificate to your local machine (so it can be uploaded to DPS), enter the following command
 
     ```sh
     download ~/certificates/certs/azure-iot-test-only.root.ca.cert.pem
     ```
 
-#### Task 2: Configurate your DPS to trust the root certificate
+    You will be prompted to save the file to your local machine. Make a note of where the file is being saved, you will need it in the next task.
+
+#### Task 2: Configure DPS to trust the root certificate
 
 1. Navigate to your **Device Provisioning Service** (DPS) named `AZ-220-DPS-_{YOUR-ID}_` within the Azure portal.
 
@@ -209,7 +220,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 1. On the **Add Certificate** pane, for **Certificate Name**, enter a logical name for the _Root CA Certificate_ into the field. For example, `root-ca-cert`.
 
-    [!NOTE] This name could be the same as the name of the certificate file, or something different. This is a logical name that has no correlation to the _Common Name_ within the X.509 CA Certificate.
+    > **Note**: This name could be the same as the name of the certificate file, or something different. This is a logical name that has no correlation to the _Common Name_ within the X.509 CA Certificate.
 
 1. For the **Certificate .pem or .cer file.** upload field, select the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that you just downloaded.
 
@@ -225,7 +236,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
     _Proof of Possession_ of the CA certificate is provided to DPS by uploading a certificate generated from the CA certificate with the verifcation code that was just generated within DPS. This is how you provide proof that you actually own the CA Certificate.
 
-    > [!IMPORTANT] You will need to leave the **Certificate Details** pane open while you generate the verification certificate. If you close the pane, you will invalidate the verification code, and will need to generate a new one.
+    > **IMPORTANT**: You will need to leave the **Certificate Details** pane open while you generate the verification certificate. If you close the pane, you will invalidate the verification code, and will need to generate a new one.
 
 1. Open the **Azure Cloud Shell**, if it's not still open from earlier, and navigate to the `~/certificates` directory.
 
@@ -251,7 +262,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
     download ~/certificates/certs/verification-code.cert.pem
     ```
 
-    [!NOTE] Depending on the web browser, you may be prompted to allow multiple downloads at this point.  If there appears to be no response to your download command, make sure there's not a prompt elsewhere on the screen asking for permission to allow the download.
+    > **Note**: Depending on the web browser, you may be prompted to allow multiple downloads at this point.  If there appears to be no response to your download command, make sure there's not a prompt elsewhere on the screen asking for permission to allow the download.
 
 1. Go back to the **Certificate Details** pane for the CA certificate within DPS.
 
@@ -675,7 +686,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Within the list of IoT devices, click on the **Device ID** (likely **simulated-device1**) for the Simulated Device.
 
-    > [!IMPORTANT] Make sure you select the device from this lab.
+    > **IMPORTANT**: Make sure you select the device from this lab.
 
 1. On the device blade, click the **Device Twin** button at the top of the blade.
 

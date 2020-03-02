@@ -111,8 +111,8 @@ In this unit, you will monitor events from the **ChildIoTDevice** are being sent
 
 1. Once the **IoTEdgeGateway** IoT Edge Transparent Gateway is able to resume connectivity with Azure IoT Hub, it will sync the event telemetry from all connected child devices. This includes the saved telemetry that couldn't be sent while disconnected, and all telemetry still being sent to the gateway.
 
-    > [!NOTE] The IoT Edge Gateway device will take a couple minutes to reconnect to Azure IoT Hub and resume sending telemetry. After waiting a couple minutes, you will see events showing up in the `az iot hub monitor-events` command output again.
+    > **Note**: The IoT Edge Gateway device will take a couple minutes to reconnect to Azure IoT Hub and resume sending telemetry. After waiting a couple minutes, you will see events showing up in the `az iot hub monitor-events` command output again.
 
 In this lab we have demonstrated that an Azure IoT Edge Gateway can utilize local storage to retain messages that can't be sent due to an interruption in the connection to the IoT Hub. Once connection is reestablished, we saw that messages are then sent.
 
-> [!NOTE] Once you have finished with the lab, ensure you exit the device simulation application by pressing **CTRL+C** in the terminal.
+> **Note**: Once you have finished with the lab, ensure you exit the device simulation application by pressing **CTRL+C** in the terminal.

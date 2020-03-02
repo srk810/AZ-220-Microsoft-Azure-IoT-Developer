@@ -20,7 +20,7 @@ In this unit, you will retire an Enrollment Group and it's devices from both the
 
 1. When prompted to confirm the action to **Remove enrollment**, click **Yes**. Once deleted, the Group Enrollment is completely removed from DPS, and would need to be recreated to add it back.
 
-    > [!NOTE] If you delete an enrollment group for a certificate, devices that have the certificate in their certificate chain might still be able to enroll if a different, enabled Enrollment Group still exists for the root certificate or another intermediate certificate higher up in their certificate chain.
+    > **Note**: If you delete an enrollment group for a certificate, devices that have the certificate in their certificate chain might still be able to enroll if a different, enabled Enrollment Group still exists for the root certificate or another intermediate certificate higher up in their certificate chain.
 
 1. Once the **Group Enrollment** has been removed from the Device Provisioning Service (DPS), the device registration will still existing within Azure IoT Hub. To fully retire the devices, you will need to remove that registration as well.
 

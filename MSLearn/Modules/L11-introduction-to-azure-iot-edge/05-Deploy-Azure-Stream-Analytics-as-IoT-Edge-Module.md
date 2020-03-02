@@ -18,7 +18,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
     To provide a globally unique name, enter **az220store{your-id}** - i.e. followed by your initials and the current date. 
 
-    > [!NOTE] Your initials must be in lower-case for this resource and no dashes.
+    > **Note**: Your initials must be in lower-case for this resource and no dashes.
 
 1. Set the **Location** to the same Azure Region used for Azure IoT Hub.
 
@@ -60,7 +60,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. In the **Encoding** dropdown, select **UTF-8**.
 
-    > [!NOTE] UTF-8 is the only JSON encoding supported at the time of writing.
+    > **Note**: UTF-8 is the only JSON encoding supported at the time of writing.
 
 1. In the **Event compression type** dropdown, select **None**.
 
@@ -80,7 +80,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. In the **Encoding** dropdown, select **UTF-8**.
 
-    > [!NOTE] UTF-8 is the only JSON encoding supported at the time of writing.
+    > **Note**: UTF-8 is the only JSON encoding supported at the time of writing.
 
 1. Click **Save**.
 
@@ -135,7 +135,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 1. In the **Edge job** dropdown, select the **Steam Analytics job** that was created previously.
 
-    > [!NOTE] The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **AZ-220-ASA-{YOUR-ID}** job again. The **Save** button should then become enabled.
+    > **Note**: The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **AZ-220-ASA-{YOUR-ID}** job again. The **Save** button should then become enabled.
 
 1. Click **Save**. Deployment may take a few moments.
 
@@ -147,7 +147,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     mcr.microsoft.com/azure-stream-analytics/azureiotedge:1.0.5
     ```
 
-    > [!NOTE] The version number at the end of the **Image URI** that is configured will reflect the current latest version when you created the Stream Analytics Module. At the time or writing this unit, the version was `1.0.5`.
+    > **Note**: The version number at the end of the **Image URI** that is configured will reflect the current latest version when you created the Stream Analytics Module. At the time or writing this unit, the version was `1.0.5`.
 
 1. Leave all values as their defaults, and close the **IoT Edge Custom Modules** pane.
 
@@ -235,7 +235,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     tempsensor         running          Up 4 hours       asaedgedockerhubtest/asa-edge-test-module:simulated-temperature-sensor
     ```
 
-    > [!NOTE] If the Stream Analytics module does not show up in the list, wait a minute or two, then try again. It can take a minute for the module deployment to be updated on the IoT Edge Device.
+    > **Note**: If the Stream Analytics module does not show up in the list, wait a minute or two, then try again. It can take a minute for the module deployment to be updated on the IoT Edge Device.
 
 1. Run the `iotedge log` command within the Azure Cloud Shell SSH session on the **IoT Edge Device** to watch the telemetry being sent by the `tempsensor` Simulated Temperature Sensor module:
 

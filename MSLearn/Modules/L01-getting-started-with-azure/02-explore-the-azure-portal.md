@@ -66,7 +66,7 @@ In this task, you will explore the Azure portal and examine some ways that you c
 
     Use the same process to add the following services to your favorites: **Device Provisioning Services**, **Function App**, **Stream Analytics jobs**, and **Azure Cosmos DB**.
 
-    > [!NOTE] You can remove a service from the list of your favorite services by clicking the star of a selected service.
+    > **Note**: You can remove a service from the list of your favorite services by clicking the star of a selected service.
 
 1. On the left side of the _All services_ page, under _Categories_, click **General**.
 

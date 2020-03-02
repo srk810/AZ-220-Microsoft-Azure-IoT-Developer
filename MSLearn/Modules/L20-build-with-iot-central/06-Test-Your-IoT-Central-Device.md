@@ -50,7 +50,7 @@ If all goes well, go straight into the second test.
     | --- | --- |
     | [![Screenshot showing the chart view in IoT Central, receiving the truck temperatures](../../Linked_Image_files/M99-L20/refrigerated-trucks-central.png)](../../Linked_Image_files/M99-L20/refrigerated-trucks-central.png#lightbox) | [![Screenshot showing the console output from the device app, showing the truck contents temperatures](../../Linked_Image_files/M99-L20/refrigerated-trucks-console.png)](../../Linked_Image_files/M99-L20/refrigerated-trucks-console.png#lightbox) |
 
-    > [!NOTE]
+    > **Note**:
     > The screenshots in this lab are taken from the C# version of the app. The Node.js app screens will be similar, but not identical.
 
 1. Check the state tiles: **Truck state**, **Cooling system state**, and **Contents state** in the IoT Central app, to verify the truck and its contents are in the expected state.
@@ -78,7 +78,7 @@ Now for the best fun of all.
 
     [![Screenshot showing the map view of the truck at its base in Seattle](../../Linked_Image_files/M99-L20/refrigerated-trucks-route-points.png)](../../Linked_Image_files/M99-L20/refrigerated-trucks-route-points.png#lightbox)
 
-   > [!NOTE]
+   > **Note**:
    > If you see a message including the text **Access denied due to invalid subscription key**, then check your subscription key to Azure Maps.
 
 1. In the dashboard **Location** tile, is your truck on its way? You might have to wait a short time for the apps to sync up.

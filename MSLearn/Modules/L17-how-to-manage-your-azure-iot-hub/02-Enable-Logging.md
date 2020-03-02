@@ -6,7 +6,7 @@ Azure Resource logs are platform logs emitted by Azure resources that describe t
 
 1. In the left hand navigation, under **Monitoring**, select **Diagnostic settings**.
 
-    > [!NOTE] Diagnostics are disabled by default.
+    > **Note**: Diagnostics are disabled by default.
 
 1. At the top of the **Diagnostic settings** page, under **Subscription**, select the subscription you used to create the IoT Hub.
 
@@ -38,7 +38,7 @@ Azure Resource logs are platform logs emitted by Azure resources that describe t
 
     The **Select a storage account** pane will appear.
 
-    > [!NOTE] In production, you should not use an existing storage account that has other, non-monitoring data stored in it so that you can better control access to monitoring data. If you are also archiving the Activity log to a storage account though, you may choose to use that same storage account to keep all monitoring data in a central location.
+    > **Note**: In production, you should not use an existing storage account that has other, non-monitoring data stored in it so that you can better control access to monitoring data. If you are also archiving the Activity log to a storage account though, you may choose to use that same storage account to keep all monitoring data in a central location.
 
 1. On the  **Select a storage account** pane, under **Subscription**, select the subscription you used to create the storage account earlier.
 
@@ -80,7 +80,7 @@ Now set up some metrics to watch for when messages are sent to the hub.
 
 1. Under **METRIC NAMESPACE**, note that the **IoT Hub standard metrics** namespace is selected.
 
-    > [!NOTE] By default, there is only one metric namespace available. Namespaces are a way to categorize or group similar metrics together. By using namespaces, you can achieve isolation between groups of metrics that might collect different insights or performance indicators. For example, you might have a namespace called **az220memorymetrics** that tracks memory-use metrics which profile your app. Another namespace called **az220apptransaction** might track all metrics about user transactions in your application. You can learn more about custom metrics and namespaces [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-custom-overview?toc=%2Fazure%2Fazure-monitor%2Ftoc.json#namespace).
+    > **Note**: By default, there is only one metric namespace available. Namespaces are a way to categorize or group similar metrics together. By using namespaces, you can achieve isolation between groups of metrics that might collect different insights or performance indicators. For example, you might have a namespace called **az220memorymetrics** that tracks memory-use metrics which profile your app. Another namespace called **az220apptransaction** might track all metrics about user transactions in your application. You can learn more about custom metrics and namespaces [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-custom-overview?toc=%2Fazure%2Fazure-monitor%2Ftoc.json#namespace).
 
 1. In the **METRIC** dropdown list, select **Telemetry messages sent**. Notice how many metrics are available!
 
@@ -98,14 +98,14 @@ Now set up some metrics to watch for when messages are sent to the hub.
 
     Your screen now shows the minimized metric for Telemetry messages sent, plus the new metric for avg connected devices. Notice that the chart title has updated to reflect both metrics.
 
-    > [!NOTE]  To edit the chart title, click the **pencil** to the right of the title. 
+    > **Note**:  To edit the chart title, click the **pencil** to the right of the title. 
 
 1. Under the updated **Chart Title**, in the toolbar, click **Pin to dashboard**. Note that you can choose to pin to the current dashboard or choose another. Select the dashboard you created in the first lab - "AZ-220-RG".
 
-    > [!NOTE] In order to retain the chart you have just created, it **must** be pinned to a dashboard.
+    > **Note**: In order to retain the chart you have just created, it **must** be pinned to a dashboard.
 
 1. Navigate to the "AZ-220-RG" dashboard and verify the chart is displayed.
 
-    > [!NOTE] You can customize the size and position of the chart by using drag and drop operations.
+    > **Note**: You can customize the size and position of the chart by using drag and drop operations.
 
 Now that we have enable logging and setup a chart to monitor metrics, we will set up an alert.

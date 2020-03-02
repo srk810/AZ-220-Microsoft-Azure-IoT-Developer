@@ -40,9 +40,9 @@ In this unit, we'll first create an IoT Hub, and add a single device to that hub
 
     As we saw previously, Azure is supported by a series of datacenters that are placed in regions all around the world. When you create something in Azure, you deploy it to one of these datacenter locations.
 
-    > [!NOTE] For the current list of Regions that support Event Grid, see the following link: [Products available by region](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=event-grid&regions=all)
+    > **Note**: For the current list of Regions that support Event Grid, see the following link: [Products available by region](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=event-grid&regions=all)
 
-    > [!NOTE] When picking a datacenter to host your app, keep in mind that picking a datacenter close to your end users will decrease load/response times. If you are on the other side of the world from your end users, you should not be picking the datacenter nearest you.
+    > **Note**: When picking a datacenter to host your app, keep in mind that picking a datacenter close to your end users will decrease load/response times. If you are on the other side of the world from your end users, you should not be picking the datacenter nearest you.
 
 1. To the right of IoT Hub Name, enter a globally unique name for your IoT Hub.
 
@@ -60,7 +60,7 @@ In this unit, we'll first create an IoT Hub, and add a single device to that hub
 
     * The _IoT Hub Name_ field is a required field.
 
-    > [!NOTE] Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**-01**' or '**-02**' as necessary to achieve a globally unique name.
+    > **Note**: Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**-01**' or '**-02**' as necessary to achieve a globally unique name.
 
 1. At the top of the blade, click **Size and scale**.
 
@@ -72,7 +72,7 @@ In this unit, we'll first create an IoT Hub, and add a single device to that hub
 
     The **S1** tier that we are using in this course allows a total of 400,000 messages per unit per day and provides the all of the services that are required in this training. We won't actually need 400,000 messages per unit per day, but we will be using features provided at this tier level, such as Cloud-to-device commands, Device management, and IoT Edge.
 
-    > [!NOTE] The "S1 - Standard" tier has a cost of $25.00 USD per month per unit. We will be specifying 1 unit.
+    > **Note**: The "S1 - Standard" tier has a cost of $25.00 USD per month per unit. We will be specifying 1 unit.
 
     For details about the other tier options, see [Choosing the right IoT Hub tier for your solution](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling)).
 

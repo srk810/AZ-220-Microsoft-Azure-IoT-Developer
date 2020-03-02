@@ -32,7 +32,7 @@ In this unit, we'll create and test the logging route.
 
 1. On the **Create Storage** pane, under **Name**, enter **vibrationstore** and add your initials and today's date - **vibrationstorecah121119**. 
 
-    > [!NOTE] This field can only contain lower-case letters and numbers, must be between 3 and 24 characters, and must be unique.
+    > **Note**: This field can only contain lower-case letters and numbers, must be between 3 and 24 characters, and must be unique.
 
 1. Under **Account kind**, select **Storage (general purpose V1)**.
 
@@ -74,7 +74,7 @@ In this unit, we'll create and test the logging route.
 
 1. Under **Encoding**, note there are two options and that **AVRO** is selected.
 
-    > [!NOTE] By default IoT Hub writes the content in Avro format, which has both a message body property and a message property. The Avro format is not used for any other endpoints. Although the Avro format is great for data and message preservation, it's a challenge to use it to query data. In comparison, JSON or CSV format is much easier for querying data. IoT Hub now supports writing data to Blob storage in JSON as well as AVRO.
+    > **Note**: By default IoT Hub writes the content in Avro format, which has both a message body property and a message property. The Avro format is not used for any other endpoints. Although the Avro format is great for data and message preservation, it's a challenge to use it to query data. In comparison, JSON or CSV format is much easier for querying data. IoT Hub now supports writing data to Blob storage in JSON as well as AVRO.
 
 1. The final field **File name format** specifies the pattern used to write the data to files in storage. The various tokens are replace with values as the file is created.
 

@@ -6,13 +6,13 @@ In this unit you will install the .NET Core 3.1 SDK, Azure CLI, Azure PowerShell
 
 1. Download and Install the [.NET Core 3.1 SDK](https://dotnet.microsoft.com/download)
 
-    > [!NOTE] You're selecting the .NET Core 3.1 release because it is the most recent LTS ("Long-Term Support") release.
+    > **Note**: You're selecting the .NET Core 3.1 release because it is the most recent LTS ("Long-Term Support") release.
 
 ## Install Visual Studio Code
 
 1. Download and Install the [Visual Studio Code](https://code.visualstudio.com) editor.
 
-    > [!NOTE] .NET Framework 4.5 is required for Visual Studio Code when installing on Windows. If you are using Windows 7, please ensure [.NET Framework 4.5](https://www.microsoft.com/en-us/download/details.aspx?id=30653) is installed.
+    > **Note**: .NET Framework 4.5 is required for Visual Studio Code when installing on Windows. If you are using Windows 7, please ensure [.NET Framework 4.5](https://www.microsoft.com/en-us/download/details.aspx?id=30653) is installed.
 
 2. Go to the Visual Studio Marketplace and install the following extensions for Visual Studio Code:
 
@@ -23,7 +23,7 @@ In this unit you will install the .NET Core 3.1 SDK, Azure CLI, Azure PowerShell
 
 1. Download and install the most recent version of the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) command-line tool. 
    
-    > [!IMPORTANT] Make sure you install the current tools and **not** the Classic tools.
+    > **IMPORTANT**: Make sure you install the current tools and **not** the Classic tools.
 
 2. Once the Azure CLI is installed, open a new command-line window, and run the following command to add the Microsoft Azure IoT Extension for Azure CLI. This extension adds IoT Hub, IoT Edge, and IoT Device Provisioning Service (DPS) specific commands to Azure CLI.
 
@@ -51,7 +51,7 @@ In this unit you will install the .NET Core 3.1 SDK, Azure CLI, Azure PowerShell
 
     If you are prompted to install a newer version of the NuGet provider, type **Y** and then press Enter.
 
-    > [!NOTE] If you re-run the command that we used above to determine the installed version of PowerShellGet, you should see that PowerShellGet version 1.6.0 (or higher) is now installed.
+    > **Note**: If you re-run the command that we used above to determine the installed version of PowerShellGet, you should see that PowerShellGet version 1.6.0 (or higher) is now installed.
 
 1. To install the Azure Resource Manager modules from the PowerShell Gallery, enter the following command:
 
@@ -59,7 +59,7 @@ In this unit you will install the .NET Core 3.1 SDK, Azure CLI, Azure PowerShell
 
     If you see a message stating that `You are installing the modules from an untrusted repository`, type **A** and then press **Enter**.
 
-    > [!NOTE] Once again, it can take a minute for the installation to begin, so just give it a chance.
+    > **Note**: Once again, it can take a minute for the installation to begin, so just give it a chance.
 
     The AzureRM module is a rollup module for the Azure Resource Manager cmdlets. When you install the AzureRM module, any Azure PowerShell module not previously installed is downloaded and installed from the PowerShell Gallery.
 

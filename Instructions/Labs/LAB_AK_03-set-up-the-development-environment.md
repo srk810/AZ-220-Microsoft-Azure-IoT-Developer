@@ -23,7 +23,7 @@ In support of these decisions, you will be setting up the following environment:
   * Hyper-V and Containers features of Windows must be enabled.
   * BIOS-level hardware virtualization support must be enabled in the BIOS settings.
 
-  **Note**: When setting up the development environment on a virtual machine, the VM environment must support nested virtualization - [nested virtualization](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/nested-virtualization)
+  > **Note**: When setting up the development environment on a virtual machine, the VM environment must support nested virtualization - [nested virtualization](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/nested-virtualization)
 
 * Azure CLI (current/latest)
 * .NET Core 3.0.100 (or later) SDK
@@ -33,7 +33,7 @@ In support of these decisions, you will be setting up the following environment:
 * Power BI Desktop (for data visualization)
 * IoT Extensions for VS Code and Azure CLI
 
-**Note**: A virtual machine has been created for this course that provides a majority of the tools specified above. The instructions below support using the prepared VM or setting up the development environment locally using your PC.
+> **Note**: A virtual machine has been created for this course that provides a majority of the tools specified above. The instructions below support using the prepared VM or setting up the development environment locally using your PC.
 
 ## In This Lab
 
@@ -248,7 +248,7 @@ Microsoft has created a GitHub repo to provide access to lab resource files. Hav
 
 #### Task 2: Install Azure PowerShell
 
-**Note**: The lab activities in this course do NOT have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
+> **Note**: The lab activities in this course do NOT have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
 
 Azure PowerShell is designed for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. You can use it in your browser with Azure Cloud Shell, or you can install it on your local machine and use it in any PowerShell session. If you are running Azure PowerShell locally, you need to have Windows PowerShell configured.
 

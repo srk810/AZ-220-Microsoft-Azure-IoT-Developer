@@ -107,7 +107,7 @@ With these certificates available, you are ready to configure the device simulat
     az iot dps show --name AZ-220-DPS-{YOUR-INITIALS-AND-CURRENT-DATE} --query properties.idScope
     ```
 
-    > [!NOTE] Ensure you use the name of your DPS instance above.
+    > **Note**: Ensure you use the name of your DPS instance above.
 
     Copy the output of the command and replace the `<DPS-ID-Scope>` value in Visual Studio code. It should look similar to:
 
@@ -146,6 +146,6 @@ This app is very similar to the app used in the earlier lab **L06-Automatic Enro
 
 1. Once the alerts have arrived, you can exit the application by either hitting **CTRL+C** in the Visual Studio Code terminal, or by closing Visual Studio Code.
 
-    > [!NOTE] When the devices are disconnected, you will receive messages informing you the alert has been resolved.
+    > **Note**: When the devices are disconnected, you will receive messages informing you the alert has been resolved.
 
 Now, let's check the storage account to see if anything has been logged by Azure Monitor.

@@ -23,7 +23,7 @@ In this Lab, you'll create a device template for a refrigerated truck.
 
     ![Screenshot showing how to name, and then create, a new device template](../../Linked_Image_files/M99-L20//refrigerated-trucks-new-template.png)
 
-    > [!NOTE]
+    > **Note**:
     > Take note of a few important elements of the above image. Including that the template is in Draft form, and the locations of the **+ Add interface**, **Views**, and **Publish** controls.
 
 1. You are now ready to add the specifics of the device template. Click **Add interface**, then **Custom**, to start building from a blank interface.
@@ -49,7 +49,7 @@ Telemetry is the data values transmitted by sensors. The most important sensor i
 
     [![Screenshot showing how to create temperature telemetry for the simulated device](../../Linked_Image_files/M99-L20/refrigerated-trucks-temperature.png)](../../Linked_Image_files/M99-L20/refrigerated-trucks-temperature.png#lightbox)
 
-    > [!IMPORTANT]
+    > **IMPORTANT**:
     > The names entered for the interface must be entered _exactly_ as shown in this unit. This is because an exact match is needed between these names, and entries in the code you'll be adding later in this lab.
 
 Let's add the rest of the template.

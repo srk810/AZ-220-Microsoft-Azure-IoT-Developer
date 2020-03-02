@@ -73,7 +73,7 @@ In order to complete this lab, you will need to reuse a number of resources from
     StorageConnectionString=$( az storage account show-connection-string --name $StorageAccountName -o tsv )
     ```
 
-    > [!NOTE] Review this script. You can see that it perform the following actions (and create resources if they don't already exist):
+    > **Note**: Review this script. You can see that it perform the following actions (and create resources if they don't already exist):
     > * Builds the resource names
     >   * Note that the storage account name is set to lowercase with no dashes to match the naming rules.
     > * Create Resource Group
@@ -88,7 +88,7 @@ In order to complete this lab, you will need to reuse a number of resources from
     * RGName
     * Location
 
-    > [!NOTE] If you have existing resources you wish to reuse, ensure you set the **YourID** value to the same you used before, as well as the same **RGName** and **Location**.
+    > **Note**: If you have existing resources you wish to reuse, ensure you set the **YourID** value to the same you used before, as well as the same **RGName** and **Location**.
 
 1. To save the edited **setup.sh** file, press **CTRL-Q**. If prompted to save you changes before closing the editor, click **Save**.
 
@@ -98,6 +98,6 @@ In order to complete this lab, you will need to reuse a number of resources from
     ./setup.sh
     ```
 
-    > [!NOTE] If the IoT Hub and DPS resources already exist, you will see red warnings stating the name is not available - you can ignore these errors.
+    > **Note**: If the IoT Hub and DPS resources already exist, you will see red warnings stating the name is not available - you can ignore these errors.
 
 You have now ensured the resources are available for this lab. Next, we shall setup monitoring and logging.

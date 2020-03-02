@@ -24,7 +24,7 @@ In this unit you will deploy an Ubuntu Server VM with Azure IoT Edge runtime sup
 
 1. Under **Size**, click **Change size**. In the displayed list of sizes, select **DS1_v2** and click **Select**.
 
-    > [!NOTE] Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
+    > **Note**: Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
 1. Under **Administrator account**, select the **Password** option for **Authentication type**.
 
@@ -36,4 +36,4 @@ In this unit you will deploy an Ubuntu Server VM with Azure IoT Edge runtime sup
 
 1. Once validation passes, click **Create** to begin deploying the virtual machine.
 
-    > [!NOTE] Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
+    > **Note**: Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.

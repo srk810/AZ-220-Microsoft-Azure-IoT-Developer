@@ -16,7 +16,7 @@ In this unit you will create a new IoT Edge Device Identity within Azure IoT Hub
 
     Be sure to replace the `{IoTHubName}` placeholder with the name of the Azure IoT Hub in your subscription.
 
-    > [!NOTE] The IoT Edge Device Identity can also be created using the Azure Portal by navigating to **IoT Hub** -> **IoT Edge** -> **Add an IoT Edge device**.
+    > **Note**: The IoT Edge Device Identity can also be created using the Azure Portal by navigating to **IoT Hub** -> **IoT Edge** -> **Add an IoT Edge device**.
 
 1. Notice the output of the command contains information about the **Device Identity** that was created for the IoT Edge device. For example, you can see it defaults to `symmetricKey` authentication with auto-generated keys, and the `iotEdge` capability is set to `true` as indicated by the `--edge-enabled` parameter that was specified.
 
@@ -66,4 +66,4 @@ In this unit you will create a new IoT Edge Device Identity within Azure IoT Hub
         }
     ```
 
-    > [!NOTE] The IoT Edge Device Connection String can also be accessed within the Azure Portal, by navigating to **IoT Hub** -> **IoT Edge** -> **Your Edge Device** -> **Connection String (primary key)**
+    > **Note**: The IoT Edge Device Connection String can also be accessed within the Azure Portal, by navigating to **IoT Hub** -> **IoT Edge** -> **Your Edge Device** -> **Connection String (primary key)**

@@ -30,7 +30,7 @@ You are going to now create a new IoT device that will later be used to measure 
 
 1. Once validation passes, click **Create** to begin deploying the virtual machine.
 
-    > [!NOTE] Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
+    > **Note**: Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
 
 ## Register New Devices
 
@@ -43,6 +43,6 @@ A device must be registered with your IoT hub before it can connect.
 1. Select and open **IoT devices** under **Explorers** from the left menu.
 1. On the top of IoT devices blade, Click  **+ New**
 1. Type in **vm-device01** under **Device ID**. Leave the other defaults.
-    > [!NOTE] To make following this lab easier,you can set **Device ID** to **vm-device01**.
+    > **Note**: To make following this lab easier,you can set **Device ID** to **vm-device01**.
 
 1. Click Save.

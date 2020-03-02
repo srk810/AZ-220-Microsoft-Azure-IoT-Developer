@@ -8,7 +8,7 @@ In this unit, you will generate an x.509 CA Certificate using OpenSSL within the
 
 1. Open the **Azure Cloud Shell** by clicking the **Terminal** icon within the top header bar of the Azure portal, and select the **Bash** shell option.
 
-    > [!NOTE] Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this unit you will use some helper scripts written for the *Bash* shell.
+    > **Note**: Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this unit you will use some helper scripts written for the *Bash* shell.
 
 1. Within the Azure Cloud Shell, run the following commands that will download a helper script for using *OpenSSL* to generate x.509 CA Certificates. They will be placed within the `~/certificates` directory inside your Cloud Shell storage.
 
@@ -71,7 +71,7 @@ In this unit, you will generate an x.509 CA Certificate using OpenSSL within the
 
 1. Copy the newly generated **Verification Code** that is displayed above the _Generate_ button.
 
-    > [!NOTE] You will need to leave the **Certificate Details** pane **Open** while you generate the Verification Certificate. If you close the pane, you will invalidate the Verification Code and will need to generate a new one.
+    > **Note**: You will need to leave the **Certificate Details** pane **Open** while you generate the Verification Certificate. If you close the pane, you will invalidate the Verification Code and will need to generate a new one.
 
 1. Open the **Azure Cloud Shell**, if it's not still open from earlier, and navigate to the `~/certificates` directory.
 

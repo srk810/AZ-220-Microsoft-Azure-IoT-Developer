@@ -383,7 +383,7 @@ In this exercise, you will run the Simulated Device and verify it's sending sens
     dotnet run
     ```
 
-    **Note**: When the Simulated Device application runs, it will first write some details about it's status to the console (terminal pane).
+    > **Note**: When the Simulated Device application runs, it will first write some details about it's status to the console (terminal pane).
 
 1. Notice that the JSON output following the `Desired Twin Property Changed:` line contains the desired value for the `telemetryDelay` for the device.
 
@@ -450,7 +450,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Within the list of IoT devices, click **DPSSimulatedDevice1**.
 
-    > [!IMPORTANT] Make sure you select the device that you are using for this lab.
+    > **IMPORTANT**: Make sure you select the device that you are using for this lab.
 
 1. On the device blade, at the top of the blade, click **Device Twin**.
 
@@ -548,7 +548,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. Within the list of IoT devices, select the checkbox to the left of the DPSSimulatedDevice1 Device ID.
 
-    > [!IMPORTANT] Make sure you select the device representing the simulated device that you used for this lab.
+    > **IMPORTANT**: Make sure you select the device representing the simulated device that you used for this lab.
 
 1. At the top of the blade, click **Delete**.
 

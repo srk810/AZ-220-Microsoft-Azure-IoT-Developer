@@ -30,7 +30,7 @@ In this unit, you will create a new Azure Logic App that will be triggered via a
 
 1. Click **Create**.
 
-    > [!NOTE] It will take a minute or two for the Logic App deployment to complete.
+    > **Note**: It will take a minute or two for the Logic App deployment to complete.
 
 1. Navigate to the **Logic App** resource that was just deployed.
 
@@ -100,7 +100,7 @@ In this unit, you will create a new Azure Logic App that will be triggered via a
 
 1. Enter "**Outlook.com**" into the search box, then locate and select the **Send an email** action for the **Outlook.com** connector.
 
-    > [!NOTE] These instructions walk through configuring the Logic App to send an email using an **Outlook.com** email address. Alternatively, the Logic App can also be configured to send email using the Office 365 Outlook or Gmail connectors as well.
+    > **Note**: These instructions walk through configuring the Logic App to send an email using an **Outlook.com** email address. Alternatively, the Logic App can also be configured to send email using the Office 365 Outlook or Gmail connectors as well.
 
 1. On the **Outlook.com Connector**, click the **Sign in** button, and follow the prompts to authenticate with an existing Outlook.com account.
 

@@ -12,7 +12,7 @@
 
     ![Screenshot showing how to create a new IoT Central app, using the IoT Central portal](../../Linked_Image_files/M99-L20/refrigerated-trucks-my-apps.png)
 
-    > [!NOTE]
+    > **Note**:
     > Click on any image in this lab, to display a full-sized image.
 
 1. Fill out your contact info, and click **Create**. Wait a few seconds whilst the app resource is built.

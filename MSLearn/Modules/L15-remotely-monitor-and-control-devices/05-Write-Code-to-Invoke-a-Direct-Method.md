@@ -51,7 +51,7 @@ In this unit, we'll add code to the device app for a direct method to turn on th
     }
     ```
 
-    > [!NOTE] This code defines the implementation of the direct method and is executed when the direct method is invoked. The fan has three states: *on*, *off*, and *failed*. The method above sets the fan to either of the first two of these states. If the payload text doesn't match one of these two, or the fan is in a failed state, an error is returned.
+    > **Note**: This code defines the implementation of the direct method and is executed when the direct method is invoked. The fan has three states: *on*, *off*, and *failed*. The method above sets the fan to either of the first two of these states. If the payload text doesn't match one of these two, or the fan is in a failed state, an error is returned.
 
 1. To register the direct method, add the following lines of code to the Main method, after creating the device client.
 
@@ -128,7 +128,7 @@ You've completed what is needed at the device end of things. Next, we need to ad
     }
     ```
 
-    > [!NOTE] This code is used to invoke the **SetFanState** direct method on the device app.
+    > **Note**: This code is used to invoke the **SetFanState** direct method on the device app.
 
 1. Add the following code to the **Main** method, before creating the receivers to listen for messages:
 
@@ -138,7 +138,7 @@ You've completed what is needed at the device end of things. Next, we need to ad
     InvokeMethod().GetAwaiter().GetResult();
     ```
 
-    > [!NOTE] This code creates the client we used to connect to the IoT Hub so we can invoke the direct method on the device.
+    > **Note**: This code creates the client we used to connect to the IoT Hub so we can invoke the direct method on the device.
 
 1. Save the **Program.cs** file.
 
@@ -152,7 +152,7 @@ To test the method, start the apps in the correct order. We can't invoke a direc
 
 1. Start the **cheesecaveoperator** back-end app. This app immediately calls the direct method. Do you notice it's handled by the back-end app, with output similar to the following?
 
-    > [!NOTE] If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **cheesecavedevice** and started the app.
+    > **Note**: If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **cheesecavedevice** and started the app.
 
     ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-direct-method-sent.png)
 

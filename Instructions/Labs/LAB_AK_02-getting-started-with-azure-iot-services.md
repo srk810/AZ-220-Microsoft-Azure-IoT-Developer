@@ -127,7 +127,7 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
 1. In the Search textbox, type **IoT** and then press **Enter**.
 
-    **Note**: Marketplace services provided by private contributors may include a cost that is not covered by a Microsoft Azure Pass or other Microsoft credit offering.
+    > **Note**: Marketplace services provided by private contributors may include a cost that is not covered by a Microsoft Azure Pass or other Microsoft credit offering.
 
 1. On the search results blade, click **IoT Hub**.
 

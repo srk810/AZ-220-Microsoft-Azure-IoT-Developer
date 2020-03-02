@@ -32,7 +32,7 @@ At the end of this unit, you'll be sending and receiving telemetry.
 
 1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
 
-    > [!NOTE] If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
+    > **Note**: If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
 
@@ -332,7 +332,7 @@ The following app simulates a conveyor belt, and reports vibration sensor data e
 
 1. Save the **Program.cs** file.
 
-    > [!NOTE] The code is also available in the `/labFiles` folder - remember to replace the `<your device connection string>`.
+    > **Note**: The code is also available in the `/labFiles` folder - remember to replace the `<your device connection string>`.
 
 ## Test your Code to Send Telemetry
 
@@ -348,7 +348,7 @@ The following app simulates a conveyor belt, and reports vibration sensor data e
 
     ![Console Output](../../Linked_Image_Files/M99-L07-vibration-telemetry.png)
 
-    > [!NOTE] Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
+    > **Note**: Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
 1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
 

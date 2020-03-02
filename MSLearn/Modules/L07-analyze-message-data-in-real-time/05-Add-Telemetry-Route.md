@@ -26,7 +26,7 @@ With this new IoT Hub route in place, we need to update our Stream Analytics job
 
 1. Under **Event Hub policy name**, ensure **RootManageSharedAccessKey** is selected.
 
-    > [!NOTE] The **Event Hub policy key** is populated and read-only.
+    > **Note**: The **Event Hub policy key** is populated and read-only.
 
 1. Under **Event Hub Consumer group**, leave it blank - this will use the **$Default** Consumer group.
 
@@ -93,7 +93,7 @@ With this new IoT Hub route in place, we need to update our Stream Analytics job
     FROM AnomalyDetectionStep
     ```
 
-    > [!NOTE] This first section of this query takes the vibration data, and examines the previous 120 seconds worth. The `AnomalyDetection_SpikeAndDip` function will return a `Score` parameter, and an `IsAnomaly` parameter. The score is how certain the ML model is that the given value is an anomaly, specified as a percentage. If the score exceeds 95%, the `IsAnomaly` parameter has a value of 1, otherwise `IsAnomaly` has a value of 0. Notice the 120 and 95 parameters in the first section of the query. The second section of the query sends the time, vibration, and anomaly parameters to `vibrationBI`.
+    > **Note**: This first section of this query takes the vibration data, and examines the previous 120 seconds worth. The `AnomalyDetection_SpikeAndDip` function will return a `Score` parameter, and an `IsAnomaly` parameter. The score is how certain the ML model is that the given value is an anomaly, specified as a percentage. If the score exceeds 95%, the `IsAnomaly` parameter has a value of 1, otherwise `IsAnomaly` has a value of 0. Notice the 120 and 95 parameters in the first section of the query. The second section of the query sends the time, vibration, and anomaly parameters to `vibrationBI`.
 
 1. Verify that the query editor on lists 2 Inputs and Outputs:
 

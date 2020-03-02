@@ -14,7 +14,7 @@ In this unit, you will execute the Simulated Device. When the device is run for 
     dotnet run
     ```
 
-    > [!NOTE] When running `dotnet run` for the Simulated Device, if a **ProvisioningTransportException** exception is displayed, the most common cause is an _Invalid certificate_ error. If this happens, ensure the CA Certificate in DPS, and the Device Certificate for the Simulated Device application are configured correctly.
+    > **Note**: When running `dotnet run` for the Simulated Device, if a **ProvisioningTransportException** exception is displayed, the most common cause is an _Invalid certificate_ error. If this happens, ensure the CA Certificate in DPS, and the Device Certificate for the Simulated Device application are configured correctly.
     >
     > ```text
     > localmachine:LabFiles User$ dotnet run

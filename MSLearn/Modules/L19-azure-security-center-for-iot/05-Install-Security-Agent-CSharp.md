@@ -51,7 +51,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
     ```cmd/sh
     echo "<primary_key>" > s.key
     ```
-    > [!NOTE] To check if you added the correct Primary key into the file, Open your file with `nano s.key`command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
+    > **Note**: To check if you added the correct Primary key into the file, Open your file with `nano s.key`command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
 
 ## Installing Security Agent
 
@@ -98,7 +98,7 @@ With the C agent you will be connecting to your IoT Hub. This means you will nee
     systemctl status ASCIoTAgent.service
     ```
 
-    > [!NOTE] If your Azure Security Center for IoT Agent isn't running or active, please check out [Deploy Azure Security Center for IoT C# based security agent for Linux Guide Troubleshooting Section](https://docs.microsoft.com/en-us/azure/asc-for-iot/how-to-deploy-linux-cs).
+    > **Note**: If your Azure Security Center for IoT Agent isn't running or active, please check out [Deploy Azure Security Center for IoT C# based security agent for Linux Guide Troubleshooting Section](https://docs.microsoft.com/en-us/azure/asc-for-iot/how-to-deploy-linux-cs).
 
 1. Navigate back to the Azure portal to your  **vm-device01**. TO do that, go in your IoT Hub, locate IoT devices under Explorers. Click on **vm-device01**.
 

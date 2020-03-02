@@ -55,4 +55,4 @@ In this task, you will use the Azure portal to explore the features and capabili
 
 1. Take a minute to explore some of the other menu options under **Settings**
 
-   > [!NOTE] This lab is only intended to be an introduction to the IoT Hub Device Provisioning Service at this point, so don't worry if you feel a bit overwhelmed. We will be covering more aspect of the DPS in later parts of the course.
+   > **Note**: This lab is only intended to be an introduction to the IoT Hub Device Provisioning Service at this point, so don't worry if you feel a bit overwhelmed. We will be covering more aspect of the DPS in later parts of the course.

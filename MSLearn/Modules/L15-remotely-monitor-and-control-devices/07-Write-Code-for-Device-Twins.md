@@ -44,7 +44,7 @@ In this unit, we'll add some code to both the device app and back-end service ap
     }
     ```
 
-    > [!NOTE] The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates thew twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1".
+    > **Note**: The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates thew twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1".
 
 1. Now, add the following lines to the **Main** method, before the lines creating a service client.
 
@@ -54,7 +54,7 @@ In this unit, we'll add some code to both the device app and back-end service ap
     SetTwinProperties().Wait();
     ```
 
-    > [!NOTE] Read the comments in this section of code.
+    > **Note**: Read the comments in this section of code.
 
 1. Save the **Program.cs** file.
 
@@ -94,7 +94,7 @@ In this unit, we'll add some code to both the device app and back-end service ap
     }
     ```
 
-    > [!NOTE] This code defines handler invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
+    > **Note**: This code defines handler invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
 
 1. To register the desired property changed handler, add the following lines after the statements creating a handler for the direct method:
 
@@ -109,7 +109,7 @@ In this unit, we'll add some code to both the device app and back-end service ap
 
 1. Save the **Program.cs** file.
 
-> [!NOTE] Now you have added device twins to your app, you can reconsider having explicit variables such as **desiredHumidity**. Instead, you can use the variables in the device twin object.
+> **Note**: Now you have added device twins to your app, you can reconsider having explicit variables such as **desiredHumidity**. Instead, you can use the variables in the device twin object.
 
 ## Test the Device Twins
 
@@ -129,4 +129,4 @@ To test the method, start the apps in the correct order.
 
 The code given in this module isn't industrial quality. It does show how to use direct methods, and device twins. However, the messages are sent only when the back-end service app is first run. Typically, a back-end service app would require a browser interface, for an operator to send direct methods, or set device twin properties, when required.
 
-> [!NOTE] Before you go, don't forget to close both instances of Visual Studio Code - this will exit the apps if they are still running.
+> **Note**: Before you go, don't forget to close both instances of Visual Studio Code - this will exit the apps if they are still running.

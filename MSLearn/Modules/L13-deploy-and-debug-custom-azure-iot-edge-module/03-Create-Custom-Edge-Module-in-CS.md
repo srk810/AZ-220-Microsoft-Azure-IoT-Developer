@@ -29,7 +29,7 @@ In this unit, you will create an Azure IoT Edge Solution that contains a custom 
     - `<acr-name>`: Replace with the name fo the Azure Container Registry service.
     - `<module-name>`: Replace with the name of the custom Azure IoT Edge Module that's being created.
 
-    > [!NOTE] The default Docker image repository in Visual Studio Code is set to `localhost:5000/<your module name>`. If you were to use a local Docker registry for testing, then **localhost** is fine.
+    > **Note**: The default Docker image repository in Visual Studio Code is set to `localhost:5000/<your module name>`. If you were to use a local Docker registry for testing, then **localhost** is fine.
 
 1. Once the new **IoT Edge Solution** has been created, Visual Studio Code will open the solution. In the **Explorer** pane, notice the files and directories that were created as part of the new IoT Edge Solution.
 
@@ -52,7 +52,7 @@ In this unit, you will create an Azure IoT Edge Solution that contains a custom 
 
 1. Within the `.env` file, replace the `<registry-username>` placeholder with the **Registry name** (_aka Username_) of the Azure Container Registry that was previously created, and replace the `<registry-password>` placeholder with the **password** for the Azure Container Registry.
 
-    > [!NOTE] The Azure Container Registry **Username** and **password** values can be found by accessing the **Access keys** pane for the **Azure Container Registry** service within the Azure portal.
+    > **Note**: The Azure Container Registry **Username** and **password** values can be found by accessing the **Access keys** pane for the **Azure Container Registry** service within the Azure portal.
 
 1. Open the `deployment.template.json` file within the root IoT Edge Solution directory. This file is the **deployment manifest** for the IoT Edge Solution. The deployment manifest tells an IoT Edge device (or a group of devices) which modules to install and how to configure them. The deployment manifest includes the _desired properties_ for each module twin. IoT edge devices report back the _reported properties_ for each module.
 

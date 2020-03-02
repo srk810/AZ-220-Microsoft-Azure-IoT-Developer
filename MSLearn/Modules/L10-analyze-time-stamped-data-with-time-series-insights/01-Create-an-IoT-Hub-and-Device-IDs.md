@@ -42,7 +42,7 @@ As part of this course, we have already created an Azure IoT Hub and Device ID u
 
 1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH121119**, and set `Location` to the location that makes sense for your resources.
 
-    > [!NOTE] The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**: The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -62,7 +62,7 @@ As part of this course, we have already created an Azure IoT Hub and Device ID u
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE] You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+    > **Note**: You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with a Device ID of **SimulatedThermostat**, and display the device connection string, enter the following command:
 

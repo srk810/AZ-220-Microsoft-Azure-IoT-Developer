@@ -22,7 +22,7 @@ In this unit you will configure a simulated device written in C# to connect to A
     dotnet run
     ```
 
-    > [!NOTE] If the command outputs a `Malformed Token` or other error message, then make sure the **Device Connection String** is configured correctly as the value of the `s_connectionString` variable.
+    > **Note**: If the command outputs a `Malformed Token` or other error message, then make sure the **Device Connection String** is configured correctly as the value of the `s_connectionString` variable.
 
 6. Once the Simulated Device application is running, it will be sending event messages to the Azure IoT Hub that include `temperature` and `humidity` values.
 

@@ -98,7 +98,7 @@ Telemetry is the data values transmitted by sensors. The most important sensor i
 
 1. Your screen should now look like the following image.
 
-    > [!IMPORTANT]
+    > **IMPORTANT**:
     > The names entered for the interface must be entered _exactly_ as shown in this unit. This is because an exact match is needed between these names, and entries in the code you'll be adding later in this lab.
 
 Let's add the rest of the template.

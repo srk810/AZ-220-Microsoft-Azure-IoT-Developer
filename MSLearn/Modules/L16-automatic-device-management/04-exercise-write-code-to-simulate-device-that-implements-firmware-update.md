@@ -249,7 +249,7 @@ At the end of this task, you'll have a device simulator awaiting for a firmware 
         
     ```
 
-    > [!NOTE]
+    > **Note**:
     > Read through the comments in the code, noting how the device reacts to device twin changes to execute a firmware update based on the configuration shared in the desired Property "firmware". You can also note the function that will report the current firmware update status through the reported properties of the device twin.
 
 1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder, so ensure you are in the fwupdatedevice folder. 

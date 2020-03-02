@@ -36,7 +36,7 @@ In this unit, you will configure the DNS name for Public IP Address of the **AZ-
 
     This is a sample SSH command that will be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. Now that the DNS name label has been configured, the command is formatted similar to `ssh demouser@AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com`.
 
-    > [!NOTE] If a "_Host key verification failed_" messages displays, then use the VM's **IP Address** with the `ssh` command to connect tot he virtual machine.
+    > **Note**: If a "_Host key verification failed_" messages displays, then use the VM's **IP Address** with the `ssh` command to connect tot he virtual machine.
 
 1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
 
@@ -60,7 +60,7 @@ In this unit, you will configure the DNS name for Public IP Address of the **AZ-
 
     The `hostname` setting configures the Edge Hub server hostname. Regardless of the case used for this setting, a lowercase value is used to configure the Edge Hub server. This is also the hostname that downstream IoT devices will need to use when connecting to the IoT Edge Gateway for the encrypted communication to work properly.
 
-    > [!NOTE] Here are some tips for using **vi** when editing the `config.yaml` file:
+    > **Note**: Here are some tips for using **vi** when editing the `config.yaml` file:
     > - Press `Esc` and enter `/` followed by a search string, then press enter to search
     >   - Pressing `n` will cycle through matches.
     > - Press the `i` key to put the editor into Insert mode, then you will be able to make changes.

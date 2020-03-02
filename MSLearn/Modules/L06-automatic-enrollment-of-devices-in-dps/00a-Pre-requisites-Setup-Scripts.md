@@ -2,7 +2,7 @@
 
 This topic outlines the prerequisite resources in Azure for this lab and provides instructions for executing the **lab-setup.azcli** script should the resources need to be recreated.
 
-> [!NOTE] Executing the **lab-setup.azcli** script may take up to 10 minutes.
+> **Note**: Executing the **lab-setup.azcli** script may take up to 10 minutes.
 
 ## Prerequisite
 
@@ -62,7 +62,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
     Location="{YOUR-LOCATION}"
     ```
 
-    > [!NOTE] The `{YOUR-LOCATION}` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**: The `{YOUR-LOCATION}` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
 
     > ```bash
     > az account list-locations -o Table
@@ -80,7 +80,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
     If prompted to save, click **Save** and the editor will close.
 
-    > [!NOTE]
+    > **Note**:
     >You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
 1. To create a resources required for this lab, enter the following command:

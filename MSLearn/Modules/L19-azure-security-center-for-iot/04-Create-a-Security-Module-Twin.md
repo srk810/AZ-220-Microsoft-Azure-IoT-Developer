@@ -23,16 +23,16 @@ In this task, you will be creating a security module twin manually.
 1. Click on **+ Add Module Identity**.
 1. In the Module Identity Name field, enter **azureiotsecurity**. Leave all over fields the same and click **Save**. You should now see **azureiotsecurity** under **Module Identities** for your device.
 
-    > [!NOTE] The Module Identity must be called **azureiotsecurity** and not another unique name.
+    > **Note**: The Module Identity must be called **azureiotsecurity** and not another unique name.
 
     ![Screenshot of Azure IoT Security Module](../../Linked_Image_files/MM99-L16-module-identity.png)
 
 1. While you are viewing the **vm-device01** information, copy the device's **Primary Key** to use later.
 
-    > [!NOTE] Make sure to copy the device's **Primary Key** and not the connection string.
+    > **Note**: Make sure to copy the device's **Primary Key** and not the connection string.
 
     ![Screenshot of Azure IoT Security Module](../../Linked_Image_files/MM99-L16-primary-key.png)
 
 1. Navigate back to your IoT Hub, click on **Overview**.  Copy your IoT Hub hostname.
 
-    > [!NOTE] Example of what an IoT Hub hostname looks like: AZ-220-HUB-CAH102119.azure-devices.net
+    > **Note**: Example of what an IoT Hub hostname looks like: AZ-220-HUB-CAH102119.azure-devices.net

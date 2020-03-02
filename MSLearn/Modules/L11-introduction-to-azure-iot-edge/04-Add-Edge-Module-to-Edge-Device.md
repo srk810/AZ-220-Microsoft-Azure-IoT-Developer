@@ -116,7 +116,7 @@ In this unit you will add a Simulated Temperature Sensor as a custom IoT Edge Mo
 
 1. Notice on the IoT Edge Device blade for the `myEdgeDevice` device, the list of **Modules** now includes the newly added `tempsensor` module.
 
-    > [!NOTE] You may have to click **Refresh** to see the module listed for the first time.
+    > **Note**: You may have to click **Refresh** to see the module listed for the first time.
 
 1. After a moment, click **Refresh** to update the current state of the Edge Device.
 

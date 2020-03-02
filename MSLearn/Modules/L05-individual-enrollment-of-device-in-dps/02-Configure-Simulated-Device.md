@@ -14,7 +14,7 @@ The simulated device created in this unit is for a an asset tracking solution th
 
 1. Locate the `dpsIdScope` variable, and replace the value with the **ID Scope** of the Device Provisioning Service.
 
-    > [!NOTE]
+    > **Note**:
     > The **ID Scope** for the **Device Provisioning Service** can be retrieved from within the Azure portal, by navigating to the DPS resource, then copying the **ID Scope** value on the **Overview** pane.
 
 1. Locate the `registrationId` variable, and replace the value with the **Registration ID** of `DPSSimulatedDevice1` for the individual enrollment that was created in the Device Provisioning Service.
@@ -84,5 +84,5 @@ The simulated device created in this unit is for a an asset tracking solution th
 
 1. Now the simulated device is all setup to be configured by the Device Twin within Azure IoT Hub.
 
-    > [!NOTE]
+    > **Note**:
     > If you need help with pasting code in the `Program.cs` file, please refer to the `/LabFiles-Completed` folder for the full source code for the Simulated Device with the Device Twin configuration code. When using this completed code sample, be sure to configure the ID Scope, Registration ID, and Individual Enrollment Keys.

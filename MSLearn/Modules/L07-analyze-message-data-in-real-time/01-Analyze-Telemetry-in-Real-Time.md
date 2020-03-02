@@ -56,7 +56,7 @@ As we need some real-time telemetry, you need to ensure the app from the previou
 
     ![Console Output](../../Linked_Image_Files/M99-L07-vibration-telemetry.png)
 
-    > [!NOTE] Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
+    > **Note**: Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
 1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
 

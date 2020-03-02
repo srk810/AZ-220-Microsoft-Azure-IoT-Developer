@@ -18,7 +18,7 @@ In this task, you will use the Azure portal to explore the features and capabili
 
 1. At the bottom-left of the _Overview_ blade, notice the **IoT Hub Usage** tile.
 
-    > [!NOTE] The tiles flow based upon the width of the browser, so the layout may be a little different than described.
+    > **Note**: The tiles flow based upon the width of the browser, so the layout may be a little different than described.
 
     This tile provides a quick overview of what is connected to your hub and message count. As we add devices and start sending messages, this tile will provide nice "at-a-glance" information.
 
@@ -57,4 +57,4 @@ In this task, you will use the Azure portal to explore the features and capabili
 
 1. Take a minute to explore some of the menu options under **Settings**
 
-    > [!NOTE] This lab is only intended to be an introduction to the IoT service at this point, so don't worry if you feel a bit overwhelmed. We will be walking you through the process of configuring and managing your IoT Hub, devices, and communications as this course continues.
+    > **Note**: This lab is only intended to be an introduction to the IoT service at this point, so don't worry if you feel a bit overwhelmed. We will be walking you through the process of configuring and managing your IoT Hub, devices, and communications as this course continues.

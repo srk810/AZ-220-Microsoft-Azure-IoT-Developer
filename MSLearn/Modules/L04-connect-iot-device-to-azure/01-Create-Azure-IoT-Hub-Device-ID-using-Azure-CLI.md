@@ -26,7 +26,7 @@ az extension add --name azure-cli-iot-ext
     az iot hub device-identity create --hub-name {IoTHubName} --device-id SimulatedDevice1
     ```
 
-    > [!NOTE] Be sure to replace the _{IoTHubName}_ placeholder with the name of your Azure IoT Hub. If you have forgotten your IoT Hub name, you can enter the following command:
+    > **Note**: Be sure to replace the _{IoTHubName}_ placeholder with the name of your Azure IoT Hub. If you have forgotten your IoT Hub name, you can enter the following command:
     >
     >```sh
     >az iot hub list -o table

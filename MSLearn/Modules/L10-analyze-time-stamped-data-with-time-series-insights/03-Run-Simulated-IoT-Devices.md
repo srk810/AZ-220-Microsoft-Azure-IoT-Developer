@@ -47,4 +47,4 @@ In this unit, you will run the Simulated Thermostat device so it starts sending 
     12/27/2019 8:51:40 PM > CONTAINER transport changed to: TRUCK
     ```
 
-    > [!NOTE] In production the shipping container would on change transport methods during the normal course of shipping. For the simulated scenario in this lab, it's performed every 30 seconds to give a short enough data duration that will fit during the course of performing the steps in this lab.
+    > **Note**: In production the shipping container would on change transport methods during the normal course of shipping. For the simulated scenario in this lab, it's performed every 30 seconds to give a short enough data duration that will fit during the course of performing the steps in this lab.

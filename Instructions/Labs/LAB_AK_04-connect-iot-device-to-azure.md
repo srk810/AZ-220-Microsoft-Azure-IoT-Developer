@@ -215,7 +215,7 @@ In this exercise you will configure a simulated device written in C# to connect 
           * 04-Connect an IoT Device to Azure
             * Starter
 
-    **Note**: You cloned the GitHub project when you set up the dev environment in Lab 3. Check with your course instructor if needed to locate your resource files.
+    > **Note**: You cloned the GitHub project when you set up the dev environment in Lab 3. Check with your course instructor if needed to locate your resource files.
 
 1. To open the folder, click **Starter**, and then click **Select Folder**.
 
@@ -275,7 +275,7 @@ In this exercise you will configure a simulated device written in C# to connect 
     10/25/2019 6:10:19 PM > Sending message: {"temperature":25.77350195766124,"humidity":67.27347029711747}
     ```
 
-    **Note**: Leave the simulated device app running for now. Your next task will be to verify that your IoT Hub is receiving the telemetry messages.
+    > **Note**: Leave the simulated device app running for now. Your next task will be to verify that your IoT Hub is receiving the telemetry messages.
 
 #### Task 3: Verify Telemetry Stream sent to Azure IoT Hub
 

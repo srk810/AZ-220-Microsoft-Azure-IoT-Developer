@@ -32,7 +32,7 @@ In this unit, you will use the Azure portal to create a new Azure Container Regi
 
     * The _Registry name_ field is a required field.
 
-    > [!NOTE] Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**01**' or '**02**' as necessary to achieve a globally unique name.
+    > **Note**: Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**01**' or '**02**' as necessary to achieve a globally unique name.
 
 1. In the **Resource group** dropdown, select the **AZ-220-RG** resource group.
 

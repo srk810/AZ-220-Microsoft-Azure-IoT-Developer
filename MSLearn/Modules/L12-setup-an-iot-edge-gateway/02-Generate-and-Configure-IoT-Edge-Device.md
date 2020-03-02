@@ -30,7 +30,7 @@ In this unit, you will generate test certificates using Linux. You will do this 
     git clone https://github.com/Azure/iotedge.git
     ```
 
-    > [!NOTE] The [Azure/iotedge](https://github.com/Azure/iotedge) open source project is the official open source project for Azure IoT Edge. This project contains source code for the Edge Agent, Edge Hub, and IoT Edge Security Daemon; in addition to the helper script used in this unit.
+    > **Note**: The [Azure/iotedge](https://github.com/Azure/iotedge) open source project is the official open source project for Azure IoT Edge. This project contains source code for the Edge Agent, Edge Hub, and IoT Edge Security Daemon; in addition to the helper script used in this unit.
 
 1. Run the following commands to create a working directory named `~/certificates` that will be used for generating the certificates, then move to that directory:
 
@@ -93,7 +93,7 @@ In this unit, you will generate test certificates using Linux. You will do this 
     ~/certificates/private/iot-edge-device-ca-MyEdgeDeviceCA.key.pem
     ```
 
-    > [!NOTE] Now that the IoT Edge Device CA certificate has been generated, do not re-run the previous command that generates the root CA certificate. Doing so will overwrite the existing certificate with a new one that will no longer match the `MyEdgeDeviceCA` IoT Edge Device CA certificate that was just generated.
+    > **Note**: Now that the IoT Edge Device CA certificate has been generated, do not re-run the previous command that generates the root CA certificate. Doing so will overwrite the existing certificate with a new one that will no longer match the `MyEdgeDeviceCA` IoT Edge Device CA certificate that was just generated.
 
 1. To confirm that the Azure IoT Edge Runtime is installed on the VM, run the following command:
 
@@ -143,7 +143,7 @@ In this unit, you will generate test certificates using Linux. You will do this 
     | `device_ca_pk` | This is the Device CA Private Key for the IoT Edge Device. |
     | `trusted_ca_certs` | This is the Root CA Certificate. This certificate must contain all the trusted CA certificates required for Edge module communications.|
 
-    > [!NOTE] Here are some tips for using **vi** when editing the `config.yaml` file:
+    > **Note**: Here are some tips for using **vi** when editing the `config.yaml` file:
     > - Press the `i` key to put the editor into Insert mode, then you will be able to make changes.
     > - Press `Esc` to go stop Insert mode and return to Normal mode.
     > - To Save and Quit, type `:x`, and press `Enter`.

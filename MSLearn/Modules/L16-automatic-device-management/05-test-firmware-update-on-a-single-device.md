@@ -16,7 +16,7 @@ You should see the following output in the terminal (where "mydevice" is the dev
     mydevice: Device booted
     mydevice: Current firmware version: 1.0.0
 ```
-> [!NOTE]
+> **Note**:
 > Make sure to put "" around your connection string. For example: "HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=SimulatedSolutionThermostat;SharedAccessKey={}="
 
 ## Create the device management configuration

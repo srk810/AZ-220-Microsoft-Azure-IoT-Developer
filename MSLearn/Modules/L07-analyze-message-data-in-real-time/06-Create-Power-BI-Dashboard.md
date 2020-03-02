@@ -12,7 +12,7 @@ Now let's create a dashboard to visualize the query, using Microsoft Power BI.
 
 1. Once Power BI has opened, using the left navigation area, select the workspace you chose above.
 
-    > [!NOTE] At the time of writing a *New Look* is in preview. The steps in this task have been written assuming the *New Look* is **Off**. To turn off the *New Look*, click **...** to the left of the user image in the top right and toggle **New Look** in the dropdown menu.
+    > **Note**: At the time of writing a *New Look* is in preview. The steps in this task have been written assuming the *New Look* is **Off**. To turn off the *New Look*, click **...** to the left of the user image in the top right and toggle **New Look** in the dropdown menu.
 
 1. Under **Datasets** verify that **vibrationDataset** is displayed. If not, you might have to wait a short time for this list to populate.
 
@@ -152,10 +152,10 @@ Now create a fourth tile, this time a bit more complex.
 
 1. There's a latency with so many routes and connections, but are you now seeing the vibration data coming through?
 
-    > [!NOTE] If no data appears, check you are running the device app and  the analytics job is running.
+    > **Note**: If no data appears, check you are running the device app and  the analytics job is running.
 
 1. Let the job run for a while, several minutes at least before the ML model will kick in. Compare the console output of the device app, with the Power BI dashboard. Are you able to correlate the forced and increasing vibrations to a run of anomaly detections?
 
 If you're seeing an active Power BI dashboard, you've just  completed this lab. Great work. 
 
-> [!NOTE] Before you go, don't forget to close Visual Studio Code - this will exit the device app if it is still running.
+> **Note**: Before you go, don't forget to close Visual Studio Code - this will exit the device app if it is still running.

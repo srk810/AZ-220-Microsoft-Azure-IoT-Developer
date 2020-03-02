@@ -7,7 +7,7 @@ lab:
 # Visualize a Data Stream in Power BI
 
 > **Note**:  This lab is a continuation of Lab 7 - Device Message Routing.
-> [!IMPORTANT] This lab has several service prerequisites that are not related to the Azure subscription you were given for the course:
+> **IMPORTANT**: This lab has several service prerequisites that are not related to the Azure subscription you were given for the course:
 >
 > 1. The ability to sign in to a "Work or School Account" (Azure Active Directory account)
 > 2. You must know your account sign-in name, which may not match your e-mail address.

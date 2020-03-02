@@ -147,7 +147,7 @@ In this unit you will deploy an Ubuntu Server VM with Azure IoT Edge runtime sup
 
     The first command above accepts the terms and conditions of use for VM image. The second command  actually creates the VM within the resource group specified above. Remember to update `AZ220EdgeVM{YOUR-ID}` with your unique id and replace `{YOUR-PASSWORD-HERE}` with a suitably secure password.
 
-    >**Note**: In production, you may elect to generate SSH keys rather than use the username/password approach. You can learn more about Linux VMs and SSH here: [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed).
+    >> **Note**: In production, you may elect to generate SSH keys rather than use the username/password approach. You can learn more about Linux VMs and SSH here: [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed).
     > **Note**:  Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
 
 ### Exercise 3: Setup IoT Edge Parent with Child IoT Devices

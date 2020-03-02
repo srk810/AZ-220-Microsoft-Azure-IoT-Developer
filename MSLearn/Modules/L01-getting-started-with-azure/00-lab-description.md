@@ -10,6 +10,6 @@ In this lab, you will become familiar with Azure portal and setup your resource 
 * Explore the Azure Portal
 * Create an Azure Dashboard and Resource Group
 
-> [!NOTE] This lab will provide you with (Azure resources) that you will be using in this course. You will only be provided with (???) for the practice labs in this course. The settings and actions you take within this Lab.
+> **Note**: This lab will provide you with (Azure resources) that you will be using in this course. You will only be provided with (???) for the practice labs in this course. The settings and actions you take within this Lab.
 
 [//]:<> (TODO:Follow instructions provided by your instructor to obtain/redeem your Azure Pass.)

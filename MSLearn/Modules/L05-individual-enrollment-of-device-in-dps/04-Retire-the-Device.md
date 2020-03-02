@@ -18,7 +18,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. Select the `DPSSimulatedDevice1` individual device enrollment by checking the box next to it in the list, then click **Delete**.
 
-    > [!NOTE]
+    > **Note**:
     > Deleting the Individual Enrollment from DPS will permanently remove the enrollment. To temporarily disable the enrollment, you can set the **Enable entry** setting to **Disable** within the **Enrollment Details** for the Individual Enrollment.
 
 1. On the **Remove enrollment** prompt, click **Yes** to confirm that you want to delete this device enrollment from the Device Provisioning Service.
@@ -31,7 +31,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. Select the `DPSSimulatedDevice1` **Device ID** by checking the box next to the device in the list, then click **Delete**.
 
-    > [!NOTE] Deleting the Device ID from IoT Hub will permanently remove the device registration. To temporarily disable the device from connecting to IoT Hub, you can set the **Enable connection to IoT Hub** to **Disable** within the properties for this **Device ID**.
+    > **Note**: Deleting the Device ID from IoT Hub will permanently remove the device registration. To temporarily disable the device from connecting to IoT Hub, you can set the **Enable connection to IoT Hub** to **Disable** within the properties for this **Device ID**.
 
 1. On the **Are you certain you wish to delete selected device(s)** prompt, click **Yes** to confirm that you want to delete this device from Azure IoT Hub.
 

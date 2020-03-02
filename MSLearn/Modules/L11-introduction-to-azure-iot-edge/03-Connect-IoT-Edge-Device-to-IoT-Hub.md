@@ -38,7 +38,7 @@ In this unit you will connect the IoT Edge Device to Azure IoT Hub.
     sudo su -
     ```
 
-    > [!NOTE] You will see the user id change in the shell prompt: `root@AZ-220-VM-EDGE:~$`
+    > **Note**: You will see the user id change in the shell prompt: `root@AZ-220-VM-EDGE:~$`
 
 1. The `/etc/iotedge/configedge.sh` script is used to configure the Edge device with the Connection String necessary to connect it to Azure IoT Hub. This script is installed as part of the Azure IoT Edge Runtime.
 

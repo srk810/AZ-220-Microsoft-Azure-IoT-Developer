@@ -10,7 +10,7 @@ In this unit you will use the Azure CLI to verify telemetry sent by the simulate
 
     _Be sure to replace the **{IoTHubName}** placeholder with the name of your Azure IoT Hub._
 
-    > [!NOTE] If you receive a message stating _"Dependency update required for IoT extension version"_ when running the Azure CLI command, then press `y` to accept the update and press `Enter`. This will allow the command to continue as expected.
+    > **Note**: If you receive a message stating _"Dependency update required for IoT extension version"_ when running the Azure CLI command, then press `y` to accept the update and press `Enter`. This will allow the command to continue as expected.
 
     The `--device-id` parameter is optional and allows you to monitor the events from a single device. If the parameters is omitted, the command will monitor all events sent to the specified Azure IoT Hub.
 
