@@ -359,7 +359,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 #### Task 2: Validate the enrollment
 
-1. Verify that the **Enrollment Groups** tab is display and that your new enrollment group is listed.
+1. Verify that the **Enrollment Groups** tab is displayed and that your new enrollment group is listed.
 
     If your enrollment group is not listed, click **Refresh** at the top of the blade.
 
@@ -374,7 +374,7 @@ In this exercise, you will create a new individual enrollment for a device withi
     * **Select the IoT hubs this group can be assigned to:** is set to **AZ-220-HUB-{YOUR-ID}.azure-devices.net**
     * **Initial device Twin State** contains the `telemetryDelay` property set to the value of `"1"`
 
-1. After you have verified the Enrollment Group settings, close the **Enrollment Group Details** pane.
+1. After you have verified the Enrollment Group settings, close the **Enrollment Group Details** blade.
 
 ### Exercise 4: Configure simulated device with X.509 certificate
 
