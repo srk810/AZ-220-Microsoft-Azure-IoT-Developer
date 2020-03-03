@@ -8,17 +8,21 @@ lab:
 
 ## Lab Scenario
 
-Suppose you manage a packaging facility. Packages are assembled for shipping, then placed on a conveyor belt that takes the packages and drops them off in mailing bins. Your metric for success is the number of packages leaving the conveyor belt.
+Contoso Management is impressed with the implementation of automatic device enrollment and is now ready to explore a scenario that can deliver business value.
+
+A key part of any cheese-making business is packaging and shipping the cheese to customers. To maximize cost efficiency, Contoso operates an on-premises packaging facility. The workflow is straightforward - packages are assembled for shipping, then placed on a conveyor belt that takes the packages and drops them off in mailing bins. The metric for success is the number of packages leaving the conveyor belt.
 
 The conveyor belt is a critical link in your process, and is monitored for vibration. The conveyor belt has three speeds: stopped, slow, and fast. The number of packages being delivered at slow speed is less than at the faster speed, though the vibration is also less at the slower speed. If the vibration becomes excessive, the conveyor belt has to be stopped and inspected.
 
 There are a number of different types of vibration. Forced vibration is vibration caused by an external force. Such a force as the broken wheel example, or a weighty package placed improperly on the conveyor belt. There's also increasing vibration, which might happen if a design limit is exceeded.
 
-Vibration is typically measured as an acceleration (meters per second squared, m/s2).
+Vibration is typically measured as an acceleration (meters per second squared, m/s&#x00B2;).
 
-The ultimate goal here is preventive maintenance. Detect that something is wrong, before any damage is caused.
+The ultimate goal here is preventive maintenance. Detect that something is wrong, before any damage is caused. 
 
-It's not always easy to detect abnormal vibration levels. For this reason, you are looking to Azure IoT Hub to detect data anomalies. You plan to have a vibration detection sensor on the conveyor belt, sending continuous telemetry to an IoT Hub. The IoT Hub will use Azure Stream Analytics, and a built-in ML model, to give you advance warning of vibration anomalies. You also plan to archive all the telemetry data, just in case it's ever needed.
+> **Note**: **Preventive maintenance** (sometimes called preventative maintenance) is an equipment maintenance program that schedules maintenance activities to be performed while the equipment is operating normally. The intent of this approach is to avoid unexpected breakdowns that often incur costly disruptions.
+
+It's not always easy to detect abnormal vibration levels. For this reason, you are looking to Azure IoT Hub to detect data anomalies. You plan to have a vibration detection sensor on the conveyor belt, sending continuous telemetry to an IoT Hub. The IoT Hub will use Azure Stream Analytics, and a built-in Machine Learning (ML) model, to give you advance warning of vibration anomalies. You also plan to archive all the telemetry data, just in case it's ever needed.
 
 You decide to build a prototype of the planned system, initially using simulated telemetry.
 
@@ -123,7 +127,7 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
 ### Exercise 2: Write Code for Vibration Telemetry
 
-The key to monitoring our conveyor belt is the output of vibration telemetry. Vibration is usually measured as an acceleration (m/s^2), although sometimes it's measured in g-forces, where 1 g = 9.81 m/s^2. There are three types of vibration.
+The key to monitoring our conveyor belt is the output of vibration telemetry. Vibration is usually measured as an acceleration (m/s&#x00B2;), although sometimes it's measured in g-forces, where 1 g = 9.81 m/s&#x00B2;. There are three types of vibration.
 
 * Natural vibration, which is just the frequency a structure tends to oscillate.
 * Free vibration, which occurs when the structure is impacted, but then left to oscillate without interference.
@@ -644,7 +648,7 @@ This will enable us to verify that our route includes the following settings:
 * **Endpoint** - vibrationLogEndpoint
 * **Enabled** - true
 
-It may seem odd to be routing data to storage, then again sending it to storage through Azure Stream Analytics.  In a production scenario, you wouldn't have both paths long-term.  Instead, the second path that we're creating here would not exist.  We're using it here simply as a way to demonstrate Azure Stream Analytics in an easy-to-validate way in a lab environment.
+> **Note**: It may seem odd to be routing data to storage, then again sending it to storage through Azure Stream Analytics.  In a production scenario, you wouldn't have both paths long-term.  Instead, the second path that we're creating here would not exist.  We're using it here simply as a way to demonstrate Azure Stream Analytics in an easy-to-validate way in a lab environment.
 
 #### Task 1: Create the Stream Analytics Job
 
@@ -809,4 +813,4 @@ The final part of this scenario requires that the telemetry data is sent to an E
 
 You may wish to exit the device simulator app by pressing **CTRL-C** in the Visual Studio Code Terminal.
 
->[!IMPORTANT] Do not remove these resources until you have completed the Data Visualization module of this course.
+> **IMPORTANT**: Do not remove these resources until you have completed the Data Visualization module of this course.
