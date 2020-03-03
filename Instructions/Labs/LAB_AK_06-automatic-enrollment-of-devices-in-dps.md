@@ -8,7 +8,7 @@ lab:
 
 ## Lab Scenario
 
-After validating the device provisioning and de-provisioning process using an Individual Enrollment, the management team has asked you to begin rolling out the process on a larger scale.
+Your work to-date on Contoso's Asset Monitoring and Tracking Solution has enabled you to validate the device provisioning and de-provisioning process using an Individual Enrollment. The management team has now asked you to begin rolling out the process on a larger scale.
 
 To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication.
 
@@ -181,16 +181,14 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
     > **WARNING**: Certificates created by this helper script **MUST NOT** be used for Production. They contain hard-coded passwords ("*1234*"), expire after 30 days, and most importantly are provided for demonstration purposes to help you quickly understand CA Certificates. When building products against CA Certificates, you'll need to use your own security best practices for certificate creation and lifetime management.
 
-1. Review the contents of the script file that you downloaded.
-
-    You can use the editor that's built-in to the Cloud Shell to review the script file.
+    If you are interested, you can quickly scan the contents of the script file that you downloaded by using the editor that's built-in to the Cloud Shell.
 
     * In the Cloud Shell, to open the editor, click **`{}`**.
     * In the FILES list, click **certificates**, and then click **certGen.sh**
 
     > **Note**: If you are experienced with other text file viewing tools in the Bash environment, such as the `more` or `vi` commands, you could also use those tools.
 
-    The first X.509 certificates needed are the root CA and intermediate certificates.
+    The next step will be to use the script to create your root and intermediate certificates.
 
 1. To generate the root and intermediate certificates, enter the following command:
 
@@ -212,35 +210,47 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 #### Task 2: Configure DPS to trust the root certificate
 
-1. Navigate to your **Device Provisioning Service** (DPS) named `AZ-220-DPS-_{YOUR-ID}_` within the Azure portal.
+1. In your Azure portal, open your Device Provisioning Service.
 
-1. On the left side of the **Device Provisioning Service** blade, in the **Settings** section, click the **Certificates** link.
+    This is the Device Provisioning Service name `AZ-220-DPS-{YOUR-ID}`.
 
-1. On the **Certificates** pane, click the **Add** button at the top to start process of uploading the X.509 CA Certificate to the DPS service.
+1. On the left side of the **Device Provisioning Service** blade, in the **Settings** section, click **Certificates**.
 
-1. On the **Add Certificate** pane, for **Certificate Name**, enter a logical name for the _Root CA Certificate_ into the field. For example, `root-ca-cert`.
+1. On the **Certificates** pane, at the top of the pane, click **+ Add**.  
 
-    > **Note**: This name could be the same as the name of the certificate file, or something different. This is a logical name that has no correlation to the _Common Name_ within the X.509 CA Certificate.
+    Clicking **+ Add** will start the process of uploading the X.509 CA Certificate to the DPS service.
 
-1. For the **Certificate .pem or .cer file.** upload field, select the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that you just downloaded.
+1. On the **Add Certificate** pane, under **Certificate Name**, enter **root-ca-cert**.
 
-1. Click **Save**.
+    It is important to provide a name that enables you to differentiate between certificates, such as your root certificate and intermediate certificate, or multiple certificates at the hierarchy level within the chain.
+
+    > **Note**: The root certificate name that you entered could be the same as the name of the certificate file, or something different. The name that you provided is a logical name that has no correlation to the _Common Name_ that is embedded within the contents X.509 CA Certificate.
+
+1. Under **Certificate .pem or .cer file.**, to the right of the _Select a file_ text box, click **Open**.
+
+    Clicking the **Open** button to the right of the text field will open an OPen file dialog that enables you to navigate to the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that you downloaded earlier.
+
+1. At the bottom of the pane, click **Save**.
 
     Once the X.509 CA Certificate has been uploaded, the _Certificates_ pane will display the certificate with the _Status_ of _Unverified_. Before this CA Certificate can be used to authenticate devices to DPS, you will need to verify **Proof of Possession** of the certificate.
 
-1. To start the process of verifying **Proof of Possession** of the certificate, click on the **CA Certificate** that was just uploaded to open the **Certificate Details** pane for it.
+1. To start the process of verifying **Proof of Possession** of the certificate, click **root-ca-cert**.
 
-1. On the **Certificate Details** pane, click on the **Generate Verification Code** button.  (You may need to scroll to see it.)
+1. On the **Certificate Details** pane, click **Generate Verification Code**.
 
-1. Copy the newly generated **Verification Code** that is displayed above the _Generate Verification Code_ button.  The button to the right of the _Verification Code_ textbox will do this for you.
+    You may need to scroll down to see the **Generate Verification Code** button.
 
-    _Proof of Possession_ of the CA certificate is provided to DPS by uploading a certificate generated from the CA certificate with the verifcation code that was just generated within DPS. This is how you provide proof that you actually own the CA Certificate.
+    When you click the button it will place the generated code ino the Verification Code filed.
+
+1. To the right of **Verification Code**, click **Copy to clipboard**.
+
+    _Proof of Possession_ of the CA certificate is provided to DPS by uploading a certificate generated from the CA certificate with the verification code that was just generated within DPS. This is how you provide proof that you actually own the CA Certificate.
 
     > **IMPORTANT**: You will need to leave the **Certificate Details** pane open while you generate the verification certificate. If you close the pane, you will invalidate the verification code, and will need to generate a new one.
 
 1. Open the **Azure Cloud Shell**, if it's not still open from earlier, and navigate to the `~/certificates` directory.
 
-1. Run the following command, passing in your copied verification code, to create the verification certificate:
+1. To create the verification certificate, enter the following command:
 
     ```sh
     ./certGen.sh create_verification_certificate <verification-code>
@@ -248,29 +258,37 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
     Be sure to replace the `<verification-code>` placeholder with the **Verification Code** generated by the Azure portal.
 
-    For example, the command run will look similar to the following:
+    For example, the command that you run will look similar to the following:
 
     ```sh
     ./certGen.sh create_verification_certificate 49C900C30C78D916C46AE9D9C124E9CFFD5FCE124696FAEA
     ```
 
-    This generates a _verification certificate_ that is chained to the CA certificate.  The subject of the certificate is the verification code. The generated Verification Certificate named `verification-code.cert.pem` is located within the `./certs` directory of the Azure Cloud Shell.
+    This generates a _verification certificate_ that is chained to the CA certificate. The subject of the certificate is the verification code. The generated Verification Certificate named `verification-code.cert.pem` is located within the `./certs` directory of the Azure Cloud Shell.
 
-1. Run the following command within the **Azure Cloud Shell** to download the verification certificate to your local machine so it can be uploaded to DPS.
+    The next step is to download the verification certificate to your local machine (similar to what we did with the root certificate earlier), so that you can then upload it to DPS.
+
+1. To download the verification certificate to your local machine, enter the following command:
 
     ```sh
     download ~/certificates/certs/verification-code.cert.pem
     ```
 
-    > **Note**: Depending on the web browser, you may be prompted to allow multiple downloads at this point.  If there appears to be no response to your download command, make sure there's not a prompt elsewhere on the screen asking for permission to allow the download.
+    > **Note**: Depending on the web browser, you may be prompted to allow multiple downloads at this point. If there appears to be no response to your download command, make sure there's not a prompt elsewhere on the screen asking for permission to allow the download.
 
-1. Go back to the **Certificate Details** pane for the CA certificate within DPS.
+1. Go back to the **Certificate Details** pane.
 
-1. For **Verification Certificate .pem or .cer file.**, select the newly created, and downloaded, verification certificate file, named `verification-code.cert.pem`.
+    If you recall, we had you leave this pane open in the Azure portal while you were working on the CA certificate within DPS.
 
-1. Click **Verify**.
+1. At the bottom the **Certificate Details** pane, to the right of **Verification Certificate .pem or .cer file.**, click **Open**.
 
-1. Verify that in the **Certificates** pane, the **Status** for the certificate is now displayed as _Verified_.  You may need to use the **Refresh** button at the top of the pane (to the right of the **Add** button) to see this change.
+1. In the Open file dialog, navigate to your downloads folder, click **verification-code.cert.pem**, and then click **Open**.
+
+1. At the bottom the **Certificate Details** pane, click **Verify**.
+
+1. On the **Certificates** pane, verify that the **Status** for the certificate is now displayed as _Verified_.
+
+    You may need to use the **Refresh** button at the top of the pane (to the right of the **Add** button) to see this change.
 
 ### Exercise 3: Create Group Enrollment (X.509 Certificate) in DPS
 
@@ -288,7 +306,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. At the top of the blade, click **Add enrollment group**.
 
-1. On the **Add Enrollment Group** blade, for **Group name**, enter "**simulated-devices**".
+1. On the **Add Enrollment Group** blade, for **Group name**, enter **simulated-devices**
 
 1. Ensure that the **Attestation Type** is set to **Certificate**.
 
@@ -298,9 +316,11 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Leave the **Secondary Certificate** dropdown set to **No certificate selected**.
 
+    The secondary certificate is generally used for certificate rotation, to accommodate expiring certificates or certificates that have been compromised. You can find more information on rolling certificates here: [https://docs.microsoft.com/en-us/azure/iot-dps/how-to-roll-certificates](https://docs.microsoft.com/en-us/azure/iot-dps/how-to-roll-certificates)
+
 1. Leave **Select how you want to assign devices to hubs** as **Evenly weighted distribution**.
 
-   As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment.
+   As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant. In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment.
 
 1. Notice that the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub is selected within the **Select the IoT hubs this device can be assigned to:** dropdown.
 
@@ -310,11 +330,11 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     This field gives you high-level control over the re-provisioning behavior, where the same device (as indicated through the same Registration ID) submits a later provisioning request after already being provisioned successfully at least once.
 
-1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-*{YOUR-ID}*** IoT Hub selected. This will ensure when the device is provisioned, it gets added to this IoT Hub.
+1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-*{YOUR-ID}*** IoT Hub selected.
 
-1. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"1"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
+    This will ensure when the device is provisioned, it gets added to this IoT Hub.
 
-    The final JSON will be like the following:
+1. In the **Initial Device Twin State** field, modify the JSON object as follows:
 
     ```json
     {
@@ -327,7 +347,9 @@ In this exercise, you will create a new individual enrollment for a device withi
     }
     ```
 
-    This field contains JSON data that represents the initial configuration of desired properties for the device.
+    This JSON data represents the initial configuration of device twin desired properties for any device that participates in this enrollment group.
+
+    The Device will use the `properties.desired.telemetryDelay` property to set the time delay for reading and sending telemetry to IoT Hub.
 
 1. Leave **Enable entry** set to **Enable**.
 
@@ -337,15 +359,22 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 #### Task 2: Validate the enrollment
 
-1. In the **Manage enrollments** pane, click on the **Enrollment Groups** tab to view the list of enrollment groups in DPS.
+1. Verify that the **Enrollment Groups** tab is displayed and that your new enrollment group is listed.
 
-1. In the list, click on the **simulated-devices** enrollment group that was just created to view the enrollment group details.
+    If your enrollment group is not listed, click **Refresh** at the top of the blade.
 
-1. In the **Enrollment Group Details** blade, locate the **Certificate Type**, and notice it's set to **CA Certificate**. Also, notice the **Primary Certificate** information is displayed, including the ability to update the certificates if needed.
+1. In the Group Name list, click **simulated-devices**.
 
-1. Locate the **Initial Device Twin State**, and notice the JSON for the Device Twin Desired State contains the `telemetryDelay` property set to the value of `"1"`.
+1. In the **Enrollment Group Details** blade, verify the following:
 
-1. Close the **Enrollment Group Details** pane.
+    * **Certificate Type** is set to **CA Certificate**
+    * **Primary Certificate** is set to **root-ca-cert**
+    * **Secondary Certificate** is set to **No certificate selected**
+    * **Select how you want to assign devices to hubs** is set to **Evenly weighted distribution**
+    * **Select the IoT hubs this group can be assigned to:** is set to **AZ-220-HUB-{YOUR-ID}.azure-devices.net**
+    * **Initial device Twin State** contains the `telemetryDelay` property set to the value of `"1"`
+
+1. After you have verified the Enrollment Group settings, close the **Enrollment Group Details** blade.
 
 ### Exercise 4: Configure simulated device with X.509 certificate
 
