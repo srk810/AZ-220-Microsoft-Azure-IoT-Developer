@@ -366,7 +366,7 @@ This section adds code to send telemetry from a simulated device. The device sen
 
 1. You should quickly see console output, similar to the following:
 
-    ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-telemetry.png)
+    ![Console Output](./Media/M99-L15-cheesecave-telemetry.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
@@ -551,7 +551,7 @@ This test is important, checking whether your back-end app is picking up the tel
 
 1. You should quickly see console output, and immediately respond if it successfully connects to IoT Hub. If not, carefully check your IoT Hub service connection string, noting that this string should be the service connection string, and not any other.:
 
-    ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-telemetry-received.png)
+    ![Console Output](./Media/M99-L15-cheesecave-telemetry-received.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
@@ -731,11 +731,11 @@ To test the method, start the apps in the correct order. We can't invoke a direc
 
     > **Note**:  If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **cheesecavedevice** and started the app.
 
-    ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-direct-method-sent.png)
+    ![Console Output](./Media/M99-L15-cheesecave-direct-method-sent.png)
 
 1. Now check the console output for the **cheesecavedevice** device app, you should see that the fan has been turned on.
 
-   ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-direct-method-received.png)
+   ![Console Output](./Media/M99-L15-cheesecave-direct-method-received.png)
 
 You are now successfully monitoring and controlling a remote device. We have turned on the fan, which will slowly move the environment in the cave to our initial desired settings. However, we might like to remotely specify those desired settings. We could specify desired settings with a direct method (which is a valid approach). Or we could use another feature of IoT Hub, called device twins. Let's look into the technology of device twins.
 
@@ -873,11 +873,11 @@ To test the method, start the apps in the correct order.
 
 1. Now check the console output for the **cheesecavedevice** device app, confirming the device twin synchronized correctly.
 
-    ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-device-twin-received.png)
+    ![Console Output](./Media/M99-L15-cheesecave-device-twin-received.png)
 
 1. If we let the fan do its work, we should eventually get rid of those red alerts!
 
-    ![Console Output](../../Linked_Image_Files/M99-L15-cheesecave-device-twin-success.png)
+    ![Console Output](./Media/M99-L15-cheesecave-device-twin-success.png)
 
 The code given in this module isn't industrial quality. It does show how to use direct methods, and device twins. However, the messages are sent only when the back-end service app is first run. Typically, a back-end service app would require a browser interface, for an operator to send direct methods, or set device twin properties, when required.
 

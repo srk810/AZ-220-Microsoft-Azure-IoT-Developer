@@ -19,9 +19,9 @@ lab:
 
 ## Lab Scenario
 
-You have developed a device simulator that generates vibration data and other telemetry outputs for a conveyor belt system that takes packages and drops them off in mailing bins. You have built and tested a logging route that sends dat to Azure Blob storage.
+You have developed a device simulator that generates vibration data and other telemetry outputs for a conveyor belt system that takes packages and drops them off in mailing bins. You have built and tested a logging route that sends data to Azure Blob storage.
 
-The second route will be to an Event Hub, because an Event Hub is a convenient input to Stream Analytics. And Stream Analytics is a convenient way of handling anomaly detection, like the excessive vibration we're looking for in our scenario.
+The second route will be to an Event Hub, because an Event Hub is a convenient input to Stream Analytics. Stream Analytics is a convenient way of handling anomaly detection, such as the excessive vibration we're looking for in our scenario.
 
 This route will be created for the IoT Hub, then added as an input to the Azure Stream Analytics job.
 
@@ -33,15 +33,17 @@ In this exercise, you will create an Event Hubs *namespace*. You then have to cr
 
 After the route is created, we move on to updating the query.
 
-### Make a Call to a Built-in ML Model
+### Make a Call to a Built-in Machine Learning Model
 
-The built-in function we're going to call is `AnomalyDetection_SpikeAndDip`.
+The built-in Machine Learning (ML) function we're going to call is `AnomalyDetection_SpikeAndDip`.
 
 The `AnomalyDetection_SpikeAndDip` function takes a sliding window of data, and examines it for anomalies. The sliding window could be, say, the most recent two minutes of telemetry data. This sliding window keeps up with the flow of telemetry in close to real time. If the size of the sliding window is increased, generally the accuracy of anomaly detection will increase too. As will the latency.
 
 As the flow of data continues, the algorithm establishes a normal range of values, then compares new values against those norms. The result is a score for each value, a percentage that determines the confidence level that the given value is anomalous. Low confidence levels are ignored, the question is what percentage confidence value is acceptable? In our query, we're going to set this tipping point at 95%.
 
 There are always complications, like when there are gaps in the data (the conveyor belt stops for a while, perhaps). The algorithm handles voids in the data by imputing values.
+
+> **Note**: In statistics, imputation is the process of replacing missing data with substituted values. You can learn more about about imputations [here](https://en.wikipedia.org/wiki/Imputation_%28statistics%29).
 
 Spikes and dips in telemetry data are temporary anomalies. However, as we're dealing with sine waves for vibration, we can expect a short period of "normal" values follow a high or low value that triggers an anomaly alert. The operator is looking for a cluster of anomalies occurring in a short time span. Such a cluster indicates something is wrong.
 
@@ -51,11 +53,11 @@ There are other built-in ML models, such as a model for detecting trends. We don
 
 Visualizing numerical data, especially volumes of it, is a challenge in itself. How can we alert a human operator of the sequence of anomalies that infer something is wrong?
 
-The solution we use in this module is to use some built-in functionality of Power BI. And the ability of Azure Stream Analytics to send data in a real-time format that Power BI can ingest.
+The solution we use in this module is to use some built-in functionality of Power BI along with the ability of Azure Stream Analytics to send data in a real-time format that Power BI can ingest.
 
-We use the dashboard feature of Power BI to create a number of tiles. One tile contains the actual vibration measurement. Another tile is a gauge, showing from 0.0 to 1.0 the confidence level that the value is an anomaly. A third tile indicates if the 95% confidence level is reached. The main tile though shows the number of anomalies detected over the past hour. This tile makes it clear if a clutch of anomalies were detected in short succession.
+We use the dashboard feature of Power BI to create a number of tiles. One tile contains the actual vibration measurement. Another tile is a gauge, showing from 0.0 to 1.0 the confidence level that the value is an anomaly. A third tile indicates if the 95% confidence level is reached. Finally, the forth tile shows the number of anomalies detected over the past hour. By including time as the x-axis, this tile makes it clear if a clutch of anomalies were detected in short succession as they will be clustered together horizontally.
 
-The fourth tile includes time as the x-axis. This tile allows you to compare the anomalies with the red text in the telemetry console window. Is there a cluster of anomalies being detected when forced, or increasing, or both, vibrations are in action?
+The fourth tile allows you to compare the anomalies with the red text in the telemetry console window. Is there a cluster of anomalies being detected when forced, or increasing, or both, vibrations are in action?
 
 Let's create the Event Hub, create the second route, update the SQL query, create a Power BI dashboard, and let it all run!
 
@@ -75,7 +77,7 @@ This lab includes:
 
 ### Exercise 1: Sign Up For PowerBI
 
-Power BI can be your personal data analysis and visualization tool, and can also serve as the analytics and decision engine behind group projects, divisions, or entire corporations. Later on in this lab, you will visualize data using PowerBI. This article explains how to sign up for Power BI as an individual.
+Power BI can be your personal data analysis and visualization tool, and can also serve as the analytics and decision engine behind group projects, divisions, or entire corporations. Later on in this lab, you will build a dashboard and visualize data using PowerBI. This exercise explains how to sign up for Power BI as an individual.
 
 >**Note:** If you already have a PowerBI subscription, you can skip to the next step.
 
@@ -99,23 +101,23 @@ Follow these steps to sign up for a Power BI account. Once you complete this pro
 
 1. If you see a message requesting you prove you are not a robot, choose either **Text me** or **Call me** and supply the relevant information to receive a verification code, then continue to the next step in this procedure.
 
-    ![Are you a robot](../../Linked_Image_Files/M99-L07b-prove-robot.png)
+    ![Are you a robot](./Media/LAB_AK_08-prove-robot.png)
 
     If, instead, you are informed that you already have an account, continue to sign-in and you are ready to use PowerBI.
 
-    ![Are you a robot](../../Linked_Image_Files/M99-L07b-existing-account.png)
+    ![Are you a robot](./Media/LAB_AK_08-existing-account.png)
 
 1. Check your phone texts or wait for the call, then enter the code that you received, then click **Sign up**.
 
-    ![Sign Up](../../Linked_Image_Files/M99-L07b-sign-up.png)
+    ![Sign Up](./Media/LAB_AK_08-sign-up.png)
 
 1. Check your email for a message like this one.
 
-    ![Sign Up](../../Linked_Image_Files/M99-L07b-email-verification.png)
+    ![Sign Up](./Media/LAB_AK_08-email-verification.png)
 
 1. On the next screen, enter your information and the verification code from the email. Select a region, review the policies that are linked from this screen, then select Start.
 
-    ![Sign Up](../../Linked_Image_Files/M99-L07b-create-account.png)
+    ![Sign Up](./Media/LAB_AK_08-create-account.png)
 
 1. You're then taken to [Power BI sign in page](https://powerbi.microsoft.com/landing/signin/), and you can begin using Power BI.
 
@@ -123,7 +125,9 @@ Now you have access to Power BI, you are ready to route real-time telemetry data
 
 ### Exercise 2: Verify Lab Prerequisites
 
-As we need some real-time telemetry, you need to ensure the Device Simulator app from the previous lab is running.
+In order to visualize data in a dashboard, we need some real-time telemetry. In this exercise you will ensure the Device Simulator app from the previous lab is running.
+
+1. Ensure Visual Studio Code is running and the **vibrationdevice** folder from the previous lab is open.
 
 1. In Visual Studio Code, to run the app in the terminal, enter the following command:
 
@@ -135,7 +139,7 @@ As we need some real-time telemetry, you need to ensure the Device Simulator app
 
 1. You should quickly see console output, similar to the following:
 
-    ![Console Output](../../Linked_Image_Files/M99-L07-vibration-telemetry.png)
+    ![Console Output](./Media/LAB_AK_08-vibration-telemetry.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
@@ -145,7 +149,7 @@ As we need some real-time telemetry, you need to ensure the Device Simulator app
 
 ### Exercise 3: Add Azure Event Hub Route and Anomaly Query
 
-In this exercise, we're going to add a query to the Stream Analytics job, and then use Microsoft Power BI to visualize the output from the query. The query searches for spikes and dips in the vibration data, reporting anomalies. We must create the second route, after first creating an instance of an Event Hubs namespace.
+Now that we have telemetry data streaming into the IoT Hub, we're going to add an Azure Event Hub Namespace and Azure Event Hub instance to our solution. Azure Event hubs are ideal for processing streaming data and support live dashboarding scenarios - perfect for passing our vibration data to Power BI.
 
 #### Task 1: Create an Event Hubs Namespace
 
@@ -173,7 +177,7 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
 1. Under **Pricing tier**, select **Standard**.
 
-   > **Note**:  Choosing the standard pricing tier enables _Kafka_. The Event Hubs for Kafka feature provides a protocol head on top of Azure Event Hubs that is binary compatible with Kafka versions 1.0 and later for both reading from and writing to Kafka topics. You can learn more about Event Huibs and Apache Kafka [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-for-kafka-ecosystem-overview). We will not be using Kafka in this lab.
+   > **Note**:  Choosing the standard pricing tier enables _Kafka_. The Event Hubs for Kafka feature provides a protocol head on top of Azure Event Hubs that is binary compatible with Kafka versions 1.0 and later for both reading from and writing to Kafka topics. You can learn more about Event Hubs and Apache Kafka [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-for-kafka-ecosystem-overview). We will not be using Kafka in this lab.
 
 1. Leave **Make this namespace zone redundant** unchecked.
 
@@ -227,7 +231,9 @@ Now we have an Event Hubs Namespace, we can create and Event Hubs instance.
 
 ### Exercise 4: Create Real-Time Message Route
 
-Now that we have an Event Hubs Namespace and an Event Hub, we can start to build the route itself.
+Now that we have an Event Hubs Namespace and an Event Hub, we need to pass the telemetry data from the IoT hub to the Event Hub.
+
+#### Task 1: Create the Telemetry Route
 
 In this task we will add a message route to our IoT Hub that will send telemetry messages to the Event Hub Instance we just created.
 
@@ -278,7 +284,7 @@ We are now ready to update the Azure Stream Analytics job to hand the real-time 
 
 ### Exercise 5: Add Telemetry Route
 
-With this new IoT Hub route in place, we need to update our Stream Analytics job to handle the telemetry stream.
+With this new IoT Hub route in place, and the telemetry data streaming into the Event Hub, we need to update our Stream Analytics job. This job will need to consume the data from the Event Hub, perform analysis using the **AnomalyDetection_SpikeAndDip** ML model and then output the results to Power BI.
 
 #### Task 1: Add a New Input to the Job
 
@@ -392,7 +398,7 @@ In order for a human operator to make much sense of the output from this query, 
 
 ### Exercise 6: Create a Power BI Dashboard
 
-Now let's create a dashboard to visualize the query, using Microsoft Power BI.
+Now that we have updated our job to process the vibration telemetry via the ML model, we need to create a dashboard to visualize the results, using Microsoft Power BI.
 
 #### Task 1: Create a New Dashboard
 

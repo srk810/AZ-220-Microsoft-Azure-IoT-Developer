@@ -723,7 +723,7 @@ This app is very similar to the app used in the earlier lab **L06-Automatic Enro
 
     The email will look similar to:
 
-    ![Email Alert](../../Linked_Image_Files/M99-L17-04-email-alert.png)
+    ![Email Alert](./Media/M99-L17-04-email-alert.png)
 
 1. Once the alerts have arrived, you can exit the application by either hitting **CTRL+C** in the Visual Studio Code terminal, or by closing Visual Studio Code.
 
@@ -743,7 +743,7 @@ Now, let's check the storage account to see if anything has been logged by Azure
 
     Notice that you can see *Telemetry messages sent* and *Connected devices (preview)** values, with the most recent numbers at the bottom of the chart - move you mouse over the chart to see values a specific points in time.
 
-    ![metrics chart](../../Linked_Image_Files/M99-L17-05-metrics-chart.png)
+    ![metrics chart](./Media/M99-L17-05-metrics-chart.png)
 
 #### Task 2: See the Alerts
 

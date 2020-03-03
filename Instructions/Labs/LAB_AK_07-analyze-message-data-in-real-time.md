@@ -492,7 +492,7 @@ The following app simulates a conveyor belt, and reports vibration sensor data e
 
 1. You should quickly see console output, similar to the following:
 
-    ![Console Output](../../Linked_Image_Files/M99-L07-vibration-telemetry.png)
+    ![Console Output](./Media/M99-L07-vibration-telemetry.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
