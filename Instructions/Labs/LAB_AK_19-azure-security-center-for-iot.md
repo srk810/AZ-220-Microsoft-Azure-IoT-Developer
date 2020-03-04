@@ -156,6 +156,8 @@ By default, turning on the Azure Security Center for IoT solution automatically 
 
 ### Exercise 4: Create and Register a New Device
 
+[TBD]
+
 #### Task 1: Create a new IoT Device
 
 You are going to now create a new IoT device that will later be used to measure vibrations on a new conveyor belt. For this lab, you will be using a VM to act like an IoT device.
@@ -383,6 +385,8 @@ Once enabled on your IoT Hub, Azure Security Center for IoT automatically identi
 
 In addition to automatic relationship detection, you can also pick and choose which other Azure resource groups to tag as part of your IoT solution. Your selections allow you to add entire subscriptions, resource groups, or single resources.
 
+#### Task 1: Open IoT Hub
+
 1. Open your IoT Hub in Azure portal.
 
 1. Select and open **Resources** under Security from the left menu.
@@ -395,7 +399,7 @@ In addition to automatic relationship detection, you can also pick and choose wh
 
 After defining all of the resource relationships, Azure Security Center for IoT leverages Azure Security Center to provide you security recommendations and alerts for these resources.
 
-#### Task 1: View Azure Security Center for IoT in Action
+#### Task 2: View Azure Security Center for IoT in Action
 
 Now that you have your the security agent installed on your device and your solution configure, take some time to check out Azure Security Center for IoT different views.
 

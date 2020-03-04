@@ -53,7 +53,7 @@ This lab assumes the following resources are available:
 
 If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
 
-The **lab-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+The **lab07-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
@@ -71,14 +71,14 @@ The **lab-setup.azcli** script is written to run in a **bash** shell environment
 
     ```bash
     mkdir lab7
-    mv lab-setup.azcli lab7
+    mv lab07-setup.azcli lab7
     cd lab7
     ```
 
 1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
 
     ```bash
-    chmod +x lab-setup.azcli
+    chmod +x lab07-setup.azcli
     ```
 
 1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab7** to expand it and then select **lab-setup.azcli**.

@@ -6,6 +6,8 @@ lab:
 
 # How to manage your Azure IoT Hub
 
+## Lab Scenario
+
 Our asset tracking solution is getting bigger, and provisioning devices one by one (even through DPS) cannot scale. We want to use DPS to enroll many devices automatically and securely using x.509 certificate authentication. Within our solution, we will use sensors to track our assets being transported. Each time a sensor is added in a transportation box, it will auto provision through DPS. We want to have a metric for the warehouse manager of how many boxes were "tagged" and need to count the Device Connected events from IoT Hub.
 
 In this lab, you will setup a Group Enrollment within Device Provisioning Service (DPS) using a Root CA x.509 certificate chain. You will configure the linked IoT Hub to using monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. Additionally you will create an alert that will be triggered based upon the average number of devices connected. You will the configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
@@ -469,7 +471,7 @@ In the following steps you will verify that OpenSSL tools installed in an earlie
 
 1. Continue to the **Generate and Configure x.509 CA Certificates using OpenSSL** section below.
 
-### Generate and Configure x.509 CA Certificates using OpenSSL
+### Task 4: Generate and Configure x.509 CA Certificates using OpenSSL
 
 The first x.509 certificates needed are CA and intermediate certificates. These can be generated using the `certGen.sh` helper script by passing the `create_root_and_intermediate` option.
 
@@ -732,6 +734,8 @@ This app is very similar to the app used in the earlier lab **L06-Automatic Enro
 Now, let's check the storage account to see if anything has been logged by Azure Monitor.
 
 ### Exercise 7: Review Metrics, Alerts and Archive
+
+[TBD]
 
 #### Task 1: See the Metrics in the Portal
 

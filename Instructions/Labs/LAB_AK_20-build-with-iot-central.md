@@ -33,6 +33,8 @@ In this lab you will:
 
 ### Exercise 1: Create a Custom IoT Central app
 
+[TBD]
+
 1. Navigate to [Azure IoT Central](https://apps.azureiotcentral.com/?azure-portal=true). It's a good idea to bookmark this URL, as it's the home for all your IoT Central apps.
 
 1. Click on **Build**, then **Custom apps**.
