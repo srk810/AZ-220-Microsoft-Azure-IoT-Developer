@@ -269,7 +269,7 @@ In this task we will add a message route to our IoT Hub that will send telemetry
     sensorID = "VSTel"
     ```
 
-    You may recall that the earlier sent "VSLog" messages to the logging storage. This message route will be sending "VSTel" (the telemetry) to the Event Hubs Instance.
+    You may recall that the earlier query sent "VSLog" messages to the logging storage. This message route will be sending "VSTel" (the telemetry) to the Event Hubs Instance.
 
 1. To create the message route, click **Save**.
 
@@ -398,7 +398,7 @@ In order for a human operator to make much sense of the output from this query, 
 
 ### Exercise 6: Create a Power BI Dashboard
 
-Now that we have updated our job to process the vibration telemetry via the ML model, we need to create a dashboard to visualize the results, using Microsoft Power BI.
+Now for the final part of the scenario - the actual data visualization. We have updated our job to process the vibration telemetry via the ML model and output the results to Power BI. Within Power BI, we need to create a dashboard with a number of tiles to visualize the results and provide decision support for the operator.
 
 #### Task 1: Create a New Dashboard
 
@@ -546,7 +546,7 @@ Now create a fourth tile, the `Anomalies Over the Hour` line chart.  This one is
 
 12. There's a latency with so many routes and connections, but are you now seeing the vibration data coming through?
 
-    > **Note**:  If no data appears, check you are running the device app and  the analytics job is running.
+    > **Note**:  If no data appears, check you are running the device app and the analytics job is running.
 
 13. Let the job run for a while, several minutes at least before the ML model will kick in. Compare the console output of the device app, with the Power BI dashboard. Are you able to correlate the forced and increasing vibrations to a run of anomaly detections?
 
