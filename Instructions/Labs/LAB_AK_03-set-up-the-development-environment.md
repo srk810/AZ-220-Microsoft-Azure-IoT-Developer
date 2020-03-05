@@ -257,11 +257,11 @@ Microsoft has created a GitHub repo to provide access to lab resource files. Hav
 
 #### Task 2: Install Azure PowerShell
 
-> **Note**: The lab activities in this course do NOT have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
-
 Azure PowerShell is designed for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. You can use it in your browser with Azure Cloud Shell, or you can install it on your local machine and use it in any PowerShell session. If you are running Azure PowerShell locally, you need to have Windows PowerShell configured.
 
-1. On the Windows 10 Start menu, to begin installing the Azure PowerShell tools, right-click **Windows Powershell**, and then click **Run as Administrator**.
+> **Note**: The lab activities in this course do NOT have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
+
+1. On the Windows 10 Start menu, to begin installing/configuring the Azure PowerShell tools, right-click **Windows Powershell**, and then click **Run as Administrator**.
 
     Administrator rights are required to install PowerShell modules, so you will need to run as an administrator to get started.
 
@@ -299,4 +299,4 @@ Azure PowerShell is designed for managing and administering Azure resources from
 
     `Import-Module -Name AzureRM`
 
-    We will be providing detailed instructions for using the Azure PowerShell tools during the labs in this course, but if you want more information now, see [Getting started with Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/get-started-azureps?view=azurermps-5.7.0)
+    If you want more information on using PowerShell, see [Getting started with Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/get-started-azureps?view=azurermps-5.7.0)
