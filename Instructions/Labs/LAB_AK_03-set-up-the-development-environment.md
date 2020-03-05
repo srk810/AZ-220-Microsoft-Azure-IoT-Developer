@@ -102,17 +102,19 @@ Visual Studio Code is a lightweight but powerful source code editor which runs o
 
 #### Task 3: Install Azure CLI
 
-Azure CLI 2.0 is a command-line tool that is designed to make scripting Azure-related tasks easier. It also enables you to flexibly query data, and it supports long-running operations as non-blocking processes.
+Azure CLI 2.1 is a command-line tool that is designed to make scripting Azure-related tasks easier. It also enables you to flexibly query data, and it supports long-running operations as non-blocking processes.
 
-1. Open your browser, and then navigate to the Azure CLI 2.0 tools download page: [Install Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest "Azure CLI 2.0 Install")
+1. Open your browser, and then navigate to the Azure CLI 2.1 tools download page: [Install Azure CLI 2.1](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest "Azure CLI 2.1 Install")
 
-1. On the Install Azure CLI 2.0 page, select the install option for your OS, and then follow the on-screen instructions to install the Azure CLI tool.
+    You should be installing the latest version of the Azure CLI tools. If version 2.1 is not the latest version listed on this "azure-cli-latest" download page, install the more recent version.
 
-    We will be providing detailed instructions for using the Azure CLI 2.0 tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
+1. On the Install Azure CLI 2.1 page, select the install option for your OS, and then follow the on-screen instructions to install the Azure CLI tool.
+
+    We will be providing detailed instructions for using the Azure CLI 2.1 tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI 2.1](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
 
 #### Task 4: Install Python 3.7
 
-You will be using Python 3.7 in support of IoT Edge and Docker.
+You will be using Python 3.7 in support of IoT Edge and Docker. 
 
 1. In your Web browser, navigate to [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
