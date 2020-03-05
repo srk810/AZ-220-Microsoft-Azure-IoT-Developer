@@ -207,14 +207,18 @@ You should verify that the development environment has been set up successfully.
     az --version
     ```
 
-    The `az --version` command will output the version information for the currently installed version of the Azure CLI. The `azure-cli` version number is the version of the Azure CLI that's installed, and will be the first version number output by the command. This command also outputs versions of all the Azure CLI modules installed, and you should see something similar to the following:
+    The `az --version` command will output the version information for Azure CLI that you have installed (the `azure-cli` version number). This command also outputs the version number for all the Azure CLI modules installed, including the IoT extension. You should see output similar to the following:
 
     ```cmd/sh
-    localmachine:~ User$ az --version
-    azure-cli                         2.1.0
+    azure-cli                           2.1.0
+
+    command-modules-nspkg               2.0.3
+    core                                2.1.0
+    nspkg                               3.0.4
+    telemetry                           1.0.4
 
     Extensions:
-    azure-cli-iot-ext                  0.8.5
+    azure-cli-iot-ext                   0.8.5
     ```
 
 1. Validate the **.NET Core 3.x SDK** installation by running the following command that will output the version number for the currently installed version of the .NET Core SDK.
