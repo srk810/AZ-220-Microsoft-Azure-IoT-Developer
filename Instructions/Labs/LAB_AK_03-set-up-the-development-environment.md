@@ -102,17 +102,19 @@ Visual Studio Code is a lightweight but powerful source code editor which runs o
 
 #### Task 3: Install Azure CLI
 
-Azure CLI 2.0 is a command-line tool that is designed to make scripting Azure-related tasks easier. It also enables you to flexibly query data, and it supports long-running operations as non-blocking processes.
+Azure CLI 2.1 is a command-line tool that is designed to make scripting Azure-related tasks easier. It also enables you to flexibly query data, and it supports long-running operations as non-blocking processes.
 
-1. Open your browser, and then navigate to the Azure CLI 2.0 tools download page: [Install Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest "Azure CLI 2.0 Install")
+1. Open your browser, and then navigate to the Azure CLI 2.1 tools download page: [Install Azure CLI 2.1](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest "Azure CLI 2.1 Install")
 
-1. On the Install Azure CLI 2.0 page, select the install option for your OS, and then follow the on-screen instructions to install the Azure CLI tool.
+    You should be installing the latest version of the Azure CLI tools. If version 2.1 is not the latest version listed on this "azure-cli-latest" download page, install the more recent version.
 
-    We will be providing detailed instructions for using the Azure CLI 2.0 tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI 2.0](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
+1. On the Install Azure CLI 2.1 page, select the install option for your OS, and then follow the on-screen instructions to install the Azure CLI tool.
+
+    We will be providing detailed instructions for using the Azure CLI 2.1 tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI 2.1](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
 
 #### Task 4: Install Python 3.7
 
-You will be using Python 3.7 in support of IoT Edge and Docker.
+You will be using Python 3.7 in support of IoT Edge and Docker. 
 
 1. In your Web browser, navigate to [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
@@ -205,11 +207,18 @@ You should verify that the development environment has been set up successfully.
     az --version
     ```
 
-1. The `az --version` command will output the version information for the currently installed version of the Azure CLI. The `azure-cli` version number is the version of the Azure CLI that's installed, and will be the first version number output by the command. This command also outputs versions of all the Azure CLI modules installed.
+    The `az --version` command will output the version information for Azure CLI that you have installed (the `azure-cli` version number). This command also outputs the version number for all the Azure CLI modules installed, including the IoT extension. You should see output similar to the following:
 
     ```cmd/sh
-    localmachine:~ User$ az --version
-    azure-cli                         2.0.64
+    azure-cli                           2.1.0
+
+    command-modules-nspkg               2.0.3
+    core                                2.1.0
+    nspkg                               3.0.4
+    telemetry                           1.0.4
+
+    Extensions:
+    azure-cli-iot-ext                   0.8.5
     ```
 
 1. Validate the **.NET Core 3.x SDK** installation by running the following command that will output the version number for the currently installed version of the .NET Core SDK.
@@ -248,11 +257,11 @@ Microsoft has created a GitHub repo to provide access to lab resource files. Hav
 
 #### Task 2: Install Azure PowerShell
 
-> **Note**: The lab activities in this course do NOT have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
-
 Azure PowerShell is designed for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. You can use it in your browser with Azure Cloud Shell, or you can install it on your local machine and use it in any PowerShell session. If you are running Azure PowerShell locally, you need to have Windows PowerShell configured.
 
-1. On the Windows 10 Start menu, to begin installing the Azure PowerShell tools, right-click **Windows Powershell**, and then click **Run as Administrator**.
+> **Note**: The lab activities in this course do NOT have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
+
+1. On the Windows 10 Start menu, to begin installing/configuring the Azure PowerShell tools, right-click **Windows Powershell**, and then click **Run as Administrator**.
 
     Administrator rights are required to install PowerShell modules, so you will need to run as an administrator to get started.
 
@@ -290,4 +299,4 @@ Azure PowerShell is designed for managing and administering Azure resources from
 
     `Import-Module -Name AzureRM`
 
-    We will be providing detailed instructions for using the Azure PowerShell tools during the labs in this course, but if you want more information now, see [Getting started with Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/get-started-azureps?view=azurermps-5.7.0)
+    If you want more information on using PowerShell, see [Getting started with Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/get-started-azureps?view=azurermps-5.7.0)
