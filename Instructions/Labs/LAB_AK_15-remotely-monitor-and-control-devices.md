@@ -374,7 +374,7 @@ This section adds code to send telemetry from a simulated device. The device sen
 
 1. You can leave this app running, as it's needed for the next section.
 
-### Exercise 2: Create a Second App to Receive Telemetry
+### Exercise 3: Create a Second App to Receive Telemetry
 
 Now we have a device pumping out telemetry, we need to listen for that telemetry with a back-end app, also connected to our IoT Hub.
 
@@ -563,7 +563,7 @@ This test is important, checking whether your back-end app is picking up the tel
 
 Completing this unit is great progress. you've an app sending telemetry from a device, and a back-end app acknowledging receipt of the data. This unit covers the monitoring side of our scenario. The next step handles the control side - what to do when issues arise with the data. Clearly, there are issues, we're getting temperature and humidity alerts!
 
-### Exercise 3: Write Code to Invoke a Direct Method
+### Exercise 4: Write Code to Invoke a Direct Method
 
 In this unit, we'll add code to the device app for a direct method to turn on the fan. Next, we add code to the back-end service app to invoke this direct method.
 
@@ -739,7 +739,7 @@ To test the method, start the apps in the correct order. We can't invoke a direc
 
 You are now successfully monitoring and controlling a remote device. We have turned on the fan, which will slowly move the environment in the cave to our initial desired settings. However, we might like to remotely specify those desired settings. We could specify desired settings with a direct method (which is a valid approach). Or we could use another feature of IoT Hub, called device twins. Let's look into the technology of device twins.
 
-### Exercise 4: Write Code for Device Twins
+### Exercise 5: Write Code for Device Twins
 
 In this exercise, we'll add some code to both the device app and back-end service app, to show device twin synchronization in operation.
 
