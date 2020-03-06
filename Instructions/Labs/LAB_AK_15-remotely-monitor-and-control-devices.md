@@ -128,7 +128,7 @@ To create these resources, please update and execute the **lab-setup.azcli** scr
     ```text
     Configuration Data:
     ------------------------------------------------
-    AZ-220-HUB-DM121119 hub connectionstring:
+    AZ-220-HUB-DM121119 Service connectionstring:
     HostName=AZ-220-HUB-DM121119.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
 
     CheeseCaveID device connection string:
@@ -366,7 +366,7 @@ This section adds code to send telemetry from a simulated device. The device sen
 
 1. You should quickly see console output, similar to the following:
 
-    ![Console Output](./Media/M99-L15-cheesecave-telemetry.png)
+    ![Console Output](./Media/LAB_AK_15-cheesecave-telemetry.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
@@ -529,7 +529,22 @@ This section adds code to receive telemetry from the IoT Hub Event Hub endpoint.
 
     > **Important:** Read through the comments in the code. Our implementation only reads messages after the back-end app has been started. Any telemetry sent prior to this isn't handled.
 
-1. Replace the `<your device connection string>` with the device connection string you saved off in the previous unit. No other lines of code need to be changed.
+1. Replace the `<your service connection string>` with the IoT Hub **iothubowner** shared access policy primary connection string - this value was displayed by the setup script executed in the first unit of this lab.
+
+    > **Note:** You may be curious as to why the **iothubowner** shared policy is used rather than the **service** shared policy. The answer is related to the IoT Hub permissions assigned to each policy. The **service** policy has the **ServiceConnect** permission and is usually used by back-end cloud sercives. It confers the following rights:
+    >
+    > * Grants access to cloud service-facing communication and monitoring endpoints.
+    > * Grants permission to receive device-to-cloud messages, send cloud-to-device messages, and retrieve the corresponding delivery acknowledgments.
+    > * Grants permission to retrieve delivery acknowledgments for file uploads.
+    > * Grants permission to access twins to update tags and desired properties, retrieve reported properties, and run queries.
+    >
+    > For the first part of the lab, where the **serviceoperator** application calls a direct method to toggle the fan state, the **service** policy has sufficient rights. However, during the latter part of the lab, the device registry is queried. This is achieved via the `RegistryManager` class. In order to use the `RegistryManager` class to query the device registry, the shared access policy used to connect to the IoT Hub must have the **Registry read** permission, which confers the following right:
+    >
+    > * Grants read access to the identity registry.
+    >
+    > As the **iothubowner** policy has been granted the **Registry write** permission, it inherits the **Registry read** permission, so is suitable for our needs.
+    >
+    > In a production scenario, you might consider adding a new shared access policy that has just the **Service connect** and **Registry read** permissions.
 
 1. Replace the `<your event hub endpoint>`, `<your event hub path>`, and the `<your event hub Sas key>` with the strings you saved off to your text file.
 
@@ -551,7 +566,7 @@ This test is important, checking whether your back-end app is picking up the tel
 
 1. You should quickly see console output, and immediately respond if it successfully connects to IoT Hub. If not, carefully check your IoT Hub service connection string, noting that this string should be the service connection string, and not any other.:
 
-    ![Console Output](./Media/M99-L15-cheesecave-telemetry-received.png)
+    ![Console Output](./Media/LAB_AK_15-cheesecave-telemetry-received.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
@@ -731,11 +746,11 @@ To test the method, start the apps in the correct order. We can't invoke a direc
 
     > **Note**:  If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **cheesecavedevice** and started the app.
 
-    ![Console Output](./Media/M99-L15-cheesecave-direct-method-sent.png)
+    ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-sent.png)
 
 1. Now check the console output for the **cheesecavedevice** device app, you should see that the fan has been turned on.
 
-   ![Console Output](./Media/M99-L15-cheesecave-direct-method-received.png)
+   ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-received.png)
 
 You are now successfully monitoring and controlling a remote device. We have turned on the fan, which will slowly move the environment in the cave to our initial desired settings. However, we might like to remotely specify those desired settings. We could specify desired settings with a direct method (which is a valid approach). Or we could use another feature of IoT Hub, called device twins. Let's look into the technology of device twins.
 
@@ -796,7 +811,7 @@ There is some overlap between the functionality of device twins and direct metho
     }
     ```
 
-    > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates thew twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1".
+    > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates thew twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1". This query requires that the connection has the **Registry read** permission.
 
 1. Now, add the following lines to the **Main** method, before the lines creating a service client.
 
@@ -873,11 +888,11 @@ To test the method, start the apps in the correct order.
 
 1. Now check the console output for the **cheesecavedevice** device app, confirming the device twin synchronized correctly.
 
-    ![Console Output](./Media/M99-L15-cheesecave-device-twin-received.png)
+    ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-received.png)
 
 1. If we let the fan do its work, we should eventually get rid of those red alerts!
 
-    ![Console Output](./Media/M99-L15-cheesecave-device-twin-success.png)
+    ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-success.png)
 
 The code given in this module isn't industrial quality. It does show how to use direct methods, and device twins. However, the messages are sent only when the back-end service app is first run. Typically, a back-end service app would require a browser interface, for an operator to send direct methods, or set device twin properties, when required.
 
