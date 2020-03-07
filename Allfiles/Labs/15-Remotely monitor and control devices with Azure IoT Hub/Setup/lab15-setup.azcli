@@ -26,7 +26,7 @@ echo "Configuration Data:"
 echo "------------------------------------------------"
 
 # display the iothubowner connection string for the IoT Hub
-echo "$IoTHubName hub connectionstring:"
+echo "$IoTHubName Service connectionstring:"
 az iot hub show-connection-string --query connectionString --hub-name $IoTHubName -o tsv
 echo ""
 

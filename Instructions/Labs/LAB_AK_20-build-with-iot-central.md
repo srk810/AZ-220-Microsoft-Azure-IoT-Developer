@@ -416,22 +416,7 @@ Using Visual Studio Code, build the device sensor app.
 
 1. From the **File** menu, open up the Program.cs file, and delete the default contents.
 
-1. After you've entered the code below into the Program.cs file, you can run the app with the command `dotnet run`. This command will run the Program.cs file in the current folder, so ensure you are in the `RefrigeratedTruck` folder.
-
-1. Open Visual Studio, and create a new **Visual C#/Windows Desktop** project. Select **Console App (.NET Framework)**.
-
-1. Give the project a friendly name, such as "RefrigeratedTruck".
-
-1. Under **Tools/NuGet Package Manager**, select **Manage NuGet Packages for Solution**. Install the following libraries:
-    * **AzureMapsRestToolkit**
-    * **Microsoft.Azure.Devices.Client**
-    * **Microsoft.Azure.Devices.Provisioning.Client**
-    * **Microsoft.Azure.Devices.Provisioning.Transport.Mqtt**
-    * **System.Text.Json**
-
-1. Delete the default contents of the Program.cs file.
-
-1. Add all the code that follows to the Program.cs file.
+You are now ready to add the code below.
 
 #### Task 2: Write the device app
 
@@ -627,7 +612,7 @@ In the blank Program.cs file, insert the following code. Each additional section
 
                 var req = new RouteRequestDirections
                 {
-                    Query = $"{currentLat},{currentLon}:{destinationLat},{destinationLon}"
+                    Query = FormattableString.Invariant($"{currentLat},{currentLon}:{destinationLat},{destinationLon}")
                 };
                 var directions = azureMapsServices.GetRouteDirections(req).Result;
 

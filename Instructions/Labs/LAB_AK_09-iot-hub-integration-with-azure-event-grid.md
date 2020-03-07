@@ -8,6 +8,8 @@ lab:
 
 ## Lab Scenario
 
+Contoso management has been impressed with the Azure IoT scenarios that have been demonstrated so far.  now interested in exploring some of the operational support capabilities. In an earlier lab, you explored the use of a simulated device to monitor temperature and humidity and demonstrated
+
 Contoso is installing new connected Thermostats to be able to monitor temperature across different cheese caves. You will create an alert to notify facilities manager when a new thermostat has been created.
 
 To create an alert, you will push device created event type to Event Grid when a new thermostat is created in IoT Hub. You will have a Logic Apps instance that will react on this event (on Event Grid) and will send an email to alert a facilities manager device a new device has been created, device ID, and connection state.
@@ -215,13 +217,13 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
    Each curly-braces entry should be dynamic content.  If you can't see the Dynamic content, select the **Add dynamic content** hyperlink under the **Body** text box. If it doesn't show you the fields you want, click *more* in the Dynamic content screen to include the fields from the previous action.
    When you add the first dynamic content value, because the input data schema is for an array, the Logic Apps Designer will automatically change the e-mail action to be nested inside of a **For each** action.  When this happens, the **Send an email (V2) (Preview)** action will collapse; simply click on it to open it up again and continue editing the body.
 
-    ![Fill out email information](./Media//MM99_L09_email_content.png)
+    ![Fill out email information](./Media//LAB_AK_09-email_content.png)
 
 1. Click **Save** at the top of the designer to save all changes to the Logic App Workflow.
 
 1. Expand the **When a HTTP request is received** trigger, copy the value for the **HTTP POST URL** that is displayed, and save it for future reference. This is the _web hook_ endpoint URL for the Logic App that will be used by Event Grid to trigger the execution of the Logic App workflow.
 
-    ![HTTP request info](./Media/MM99_L09_http_post.png)
+    ![HTTP request info](./Media/LAB_AK_09-http_post.png)
 
     The **HTTP POST URL** will be similar to the following:
 
@@ -256,7 +258,7 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
    * **EVENT TYPES**
      * **Filter to Event Types**: Uncheck all of the choices except **Device Created**.
 
-       ![subscription event types](./Media/MM99-L09-subscription-event-types.png)
+       ![subscription event types](./Media/LAB_AK_09-subscription-event-types.png)
 
    * **ENDPOINT DETAILS**:
      * **Endpoint Type**: **Web Hook**
@@ -266,7 +268,7 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
   
     When you're done, the pane should look like the following example:
 
-    ![Sample event subscription form](./Media/MM99-L09-subscription-form.png)
+    ![Sample event subscription form](./Media/LAB_AK_09-subscription-form.png)
 
 1. You could save the event subscription here, and receive notifications for every device that is created in your IoT hub. For this tutorial, though, let's use the optional fields to filter for specific devices. Select **Filters** at the top of the pane.
 
@@ -310,6 +312,6 @@ Test your logic app by creating a new device to trigger an event notification em
 
    If you added the four examples total, your list of IoT devices should look like the following image:
 
-   ![IoT Hub device list](./Media/MM99-L09-iot-hub-device-list.png)
+   ![IoT Hub device list](./Media/LAB_AK_09-iot-hub-device-list.png)
 
 6. Once you've added a few devices to your IoT hub, check your email to see which ones triggered the logic app.
