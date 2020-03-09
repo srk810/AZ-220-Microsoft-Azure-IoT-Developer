@@ -20,21 +20,9 @@ lab:
 
 ## Lab Scenario
 
-You have developed a simulated IoT device that generates vibration data and other telemetry outputs that are representative of the conveyor belt system used in Contoso's cheese packaging process. You have built and tested a logging route that sends data to Azure Blob storage. You will now start work on a second route within IoT hub.
+You have developed a simulated IoT device that generates vibration data and other telemetry outputs that are representative of the conveyor belt system used in Contoso's cheese packaging process. You have built and tested a logging route that sends data to Azure Blob storage. You will now start work on a new route within IoT hub that will send telemetry data to an Azure Event Hubs service.
 
-The second route will send data to an Azure Event Hubs service. Both IoT Hub and Event Hubs support ingestion of data with low latency and high reliability, Event Hubs designed for big data streaming, which provides a convenient input to Stream Analytics. 
-
-Stream Analytics is often used for anomaly detection within live streaming data, and is a good choice for detecting the excessive vibration that we're looking for in our scenario.
-
-This route will be created for the IoT hub, then added as an input to the Azure Stream Analytics job.
-
-We need to update the job to handle two inputs and two outputs, and a more complex query.
-
-The process of creating the second route follows a similar process to the first, though it diverges at the creation of an endpoint. An Event Hub is chosen as the endpoint for the telemetry route.
-
-In this exercise, you will create an Event Hubs *namespace*. You then have to create an *instance* of the namespace to complete the setting up of an Event Hub. You can then use this instance as the destination for the new message route.
-
-After the route is created, we move on to updating the query.
+The primary difference between Azure IoT Hub and Azure Event Hubs is that Event Hubs designed for big data streaming, while IoT hub is optimized for an IoT solution. Both services support ingestion of data with low latency and high reliability. Since Azure Event Hubs provides a input to Stream Analytics ina manner that is similar to IoT hub, your choice of Event Hubs in this case is allows you explore an additional Azure service option within your solution.
 
 ### Make a Call to a Built-in Machine Learning Model
 
@@ -62,19 +50,19 @@ We use the dashboard feature of Power BI to create a number of tiles. One tile c
 
 The fourth tile allows you to compare the anomalies with the red text in the telemetry console window. Is there a cluster of anomalies being detected when forced, or increasing, or both, vibrations are in action?
 
-Let's create the Event Hub, create the second route, update the SQL query, create a Power BI dashboard, and let it all run!
-
 ## In This Lab
 
-This lab includes:
+In this lab, you will complete the following activities:
 
 * Sign-up for Power BI
-* Verify Lab Prerequisites
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
 * Analyze Telemetry in Real-Time
-* Create EventHub
-* Create Real-time Message Route
-* Add Telemetry Route
-* Create a dashboard to visualize data anomalies, using Power BI
+* Create an Azure Event Hubs service
+* Create a Real-time Message Route
+* Add a Telemetry Route to IoT hub
+* Create a Power BI dashboard to visualize data anomalies
+
+Let's create the Event Hub, create the second route, update the SQL query, create a Power BI dashboard, and let it all run!
 
 ## Lab Instructions
 
@@ -152,7 +140,7 @@ In order to visualize data in a dashboard, we need some real-time telemetry. In 
 
 ### Exercise 3: Add Azure Event Hub Route and Anomaly Query
 
-Now that we have telemetry data streaming into the IoT Hub, we're going to add an Azure Event Hub Namespace and Azure Event Hub instance to our solution. Azure Event hubs are ideal for processing streaming data and support live dashboarding scenarios - perfect for passing our vibration data to Power BI.
+Now that we have telemetry data streaming into the IoT Hub, we're going to add an Azure Event Hubs Namespace and Azure Event Hubs instance to our solution. Azure Event hubs are ideal for processing streaming data and support live dashboarding scenarios - perfect for passing our vibration data to Power BI.
 
 #### Task 1: Create an Event Hubs Namespace
 
@@ -234,7 +222,7 @@ Now we have an Event Hubs Namespace, we can create and Event Hubs instance.
 
 ### Exercise 4: Create Real-Time Message Route
 
-Now that we have an Event Hubs Namespace and an Event Hub, we need to pass the telemetry data from the IoT hub to the Event Hub.
+Now that we have an Event Hubs Namespace and an Event Hubs service, we need to pass the telemetry data from the IoT hub to the Event Hub.
 
 #### Task 1: Create the Telemetry Route
 
