@@ -7,6 +7,7 @@ lab:
 # Visualize a Data Stream in Power BI
 
 > **Note**:  This lab is a continuation of Lab 7 - Device Message Routing.
+>
 > **IMPORTANT**: This lab has several service prerequisites that are not related to the Azure subscription you were given for the course:
 >
 > 1. The ability to sign in to a "Work or School Account" (Azure Active Directory account)
@@ -15,15 +16,17 @@ lab:
     1. An existing Power BI account
     2. The ability to sign up for Power BI - some organizations block this.
 >
-> The first lab exercise will validate your ability to access Power BI.  If you are not successful in the first exercise, you will not be able to complete the lab, as there is no quick workaround to this.
+> The first lab exercise will validate your ability to access Power BI.  If you are not successful in the first exercise, you will not be able to complete the lab, as there is no quick workaround for blocked access to a work or school account.
 
 ## Lab Scenario
 
-You have developed a device simulator that generates vibration data and other telemetry outputs for a conveyor belt system that takes packages and drops them off in mailing bins. You have built and tested a logging route that sends data to Azure Blob storage.
+You have developed a simulated IoT device that generates vibration data and other telemetry outputs that are representative of the conveyor belt system used in Contoso's cheese packaging process. You have built and tested a logging route that sends data to Azure Blob storage. You will now start work on a second route within IoT hub.
 
-The second route will be to an Event Hub, because an Event Hub is a convenient input to Stream Analytics. Stream Analytics is a convenient way of handling anomaly detection, such as the excessive vibration we're looking for in our scenario.
+The second route will send data to an Azure Event Hubs service. Both IoT Hub and Event Hubs support ingestion of data with low latency and high reliability, Event Hubs designed for big data streaming, which provides a convenient input to Stream Analytics. 
 
-This route will be created for the IoT Hub, then added as an input to the Azure Stream Analytics job.
+Stream Analytics is often used for anomaly detection within live streaming data, and is a good choice for detecting the excessive vibration that we're looking for in our scenario.
+
+This route will be created for the IoT hub, then added as an input to the Azure Stream Analytics job.
 
 We need to update the job to handle two inputs and two outputs, and a more complex query.
 
