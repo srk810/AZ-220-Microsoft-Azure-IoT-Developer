@@ -22,7 +22,7 @@ The ultimate goal here is a form of preventive maintenance. Detect that somethin
 
 > **Note**: **Preventive maintenance** (sometimes called preventative maintenance or predictive maintenance) is an equipment maintenance program that schedules maintenance activities to be performed while the equipment is operating normally. The intent of this approach is to avoid unexpected breakdowns that often incur costly disruptions.
 
-It's not always easy to detect abnormal vibration levels. For this reason, you are looking to Azure IoT Hub to detect data anomalies. You plan to have vibration detection sensors on the conveyor belt, sending continuous telemetry to an IoT Hub. The IoT Hub will use Azure Stream Analytics, and a built-in Machine Learning (ML) model, to give you advance warning of vibration anomalies. You also plan to archive all the telemetry data, just in case it's ever needed.
+It's not always easy to detect abnormal vibration levels. For this reason, you are looking to Azure IoT Hub to detect data anomalies. You plan to have vibration detection sensors on the conveyor belt, sending continuous telemetry to an IoT Hub. The IoT Hub will use Azure Stream Analytics, and a built-in Machine Learning (ML) model, to give you advance warning of vibration anomalies. You also plan to archive all all of the telemetry data, just in case it's needed for further analysis in the future.
 
 You decide to build a prototype of the planned system, initially using simulated telemetry from a single device.
 
@@ -34,8 +34,7 @@ In this lab, you will complete the following activities:
 * Create an Azure IoT Hub, and a device ID using Azure CLI
 * Create a C# app to send device telemetry to the IoT Hub, using Visual Studio code
 * Create a message route, through to blob storage, using the Azure portal
-* Create a second message route, through to an Azure Analytics job, using the Azure portal
-* Create an Azure Function to identify anomalies.
+* Create a second message route, through to an Azure Stream Analytics job, using the Azure portal
 
 ## Lab Instructions
 
@@ -729,7 +728,7 @@ This will enable us to verify that our route includes the following settings:
 * **Endpoint** - vibrationLogEndpoint
 * **Enabled** - true
 
-> **Note**: It may seem odd that in this lab we are routing data to storage, and then also sending our data to storage through Azure Stream Analytics. In a production scenario, you wouldn't have both paths long-term. Instead, it is likely that the second path that we're creating here would not exist. We're using it here in a lab environment as a way to demonstrate Azure Stream Analytics that is also easy to validate.
+> **Note**: It may seem odd that in this lab we are routing data to storage, and then also sending our data to storage through Azure Stream Analytics. In a production scenario, you wouldn't have both paths long-term. Instead, it is likely that the second path that we're creating here would not exist. We're using it here, in a lab environment, as a way to validate that our routing is working as expected and to show a simple implementation of Azure Stream Analytics.
 
 #### Task 1: Create the Stream Analytics Job
 
