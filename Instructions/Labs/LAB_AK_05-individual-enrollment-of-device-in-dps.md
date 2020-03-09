@@ -262,6 +262,16 @@ This is different than the earlier lab where a simulated device connected to Azu
           * 05-Individual Enrollment of a Device in DPS
             * Starter
 
+1. on the **View** menu, click **Terminal**.
+
+    Verify that the selected terminal shell is the windows command prompt.
+
+1. To restore all the application NuGet packages via the command-line, in the Terminal view, at the command prompt, enter the following command:
+
+    ```cmd/sh
+    dotnet restore
+    ```
+
 1. In the Visual Studio Code Explorer pane, click **Program.cs**.
 
 1. In the code editor, near the top of the Program class, locate the `dpsIdScope` variable, and then update the assigned value using the ID Scope value that you copied from the Device Provisioning Service in the Azure portal.
