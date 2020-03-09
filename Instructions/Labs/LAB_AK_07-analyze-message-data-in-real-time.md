@@ -93,7 +93,7 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
     cd lab7
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following command:
+1. To ensure that **lab07-setup.azcli** has the execute permission, enter the following command:
 
     ```bash
     chmod +x lab07-setup.azcli

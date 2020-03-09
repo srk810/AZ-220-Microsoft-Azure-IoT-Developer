@@ -8,63 +8,103 @@ lab:
 
 ## Lab Scenario
 
-Contoso management has been impressed with the Azure IoT scenarios that have been demonstrated so far.  now interested in exploring some of the operational support capabilities. In an earlier lab, you explored the use of a simulated device to monitor temperature and humidity and demonstrated
+Contoso management is impressed with the prototype solutions that you've created using Azure IoT services, and they feel comfortable assigning additional budget the capabilities that you have already demonstrated. They are now asking that you explore the integration of certain operational support capabilities. Specifially, they would like to see how the Azure tools support sending alert notifications to the managers who are responsible for specific work areas. Alert criteria will be defined by the business area managers. The telemetry data arriving at IoT hub will be evaluated to generate the notifications.
 
-Contoso is installing new connected Thermostats to be able to monitor temperature across different cheese caves. You will create an alert to notify facilities manager when a new thermostat has been created.
+You've identified a business manager, Nancy, that you've had success working with in the past. You'll work with her during the initial phase of your solution.
 
-To create an alert, you will push device created event type to Event Grid when a new thermostat is created in IoT Hub. You will have a Logic Apps instance that will react on this event (on Event Grid) and will send an email to alert a facilities manager device a new device has been created, device ID, and connection state.
+Nancy informs you that her team of facility technicians is responsible for installing the new connected thermostats that will be used to monitor temperature across different cheese caves. The thermostat devices function as IoT devices that can be connected to IoT hub. To get your project started, you agree to create an alert that will generate a notification when a new device has been implemented.
+
+To generate an alert, you will push a device created event type to Event Grid when a new thermostat device is created in IoT Hub. You will create a Logic Apps instance that reacts to this event (on Event Grid) and which will send an email to alert facilities when a new device has been created, specifying the device ID and connection state.
 
 ## In This Lab
 
-* Verify Lab Prerequisites
-* Create Logic App that sends an email
-* Configure Azure IoT Hub Event Subscription
-* Create new devices triggering a Logic Apps which sends an email when alert is flagged by device
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+* Create a Logic App that sends an email
+* Configure an Azure IoT Hub Event Subscription
+* Create new devices to trigger the Logic App
 
 ### Exercise 1: Verify Lab Prerequisites
 
-This lab assumes the following resources are available:
+This lab assumes the following Azure resources are available:
 
-| Resource Type | Resource Name |
-| :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Type  | Resource Name          |
+|----------------|------------------------|
+| :--            | :--                    |
+| Resource Group | AZ-220-RG              |
+| IoT Hub        | AZ-220-HUB-_{YOUR-ID}_ |
 
-If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
+If these resources are not available, you will need to run the **lab09-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
 The **lab09-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. To ensure the Azure Shell is using **Bash**, ensure the dropdown selected value in the top-left is **Bash**.
+1. Verify that the Azure Cloud Shell is using **Bash**.
+
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
 1. To upload the setup script, in the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
-1. In the dropdown, select **Upload** and in the file selection dialog, navigate to the **lab-setup.azcli** file for this lab. Select the file and click **Open** to upload it.
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+        * Labs
+            * Lab 09: Integrate IoT Hub with Event Grid
+                * Setup
+
+    The lab09-setup.azcli script file is located in the Setup folder for lab 9.
+
+1. Select the **lab09-setup.azcli** file, and then click **Open**.
 
     A notification will appear when the file upload has completed.
 
-1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
-
-1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
+1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
 
     ```bash
-    mkdir lab09
-    mv lab09-setup.azcli lab09
-    cd lab09
+    ls
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
+    The `ls` command lists the content of the current directory. You should see the lab09-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
+
+    ```bash
+    mkdir lab9
+    mv lab09-setup.azcli lab9
+    cd lab9
+    ```
+
+1. To ensure that **lab09-setup.azcli** has the execute permission, enter the following command:
 
     ```bash
     chmod +x lab09-setup.azcli
     ```
 
-1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab09** to expand it and then select **lab-setup.azcli**.
+1. On the Cloud Shell toolbar, to edit the lab09-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-    The editor will now show the contents of the **lab-setup.azcli** file.
+1. In the **FILES** list, to expand the lab9 folder and open the script file, click **lab9**, and then click **lab09-setup.azcli**.
 
-1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH121119**, and set `Location` to the location that makes sense for your resources.
+    The editor will now show the contents of the **lab09-setup.azcli** file.
+
+1. In the editor, update the `{YOUR-ID}` and `{YOUR-LOCATION}` assigned values.
+
+    In the reference sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+
+    ```bash
+    #!/bin/bash
+
+    YourID="{YOUR-ID}"
+    RGName="AZ-220-RG"
+    IoTHubName="AZ-220-HUB-$YourID"
+
+    Location="{YOUR-LOCATION}"
+    ```
 
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
@@ -82,16 +122,16 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
     > East US 2             36.6681     -78.3889     eastus2
     > ```
 
-1. To save the changes made to the file and close the editor, click **...** in the top-right of the editor window and select **Close Editor**.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
     If prompted to save, click **Save** and the editor will close.
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with an ID of **VibrationSensorId**, and display the device connection string, enter the following command:
+1. To create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}** enter the following command:
 
     ```bash
-    ./lab-setup.azcli
+    ./lab09-setup.azcli
     ```
 
     This will take a few minutes to run. You will see JSON output as each step completes.
@@ -102,37 +142,49 @@ Azure Logic Apps is a cloud service that helps you schedule, automate, and orche
 
 In this exercise, you will create a new Azure Logic App that will be triggered via an HTTP Web Hook, then send an email using an Outlook.com email address.
 
-1. Login to [portal.azure.com](https://portal.azure.com) using your Azure account credentials.
+#### Task 1: Create a Logic App resource in the Azure portal
+
+1. If necessary, log in to the [Azure portal](https://portal.azure.com) using the Azure account credentials that you are using for this course.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. In the Azure Portal, click **+ Create a resource** to open the Azure Marketplace.
+1. On the Azure portal menu, click **+ Create a resource**.
 
-1. On the **New** blade, in the **Search the Marketplace** box, type in and search for **Logic App**.
+1. On the **New** blade, in the **Search the Marketplace** box, enter **logic app**
 
-1. In the search results, select the **Logic App** item.
+1. In the search results, click **Logic App**.
 
-1. On the **Logic App** item, click **Create**.
+1. On the **Logic App** blade, click **Create**.
 
-1. On the **Logic App** blade, in the **Name** field, enter **AZ-220-LogicApp-_{YOUR-ID}_**.
+1. On the **Basics** tab, under **Project details**, select the **Subscription** that you are using for this course.
+
+1. In the **Resource group** dropdown, under **Select existing**, click **AZ-220-RG**.
+
+1. Under **Instance details**, in the **Name** field, enter **AZ-220-LogicApp-_{YOUR-ID}_**
 
     For example: **AZ-220-LogicApp-CP191218**
 
     The name of your Azure Logic App must be globally unique because it is a publicly accessible resource that you must be able to access from any IP connected device.
 
-1. In the **Resource group** dropdown, select **Use Existing**, then select the **AZ-220-RG** resource group.
-
-1. In the **Location** dropdown, choose the same Azure region that was used for the resource group.
+1. In the **Location** dropdown, select the same Azure region that was used for the resource group.
 
 1. Leave **Log Analytics** set to **Off**.
 
-1. Click **Create**.
+1. Click **Review + create**.
+
+1. On the **Review + create** tab, click **Create**.
 
     > **Note**:  It will take a minute or two for the Logic App deployment to complete.
 
-1. Navigate to the **Logic App** resource that was just deployed.
+1. Navigate back to your Azure portal Dashboard.
 
-1. When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed.
+#### Task 2: Configure Your Logic App 
+
+1. On your resource group tile, click the link to the Logic App resource that was just deployed.
+
+    If the **AZ-220-LogicApp-_{YOUR-ID}_** Logic app is not displayed, refresh the resource group tile.
+
+    When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed.
 
     If this doesn't come up automatically, click on the **Logic app designer** link under the **Development Tools** section on the **Logic App** blade.
 
@@ -145,7 +197,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 1. When prompted, paste in the following sample JSON into the textbox and click **Done**.
 
     ```json
-     [{
+    [{
       "id": "56afc886-767b-d359-d59e-0da7877166b2",
       "topic": "/SUBSCRIPTIONS/<subscription ID>/RESOURCEGROUPS/<resource group name>/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/<hub name>",
       "subject": "devices/LogicAppTestDevice",
