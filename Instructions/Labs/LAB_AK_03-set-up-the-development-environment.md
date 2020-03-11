@@ -269,8 +269,6 @@ Azure PowerShell is a set of cmdlets for managing Azure resources directly from 
     Install-Module -Name Az -AllowClobber -Scope AllUsers
     ```
 
-    > **Note**: If you are informed that an existing version 
-
 1. By default, the PowerShell gallery isn't configured as a trusted repository for PowerShellGet. The first time you use the PSGallery you see the following prompt:
 
     ```output
@@ -287,8 +285,8 @@ Azure PowerShell is a set of cmdlets for managing Azure resources directly from 
 
     The Az module is a rollup module for the Azure PowerShell cmdlets. Installing it downloads all of the available Azure Resource Manager modules, and makes their cmdlets available for use.
 
-    > **Note**: If the **Az** module is already installed, you can update to the latest version using:
-    > 
-    > ```powershell
-    > Update-Module -Name Az
-    > ```
+> **Note**: If the **Az** module is already installed, you can update to the latest version using:
+> 
+> ```powershell
+> Update-Module -Name Az
+> ```
