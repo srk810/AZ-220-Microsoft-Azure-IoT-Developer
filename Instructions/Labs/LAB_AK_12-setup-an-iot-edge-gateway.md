@@ -37,7 +37,116 @@ In this lab, you will:
 
 ### Exercise 1: Verify Lab Prerequisites
 
-[tbd]
+This lab assumes that the following Azure resources are available:
+
+| Resource Type | Resource Name |
+| :-- | :-- |
+| Resource Group | AZ-220-RG |
+| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+
+If these resources are not available, you will need to run the **lab12-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+
+> **Note**:  The **lab12-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+
+1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+
+1. Verify that the Azure Shell is using **Bash**.
+
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In Lab 3 of this course, "Setup the Development Environment", you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 12-Setup an IoT Edge Gateway
+            * Setup
+
+    The lab12-setup.azcli script file is located in the Setup folder for lab 12.
+
+1. Select the **lab12-setup.azcli** file, and then click **Open**.
+
+    A notification will appear when the file upload has completed.
+
+1. To verify that the correct file has uploaded, enter the following command:
+
+    ```bash
+    ls
+    ```
+
+    The `ls` command lists the content of the current directory. You should see the lab12-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
+
+    ```bash
+    mkdir lab12
+    mv lab12-setup.azcli lab12
+    cd lab12
+    ```
+
+    These commands will create a directory for this lab, move the **lab12-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
+
+1. To ensure the **lab12-setup.azcli** has the execute permission, enter the following command:
+
+    ```bash
+    chmod +x lab12-setup.azcli
+    ```
+
+1. On the Cloud Shell toolbar, to edit the **lab12-setup.azcli** file, click **Open Editor** (second button from the right - **{ }**).
+
+1. In the **Files** list, to expand the lab4 folder, click **lab12**, and then click **lab12-setup.azcli**.
+
+    The editor will now show the contents of the **lab12-setup.azcli** file.
+
+1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+
+    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+
+    ```bash
+    #!/bin/bash
+
+    RGName="AZ-220-RG"
+    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+
+    Location="{YOUR-LOCATION}"
+    ```
+
+    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    >
+    > ```bash
+    > az account list-locations -o Table
+    >
+    > DisplayName           Latitude    Longitude    Name
+    > --------------------  ----------  -----------  ------------------
+    > East Asia             22.267      114.188      eastasia
+    > Southeast Asia        1.283       103.833      southeastasia
+    > Central US            41.5908     -93.6208     centralus
+    > East US               37.3719     -79.8164     eastus
+    > East US 2             36.6681     -78.3889     eastus2
+    > ```
+
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
+
+    If prompted to save, click **Save** and the editor will close.
+
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+
+1. To create the resources required for this lab, enter the following command:
+
+    ```bash
+    ./lab12-setup.azcli
+    ```
+
+    This will take a few minutes to run. You will see JSON output as each step completes.
+
+Once the script has completed, you will be ready to continue with the lab.
 
 ### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
