@@ -184,17 +184,19 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
     If the **AZ-220-LogicApp-_{YOUR-ID}_** Logic app is not displayed, refresh the resource group tile.
 
-    When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed.
+    > **Note**: When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed. If this page doesn't come up automatically, click **Logic app designer** under the **Development Tools** section on the **Logic App** blade.
 
-    If this doesn't come up automatically, click on the **Logic app designer** link under the **Development Tools** section on the **Logic App** blade.
+1. Under the **Start with a common trigger** section, click **When a HTTP request is received**.
 
-1. Select the **When a HTTP request is received** trigger under the **Start with a common trigger** section.
+    Starting out with one of the commonly used triggers is a convenient way to get started on your Logic App.
 
-1. The **Logic Apps Designer** will open with the visual designer displayed, and with the **When a HTTP request is received** trigger selected.
+1. Notice that the visual designer opens with the **When a HTTP request is received** trigger selected.
 
 1. On the **When a HTTP request is received** trigger, under the **Request Body JSON Schema** textbox, click the **Use sample payload to generate schema** link.
 
-1. When prompted, paste in the following sample JSON into the textbox and click **Done**.
+    > **Note**: In the next step you will be adding the **DeviceCreated** sample event schema to the Request Body JSON Schema textbox. This sample, along with a couple of other event schema samples and some associated documentation, can be found at the following link for those who want to learn more: [Azure Event Grid event schema for IoT Hub](https://docs.microsoft.com/en-us/azure/event-grid/event-schema-iot-hub).
+
+1. Use a copy-and-paste operation to add the following sample JSON to the Request Body JSON Schema textbox, and then click **Done**.
 
     ```json
     [{
@@ -244,46 +246,71 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
     This sample JSON is an example of the JSON that Event Grid will POST to the Web Hook endpoint for the Logic App once it's created. This sample includes the IoT Hub Message Telemetry properties for the IoT Device that will be sending telemetry messages.
 
-1. Notice the **Request Body JSON Schema** box is now populated with a JSON schema that was automatically generated based on the sample JSON that was pasted in.
+1. Notice that the **Request Body JSON Schema** textbox is now populated with a JSON schema that was automatically generated based on the sample JSON that you provided.
 
-1. Below the **When a HTTP request is received** trigger, click the **+ New step** button.
+1. Below the **When a HTTP request is received** trigger, click **+ New step**.
 
-1. Enter `Outlook.com` into the search box, then locate and select the **Send an email (V2) (Preview)** action for the **Outlook.com** connector.
+1. Below **Choose an action**, in the search textbox, enter **Outlook.com**
+
+1. In the list of Actions, scroll down to the Send options, and then click **Send an email (V2)**.
 
     > **Note**:  These instructions walk through configuring the Logic App to send an email using an **Outlook.com** email address. Alternatively, the Logic App can also be configured to send email using the Office 365 Outlook or Gmail connectors as well.
 
-1. On the **Outlook.com** Connector, click the **Sign in** button, and follow the prompts to authenticate with an existing Outlook.com account.
+1. On the **Outlook.com** connector, click **Sign in**, and then follow the prompts to authenticate with an existing Outlook.com account.
 
 1. If prompted to **Let this app access your info**, click **Yes**.
 
-1. In the **Send an email (V2) (Preview)** action, on the **To** field, enter an email address to send email messages to.
+1. On the **Send an email (V2)** action, in the **To** field, enter an email address to send email messages to.
 
-    Enter an email address where you can receive emails; such as the Outlook.com account used for this connector.
+    For the purposes of this lab, you will provide an email address where you can receive the email notification. You can enter the Outlook.com account used for this connector, or another email account that is easy for you to access.
 
-    The Outlook.com account that was authenticated will be used to send the emails from that account. You can actually enter any email address you want to send the notifications to.
+    The Outlook.com account that was authenticated in the step above will be used to send the emails.
 
-1. For the **Subject**, fill in `IoT Hub alert:`.
+1. In the **Subject** field, enter **IoT Hub alert:**
 
-1. Next, begin work on the **Body**.  Your desired conent is the following:
-   `This is an automated email to inform you that: {eventType} occurred at {eventTime} IoT Hub: {hubName} Device ID: {deviceID} Connection state: {connectionState}`
-   Each curly-braces entry should be dynamic content.  If you can't see the Dynamic content, select the **Add dynamic content** hyperlink under the **Body** text box. If it doesn't show you the fields you want, click *more* in the Dynamic content screen to include the fields from the previous action.
-   When you add the first dynamic content value, because the input data schema is for an array, the Logic Apps Designer will automatically change the e-mail action to be nested inside of a **For each** action.  When this happens, the **Send an email (V2) (Preview)** action will collapse; simply click on it to open it up again and continue editing the body.
+1. In the **Body** field, enter the following message content:
+
+    ```
+    This is an automated email to inform you that:
+
+    {eventType} occurred at {eventTime}
+
+    IoT Hub: {hubName}
+    Device ID: {deviceID}
+    Connection state: {connectionState}
+    ```
+
+1. Take a moment to examine the message body that you just entered.
+
+    You may have realized that the curly-braces entries are intended to represent dynamic content. You will need to replace these placeholder entries with the actual Dynamic content values.
+
+    > **Note**: If the Add dynamic content tools are not displayed to the right of the connector, click the **Add dynamic content** hyperlink located directly under the **Body** text box. If it doesn't list the fields you need, click **See more** in the Dynamic content pane to include the fields included in the message body that you entered.
+
+    In the next step you will replace each placeholder value with the corresponding Dynamic content value.
+
+1. For each dynamic content placeholder, delete the entry and then replace it with the corresponding Dynamic content field.
+
+    When you add the first dynamic content value, because the input data schema is for an array, the Logic Apps Designer will automatically change the e-mail action to be nested inside of a **For each** action. When this happens, the **Send an email (V2)** action will collapse. To reopen your email message, click **Send an email (V2)**, and then continue editing the message body.
+
+    When you have completed this step you should see a message body that is similar to the following:
 
     ![Fill out email information](./Media//LAB_AK_09-email_content.png)
 
-1. Click **Save** at the top of the designer to save all changes to the Logic App Workflow.
+1. At the top of the designer, to save all changes to the Logic App Workflow, click **Save** .
 
-1. Expand the **When a HTTP request is received** trigger, copy the value for the **HTTP POST URL** that is displayed, and save it for future reference. This is the _web hook_ endpoint URL for the Logic App that will be used by Event Grid to trigger the execution of the Logic App workflow.
+1. To expand the _When a HTTP request is received_ trigger, click **When a HTTP request is received**.
 
-    ![HTTP request info](./Media/LAB_AK_09-http_post.png)
+1. Copy the value for the **HTTP POST URL** that is displayed.
 
-    The **HTTP POST URL** will be similar to the following:
+    The **HTTP POST URL** will look similar to the following:
 
     ```text
     https://prod-87.eastus.logic.azure.com:443/workflows/b16b5556cbc54c97b063479ed55b2669/triggers/manual/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=ZGqYl-R5JKTugLG3GR5Ir1FuM0zIpCrMw4Q2WycJRiM
     ```
 
-    This URL is the Web Hook endpoint to call the Logic App trigger via HTTPS. Notice the **sig** query string parameter and it's value. The **sig** parameter contains the shared access key that is used to authenticate requests to the Web Hook endpoint.
+    This URL is the Web Hook endpoint that is used to call the Logic App trigger via HTTPS. Notice the **sig** query string parameter and it's value. The **sig** parameter contains the shared access key that is used to authenticate requests to the Web Hook endpoint.
+
+1. Save the URL for future reference.
 
 ### Exercise 3: Configure Azure IoT Hub Event Subscription
 
@@ -291,79 +318,82 @@ Azure IoT Hub integrates with Azure Event Grid so that you can send event notifi
 
 In this exercise, you will create an Event Subscription within Azure IoT Hub to setup Event Grid integration that will trigger a Logic App to send an alert email.
 
-1. Navigate back to your Azure Portal dashboard.
+1. Navigate back to your Azure portal dashboard.
 
-1. On your resource group tile, click **AZ-220-HUB-_{YOUR-ID}_** to navigate to your Azure IoT Hub.
+1. On your resource group tile, to navigate to your IoT Hub, click **AZ-220-HUB-_{YOUR-ID}_**.
 
-1. On the **IoT Hub** blade, on the left side, click the **Events** link.
+1. On the **IoT Hub** blade, on the left side navigation menu, click **Events**.
 
-1. On the **Events** pane, at the top, click the **+ Event Subscription** button.
+1. On the **Events** pane, at the top, click **+ Event Subscription**.
 
-1. Create the event subscription with the following values:
+1. On the Create Event Subscription blade, in the **Name** field, enter **MyDeviceCreateEvent**
 
-   * **EVENT SUBSCRIPTION DETAILS**
-     * **Name**: `MyDeviceCreateEvent`
-     * **EventSchema**: **Event Grid Schema**
+1. Ensure that the **EventSchema** filed is set to **Event Grid Schema**.
 
-   * **TOPIC DETAILS**: will be informational and read-only
+1. Leave the **TOPIC DETAILS** section unchanged.
+
+    This section is informational and read-only
+
+1. Under **EVENT TYPES**, open the **Filter to Event Types** dropdown, and then de-select all of the choices except **Device Created**.
+
+1. Under **ENDPOINT DETAILS**, open the **Endpoint Type** dropdown, and then click **Web Hook**.
+
+1. Under **ENDPOINT DETAILS**, click **Select an endpoint**.
+
+1. In the **Select Web Hook** pane, under **Subscriber Endpoint**, paste the URL that you copied from your logic app, then click **Confirm Selection**.
   
-   * **EVENT TYPES**
-     * **Filter to Event Types**: Uncheck all of the choices except **Device Created**.
+    > **Important**: Do not click Create!
 
-       ![subscription event types](./Media/LAB_AK_09-subscription-event-types.png)
+    You could save the event subscription here, and receive notifications for every device that is created in your IoT hub. However, for this lab we will use the optional fields to filter for specific devices. 
 
-   * **ENDPOINT DETAILS**:
-     * **Endpoint Type**: **Web Hook**
-     * Click **Select an endpoint**, and then, in the **Select Web Hook** pane, under **Subscriber Endpoint**, paste the URL that you copied from your logic app, then click **Confirm Selection**.
-  
-    *Do not yet click Create!*
-  
-    When you're done, the pane should look like the following example:
+1. At the top of the pane, click **Filters** .
 
-    ![Sample event subscription form](./Media/LAB_AK_09-subscription-form.png)
+    You will be using filters to filter for specific devices.
 
-1. You could save the event subscription here, and receive notifications for every device that is created in your IoT hub. For this tutorial, though, let's use the optional fields to filter for specific devices. Select **Filters** at the top of the pane.
+1. Under **ADVANCED FILTERS**, click **Add new filter**, and then fill in the fields with these values:
 
-1. At the bottom of the pane, select **Add new filter**. Fill in the fields with these values:
+    * **Key**: Enter `Subject`
 
-   * **Key**: Enter `Subject`.
+    * **Operator**: Select `String begins with`
 
-   * **Operator**: Select `String begins with`.
+    * **Value**:  Enter `devices/CheeseCave1_`
 
-   * **Value**:  Enter `devices/CheeseCave1_` to filter for device events in building 1.
-  
-1. Add another filter with these values:
+    We will use this value to filter for device events associated with the Cheese Cave 1 location (CheeseCave1).
 
-   * **Key**: Enter `Subject`.
+1. To create a second filter, click **Add new filter**, and then fill in the fields with these values:
 
-   * **Operator**: Select `String ends with`.
+    * **Key**: Enter `Subject`
 
-   * **Value**: Enter `_Thermostat` to filter for device events related to temperature.
+    * **Operator**: Select `String ends with`
 
-   The **Filters** tab of your event subscription should now look similar to this image:
+    * **Value**: Enter `_Thermostat`
 
-1. Select **Create** to save the event subscription.
+    We will use this value to filter for device events related to temperature.
+
+1. To save the event subscription, click **Create**.
 
 ### Exercise 4: Test Your Logic App with New Devices
 
 Test your logic app by creating a new device to trigger an event notification email.
 
-1. From your IoT hub, on the left side, under **Explorers**, select **IoT Devices**.
+1. In your Azure portal, if needed, navigate to your IoT Hub blade.
 
-2. At the top, select **+ New**.
+1. On the left side navigation menu, under **Explorers**, click **IoT Devices**.
 
-3. For **Device ID**, enter `CheeseCave1_Building1_Thermostat`.
+1. At the top of the IoT devices blade, click **+ New**.
 
-4. Leave all other fields at the defaults, and select **Save**.
+1. In the **Device ID** field, enter **CheeseCave1_Building1_Thermostat**
 
-5. You can add multiple devices with different device IDs to test the event subscription filters. Try these other examples:
+1. Leave all other fields at the defaults, and then click **Save**.
 
-   * `CheeseCave1_Building1_Light`
-   * `CheeseCave2_Building1_Thermostat`
-   * `CheeseCave2_Building2_Light`
+1. To test the event subscription filters, create additional devices using the following device IDs:
 
-   If you added the four examples total, your list of IoT devices should look like the following image:
+    * `CheeseCave1_Building1_Light`
+    * `CheeseCave2_Building1_Thermostat`
+    * `CheeseCave2_Building2_Light`
 
-   ![IoT Hub device list](./Media/LAB_AK_09-iot-hub-device-list.png)
+    If you added the four examples total, your list of IoT devices should look like the following image:
 
-6. Once you've added a few devices to your IoT hub, check your email to see which ones triggered the logic app.
+    ![IoT Hub device list](./Media/LAB_AK_09-iot-hub-device-list.png)
+
+1. Once you've added a few devices to your IoT hub, check your email to see which ones triggered the logic app.
