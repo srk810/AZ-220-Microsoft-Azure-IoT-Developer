@@ -172,7 +172,7 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On the portal menu, click **All services**.
+1. On the Azure portal menu, click **All services**.
 
 1. In the Search textbox, type **Event**
 

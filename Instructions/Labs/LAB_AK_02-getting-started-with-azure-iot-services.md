@@ -121,7 +121,7 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
     You will be adding resources to your dashboard as the course continues.
 
-1. On the portal menu, click **+ Create a resource**.
+1. On the Azure portal menu, click **+ Create a resource**.
 
     The Azure Marketplace is a collection of all the resources you can create in Azure. The marketplace contains resources from both Microsoft and the community.
 
@@ -208,7 +208,7 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
 1. Notice that after a couple of minutes you receive a notification stating that your IoT Hub was successfully deployed to your **AZ-220-RG** resource group.
 
-1. On the portal menu, click **Dashboard**, and then click **Refresh**.
+1. On the Azure portal menu, click **Dashboard**, and then click **Refresh**.
 
     You should see that your resource group tile lists your new IoT Hub.
 
@@ -295,7 +295,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On the portal menu, click **+ Create a resource**.
+1. On the Azure portal menu, click **+ Create a resource**.
 
     The Azure Marketplace is a collection of all the resources you can create in Azure. The marketplace contains resources from both Microsoft and the community.
 
@@ -341,7 +341,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. Notice that after a couple of minutes you receive a notification stating that your IoT Hub Device Provisioning Service instance was successfully deployed to your **AZ-220-RG** resource group.
 
-1. On the portal menu, click **Dashboard**, and then click **Refresh**.
+1. On the Azure portal menu, click **Dashboard**, and then click **Refresh**.
 
     You should see that your resource group tile lists your new IoT Hub Device Provisioning Service.
 
@@ -375,7 +375,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     You should now see the selected hub listed on the Linked IoT hubs blade. You might need to click **Refresh** to show Linked IoT hubs.
 
-1. On the Portal menu, click **Dashboard**.
+1. On the Azure portal menu, click **Dashboard**.
 
 ### Exercise 5: Examine the Device Provisioning Service
 

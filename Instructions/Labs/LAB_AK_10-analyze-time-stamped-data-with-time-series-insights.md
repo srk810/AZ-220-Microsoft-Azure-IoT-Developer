@@ -319,7 +319,7 @@ In this exercise, you will be introduced to working with time series data using 
 
 1. On your Resource group tile, click **AZ-220-TSI**.
 
-1. On the **Time Series Insights environment** blade, atthe top of the **Overview** pane, click **Go to Environment**.
+1. On the **Time Series Insights environment** blade, at the top of the **Overview** pane, click **Go to Environment**.
 
     This will open the **Time Series Insights Explorer** in a new browser tab.
 

@@ -33,7 +33,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
     When you log into Azure you will arrive at the Azure portal. The Azure portal provides you with a customizable UI that you can use to access your Azure resources.
 
-1. In the upper left corner of the portal window, to open the portal menu, click the hamburger menu icon.
+1. In the upper left corner of the portal window, to open the Azure portal menu, click the hamburger menu icon.
 
     At the top of the portal menu, you should see a section containing four menu options:
 
@@ -45,7 +45,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
     The bottom section of the portal menu is a **FAVORITES** section that can be customized to show your favorite, or most commonly used, resources. Later in this lab, you will learn how to customize this default list of common services to make it a list of your own favorites.
 
-1. On the portal menu, to display the **Home** page, click **Home**.
+1. On the Azure portal menu, to display the **Home** page, click **Home**.
 
 1. On the home page, to display a map of data center regions, under **Azure services**, click **Service Health**.
 
@@ -61,7 +61,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
 #### Task 2: Explore the Azure Service options
 
-1. Open the portal menu, and then click **All services**.
+1. Open the Azure portal menu, and then click **All services**.
 
     The _All services_ page provides you with a few different viewing options and access to all of the services that Azure offers in both PaaS and IaaS. The first time that you open the _All services_ page, you will see the _Overview_ page. This view is accessible from the left side menu.
 
@@ -152,7 +152,7 @@ In the following tasks, you will:
 
     You can use the following link to open the Azure portal: [Azure portal](https://portal.azure.com)
 
-1. On the portal menu, click **Dashboard**.
+1. On the Azure portal menu, click **Dashboard**.
 
 1. On the _Dashboard_ page, click **+ New dashboard**
 
@@ -168,7 +168,7 @@ In the following tasks, you will:
 
 #### Task 2: Create a Resource Group and add a Resource Group tile to your Dashboard
 
-1. On the portal menu, click **Resource groups**
+1. On the Azure portal menu, click **Resource groups**
 
     This blade displays all of the resource groups that you have created using your Azure subscription(s). If you are just getting started with Azure, you probably don't have any resource groups yet.
 
