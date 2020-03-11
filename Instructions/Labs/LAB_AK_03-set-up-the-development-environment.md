@@ -158,16 +158,6 @@ You will be using Docker Desktop Community 2.1.0.5 (or later) set to Linux Conta
 
     Docker Desktop does not start automatically after installation. To start Docker Desktop, search for Docker, and select Docker Desktop in the search results. When the whale icon in the status bar stays steady, Docker Desktop is up-and-running, and is accessible from any terminal window.
 
-#### Task 6: Install Power BI Desktop
-
-Power BI Desktop is designed for an x64 architecture PC running Windows 10 version 14393 or higher.
-
-1. In your Web browser, navigate to [https://powerbi.microsoft.com/en-us/desktop/](https://powerbi.microsoft.com/en-us/desktop/)
-
-1. Click **Download Free**.
-
-1. On the Microsoft Store page for Power BI Desktop, click **Install**, and then follow instructions to complete the installation.
-
 ### Exercise 2: Install Dev Tool Extensions
 
 The Visual Studio Code and Azure CLI tools both support extension that help developers to create their solutions more efficiently. Extensions for IoT have been developed by Microsoft that leverage the IoT SDKs and reduce development time.
@@ -255,48 +245,50 @@ Microsoft has created a GitHub repo to provide access to lab resource files. Hav
 
     Be sure to make not of where you located the files.
 
-#### Task 2: Install Azure PowerShell
-
-Azure PowerShell is designed for managing and administering Azure resources from the command line, and for building automation scripts that work against the Azure Resource Manager. You can use it in your browser with Azure Cloud Shell, or you can install it on your local machine and use it in any PowerShell session. If you are running Azure PowerShell locally, you need to have Windows PowerShell configured.
+#### Task 2: Install Azure PowerShell Module
 
 > **Note**: The lab activities in this course do NOT have you using PowerShell, however, you may see sample code in reference documents that use PowerShell. If you want to run PowerShell code, you can use the following instructions to complete the installation steps.
 
-1. On the Windows 10 Start menu, to begin installing/configuring the Azure PowerShell tools, right-click **Windows Powershell**, and then click **Run as Administrator**.
+Azure PowerShell is a set of cmdlets for managing Azure resources directly from the PowerShell command line. Azure PowerShell is designed to make it easy to learn and get started with, but provides powerful features for automation. Written in .NET Standard, Azure PowerShell works with PowerShell 5.1 on Windows, and PowerShell 6.x and higher on all platforms.
 
-    Administrator rights are required to install PowerShell modules, so you will need to run as an administrator to get started.
+> **Warning**:  You can't have both the AzureRM and Az modules installed for PowerShell 5.1 for Windows at the same time. If you need to keep AzureRM available on your system, install the Az module for PowerShell Core 6.x or later. To do this, install PowerShell Core 6.x or later and then follow these instructions in a PowerShell Core terminal.
 
-1. At the command prompt, to determine the version of PowerShellGet installed on your computer, enter the following command:
+1. Decide if you wish to install the Azure PowerShell module for just the current user (recommended approach) or for all users.
 
-    `Get-Module -Name PowerShellGet -ListAvailable | Select-Object -Property Name,Version,Path`
+1. Launch the PowerShell terminal of your choice - if you are installing for all users you must launch an elevated PowerShell session either by either selecting **run as administrator** or with the **sudo** command on macOS or Linux.
 
-    PowerShellGet should be installed by default with Windows 10. However, to install the Azure PowerShell module, you will need PowerShellGet version 1.1.2.0 or higher.
+1. To only install for the current user, enter the following command:
 
-1. If you are running an older version of PowerShellGet (such as version 1.0.0.1), to update PowerShellGet, enter the following command:
+    ```powershell
+    Install-Module -Name Az -AllowClobber -Scope CurrentUser
+    ```
 
-    `Install-Module PowerShellGet -Force`
+    or to install for all users on a system, enter the following command:
 
-    It will take a moment for your computer to respond.
+    ```powershell
+    Install-Module -Name Az -AllowClobber -Scope AllUsers
+    ```
 
-    If you are prompted to install a newer version of the NuGet provider, type **Y** and then press Enter.
+    > **Note**: If you are informed that an existing version 
 
-    > **Note**:  If you re-run the command that we used above to determine the installed version of PowerShellGet, you should see that PowerShellGet version 1.6.0 (or higher) is now installed.
+1. By default, the PowerShell gallery isn't configured as a trusted repository for PowerShellGet. The first time you use the PSGallery you see the following prompt:
 
-1. To install the Azure Resource Manager modules from the PowerShell Gallery, enter the following command:
+    ```output
+    Untrusted repository
 
-    `Install-Module -Name AzureRM -AllowClobber`
+    You are installing the modules from an untrusted repository. If you trust this repository, change
+    its InstallationPolicy value by running the Set-PSRepository cmdlet.
 
-    If you see a message stating that "You are installing the modules from an untrusted repository", type **A** and then press Enter.
+    Are you sure you want to install the modules from 'PSGallery'?
+    [Y] Yes  [A] Yes to All  [N] No  [L] No to All  [S] Suspend  [?] Help (default is "N"):
+    ```
 
-    > **Note**:  Once again, it can take a minute for the installation to begin, so just give it a chance.
+1. Answer **Yes** or **Yes to All** to continue with the installation.
 
-    The AzureRM module is a rollup module for the Azure Resource Manager cmdlets. When you install the AzureRM module, any Azure PowerShell module not previously installed is downloaded and installed from the PowerShell Gallery.
+    The Az module is a rollup module for the Azure PowerShell cmdlets. Installing it downloads all of the available Azure Resource Manager modules, and makes their cmdlets available for use.
 
-1. Close the version of PowerShell that is running at elevated privileges, and then open a PowerShell session at a normal privilege level.
-
-    Once the AzureRM module is installed, you need to load the module into your PowerShell session. It is best to do this in a normal (non-elevated) PowerShell session.
-
-1. To load the modules using the Import-Module cmdlet, enter the following command:
-
-    `Import-Module -Name AzureRM`
-
-    If you want more information on using PowerShell, see [Getting started with Azure PowerShell](https://docs.microsoft.com/en-us/powershell/azure/get-started-azureps?view=azurermps-5.7.0)
+    > **Note**: If the **Az** module is already installed, you can update to the latest version using:
+    > 
+    > ```powershell
+    > Update-Module -Name Az
+    > ```
