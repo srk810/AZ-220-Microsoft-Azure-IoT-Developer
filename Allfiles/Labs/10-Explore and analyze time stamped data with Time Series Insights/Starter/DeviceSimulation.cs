@@ -34,9 +34,9 @@ namespace device_simulation
             Console.WriteLine("This app simulations Temperature and Humidity sensors from the following devices:");
             Console.WriteLine(" - Container: The shipping container.");
             Console.WriteLine(" - Truck: The truck transporting the container.");
-            Console.WriteLine(" - Airplain: The airplane transporting the container.");
+            Console.WriteLine(" - Airplane: The airplane transporting the container.");
             Console.WriteLine(string.Empty);
-            Console.WriteLine("The Container is being shipped via Truck and Airplain, and the container sensor readings will vary depending on which transport vehicle is currently transporting the container.");
+            Console.WriteLine("The Container is being shipped via Truck and Airplane, and the container sensor readings will vary depending on which transport vehicle is currently transporting the container.");
             Console.WriteLine(string.Empty);
             Console.WriteLine("Press Ctrl-C to exit.");
             Console.WriteLine(string.Empty);
