@@ -150,71 +150,103 @@ Once the script has completed, you will be ready to continue with the lab.
 
 ### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
-In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace.
+In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace. You will be configuring this simulated IoT Edge device for use as an Edge Gateway.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. In the upper left of the Azure Portal, click **Create a resource** open the Azure Marketplace.
+1. On the Azure portal menu, click **+ Create a resource**.
 
-1. On the **New** blade, in the **Search the Marketplace** box, type in and search for **Azure IoT Edge on Ubuntu**.
+1. On the **New** blade, in the **Search the Marketplace** box, type **Azure IoT Edge on** and then click **Azure IoT Edge on Ubuntu**.
 
-1. On the **Azure IoT Edge on Ubuntu** item, click **Create**.
+1. On the **Azure IoT Edge on Ubuntu** blade, click **Create**.
 
-1. On the **Create a virtual machine** blade, next to **Subscription**, select your Azure Subscription.
+1. On the **Create a virtual machine** blade, in the **Subscription** dropdown, ensure that the subscription you are using for this course is selected.
 
-1. Next to **Resource group**, under the drop-down, select **Create new** to create a new Resource Group for the VM; name it `AZ-220-GWVM-RG`.
+1. Below the **Resource group** dropdown, click **Create new**.
 
-1. In the **Virtual machine name** box, enter `AZ-220-VM-EDGEGW-{YOUR-ID}` for the name of the Virtual Machine.
+1. In the resource group Name popup, under **Name**, enter **AZ-220-GWVM-RG** and then click **OK**.
+
+1. Under **Instance details**, in the **Virtual machine name** textbox, enter **AZ-220-VM-EDGEGW-{YOUR-ID}**.
 
 1. In the **Region** dropdown, select the region where your Azure IoT Hub is provisioned.
 
-1. Leave **Availability options** at **No infrastructure redundancy required**.
+1. Leave the **Availability options** field set to **No infrastructure redundancy required**.
 
-1. Notice the **Image** dropdown has the **Ubuntu Server 16.04 LTS + Azure IoT Edge runtime** image selected.
+1. Notice that the **Image** dropdown has the **Ubuntu Server 16.04 LTS + Azure IoT Edge runtime** image selected.
 
-1. Leave **Azure Spot instance** set to **No**.
+1. Leave the **Azure Spot instance** field set to **No**.
 
-1. Under **Size**, click **Change size**. In the displayed list of sizes, select **DS1_v2** and click **Select**.  You may need to use the **Clear all filters** link to make this size available in the list.
+1. Under **Size**, click **Change size**.
 
-    > **Note**:  Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
+1. On the **Select a VM size** blade, click **DS1_v2**, and then click **Select**.
 
-1. Under **Administrator account**, set the **Authentication type** to **Password**.
+    You may need to use the **Clear all filters** link to make this size available in the list.
 
-1. Enter an administrator **Username**, **Password**, and **Confirm password** for the VM.
+    > **Note**: Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
-    >**Important:** Do not lose/forget these values - you cannot connect to your VM without them.
+1. Under **Administrator account**, to the right of **Authentication type**, click **Password**.
 
-1. Notice the **Inbound port rules** is configured to enable inbound **SSH** access to the VM. This will be used to remote into the VM to configure/manage it.
+1. For the VM Administrator account, enter values for the **Username**, **Password**, and **Confirm password** fields.
+
+    > **Important:** Do not lose/forget these values - you cannot connect to your VM without them.
+
+1. Notice that the **Inbound port rules** are configured to enable inbound **SSH** access to the VM.
+
+    This will be used to remote into the VM to configure/manage it.
 
 1. Click **Review + create**.
 
-1. Once validation passes, click **Create** to begin deploying the virtual machine.
+1. Wait for the **Validation passed** message to be displayed at the top of the blade, and then click **Create**.
 
-    > **Note**:  Deployment will take approximately 5 minutes to complete. You will need it to finish before moving to the next exercise.
+    > **Note**:  Deployment can take as much as 5 minutes to complete. You can continue on to the next exercise while it is deploying.
 
 ### Exercise 3: Generate and Configure IoT Edge Device CA Certificates
 
-In this exercise, you will generate test certificates using Linux. You will do this on the `AZ-220-VM-EDGEGW-{YOUR-ID}` Virtual Machine using a helper script contained within the `Azure/IoTEdge` GitHub project.
+In this exercise, you will generate test certificates using Linux. You will do this on the `AZ-220-VM-EDGEGW-{YOUR-ID}` Virtual Machine using a helper script contained within the "Starter" folder for this lab that you created during lab 3 of this course.
 
-1. Navigate to the `AZ-220-VM-EDGEGW-{YOUR-ID}` IoT Edge virtual machine within the Azure Portal.
+1. Verify that the IoT Edge virtual machine has been deployed successfully.
 
-1. At the top of the **Overview** pane of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** blade, click the **Connect** button, then click **SSH**.
+    You can check the Notification pane in the Azure portal.
 
-1. Within the **Connect via SSH with client** pane, copy the **Run the example command below to connect to your VM.** value.
+1. On the Azure portal menu, click **Resource groups**.
 
-    This is a sample SSH command that will be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. The command is formatted similar to `ssh username@52.170.205.79`.
+1. On the **Resource groups** blade, locate the AZ-220-GWVM-RG resource group.
 
-    > **Important**: As of the last edit of this lab, there is a bug in the Portal where you get a certificate-based sign in command rather than a username-based command.  You will need to edit the command to remove the certificate reference.
+1. On the righthand side of the blade, across from **AZ-220-GWVM-RG**, click **Click to open contenxt menu** (the elipsis icon - **...**)
 
-1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up Azure Cloud Shell within the Azure Portal. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell if it is not already selected.
+1. On the context menu, click **Pin to dashboard**, and then navigate back to your dashboard.
 
-1. Within the Cloud Shell, paste in the `ssh` command that was copied, and press **Enter**.
+    You can **Edit** your dashboard to rearrange the tiles if that makes it easier to access your resources.
+ 
+1. On the **AZ-220-GWVM-RG** resource group tile, to open the Edge Gateway virtual machine, click **AZ-220-GWVM-EDGE-{YOUR-ID}**.
 
-1. When prompted with **Are you sure you want to continue connecting?**, type `yes` and press Enter. This prompt is a security confirmation since the certificate used to secure the connection to the VM is self-signed. The answer to this prompt will be remembered for subsequent connections, and is only prompted on the first connection.
+    > **Note**: Since the resource names are long and some are similar, be sure to select the VM, not the Disk, Public IP address, or Network security group.  
 
-1. When prompted to enter the password, enter the Administrator password that was entered when the VM was provisioned.
+1. At the top of the **AZ-220-GWVM-EDGE-{YOUR-ID}** blade, click **Connect**, and then click **SSH**.
+
+1. On the **Connect** pane, under **4. Run the example command below to connect to your VM**, copy the example command.
+
+    This is a sample SSH command that can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. The command is formatted similar to `ssh -i <private key path> username@52.170.205.79`.
+
+1. Paste the command into Notepad or another text editor of your choice.
+
+    You need to update the command to replace the `<private key path>` placeholder
+
+1. On the **Connect** pane, under **3. Provide a path to your SSH private key file**, make note of the **Private key path** displayed in the field.
+
+1. In your text editor containing `ssh` command from above, update the command by entering the value of the Private key path.
+
+1. On the Azure portal toolbar, click **Cloud Shell**
+
+1. At the Cloud Shell command prompt, paste the `ssh` command that you updated in the text editor, and then press **Enter**.
+
+1. When prompted with **Are you sure you want to continue connecting?**, type `yes` and then press **Enter**.
+
+    This prompt is a security confirmation since the certificate used to secure the connection to the VM is self-signed. The answer to this prompt will be remembered for subsequent connections, and is only prompted on the first connection.
+
+1. When prompted to enter the password, enter the administrator password that you created when the Edge Gateway VM was provisioned.
 
 1. Once connected, the terminal will change to show the name of the Linux VM, similar to the following. This tells you which VM you are connected to.
 
@@ -224,59 +256,60 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
     > **Important**: When you connect, you will likely be told there are outstanding OS updates for the Edge VM.  We are ignoring this for our lab purposes, but in production, you always want to be sure to keep your Edge devices up-to-date.
 
-1. The `Azure/IoTEdge` GitHub project contains scripts to generate non-production certificates. These scripts will help you create the necessary scripts to set up a Transparent IoT Edge Gateway. Run the following command:
+1. To download and configure some Azure IoT Edge helper scripts, enter the following command:
 
     ```bash
     git clone https://github.com/Azure/iotedge.git
     ```
 
+    The `Azure/IoTEdge` GitHub project contains scripts to generate **non-production** certificates. These scripts will help you create the necessary scripts to set up a Transparent IoT Edge Gateway.
+
     > **Note**:  The [Azure/iotedge](https://github.com/Azure/iotedge) open source project is the official open source project for Azure IoT Edge. This project contains source code for the Edge Agent, Edge Hub, and IoT Edge Security Daemon; in addition to the helper script used in this unit.
 
-1. Run the following commands to create a working directory named `~/lab12` that will be used for generating the certificates, then move to that directory:
+1. To create a working directory named "lab12" and then move into that directory, enter the following commands:
 
     ```bash
     mkdir lab12
     cd lab12
     ```
 
-1. To generate the certificates, the helper scripts need to be copied to the working directory. To do this, run the following commands:
+    > **Note**: You will be using the "lab12" directory on the Gateway VM for generating certificates. To generate the certificates, the helper scripts need to be copied to the working directory.
+
+1.  To copy helper scripts into the lab12 directory, enter the following commands:
 
     ```bash
     cp ../iotedge/tools/CACertificates/*.cnf .
     cp ../iotedge/tools/CACertificates/certGen.sh .
     ```
 
-    These commands will copy just the necessary files for running the helper script for generating test CA certificates. The rest of the source files within the Azure/iotedge repository are not needed for this unit.
+    These commands will copy just the necessary files for running the helper script for generating test CA certificates. The rest of the source files within the Azure/iotedge repository are not needed for this lab.
 
-1. Within the working directory, run the following command to verify the helper script files have been copied correctly.
+1. To verify that the helper script files have been copied correctly, enter the following command:
 
     ```bash
     ls
     ```
 
-    This command should output there are 2 files within the directory. The `certGen.sh` is the helper bash script, and the `openssl_root_ca.cnf` file is the configuration file needed for generating the certificates with the helper script using OpenSSL.
+    This command should output a file list showing that there are 2 files within the directory. The `certGen.sh` is the helper bash script, and the `openssl_root_ca.cnf` file is the configuration file needed for generating the certificates with the helper script using OpenSSL.
 
-    ```bash
-    username@AZ-220-VM-EDGEGW:~/lab12$ ls
-    certGen.sh  openssl_root_ca.cnf
-    ```
+    Verify that the command prompt includes `~/lab12`, showing that you are running commands in the correct location. This maps to the `/home/<username>/lab12` directory, where `<username>` is the user your logged into SSH with. You will need to use this directory location later when configuring Azure IoT Edge to use the generated certificates.
 
-    Make note that the directory where you're running the script is located at `~/lab12`. This maps to the `/home/<username>/lab12` directory, where `<username>` is the user your logged into SSH with. You will need to use this directory location later when configuring Azure IoT Edge to use the generated certificates.
-
-1. The `certGen.sh` helper script is run with the `create_root_and_intermediate` parameter to generate the root CA certificate and one intermediate certificate. Run the following command to do this:
+1. To generate the root CA certificate and one intermediate certificate, enter the following command:
 
     ```bash
     ./certGen.sh create_root_and_intermediate
     ```
 
-    The script created several certificate and key files. Make note of the following **root CA certificate** file that will be referred to later:
+    The `certGen.sh` helper script uses the `create_root_and_intermediate` parameter to generate the root CA certificate and one intermediate certificate. The script will have created several certificate and key files. Make note of the following **root CA certificate** file that will be referred to later:
 
     ```text
     # Root CA certificate
     ~/lab12/certs/azure-iot-test-only.root.ca.cert.pem
     ```
 
-1. Now that the root CA has been generated, the IoT Edge device CA certificate and private key need to be generated. Run the following command to generate the IoT Edge device CA certificate, and uses `MyEdgeDeviceCA` as the name for the CA certificate that is generated.
+    Now that the root CA has been generated, the IoT Edge device CA certificate and private key need to be generated. 
+
+1. To generate the IoT Edge device CA certificate, enter the following command:
 
     ```bash
     ./certGen.sh create_edge_device_ca_certificate "MyEdgeDeviceCA"
@@ -293,9 +326,9 @@ In this exercise, you will generate test certificates using Linux. You will do t
     ~/lab12/private/iot-edge-device-ca-MyEdgeDeviceCA.key.pem
     ```
 
-    > **Note**:  Now that the IoT Edge Device CA certificate has been generated, do not re-run the previous command that generates the root CA certificate. Doing so will overwrite the existing certificate with a new one that will no longer match the `MyEdgeDeviceCA` IoT Edge Device CA certificate that was just generated.
+    > **Note**: Now that the IoT Edge Device CA certificate has been generated, do not re-run the previous command that generates the root CA certificate. Doing so will overwrite the existing certificate with a new one that will no longer match the `MyEdgeDeviceCA` IoT Edge Device CA certificate that was just generated.
 
-1. To confirm that the Azure IoT Edge Runtime is installed on the VM, run the following command:
+1. To confirm that the Azure IoT Edge Runtime is installed on the VM, enter the following command:
 
     ```bash
     iotedge version
@@ -310,13 +343,15 @@ In this exercise, you will generate test certificates using Linux. You will do t
     iotedge 1.0.8 (208b2204fd30e856d00b280112422130c104b9f0)
     ```
 
-1. To configure Azure IoT Edge, the `/etc/iotedge/config.yaml` configuration file needs to be modified to contain the full path to the certificate and key files on the IoT Edge Device. Before the file can be edited, you must be sure the `config.yaml` file is not read-only. Run the following command to set the file to be writable:
+1. To ensure that you are able to configure Azure IoT Edge, enter the following command:
 
     ```bash
     sudo chmod a+w /etc/iotedge/config.yaml
     ```
 
-1. Run the following command to open the `config.yaml` file within the vi/vim editor:
+    To configure Azure IoT Edge, the `/etc/iotedge/config.yaml` configuration file needs to be modified to contain the full path to the certificate and key files on the IoT Edge Device. Before the file can be edited, you must be sure that the `config.yaml` file is not read-only. The command above sets the `config.yaml` file to be writable.
+
+1. To open the `config.yaml` file within the vi/vim editor, enter the following command:
 
     ```bash
     sudo vi /etc/iotedge/config.yaml
@@ -324,9 +359,18 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
     > **Note**: If you would rather use a different editor such as `code`, `nano`, or `emacs`, that's fine.
 
-1. Locate the **Certificate settings** section within the file, remove the leading `#` character before the certificate properties to uncomment those lines, then edit the certificate settings to contain the correct certificate and key paths. After changes are made, save the file and exit the editor.
+1. In the vi/vim editor, scroll down within the file until you locate the **Certificate settings** section.
 
-    After the X.509 certificate settings changes made to the `config.yaml` file, this section of the file will look like the following:
+    > **Note**:  Here are some tips for using **vi** when editing the `config.yaml` file:
+    > * Press the `i` key to put the editor into Insert mode, then you will be able to make changes.
+    > * Press `Esc` to go stop Insert mode and return to Normal mode.
+    > * To Save and Quit, type `:x`, and press `Enter`.
+    > * Save the file, type `:w`, and press `Enter`.
+    > * To quit vi, type `:quit` and press `Enter`.
+    >
+    > You have to stop Insert mode before you can Save or Quit.
+
+1. To update the `certificates` code lines, remove the leading `#` characters and enter the certificate path as shown below:
 
     ```yaml
         certificates:
@@ -335,7 +379,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
           trusted_ca_certs: "/home/<username>/lab12/certs/azure-iot-test-only.root.ca.cert.pem"
     ```
 
-    Be sure to replace the `<username>` placeholder within the file locations with the **Username** of the user your connected to SSH with.
+    > **Note**: Be sure to replace the `<username>` placeholder within the file locations with the **Username** of the user your connected to SSH with.
 
     The X.509 certificates configured in this section are used for the following purposes:
 
@@ -345,35 +389,41 @@ In this exercise, you will generate test certificates using Linux. You will do t
     | `device_ca_pk` | This is the Device CA Private Key for the IoT Edge Device. |
     | `trusted_ca_certs` | This is the Root CA Certificate. This certificate must contain all the trusted CA certificates required for Edge module communications.|
 
-    > **Note**:  Here are some tips for using **vi** when editing the `config.yaml` file:
-    > * Press the `i` key to put the editor into Insert mode, then you will be able to make changes.
-    > * Press `Esc` to go stop Insert mode and return to Normal mode.
-    > * To Save and Quit, type `:x`, and press `Enter`.
-    > * Save the file, type `:w`, and press `Enter`.
-    > * To quit vi, type `:quit` and press `Enter`.
+1. To save your changes and exit the editor, enter **:x** and then press **Enter**
 
-1. The `MyEdgeDeviceCA` certificate needs to be downloaded from the `AZ-220-VM-EDGEGW` virtual machine so it can be used to configure the IoT Edge device enrollment within Azure IoT Hub Device Provisioning Service. Type `exit` in the Azure Cloud Shell to end the SSH session.
+    Remember that you need to stop "Insert" mode before you can Save or Quit the vi/vim editor.
+
+1. At the Cloud Shell command prompt, to end the SSH session, enter the following command:
 
     ```sh
     exit
     ```
 
-1. Within the Cloud Shell, run the following commands to download the `~/lab12` directory and its contents from the **AZ-220-VM-EDGEGW** virtual machine to the **Cloud Shell** storage:
+    Next, you need to "download" the `MyEdgeDeviceCA` certificate from the `AZ-220-VM-EDGEGW` virtual machine so that it can be used to configure the IoT Edge device enrollment within Azure IoT Hub Device Provisioning Service.
+
+1. At the Cloud Shell command prompt, to download the `~/lab12` directory from the **AZ-220-VM-EDGEGW** virtual machine to the **Cloud Shell** storage, enter the following commands:
 
     ```bash
     mkdir lab12
     scp -r -p <username>@<ipaddress>:~/lab12 .
     ```
 
-    Replace the `<username>` placeholder with the username of the admin user for the VM, and replace the `<ipaddress>` placeholder with the IP Address fo the VM.
+    > **Note**: Replace the `<username>` placeholder with the username of the admin user for the VM, and replace the `<ipaddress>` placeholder with the IP Address for the VM. Refer to the command that you used to open the SSH session if needed.
 
-    When executing the command, enter the Admin password for the VM when prompted.
+    After entering the `scp` command, enter the Admin password for the VM when prompted.
 
-1. Once the command has executed, it will have downloaded a copy of the `~/lab12` directory with the certificate and key files over SSH to the Cloud Shell storage. You can verify the file has been downloaded by running the `ls` command within the `~/lab12` directory to view its contents.
+    Once the command has executed, it will have downloaded a copy of the `~/lab12` directory with the certificate and key files over SSH to the Cloud Shell storage. 
+    
+1. To verify that the files have been downloaded, enter the following commands:
 
     ```bash
-    chris@Azure:~$ cd lab12
-    chris@Azure:~/lab12$ ls
+    cd lab12
+    ls
+    ```
+
+    You should see the following files listed:
+
+    ```bash
     certGen.sh  csr        index.txt.attr      index.txt.old  openssl_root_ca.cnf  serial
     certs       index.txt  index.txt.attr.old  newcerts       private              serial.old
     ```
@@ -382,37 +432,51 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
 ### Exercise 4: Create IoT Edge Device Identity in IoT Hub using Azure Portal
 
-In this exercise, you will create a new IoT Edge Device identity in Azure IoT Hub for the IoT Edge Transparent Gateway.
+In this exercise, you will use Azure IoT Hub to create a new IoT Edge Device identity for the IoT Edge Transparent Gateway.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your **AZ-220-RG** tile, click **AZ-220-HUB-_{YOUR-ID}_** to navigate to the Azure IoT Hub.
+1. On your **AZ-220-RG** tile, to open your IoT hub, click **AZ-220-HUB-{YOUR-ID}**.
 
-1. On the **IoT Hub** summary blade, to the left, in the **Automatic Device Management** section, click **IoT Edge**. This section of the IoT Hub blade allows you to manage the IoT Edge devices connected to the IoT Hub.
+1. On the **AZ-220-HUB-{YOUR-ID}** blade, on the left side navigation menu under **Automatic Device Management**, click **IoT Edge**.
 
-1. At the top of the pane, click the **Add an IoT Edge device** button to begin adding a new IoT Edge Device to the IoT Hub.
+    The IoT Edge pane allows you to manage the IoT Edge devices connected to the IoT Hub.
 
-1. On the **Create a device** blade, in the **Device ID** field, enter `AZ-220-VM-EDGEGW-{YOUR-ID}`. This is the device identity used for authentication and access control.
+1. At the top of the pane, click **Add an IoT Edge device**.
 
-1. For the **Authentication type**, select **Symmetric key**, and leave the **Auto-generate keys** box checked. This will have IoT Hub automatically generate the symmetric keys for authenticating the device.
+1. On the **Create a device** blade, in the **Device ID** field, enter **AZ-220-VM-EDGEGW-{YOUR-ID}**.
 
-1. Leave the other settings alone and click **Save**.
+    Be sure to replace {YOUR-ID} with the value that you created at the beginning of the course. This is the device identity will be used for authentication and access control.
 
-1. Once the IoT Edge Device is added, click on the **Device ID** in the list of IoT Edge devices.
+1. Under **Authentication type**, ensure that **Symmetric key** is selected, and leave the **Auto-generate keys** box checked.
 
-1. On the IoT Edge Device summary blade, copy the **Primary Connection String** and save it for later.
+    This will have IoT Hub automatically generate the symmetric keys for authenticating the device.
 
-1. Notice the list of **Modules** configured for the IoT Edge Device contains the **\$edgeAgent** and **\$edgeHub** modules.
+1. Leave the other settings at the default values, and then click **Save**.
+
+    After a moment, the new IoT Edge Device will added to the list of IoT Edge devices.
+
+1. Under **Device ID**, click **AZ-220-VM-EDGEGW-{YOUR-ID}**.
+
+1. On the **AZ-220-VM-EDGEGW-{YOUR-ID}** blade, copy the **Primary Connection String**.
+
+    A copy button is provided to the right of the value.
+
+1. Save the value of the **Primary Connection String** to a file, making a note about which device it is associated with.
+
+1. On the **AZ-220-VM-EDGEGW-{YOUR-ID}** blade, notice that the list of **Modules** is limited to **\$edgeAgent** and **\$edgeHub**.
 
     The IoT Edge Agent (`$edgeAgent`) and IoT Edge Hub (`$edgeHub`) modules are a part of the IoT Edge Runtime. The Edge Hub is responsible for communication, and the Edge Agent deploys and monitors the modules on the device.
 
-1. Click the **Set Modules** button at the top of the IoT Edge Device summary blade. This is used to add additional modules to the IoT Edge Device. At this time, you'll use this to ensure the message routing is configured correctly for the IoT Edge Gateway device.
+1. At the top of the blade, click **Set Modules**.
 
-1. Leave all fields as they are in the **Modules** step, and click **Next: Routes >**.
+    The **Set module on device** blade can be used to add additional modules to an IoT Edge Device. For now though, you will be using this blade to ensure the message routing is configured correctly for the IoT Edge Gateway device.
 
-1. Within the **Specify Routes**, the editor will display the configured default route for the IoT Edge Device. At this time, it should be configured with a route that sends all messages from all modules to Azure IoT Hub. If the route configuration doesn't match this, then update it to match the following route:
+1. At the top of the **Set module on device** blade, click **Routes**.
+
+    Under **Routes**, the editor displays a configured default route for the IoT Edge Device. At this time, it should be configured with a route that sends all messages from all modules to Azure IoT Hub. If the route configuration doesn't match this, then update it to match the following route:
 
     * **NAME**: `route`
     * **VALUE**: `FROM /* INTO $upstream`
@@ -421,57 +485,83 @@ In this exercise, you will create a new IoT Edge Device identity in Azure IoT Hu
 
     > **Note**:  To learn more about configuring message routing within Azure IoT Edge, reference the [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/azure/iot-edge/module-composition#declare-routes#declare-routes) documentation article.
 
-1. Click the **Next: Review + create >** button.
+1. At the top of the blade, click **Review + create**.
 
-1. On the **Review + create** step, click the **Create** button.
+    This tab of the **Set module on device** blade displays the deployment manifest for your Edge device. You should see a message at the top of the blade that indicates "Validation passed"
+
+1. Take a moment to review the deployment manifest.
+
+1. At the bottom of the blade, click **Create**.
 
 ### Exercise 5: Setup IoT Edge Gateway Hostname
 
-In this exercise, you will configure the DNS name for Public IP Address of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_**, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
+In this exercise, you will configure the DNS name for Public IP Address of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** simulated Edge device, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Navigate to the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** IoT Edge virtual machine within the Azure Portal.
+1. On your Dashboard page, to open your IoT Edge virtual machine, click **AZ-220-VM-EDGEGW-_{YOUR-ID}_**.
 
-1. In the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** blade, at the top of the **Overview** pane, next to **DNS name**, click the **Configure** link.
+1. On the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** blade, in the upper section, locate the **DNS name** field.
 
-1. On the **AZ-220-VM-EDGEGW-_{YOUR-ID}_-ip - Configuration** blade, into the **DNS name label** field, enter `az-220-vm-edgegw-{YOUR-ID}` (the label must be globally unique, and only lowercase letters, numbers and hyphens).
+    If the "Essentials" section at the top of the Overview blade is collapsed, to expand it, click **Essentials**.
 
-1. Click **Save**.
+1. To the right of the **DNS name** field, click **Configure**.
 
-1. Note the full DNS name for the Public IP Address of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** virtual machine, and save it for reference later.
+1. On the **AZ-220-VM-EDGEGW-_{YOUR-ID}_-ip - Configuration** blade, in the **DNS name label** field, enter **az-220-vm-edgegw-{your-id}**
 
-    The full DNS name is comprised of the `AZ-220-VM-EDGEGW-{YOUR-ID}` value suffixed by the text below the **DNS name label** field.
+    This label must be globally unique, and only lowercase letters, numbers and hyphens.
 
-    For example, the full DNS name will be:
+1. At the top of the blade, click **Save**.
+
+1. Notice the text located below and to the right of the **DNS name label** field.
+
+    It should be similar to the following: `.westus2.cloudapp.azure.com`, although yours will probably list a different region.
+
+    The full DNS name is comprised of the `AZ-220-VM-EDGEGW-{YOUR-ID}` value suffixed by this text located below the **DNS name label** field.
+
+    For example, a full DNS name could be:
 
     ```text
-    az-220-vm-edgegw-cah191230.eastus.cloudapp.azure.com
+    az-220-vm-edgegw-cah191230.westus2.cloudapp.azure.com
     ```
 
-    All Public IP Address DNS names in the standard Azure commercial cloud will be at the **.cloudapp.azure.com** domain name. This example is for the VM being hosted in the **eastus** Azure region. This part fo the DNS name will vary depending on what Azure region the VM is hosted within.
+    All Public IP Address DNS names in the standard Azure commercial cloud will be at the **.cloudapp.azure.com** domain name. This example is for the VM being hosted in the **westus2** Azure region. This part fo the DNS name will vary depending on what Azure region the VM is hosted within.
 
     Setting the DNS name for the Public IP Address of the **AZ-220-VM-EDGEGW** virtual machine will give it a FQDN (Fully Qualified Domain Name) for the downstream device(s) to use as the `GatewayHostName` to connect to it. Since the VM, in this case, is accessible across the Internet, an Internet DNS name is needed. If the Azure IoT Edge Gateway were hosted in a Private or Hybrid network, then the machine name would meet the requirements of a `GatewayHostName` for on-premises downstream devices to connect.
 
-1. Navigate to the **AZ-220-VM-EDGEGW** IoT Edge virtual machine within the Azure Portal.
+1. Make a record of the full DNS name for your **AZ-220-VM-EDGEGW-{YOUR-ID}** virtual machine, and save it for reference later.
+
+1. Navigate back to the **AZ-220-VM-EDGEGW-{YOUR-ID}** blade, and then click **Refresh**. 
 
     > **Note**: If you are still in the IP configuration blade, you can use the breadcrumb trail at the top of the page to get back to the VM quickly.  In that case, at the top of the **Overview** pane, use the Refresh button to update the DNS name in the display.
 
-1. At the top of the **Overview** pane of the **Virtual machine** blade, click the **Connect** button, then click **SSH**.
+1. At the top of the blade, click **Connect**, and then click **SSH**.
 
-1. As before, locate the **Run the example command below to connect to your VM.** value.  Notice it includes the new DNS name now, and not the IP address.  Copy the command as before.
+1. As before, locate the **4. Run the example command below to connect to your VM.** value.
 
-    This is a sample SSH command that will be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. Now that the DNS name label has been configured, the command is formatted similar to `ssh demouser@AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com`.
+1. Notice that the example command now includes the new DNS name, not the IP address that was included previously.
 
-1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up the Cloud Shell within the Azure Portal. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
+1. Under **4. Run the example command below to connect to your VM.**, to copy the command, click **Copy to clipboard**.
 
-1. Within the Cloud Shell, paste in the `ssh` command that was copied, and press **Enter**.
+    This sample SSH command can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. Now that the DNS name label has been configured, the command should look similar to the following: `ssh -i <private key path> demouser@AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com`
 
-1. When prompted to enter the password, enter the Administrator password that was entered when the VM was provisioned.
+1. Use a text editor to replace `<private key path>` in the command with the path to your SSH private key file.
 
-1. Run the following command to open the `config.yaml` file within the vi/vim editor:
+    The path to your SSH private key file is shown on the **Connect** blade, under **3. Provide a path to your SSH private key file.**
+
+1. On the Azure portal toolbar, click **Cloud Shell**.
+
+    Ensure that the Cloud Shell environment is set to use **Bash**.
+
+1. At the Cloud Shell command prompt, enter the `ssh` command from above, and then press **Enter**.
+
+    If youy see a warning asking you if you are sure that you want to continue, enter **yes**
+
+1. When prompted to enter the password, enter the Administrator password that you specified when the VM was provisioned.
+
+1. To open the `config.yaml` file within the vi/vim editor, enter the following command:
 
     ```bash
     sudo vi /etc/iotedge/config.yaml
@@ -479,7 +569,11 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
     > **Note**: Again, you can use another editor if you wish.
 
-1. Locate the **Edge device hostname** section within the file. Update the **hostname** value to be set to the **DNS name** set previously for the Public IP Address of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** virtual machine.
+1. Scroll down within the file to locate the **Edge device hostname** section. 
+
+1. Set the **hostname** value to the value of the **Full DNS name** that you saved earlier.
+
+    This is the **Full DNS name** of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** virtual machine.
 
     > **Note**: If you did not save the name, you can find it in the **Overview** pane of the virtual machine.  You can even copy it from there to paste into the Cloud Shell window.
 
@@ -506,9 +600,7 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
 In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
-1. If you are not still connected to the Edge device using ssh in Cloud Shell, reconnect.
-
-1. The `/etc/iotedge/configedge.sh` script is used to configure the Edge device with the Connection String necessary to connect it to Azure IoT Hub. This script is installed as part of the Azure IoT Edge Runtime.
+1. In the Azure portal, if your Cloud Shell SSH session is no longer open, reconnect.
 
 1. To configure the Edge device with the Connection String for Azure IoT Hub, run the following command:
 
@@ -518,9 +610,13 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
     Be sure to replace the `{iot-edge-device-connection-string}` placeholder with the Connection String you copied previously for your IoT Edge Device.
 
-1. Once this command completes, the IoT Edge Device will be configured to connect to Azure IoT Hub using the Connection String that was entered.
+    The `/etc/iotedge/configedge.sh` script is installed as part of the Azure IoT Edge Runtime. It can used to configure the Edge device with the Connection String necessary to connect it to Azure IoT Hub.
 
-1. Wait a few moments, then run the following command to list all the **IoT Edge Modules** currently running on the IoT Edge Device.
+    Once this command completes, the IoT Edge Device will be configured to connect to Azure IoT Hub using the Connection String that was entered.
+
+1. Wait a few moments.
+
+1. To list all the **IoT Edge Modules** currently running on the IoT Edge Device, enter the following command:
 
     ```sh
     iotedge list

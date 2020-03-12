@@ -184,7 +184,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. For the VM Administrator account, enter values for the **Username**, **Password**, and **Confirm password** fields.
 
-    >**Important:** Do not lose/forget these values - you cannot connect to your VM without them.
+    > **Important:** Do not lose/forget these values - you cannot connect to your VM without them.
 
 1. Notice that the **Inbound port rules** are configured to enable inbound **SSH** access to the VM.
 
@@ -192,7 +192,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. Click **Review + create**.
 
-1. Wait for the **Validation passed** messaage to be displayed at the top of the blade, and then click **Create**.
+1. Wait for the **Validation passed** message to be displayed at the top of the blade, and then click **Create**.
 
     > **Note**:  Deployment can take as much as 5 minutes to complete. You can continue on to the next exercise while it is deploying.
 
@@ -282,7 +282,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
 1. Verify that the IoT Edge virtual machine has been deployed successfully.
 
-    You can check the Notification pane i nthe Azure portal.
+    You can check the Notification pane in the Azure portal.
 
 1. On the Azure portal menu, click **Resource groups**.
 
