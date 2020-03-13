@@ -276,7 +276,7 @@ In this exercise, you will create a simple simulator that will manage the device
                 LogToConsole("A firmware update was requested from version " + GetFirmwareVersion() + " to version " + fwVersion);
                 await UpdateFWUpdateStatus(client, null, fwVersion, null, null, DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"), null);
 
-                // Get new firmware binary. Here you would download the binary or retreive it from the source as instructed for your device, then double check with a hash the integrity of the binary you downloaded
+                // Get new firmware binary. Here you would download the binary or retrieve it from the source as instructed for your device, then double check with a hash the integrity of the binary you downloaded
                 LogToConsole("Downloading new firmware package from " + fwPackageURI);
                 await UpdateFWUpdateStatus(client, null, null, "downloading", "0", null, null);
                 await Task.Delay(2 * 1000);
@@ -302,7 +302,7 @@ In this exercise, you will create a simple simulator that will manage the device
                 await UpdateFWUpdateStatus(client, null, null, "applying", null, null, null);
                 await Task.Delay(5 * 1000);
 
-                // On a real device you would reboot at the end of the process and the device at boot time would report the actual firmware version, which if successfull should be the new version.
+                // On a real device you would reboot at the end of the process and the device at boot time would report the actual firmware version, which if successful should be the new version.
                 // For the sake of the simulation, we will simply wait some time and report the new firmware version
                 LogToConsole("Rebooting");
                 await UpdateFWUpdateStatus(client, null, null, "rebooting", null, null, DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"));
@@ -326,7 +326,7 @@ In this exercise, you will create a simple simulator that will manage the device
                     // In the desired properties, we will find the following information:
                     // fwVersion: the version number of the new firmware to flash
                     // fwPackageURI: URI from where to download the new firmware binary
-                    // fwPackageCheckValue: Hash for validating the integrity of the binary  downloaded
+                    // fwPackageCheckValue: Hash for validating the integrity of the binary downloaded
                     // We will assume the version of the firmware is a new one
                     TwinCollection fwProperties = new TwinCollection(desiredProperties["firmware"].ToString());
                     await UpdateFirmware((DeviceClient)userContext, fwProperties["fwVersion"].ToString(), fwProperties["fwPackageURI"].ToString(), fwProperties["fwPackageCheckValue"].ToString());

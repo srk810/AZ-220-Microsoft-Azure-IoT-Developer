@@ -158,7 +158,7 @@ The use of Parent / Child relationships including an IoT Edge Gateway (the paren
 
 The following diagram shows the relationship between the Azure IoT Edge Device as the parent, and a child device:
 
-![IoT Edge Parent with Child Device Diagram](images/IoTEdge-Parent-Child-Relationship.jpg "IoT Edge Parent with Child Device Diagram")
+![IoT Edge Parent with Child Device Diagram](media/LAB_AK_14-IoTEdge-Parent-Child-Relationship.jpg "IoT Edge Parent with Child Device Diagram")
 
 In this scenario, the child device connects to, and authenticate against the parent IoT Edge Device using their Azure IoT Hub credentials. Once authenticated, the child IoT Device sends messages to the Edge Hub (`$edgeHub`) on the IoT Edge Device. Once messages reach the parent IoT Edge Device, the IoT Edge Modules and Routing will handle the messages as configured; including sending the messages to the Azure IoT Hub when connected.
 
@@ -173,7 +173,7 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 1. First the IoT Edge Device Identity needs to be created. This will be the **IoT Edge Gateway**, or the Parent IoT Device. Run the following command to create a new **IoT Edge Device Identity** within Azure IoT Hub:
 
     ```sh
-    az iot hub device-identity create --edge-enabled --hub-name AZ-220-HUB-_{YOUR-ID}_ --auth-method shared_private_key --device-id IoTEdgeGateway
+    az iot hub device-identity create --edge-enabled --hub-name AZ-220-HUB-{YOUR-ID} --auth-method shared_private_key --device-id IoTEdgeGateway
     ```
 
     > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
@@ -297,7 +297,7 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 1. Run the following command to retrieve the **Connection String** from IoT Hub for the **IoTEdgeGateway** Device, and **copy** the connection string value for reference later:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id ChildDevice1 -o tsv
+    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id ChildDevice1 -o tsv
     ```
 
     > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.

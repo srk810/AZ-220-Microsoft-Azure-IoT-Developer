@@ -7,17 +7,17 @@ IoTHubName="AZ-220-HUB-$YourID"
 Location="{YOUR-LOCATION}"
 
 # create resource group
-az group create --name $RGName --location $Location
+az group create --name $RGName --location $Location -o table
 
 # create IoT Hub
-az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location
+az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location -o table
 
 # create a Device IDs using Symmetric Key Auth and Connect it to the IoT Hub
-az iot hub device-identity create --hub-name $IoTHubName --device-id TruckDevice
-az iot hub device-identity create --hub-name $IoTHubName --device-id AirplaneDevice
-az iot hub device-identity create --hub-name $IoTHubName --device-id ContainerDevice
+az iot hub device-identity create --hub-name $IoTHubName --device-id TruckDevice -o table
+az iot hub device-identity create --hub-name $IoTHubName --device-id AirplaneDevice -o table
+az iot hub device-identity create --hub-name $IoTHubName --device-id ContainerDevice -o table
 
-# retreive the Connection String for the IoT Device
+# retrieve the Connection String for the IoT Device
 az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id TruckDevice
 az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id AirplaneDevice
 az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id ContainerDevice
