@@ -484,25 +484,9 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     This file is the debugging deployment manifest file. It is located in the root directory of the IoT Edge Solution.
 
-    When the process begins, you will see a dialog open in the lower right corner of the windows that says, **Please setup iotedgehubdev first before starting simulator**, click **Setup**.
+    When the process begins, you will see a dialog open in the lower right corner of the windows that says, **Please setup iotedgehubdev first before starting simulator**.
 
-
-
-
-
-
-
-Error: Cannot find config file. You can press Ctrl + Shift + P to open command palette and run `Azure IoT Edge: Setup IoT Edge Simulator` to setup IoT Edge simulator first.
-
-azure-iot-edge.setupIotedgehubdev: 
-Error: getaddrinfo ENOTFOUND AZ-220-HUB-CAH050961.azure-devices.net
-
-
-
-
-
-
-
+1. When you see the prompt to **setup iotedgehubdev**, click **Setup**. 
 
 1. When prompted for the **IoT Hub Connection String**, enter the **Connection string--primary key** you noted earlier.
 
