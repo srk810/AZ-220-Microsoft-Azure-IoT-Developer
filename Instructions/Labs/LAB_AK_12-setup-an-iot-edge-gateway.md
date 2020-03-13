@@ -370,16 +370,18 @@ In this exercise, you will generate test certificates using Linux. You will do t
     >
     > You have to stop Insert mode before you can Save or Quit.
 
-1. To update the `certificates` code lines, remove the leading `#` characters and enter the certificate path as shown below:
+1. To update the `certificates` code lines, remove the leading `# ` characters and enter the certificate path as shown below:
 
     ```yaml
-        certificates:
-          device_ca_cert: "/home/<username>/lab12/certs/iot-edge-device-ca-MyEdgeDeviceCA-full-chain.cert.pem"
-          device_ca_pk: "/home/<username>/lab12/private/iot-edge-device-ca-MyEdgeDeviceCA.key.pem"
-          trusted_ca_certs: "/home/<username>/lab12/certs/azure-iot-test-only.root.ca.cert.pem"
+    certificates:
+        device_ca_cert: "/home/<username>/lab12/certs/iot-edge-device-ca-MyEdgeDeviceCA-full-chain.cert.pem"
+        device_ca_pk: "/home/<username>/lab12/private/iot-edge-device-ca-MyEdgeDeviceCA.key.pem"
+        trusted_ca_certs: "/home/<username>/lab12/certs/azure-iot-test-only.root.ca.cert.pem"
     ```
 
-    > **Note**: Be sure to replace the `<username>` placeholder within the file locations with the **Username** of the user your connected to SSH with.
+    > **Note**: Be sure to replace the `<username>` placeholder within the file path specification above. You need to specify the **Username** of the user that is connected to SSH (the Admin user that you specified when creating the VM). 
+
+    > **Important**: YAML treats spaces as significant characters. In the lines entered above, this means that there should not be any leading spaces in front of `certificates:` and that there should be two leading spaces in front of `device_ca_cert:`, `device_ca_pk:`, and `trusted_ca_certs:`
 
     The X.509 certificates configured in this section are used for the following purposes:
 
@@ -631,7 +633,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
     edgeAgent        running          Up 18 seconds    mcr.microsoft.com/azureiotedge-agent:1.0
     ```
 
-    If an error is reported, then you'll need to double check the configurations are set correctly. For troubleshooting, the `iotedge check --verbose` command can be run to see if there are any errors.
+    If an error is reported, then you'll need to double check that the configurations are set correctly. For troubleshooting, the `iotedge check --verbose` command can be run to see if there are any errors.
 
 ### Exercise 7: Open IoT Edge Gateway Device Ports for Communication
 
@@ -649,31 +651,33 @@ The IoT communication protocols supported by Azure IoT Edge have the following p
 
 The IoT communication protocol chosen for your devices will need to have the corresponding port opened for the firewall that secures the IoT Edge Gateway device. In the case of this lab, an Azure Network Security Group (NSG) is used to secure the IoT Edge Gateway, so Inbound security rules for the NSG will be opened on these ports.
 
-In a production scenario, you will only want to open the minimum number of ports for your devices to communicate. If you are using MQTT, then only open port 8883 for inbound communications. Opening additional ports will introduce addition security attack vectors that attackers could take exploit. It is a security best practice to only open the minimum number of ports necessary for your solution.
+In a production scenario, you will want to open only the minimum number of ports for your devices to communicate. If you are using MQTT, then only open port 8883 for inbound communications. Opening additional ports will introduce addition security attack vectors that attackers could take exploit. It is a security best practice to only open the minimum number of ports necessary for your solution.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Navigate to the resource group that contains the  **AZ-220-VM-EDGEGW-_{YOUR-ID}_** VM.
+1. On your Azure dashboard, locate the Resources tile that contains the **AZ-220-VM-EDGEGW-{YOUR-ID}** VM.
 
-1. On the resource group blade, click on the **AZ-220-VM-EDGEGW-_{YOUR-ID}_-nsg** network security group (NSG) resource.
+    Notice that this resource group tile also includes a link to the associated Network security group.
+  
+1. On the Resources tile, click **AZ-220-VM-EDGEGW-_{YOUR-ID}_-nsg**.
 
-1. On the **Network security group** blade, under the **Settings** section, click **Inbound security rules**.
+1. On the **Network security group** blade, left side navigation menu under **Settings**, click **Inbound security rules**.
 
-1. At the top of the **Inbound security rules** pane, click the **Add** button.
+1. At the top of the **Inbound security rules** pane, click **Add**.
 
-1. On the **Add inbound security rule** pane, change the **Destination port ranges** to `8883`.
+1. On the **Add inbound security rule** pane, under **Destination port ranges**, change the value to **8883**
 
-1. Set the **Protocol** to **TCP**.
+1. Under **Protocol**, click **TCP**.
 
-1. Set the **Name** to `MQTT`.
+1. Under **Name**, change the value to **MQTT**
 
-1. Leave all other settings and the default and click **Add** to save the new security rule.
+1. Leave all other settings at the default, and then click **Add**.
 
     This will define an inbound security rule that will allow communication for the MQTT protocol to the IoT Edge Gateway.
 
-1. After the rule is added, to open ports for **AMQP** and **HTTPS** communication protocols, add two more rules with the following values:
+1. After the MQTT rule is added, to open ports for the **AMQP** and **HTTPS** communication protocols, add two more rules with the following values:
 
     | Destination port ranges | Protocol | Name |
     | :--- | :--- | :--- |
@@ -692,27 +696,43 @@ In this exercise, you will create a new IoT Device identity in Azure IoT Hub for
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-HUB-_{YOUR-ID}_** to navigate to the Azure IoT Hub.
+1. On your Azure dashboard, to open your IoT Hub, click **AZ-220-HUB-_{YOUR-ID}_**.
 
-1. On the **AZ-220-HUB-_{YOUR-ID}_** blade, at the left, in the **Explorers** section, click **IoT devices**. This section of the IoT Hub blade allows you to manage the IoT Devices connected to the IoT Hub.
+1. On the **AZ-220-HUB-_{YOUR-ID}_** blade, on the left side navigation menu under **Explorers**, click **IoT devices**.
 
-1. At the top of the pane, click the **New** button to begin adding a new IoT Device Identity to the IoT Hub.
+    This pane of the IoT Hub blade allows you to manage the IoT Devices connected to the IoT Hub.
 
-1. On the **Create a device** blade, for the **Device ID** field, enter `DownstreamDevice1`. This is the device identity used for authentication and access control.
+1. At the top of the pane, to begin configuring a new IoT device, click **+ New**.
 
-1. For the **Authentication type**, select **Symmetric key**.  Leave the **Auto-generate keys** box checked. This will have IoT Hub automatically generate the Symmetric keys for authenticating the device.
+1. On the **Create a device** blade, under **Device ID**, enter **DownstreamDevice1**.
 
-1. Under **Parent device** click the **Set a parent device** link to begin configuring this downstream device to communicate with IoT Hub through the IoT Edge Gateway.
+    This is the device identity used for authentication and access control.
 
-1. On the **Set an Edge device as a parent device** blade, in the list of IoT Edge Devices, select the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** Device ID.
+1. Under **Authentication type**, ensure that **Symmetric key** is selected.
 
-1. Click **OK** to select the parent device.
+1. Under **Auto-generate keys**, leave the box checked.
 
-1. Click **Save** to create the IoT Device identity for the downstream device.
+    This will have IoT Hub automatically generate the Symmetric keys for authenticating the device.
 
-1. Once the `DownstreamDevice1` IoT Device Identity is created, click on the Device ID in the list. This will open the details view for this device.
+1. Under **Parent device**, click **Set a parent device**.
 
-1. On the IoT Device summary pane, copy the **Primary Connection String** for the **DownstreamDevice1** IoT Device, and save it for reference later.
+    We will be configuring this downstream device to communicate with IoT Hub through the IoT Edge Gateway device that we created earlier in this lab.
+
+1. On the **Set an Edge device as a parent device** blade, under **Device ID**, click **AZ-220-VM-EDGEGW-_{YOUR-ID}_**, and then click **OK**.
+
+1. On the **Create a device** blade, to create the IoT Device identity for the downstream device, click **Save**.
+
+1. On the **IoT devices** pane, at the top of the pane, click **Refresh**.
+
+1. Under **Device ID**, click **DownstreamDevice1**. 
+
+    This will open the details view for this device.
+
+1. On the IoT Device summary pane, to the right of the **Primary Connection String** field, click **Copy**.
+
+1. Save the connection string for later reference.
+
+    Be sure to note that this connection string is for DownstreamDevice1.
 
 ### Exercise 9: Connect Downstream Device to IoT Edge Gateway
 
@@ -722,11 +742,13 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. If Cloud Shell is not still open, then at the top of the Azure Portal, click on the **Cloud Shell** icon. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
+1. If the Cloud Shell is not open, on the Azure portal toolbar, click **Cloud Shell**.
 
-1. If Cloud Shell was already open and you are still connected to the Edge device, run `exit` to close the SSH session.
+    Ensure that the environment is set to **Bash**.
 
-1. Within the Cloud Shell, run the following command to download the root CA X.509 certificate for the Azure IoT Edge Gateway (AZ-220-VM-EDGEGW-_{YOUR-ID}_) virtual machine.
+    > **Note**: If Cloud Shell was already open and you are still connected to the Edge device, use an `exit` command to close the SSH session.
+
+1. At the Cloud Shell command prompt, to download the root CA X.509 certificate for the IoT Edge Gateway virtual machine, enter the following command:
 
     ```bash
     download lab12/certs/azure-iot-test-only.root.ca.cert.pem
@@ -738,13 +760,21 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
     > **Important**: Make sure the file has that exact name.  It may have a different name (for example, with `(1)` added) from previous labs, so rename it after copying it if necessary.
 
-1. Open the `/Starter/DownstreamDevice` directory in Visual Studio Code.
+1. Open Visual Studio Code.
 
-1. Open the **SimulatedDevice.cs** source code file.
+1. On the **File** menu, click **Open Folder**.
 
-1. Locate the declaration for the `s_connectionString` variable and replace the value placeholder with the IoT Hub Connection String for the `DownstreamDevice1` IoT Device.
+1. In the **Open Folder** dialog, navigate to the Starter folder for lab 12, click **DownstreamDevice**, and then click **Select Folder**.
 
-1. Modify `s_connectionString` to include the `GatewayHostName` property with the value set to the full DNS name for the IoT Edge Gateway Device (`AZ-220-VM-EDGEGW`).
+    You should see the azure-iot-test-only.root.ca.cert.pem file listed in the EXPLORER pane along with the SimulatedDevice.cs file.
+
+    > **Note**: If you see messages to restore dotnet and/or load the C# extension, complete the installs.
+
+1. In the EXPLORER pane, click **SimulatedDevice.cs**.
+
+1. Locate the declaration for the `s_connectionString` variable, and then replace the placeholder value with the IoT Hub Connection String for the `DownstreamDevice1` IoT Device.
+
+1. Modify `s_connectionString` value to include a `GatewayHostName` property, and set the value of GatewayHostName to the full DNS name for the IoT Edge Gateway Device (`AZ-220-VM-EDGEGW`).
 
     The Connection String will match the following format:
 
@@ -752,7 +782,7 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
     HostName=<IoT-Hub-Name>.azure-devices.net;DeviceId=DownstreamDevice1;SharedAccessKey=<IoT-Device-Primary-Key>;GatewayHostName=<IoT-Edge-Device-DNS-Name>
     ```
 
-    Be sure to replace the placeholders with the appropriate values:
+    Be sure to replace the placeholders shown above with the appropriate values:
 
     * `<IoT-Hub-Name>`: The Name of the Azure IoT Hub.
     * `<IoT-Device-Primary-Key>`: The Primary Key for the **DownstreamDevice1** IoT Device in Azure IoT Hub.
@@ -764,9 +794,11 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
     private readonly static string s_connectionString = "HostName=AZ-220-HUB-1119.azure-devices.net;DeviceId=DownstreamDevice1;SharedAccessKey=ygNT/WqWs2d8AbVD9NAlxcoSS2rr628fI7YLPzmBdgE=;GatewayHostName=AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com";
     ```
 
-1. Save the file.
+1. On the **File** menu, click **Save**.
 
-1. Locate the **Main** method. This method contains the code that instantiates the `DeviceClient` using the configured Connection String, and specifies `MQTT` as the transport protocol to use for communicating with the Azure IoT Edge Gateway.
+1. Scroll down to lcoate the **Main** method, and then take a minute to review the code.
+
+    This method contains the code that instantiates the `DeviceClient` using the configured Connection String, and specifies `MQTT` as the transport protocol to use for communicating with the Azure IoT Edge Gateway.
 
     ```csharp
     s_deviceClient = DeviceClient.CreateFromConnectionString(s_connectionString, TransportType.Mqtt);
@@ -777,19 +809,25 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
     > **Note**: Do not be concerned with the `GetAwaiter().GetResult()` call - it's an artifact of how C# handles asynchronous calls from the `Main` method before C# 7.1.  As the lab doesn't assume that level of support, it uses a bit of a workaround.
 
-1. Locate the **SendDeviceToCloudMessagesAsync** method. This method contains the code that generates the simulated device telemetry, and sends the events to the IoT Edge Gateway.
+1. Locate the **SendDeviceToCloudMessagesAsync** method, and then take a minute to review the code.
 
-1. Locate the **InstallCACert** and browse the code that installed the root CA X.509 certificate to the local machine certificate store.
+    This method contains the code that generates the simulated device telemetry, and sends the events to the IoT Edge Gateway.
+
+1. Locate the **InstallCACert** and browse the code that installs the root CA X.509 certificate to the local machine certificate store.
 
 1. In Visual Studio Code, with the `SimulatedDevice.cs` file still open, on the **Terminal** menu, select **New Terminal**.
 
-1. At the bottom of Visual Studio Code, in the **TERMINAL** window, run the following command to build the code for the **DownstreamDevice1** simulated device, and execute it to start sending device telemetry:
+1. At the bottom of Visual Studio Code, in the **TERMINAL** window, run the following command:
 
     ```bash
     dotnet run
     ```
 
-1. When the app attempts to install the X.509 certificate on the local machine so it can use it to authenticate with the IoT Edge Gateway, you may be prompted about installing the certificate. Click **Yes** to allow it and continue.
+    This command will build and run the code for the **DownstreamDevice1** simulated device, which will start sending device telemetry.
+
+    > **note**: When the app attempts to install the X.509 certificate on the local machine (so that it can use it to authenticate with the IoT Edge Gateway), you may see a Security Warning asking about installing the certificate. You will need to click **Yes** to allow the app to continue.
+
+1. If you are asked if you want to install the certificate, click **Yes**.
 
 1. Once the simulated device is running, the console output will display the events being sent to the Azure IoT Edge Gateway.
 
@@ -809,7 +847,7 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
     > **Note**: If the device send seems to pause for longer than a second on the first send, you likely did not add the NSG incoming rules correctly earlier, so your MQTT traffic is being blocked.  Check your NSG configuration.
 
-1. Leave the simulated device running while you move on to the next unit.
+1. Leave the simulated device running while you move on to the next exercise.
 
 ### Exercise 10: Verify Event Flow
 
@@ -819,11 +857,11 @@ In this exercise, you will use the Azure CLI to monitor the events being sent to
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. If Cloud Shell is not running, start it.
+1. If Cloud Shell is not running, on the Azure portal toolbar, click **Cloud Shell**.
 
 1. If you are still connected to the Edge device with an SSH connection in Cloud Shell, exit that connection.
 
-1. Within the Cloud Shell, run the following command to monitor the stream of events flowing to the Azure IoT Hub. This will verify that events from the simulate device, being sent to the IoT Edge Gateway, are being received by the Azure IoT Hub.
+1. At the Cloud Shell command prompt, to monitor the stream of events flowing to the Azure IoT Hub, run the following command:
 
     ```bash
     az iot hub monitor-events -n AZ-220-HUB-{YOUR-ID}
@@ -831,7 +869,7 @@ In this exercise, you will use the Azure CLI to monitor the events being sent to
 
     Be sure to replace the `{YOUR-ID}` placeholder for the `-n` parameter with the name of your Azure IoT Hub.
 
-    The `az iot hub monitor-events` command enables you to monitor device telemetry & messages sent to an Azure IoT Hub.
+    The `az iot hub monitor-events` command enables you to monitor device telemetry & messages sent to an Azure IoT Hub. This will verify that events from the simulated device, being sent to the IoT Edge Gateway, are being received by the Azure IoT Hub.
 
 1. With everything working correctly, the output from the `az iot hub monitor-events` command will look similar to the following:
 
