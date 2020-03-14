@@ -160,13 +160,17 @@ The **lab14-setup.azcli** script is written to run in a **bash** shell environme
 
 ### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
-In this unit you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace. In previous labs you have created the VM using the Azure Portal. This time around, we will create the VM using the Azure CLI.
+In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace. 
+
+In previous labs you have created the VM using the Azure Portal. In this lab, you will use Azure CLI to create the VM.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Open the Azure Cloud Shell by clicking the **Terminal** icon within the top header bar of the Azure portal, and select the **Bash** shell option.
+1. On the Azure portal toolbar, click **Cloud Shell**.
+
+    Ensure that the evironment is set to **Bash** in the shell.
 
 1. To create a resource group for the Azure IoT Edge enabled VM, enter the following command:
 
@@ -174,41 +178,48 @@ In this unit you will deploy an Ubuntu Server VM with Azure IoT Edge runtime sup
     az group create --name AZ-220-IoTEdge-RG --location {YOUR-LOCATION}
     ```
 
-    Remember to replace `{YOUR-LOCATION}` with a location close to you.
+    Remember to replace `{YOUR-LOCATION}` with a region close to you.
 
-1. To create a Linux VM, enter the following commands:
+1. To create a Linux VM, enter the following two commands:
 
     ```bash
     az vm image terms accept --urn microsoft_iot_edge:iot_edge_vm_ubuntu:ubuntu_1604_edgeruntimeonly:latest
     az vm create --resource-group AZ-220-IoTEdge-RG --name AZ220EdgeVM{YOUR-ID} --image microsoft_iot_edge:iot_edge_vm_ubuntu:ubuntu_1604_edgeruntimeonly:latest --admin-username vmadmin --admin-password {YOUR-PASSWORD-HERE} --authentication-type password
     ```
 
-    The first command above accepts the terms and conditions of use for VM image. The second command  actually creates the VM within the resource group specified above. Remember to update `AZ220EdgeVM{YOUR-ID}` with your unique id and replace `{YOUR-PASSWORD-HERE}` with a suitably secure password.
+    > **Note**: Be sure to replace the placeholders that are included in the second command.
 
-    >> **Note**: In production, you may elect to generate SSH keys rather than use the username/password approach. You can learn more about Linux VMs and SSH here: [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed).
+    The first command above accepts the terms and conditions of use for VM image. 
+
+    The second command actually creates the VM within the resource group specified above. Remember to update `AZ220EdgeVM{YOUR-ID}` with your unique id and replace `{YOUR-PASSWORD-HERE}` with a suitably secure password.
+
+    > **Note**: In production, you may elect to generate SSH keys rather than use the username/password approach. You can learn more about Linux VMs and SSH here: [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed).
+    >
     > **Note**:  Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
 
 ### Exercise 3: Setup IoT Edge Parent with Child IoT Devices
 
-In this exercise, you will register an IoT Edge Device within Azure IoT Hub, and an IoT Device that is configured in a child relationship. This will enable the scenario to the the child IoT Device send messages through the IoT Edge Device as a gateway before communicating to the Azure IoT Hub in the cloud.
+The use of a Parent / Child relationship that includes an IoT Edge Gateway (the parent) and other IoT Devices (the child or leaf devices) enables the implementation of Offline capabilities within an Azure IoT solution. As long as the IoT Edge device has had one opportunity to connect to IoT Hub, that device and any child devices can continue to function with intermittent or no Internet connection.
 
-The use of Parent / Child relationships including an IoT Edge Gateway (the parent) and other IoT Devices (the child or leaf devices) enables the use of Offline capabilities within an Azure IoT solution.
-
-The following diagram shows the relationship between the Azure IoT Edge Device as the parent, and a child device:
+The following diagram shows the relationship between an IoT Edge Device parent and a child device:
 
 ![IoT Edge Parent with Child Device Diagram](media/LAB_AK_14-IoTEdge-Parent-Child-Relationship.jpg "IoT Edge Parent with Child Device Diagram")
 
-In this scenario, the child device connects to, and authenticate against the parent IoT Edge Device using their Azure IoT Hub credentials. Once authenticated, the child IoT Device sends messages to the Edge Hub (`$edgeHub`) on the IoT Edge Device. Once messages reach the parent IoT Edge Device, the IoT Edge Modules and Routing will handle the messages as configured; including sending the messages to the Azure IoT Hub when connected.
+In this diagram, the child device connects to and authenticates against the parent IoT Edge Device. The child device uses their Azure IoT Hub credentials to achieve this authentication. Once authenticated, the child IoT Device sends messages to the Edge Hub (`$edgeHub`) on the IoT Edge Device. Once messages reach the parent IoT Edge Device, the IoT Edge Modules and Routing will handle the messages as configured; including sending the messages to the Azure IoT Hub when connected.
 
 When the parent IoT Edge Device is disconnected (or loses connection to the Azure IoT Hub) it will automatically store all device messages to the IoT Edge Device. Once the connection is restored, the IoT Edge Device will resume connectivity and send any stored messages to Azure IoT Hub. Messages stored on the IoT Edge Device may expire according to the Time-to-Live (TTL) configurations for the device; which defaults to store messages for up to `7200` seconds (two hours).
+
+In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and then create an IoT Device and configure it as a child of the IoT Edge Device. This will enable the scenario described above, where the child IoT Device sends messages through the parent IoT Edge Gateway Device before communications are sent to the Azure IoT Hub in the cloud. If the connection between the Edge Gateway Device and IoT Hub is lost, messages will be saved by the Edge Gateway Device (within configured limits) until the connection is restored.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
+1. On the Azure portal toolbar, click **Cloud Shell**
 
-1. First the IoT Edge Device Identity needs to be created. This will be the **IoT Edge Gateway**, or the Parent IoT Device. Run the following command to create a new **IoT Edge Device Identity** within Azure IoT Hub:
+    Ensure that the environment is using **Bash**.
+
+1. To create a new **IoT Edge Device Identity** within Azure IoT Hub, enter the following command:
 
     ```sh
     az iot hub device-identity create --edge-enabled --hub-name AZ-220-HUB-{YOUR-ID} --auth-method shared_private_key --device-id IoTEdgeGateway
@@ -216,7 +227,7 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 
     > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
-    Notice the `az iot hub device-identity create` command is called by passing in several parameters:
+    Notice that the following parameters are included in the `az iot hub device-identity create` command:
 
     * `--hub-name`: This required parameter is used to specify the name of the **Azure IoT Hub** to add the new device to.
 
@@ -226,7 +237,9 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 
     * `--auth-method`: This specifies the authentication method used for the IoT device. The value of `shared_private_key` specifies to use Symmetric Key Encryption. Other options available are `x509_ca` and `x509_thumbprint`.
 
-1. Notice when the command completes, there is a blog of JSON returned to the terminal. This JSON includes a few details for the configuration of the **IoT Edge Device** that was just created. Among the device details is the **symmetric keys** that were auto-generated by the service for the device.
+1. Take a minute to review the JSON output generated by the command. 
+
+    Notice that when the command completes, there is a blog of JSON returned to the terminal. This JSON includes a few details for the configuration of the **IoT Edge Device** that was just created. Among the device details is the **symmetric keys** that were auto-generated by the service for the device.
 
     ```json
         {
@@ -258,7 +271,7 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
         }
     ```
 
-1. Run the following command to retrieve the **Connection String** from IoT Hub for the **IoTEdgeGateway** Device, and **copy** the connection string value for reference later:
+1. To retrieve the **Connection String** of the **IoTEdgeGateway** Device from IoT Hub, enter the following command:
 
     ```cmd/sh
     az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id IoTEdgeGateway -o tsv
@@ -278,9 +291,11 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
     HostName={iot-hub-name}.azure-devices.net;DeviceId=IoTEdgeGateway;SharedAccessKey={shared-access-key}
     ```
 
-1. The next step is to create the Child IoT Device. These will be **IoT Devices** registered with the Azure IoT Hub, and will connect directly to the Parent IoT Device for communications with the cloud.
+1. Save a copy of the connection string value for reference later in this lab. 
 
-1. To create the first child device, run the following command:
+    The next step is to create the child IoT Device that will connect directly to the parent IoT Edge Gateway Device for communications with IoT hub.
+
+1. To create an IoT Device and configure it as a child of your IoT Edge Device, run the following command:
 
     ```sh
     az iot hub device-identity create -n AZ-220-HUB-_{YOUR-ID}_ --device-id ChildDevice1 --pd IoTEdgeGateway
@@ -298,9 +313,11 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 
     Notice that this command is not passing in the `--auth-method`. By omitting this parameter, the default value of `shared_private_key` will be used.
 
-1. Notice when the command completes, there is a blog of JSON returned to the terminal. This JSON includes a few details for the configuration of the **IoT Device** that was just created. Notice the `symmetricKey` node that contains the Symmetric Keys that can be used to authenticate the device with Azure IoT Hub, or when the child device connects to the parent IoT Edge Gateway.
+1. Take a minute to review the JSON output of this command.
 
-    Copy the **primaryKey** for this IoT Device so it can be used later.
+    Notice when the command completes, there is a blog of JSON returned to the terminal. This JSON includes a few details for the configuration of the **IoT Device** that was just created. Notice the `symmetricKey` node that contains the Symmetric Keys that can be used to authenticate the device with Azure IoT Hub, or when the child device connects to the parent IoT Edge Gateway.
+
+    You will need the **primaryKey** for this IoT Device so it can be used later.
 
     ```json
         {
@@ -332,7 +349,9 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
         }
     ```
 
-1. Run the following command to retrieve the **Connection String** from IoT Hub for the **IoTEdgeGateway** Device, and **copy** the connection string value for reference later:
+1. Save a copy of the `primaryKey` value for reference later in this lab. 
+
+1. To retrieve the **Connection String** of the **ChildDevice1** Device from IoT Hub, enter the following command:
 
     ```cmd/sh
     az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id ChildDevice1 -o tsv
@@ -340,7 +359,13 @@ When the parent IoT Edge Device is disconnected (or loses connection to the Azur
 
     > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
-1. Now you have an IoT Edge Device and a Child IoT Device registered within Azure IoT Hub. The **IoT Device** is configured with the **IoT Edge Device** as its parent. This configuration will enable the Child IoT Device to connect to and communicate with the Parent IoT Edge Device; instead of connecting directly with Azure IoT Hub. Configuring the IoT device topology this way enables Offline capable scenarios where the IoT Device and IoT Edge Device can keep working even when connectivity to Azure IoT Hub is broken.
+1. Save a copy of the connection string value for reference later in this lab.
+
+1. Consider the results of the actions that you just completed.
+
+    You now have an IoT Edge Device and a Child IoT Device registered within Azure IoT Hub. The **IoT Device** is configured with the **IoT Edge Device** as its parent.
+
+    This configuration will enable the Child IoT Device to connect to and communicate with the Parent IoT Edge Device; instead of connecting directly with Azure IoT Hub. Configuring the IoT device topology this way enables Offline capable scenarios where the IoT Device and IoT Edge Device can keep working even when connectivity to Azure IoT Hub is broken.
 
 ### Exercise 4: Configure IoT Edge Device as Gateway
 
