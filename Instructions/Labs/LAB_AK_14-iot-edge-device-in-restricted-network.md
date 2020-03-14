@@ -12,7 +12,7 @@ The conveyor belt monitoring system that you've implemented at Contoso's cheese 
 
 Your manager wants the system to be resilient to network outages, which do still occur occasionally in some areas of the cheese processing facilities. In addition, the IT department has requested that you optimize the system to bulk upload any non-critcal telemetry data at specific times in the day to help load balance network usage. 
 
-You propose configuring IoT Edge to support an offline scenario in case network drops, and you will look into storing telemetry from sensors locally (on device) and configuring for regular syncs at given times.
+You propose configuring IoT Edge to support an offline scenario in case network drops, and you will look into storing telemetry from sensors locally (on device) and configuring the Edge devices for regular syncs at given times.
 
 ## In this Lab
 
@@ -32,7 +32,7 @@ In this lab, you will complete the following activities:
 
 ### Exercise 1: Verify Lab Prerequisites
 
-This lab assumes the following resources are available:
+This lab assumes the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
@@ -40,9 +40,11 @@ This lab assumes the following resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | IoT Device | SimulatedThermostat |
 
-If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
+If these resources are not available, you will need to run the **lab14-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
->**Note:** You will need the **SimulatedDevice** connection string. You can obtain that by running the following command in the Azure Cloud Shell"
+The **lab14-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+
+>**Note:** You will need the connection string for the **SimulatedThermostat** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
 > az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id SimulatedThermostat -o tsv
@@ -50,53 +52,79 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
 
 #### Task 1: Execute Setup Script
 
-1. If necessary, log in to your Azure portal using your Azure account credentials.
+1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-    If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
+    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. Open the Azure Cloud Shell by clicking the **Terminal** icon within the top header bar of the Azure portal, and select the **Bash** shell option.
+1. Verify that the Azure Cloud Shell is using **Bash**.
 
-1. Before the Azure CLI can be used with commands for working with Azure IoT Hub, the **Azure IoT Extensions** need to be installed. To install the extension, run the following command:
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-    ```sh
-    az extension add --name azure-cli-iot-ext
-    ```
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
-1. To upload the setup script, in the Azure Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. In the dropdown, click **Upload**.
 
-1. In the dropdown, select **Upload** and in the file selection dialog, navigate to the **lab-setup.azcli** file for this lab. Select the file and click **Open** to upload it.
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 14-Run an IoT Edge device in restricted network and offline
+            * Setup
+
+    The lab14-setup.azcli script file is located in the Setup folder for lab 14.
+
+1. Select the **lab14-setup.azcli** file, and then click **Open**.
 
     A notification will appear when the file upload has completed.
 
-1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
+1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
 
-1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
+    ```bash
+    ls
+    ```
+
+    The `ls` command lists the content of the current directory. You should see the lab14-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
     mkdir lab14
-    mv lab-setup.azcli lab14
+    mv lab14-setup.azcli lab14
     cd lab14
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
+1. To ensure that **lab14-setup.azcli** has the execute permission, enter the following command:
 
     ```bash
-    chmod +x lab-setup.azcli
+    chmod +x lab14-setup.azcli
     ```
 
-1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab14** to expand it and then select **lab-setup.azcli**.
+1. On the Cloud Shell toolbar, to edit the lab14-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-    The editor will now show the contents of the **lab-setup.azcli** file.
+1. In the **FILES** list, to expand the lab14 folder and open the script file, click **lab14**, and then click **lab14-setup.azcli**.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `Location` variables. Set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CP123019**, and set `Location` to the location that makes sense for your resources.
+    The editor will now show the contents of the **lab14-setup.azcli** file.
 
-    > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+1. In the editor, update the `{YOUR-ID}` and `{YOUR-LOCATION}` assigned values.
+
+    In the reference sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+
+    ```bash
+    #!/bin/bash
+
+    RGName="AZ-220-RG"
+    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+
+    Location="{YOUR-LOCATION}"
+    ```
+
+    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
-    > ```
     >
-    > ```text
     > DisplayName           Latitude    Longitude    Name
     > --------------------  ----------  -----------  ------------------
     > East Asia             22.267      114.188      eastasia
@@ -106,21 +134,29 @@ If the resources are unavailable, please execute the **lab-setup.azcli** script 
     > East US 2             36.6681     -78.3889     eastus2
     > ```
 
-1. To save the changes made to the file and close the editor, click **...** in the top-right of the editor window and select **Close Editor**.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
     If prompted to save, click **Save** and the editor will close.
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with a Device ID of **SimulatedThermostat**, and display the device connection string, enter the following command:
+1. To create the resources required for this lab, enter the following command:
 
     ```bash
-    ./lab-setup.azcli
+    ./lab14-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This script can take a few minutes to run. You will see JSON output as each step completes.
 
-1. Once complete, the connection string for the device, starting with "HostName=", is displayed. Copy this connection string into a text document and note that it is for the **SimulatedThermostat** device.
+    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **SimulatedThermostat** to the IoT hub and display the device connection string.
+
+1. Notice that, once the script has completed, the connection string for the device is displayed.
+
+    The connection string starts with "HostName="
+
+1. Copy the connection string into a text document, and note that it is for the **SimulatedThermostat** device.
+
+    Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
 
 ### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
