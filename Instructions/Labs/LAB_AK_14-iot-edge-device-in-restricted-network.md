@@ -8,13 +8,15 @@ lab:
 
 ## Lab Scenario
 
-The conveyor belt system monitors vibrations, telemetry, and counts objects. We want our system to be resilient to network outages and also optimize the bulk upload of telemetry data at specific times in the day (load balancing network usage). We will configure IoT Edge to support offline in case network drops and we will look into storing telemetry from sensors locally and configure for regular syncs at given times.
+The conveyor belt monitoring system that you've implemented at Contoso's cheese packaging and shipping faciilites is paying off. The system is now sending telemetry data to Azure IoT Hub that helps operations to manage the vibration levels of the belts, and the new IoT Edge devices helping to manage inventory by tracking the number of cheese package that pass through the system. 
 
-You will learn the different scenarios where IoT Edge device is on an enterprise network (needs proxy settings) or needs extended offline capabilities.
+Your manager wants the system to be resilient to network outages, which do still occur occasionally in some areas of the cheese processing facilities. In addition, the IT department has requested that you optimize the system to bulk upload any non-critcal telemetry data at specific times in the day to help load balance network usage. 
+
+You propose configuring IoT Edge to support an offline scenario in case network drops, and you will look into storing telemetry from sensors locally (on device) and configuring for regular syncs at given times.
 
 ## In this Lab
 
-In this lab, you will:
+In this lab, you will complete the following activities:
 
 * Verify Lab Prerequisites
 * Create an IoT Hub and Device ID

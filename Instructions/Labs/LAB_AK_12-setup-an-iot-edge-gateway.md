@@ -20,7 +20,7 @@ There are three patterns for using an IoT Edge device as a gateway: transparent,
 
 ## In This Lab
 
-In this lab, you will:
+In this lab, you will complete the following activities:
 
 * Verify Lab Prerequisites
 * Deploy Azure IoT Edge Enabled Linux VM as an IoT Edge Device

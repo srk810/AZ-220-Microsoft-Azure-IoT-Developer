@@ -31,7 +31,7 @@ This lab includes the following prerequisites for the development machine (lab h
 
 ## In This Lab
 
-IoT Edge solution development in VS Code
+In this lab, you will complete the following activities:
 
 * Verify Lab Prerequisites
 * Create Container Registry

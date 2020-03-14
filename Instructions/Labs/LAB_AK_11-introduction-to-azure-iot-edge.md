@@ -18,6 +18,8 @@ You have been tasked with prototyping the Azure IoT Edge solution. To begin, you
 
 ## In This Lab
 
+In this lab, you will complete the following activities:
+
 * Verify Lab Prerequisites
 * Deploy Azure IoT Edge Enabled Linux VM
 * Create IoT Edge Device Identity in IoT Hub using Azure CLI

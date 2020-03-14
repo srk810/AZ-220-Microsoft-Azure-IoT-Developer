@@ -18,6 +18,8 @@ To generate an alert, you will push a device created event type to Event Grid wh
 
 ## In This Lab
 
+In this lab, you will complete the following activities:
+
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 * Create a Logic App that sends an email
 * Configure an Azure IoT Hub Event Subscription
