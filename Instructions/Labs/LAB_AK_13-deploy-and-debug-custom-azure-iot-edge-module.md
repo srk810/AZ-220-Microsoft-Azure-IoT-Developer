@@ -490,17 +490,17 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. When prompted for the **IoT Hub Connection String**, enter the **Connection string--primary key** you noted earlier.
 
-1. When prompted to **Select an IoT Edge Device**, select the **SimulatedDevice**.
+1. When prompted to **Select an IoT Edge Device**, click **SimulatedDevice**.
 
-    > **Note**: If you get a **Unauthorized** error in the lower-right-hand corner, run the `Azure IoT Edge: Set IoT Hub Connection String` command from the Command Palette to reconfigure your simulator connection string, then `Azure IoT Edge: Setup IoT Edge Simulator` to try to select your device again.
+    > **Note**: If you get an **Unauthorized** error in the lower-right-hand corner, run the `Azure IoT Edge: Set IoT Hub Connection String` command from the Command Palette to reconfigure your simulator connection string, then run `Azure IoT Edge: Setup IoT Edge Simulator` from the command palette and try to select your device again.
 
-1. Within the **TERMINAL** window inside **Visual Studio Code**, you may be prompted for your Admin password on your local machine, particularly on Linux or macOS. Enter your password at the prompt and press **Enter**.
+    > **Note**: It is possible that you will be prompted for your Admin password on your local machine (in the Visual Studio Code **TERMINAL** window), particularly on Linux or macOS. Enter your password at the prompt and press **Enter**. The reason it might ask for your password is that the setup command for `iotedgehubdev` is being run using `sudo` as it requires elevated privileges.
 
-    The reason it's asking for your password is that the setup command for `iotedgehubdev` is being run using `sudo` as it requires elevated privileges.
+    Once the IoT Edge Simulator is set up successfully, a **Setup IoT Edge Simulator successfully** message will be displayed in the Visual Studio Code TERMINAL.
 
-1. Once the **IoT Edge Simulator** is set up successfully, a `Setup IoT Edge Simulator successfully` message will be displayed in the **TERMINAL**.
+    Now when you build and run the module in the IoT Edge Simulator, it will run as expected.
 
-1. Now that the **IoT Edge Simulator** has been set up, right-click the `deployment.debug.template.json` debugging deployment manifest file in the root directory of the IoT Edge solution, and select the **Build and Run IoT Edge Solution in Simulator** option again.
+1. In the **Explorer** pane, right-click **deployment.debug.template.json**, and then click **Build and Run IoT Edge Solution in Simulator**.
 
     > **Note**: If you are on Windows and see a message in in **TERMINAL** that reads, in part, `open //./pipe/docker_engine: The system cannot find the file specified.`, Docker is likely not started, or running correctly.  A Docker restart or even a full computer restart might be necessary.
 
@@ -508,7 +508,11 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     > **Note**: A build may take some time depending on what Docker images you have on your machine already and the speed of your Internet connection.  The build includes downloading Docker images if not present and updating container instances if necessary.
 
-1. Notice that once the **IoT Edge Simulator** is running, the **TERMINAL** window in **Visual Studio Code** will display the console output from the Modules that are running in the solution.
+1. Observe the build process reporting in your TERMINAL window.
+
+    It can take quite a few minutes to download and build everything that is required to simulate the IoT Edge device and run your modules, so be patient.
+
+    Notice that once the **IoT Edge Simulator** is running, the Modules that you built will begin sending message output that is reported to the TERMINAL window:
 
     ```text
     SimulatedTemperatureSensor    |         12/09/2019 15:05:08> Sending message: 4, Body: [{"machine":{"temperature":23.023276334173641,"pressure":1.2304998355387693},"ambient":{"temperature":20.56235126408858,"humidity":24},"timeCreated":"2019-12-09T15:05:08.4596891Z"}]
@@ -521,9 +525,9 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     Notice the output from the **ObjectCountingModule** contains the text `Received message: #` where `#` is the total message count that has been received by the custom **ObjectCountingModule** IoT Edge Module that was created.
 
-1. With the IoT Edge Simulator still running, open the Azure portal, then open the Cloud Shell by clicking the Cloud Shell icon at to top of the Azure portal.
+1. With the IoT Edge Simulator still running, open the Azure portal, and then open the Cloud Shell.
 
-1. Run the following command within the Azure Cloud Shell to monitor the messages being sent to Azure IoT Hub from the `SimulatedDevice` running in the IoT Edge Simulator on your local machine:
+1. At the Cloud Shell command prompt, to monitor the messages being sent to Azure IoT Hub from the `SimulatedDevice` running in the IoT Edge Simulator on your local machine, enter the following command:
 
     ```cmd/sh
     az iot hub monitor-events --hub-name "AZ-220-HUB-{YOUR-ID}"
@@ -531,7 +535,9 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     Be sure to replace the `AZ-220-HUB-{YOUR-ID}` value in the above command with the name of your Azure IoT Hub service.
 
-1. With everything still running, notice the output of the previous command in the Cloud Shell will display a JSON representation of the messages being received by the Azure IoT Hub.
+1. Observe the output displayed in the Cloud Shell.
+
+    With everything still running, notice the output of the previous command in the Cloud Shell will display a JSON representation of the messages being received by the Azure IoT Hub.
 
     The output should look similar to the following:
 
@@ -550,33 +556,51 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
     }
     ```
 
-1. Notice that even though there are 2 IoT Edge Modules running on the IoT Edge Device, there is still only a single copy of each message getting sent to Azure IoT Hub. The IoT Edge Device has a message pipeline defined where messages from the `SimulatedTemperatureSensor` are piped to the `ObjectCountingModule` which then sends messages out piped out to the Azure IoT Hub.
+1. Compare the output in the Visual Studio Code TERMINAL with the output in the Cloud Shell.
+
+    Notice that even though there are 2 IoT Edge Modules running on the IoT Edge Device that generate messages, there is still only a single copy of each message getting sent to Azure IoT Hub. The IoT Edge Device has a message pipeline defined where messages from the `SimulatedTemperatureSensor` are piped to the `ObjectCountingModule` which then sends messages out to the Azure IoT Hub.
 
 1. To stop monitoring Azure IoT Hub events, press **Ctrl + C** within the Azure Cloud Shell.
 
-1. Navigate to the Visual Studio Code **Debug** view, by clicking on the **Debug** icon on the left-side of the window.
+1. Switch to your Visual Studio Code window.
 
-1. On the dropdown at the top of the **Debug** pane, select the **ObjectCountingModule Remote Debug (.NET Core)** option.
+1. On the left side toolbar, to open the Visual Studio Code debugger view, click **Run**.
 
-1. Select **Start Debugging** or press **F5**
+    The Run button is the forth button down from the top, and includes a bug-like shape on the icon.
 
-1. When prompted to **Select the process to attach to**, select the **dotnet ObjectCountingModule.dll** process.
+1. At the top of the **Run** pane, in the dropdown, ensure that **ObjectCountingModule Remote Debug (.NET Core)** is selected.
 
-1. Change to the **Explorer** view, and open the `/modules/ObjectCountingModule/Program.cs` source code file within the solution.
+1. To the left of the dropdown, click **Start Debugging**.
 
-1. Locate the `static async Task<MessageResponse> PipeMessage(` method, and set a breakpoint within this method by clicking on the line and pressing **F9**.
+    You could also press **F5** to start degugging
+
+1. When prompted to **Select the process to attach to**, click **dotnet ObjectCountingModule.dll**.
+
+1. On the left side toolbar, to change to the file Explorer view, click **Explorer**
+
+1. In the EXPLORER pane, to open the `/modules/ObjectCountingModule/Program.cs` source code file, click **Program.cs**.
+
+1. In the code editor, locate the `static async Task<MessageResponse> PipeMessage(` method.
+
+1. Select the `static async Task<MessageResponse> PipeMessage(` code line, and then, to set a breakpoint, press **F9**.
+
+    Visual Studio Code enables you to set a breakpoint within your code by clicking on the line and pressing the **F9** key.
 
 1. Notice that execution stops at the breakpoint that is set, and the editor highlights that specific line of code.
 
-1. Open the Visual Studio Code **Debug** view, and notice the variables in the left panel.
+1. To open the Visual Studio Code debugger view, on the left toolbar, click **Run**.
 
-1. To resume execution, click the **Continue** button, or press **F5**.
+1. Notice the variables listed in the left panel.
+
+1. To resume execution, click **Continue**.
+
+    You can also press **F5** to resume.
 
 1. Notice that each time the breakpoint it hit, execution stops.
 
 1. To stop debugging, click the **Disconnect** button, or press **Shift + F5**.
 
-1. To stop the IoT Edge Simulator, open the **Command Palette**, then select the **Azure IoT Edge: Stop IoT Edge Simulator** option.
+1. To stop the IoT Edge Simulator, open the **Command Palette**, and then select the **Azure IoT Edge: Stop IoT Edge Simulator** option.
 
 Now that the module has been created and tested in the IoT Edge simulator, it is time to deploy it to the cloud.
 
@@ -584,7 +608,15 @@ Now that the module has been created and tested in the IoT Edge simulator, it is
 
 In this exercise, you will build and publish the custom IoT Edge Module into the Azure Container Registry (ACR) service. Once published to ACR, the custom module will then be made available to be deployed to any IoT Edge Device.
 
-1. Change to the **Explorer** view, and open `.env` to ensure credentials for the Azure Container Registry have been set. Do this by opening the `.env` file located in the root directory of the IoT Edge Solution and reviewing it.  When set correctly, the `CONTAINER_REGISTRY_USERNAME_<acr-name>` key will have it's value set to the Azure Container Registry service name, and the `CONTAINER_REGISTRY_PASSWORD_<acr-name>` key will have it's value set to the **Password** for the Azure Container Registry service. Keep in mind, the `<acr-name>` placeholders in the keys will be set to the ACR service name (is all lowercase) automatically when the IoT Edge Solution was created.
+1. Open the Visual Studio Code window containing your EdgeSolution project.
+
+1. In the **Explorer** view, to open the `.env` file, click **.env**.
+
+    The `.env` file is located in the root directory of the IoT Edge Solution. 
+
+1. Ensure that the credentials for the Azure Container Registry have been set.
+
+    When set correctly, the `CONTAINER_REGISTRY_USERNAME_<acr-name>` key will have it's value set to the Azure Container Registry service name, and the `CONTAINER_REGISTRY_PASSWORD_<acr-name>` key will have it's value set to the **Password** for the Azure Container Registry service. Keep in mind, the `<acr-name>` placeholders in the keys will be set to the ACR service name (is all lowercase) automatically when the IoT Edge Solution was created.
 
     The resulting `.env` file contents will look similar to the following:
 
@@ -593,33 +625,39 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     CONTAINER_REGISTRY_PASSWORD_az220acrcah191204=Q8YErJFCtqSe9C7BWdHOKEXk+C6uKSuK
     ```
 
-1. Right-click `deployment.template.json`, and select **Build and Push IoT Edge Solution**.
+1. In the **Explorer** view, right-click **deployment.template.json**, and then click **Build and Push IoT Edge Solution**.
 
-1. The status of the Build and Push IoT Edge Solution operation is displayed within the Visual Studio Code **TERMINAL** window. Once the process completes, the custom `ObjectCountingModule` IoT Edge Module will have been built, and then the Docker image for the IoT Edge Module will be published to the Azure Container Registry service.
+    The status of the Build and Push IoT Edge Solution operation is displayed within the Visual Studio Code **TERMINAL** window. Once the process completes, the custom `ObjectCountingModule` IoT Edge Module will have been built, and then the Docker image for the IoT Edge Module will be published to the Azure Container Registry service.
 
-1. Open the Azure portal. If necessary, log in to your Azure portal using your Azure account credentials.
+1. Switch to your Azure portal window.
+
+    If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ220ACR{YOUR-ID}** to navigate to your Azure Container Registry (ACR) service.
+1. On your Resource group tile, to open your Azure Container Registry (ACR) service, click **AZ220ACR{YOUR-ID}**.
 
-1. On the left hand side, under the **Services** section, click on the **Repositories** link.
+1. On the left side navigation menu, under **Services**, click **Repositories**.
 
-1. On the **Repositories** pane, notice that the `objectcountingmodule` repository now exists within the ACR service. This was created when the custom `ObjectCountingModule` IoT Edge Module was published from within Visual Studio Code.
+1. On the **Repositories** pane, notice that the `objectcountingmodule` repository now exists within the ACR service.
+
+    This was created when the custom `ObjectCountingModule` IoT Edge Module was published from within Visual Studio Code.
 
     > **Note**: If the repository is not present, review the output from the Push action and ensure that you did not leave references to the `:5000` port number with your ACR references; you can do an **Edit**, **Find in Files** to confirm this.  You should also validate your credentials in the `.env` file and validate that you performed the `docker login` step earlier in the lab.
 
-1. Click on the **objectcountingmodule** repository navigate to the repository details.
+1. Under **Repositories**, click **objectcountingmodule**.
 
-1. On the **Repository** details pane for the **objectcountingmodule** repository, notice in the list of tags there is a tag named `0.0.1-amd64`
+1. On the **objectcountingmodule** blade, under **Tags**, notice that there is a tag named **0.0.1-amd64**.
 
-1. Click on the `0.0.1-amd64` tag to open up the details pane for this Tag within the `objectcountingmodule` repository.
+1. To open a details pane for this Tag, click **0.0.1-amd64**.
 
-    Notice the properties listed, including _Tag creation date_,  _Tag last updated date_, and other properties displaying information about the Tag.
+    Notice the properties listed, including _Repository_, _Tag_, _Tag creation date_,  _Tag last updated date_, and other properties displaying information about the Tag.
 
-1. Copy the **Repository** name and the **Tag** for use later on.
+1. Save a copy of the values for the **Repository** and **Tag** properties.
 
-    The Repository and Tag names will be used to pull down this specific version of the Docker image for the custom IoT Edge Module to run in an IoT Edge Device.
+    To copy the values, you can click on the **Copy to clipboard** button located to the right of the displayed values.
+
+    You will need the Repository and Tag names to pull down this specific version of the Docker image for the custom IoT Edge Module to run in an IoT Edge Device.
 
     The format of the Docker image Repository and Tag names combined will be in the following format:
 
@@ -633,38 +671,40 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     objectcountingmodule:0.0.1-amd64
     ```
 
-1. Navigate to your Azure IoT Hub (`AZ-220-HUB-{YOUR-ID}`) resource. With the custom `objectcountingmodule` IoT Edge Module published to Azure Container Registry (ACR), the next step is to create a new IoT Edge Device within IoT Hub and configure it to run the new custom IoT Edge Module.
+1. Navigate to your Azure IoT Hub resource.
 
-1. On the **IoT Hub** blade, under the **Automatic Device Management** section, click on the **IoT Edge** link.
+    With the custom `objectcountingmodule` IoT Edge Module published to Azure Container Registry (ACR), the next step is to create a new IoT Edge Device within IoT Hub and configure it to run the new custom IoT Edge Module.
 
-1. On the IoT Hub **IoT Edge** pane, click the **Add an IoT Edge device** button at the top.
+1. On the **AZ-220-HUB-{YOUR-ID}** blade, on the left side navigation menu under **Automatic Device Management**, click **IoT Edge**.
 
-1. On the **Create a device** blade, for the **Device ID** field, enter `objectcountingdevice`.
+1. On the **IoT Edge** pane, at the top of the pane, click **Add an IoT Edge device**.
 
-1. Under **Authentication type**, select the **Symmetric key** option, and ensure the **Auto-generate keys** checkbox is checked.
+1. On the **Create a device** blade, under **Device ID**, enter **objectcountingdevice**
+
+1. Under **Authentication type**, ensure that **Symmetric key** is selected, and ensure that the **Auto-generate keys** checkbox is selected.
 
     For this unit, we'll keep the IoT Edge Module registration simple by choosing _Symmetric key_ authentication. With the _Auto-generate keys_ option selected, the IoT Hub with automatically generate authentication keys for this device.
 
-1. Click **Save**.
+1. At the bottom of the blade, click **Save**.
 
-1. On the **IoT Edge** pane, in the list of IoT Edge devices, click on the **objectcountingdevice** IoT Edge Device to open the details view for the device.
+1. On the **IoT Edge** pane, under **Device ID**, click **objectcountingdevice**.
 
-1. At the top of the `objectcountingdevice` IoT Edge Device details blade, click on the **Set Modules** button.
+1. At the top of the **objectcountingdevice** blade, click **Set Modules**.
 
-1. On the **Set modules on device: objectcountingdevice** blade, within the **Container Registry Settings** section, enter the following values:
+1. On the **Set modules on device: objectcountingdevice** blade, under **Container Registry Settings**, enter the following values:
 
     * **Name**: Enter the **Registry name** of the Azure Container Registry (e.g. `az220acrcah191204`)
     * **Address**: Enter the **Login server** (or DNS name) of the Azure Container Registry service (ex: `az220acrcah191204.azurecr.io`)
     * **User Name**: Enter the **Username** for the Azure Container Registry service
     * **Password**: Enter the **password** for the Azure Container Registry service
 
-    > **Note**:  The Azure Container Registry (ACR) service _Registry name_, _Login server_, _Username_, and _Password_ can be found on the **Access keys** pane for the service.
+    > **Note**: The Azure Container Registry (ACR) service _Registry name_, _Login server_, _Username_, and _Password_ can be found on the **Access keys** pane for the service.
 
-1. On the **Set modules on device: objectcountingdevice** blade, within the **IoT Edge Modules** section, click the **Add** button and select **IoT Edge Module**.
+1. On the **Set modules on device: objectcountingdevice** blade, under **IoT Edge Modules**, click **Add**, and then click **IoT Edge Module**.
 
-1. On the **Add IoT Edge Module** pane, for the **IoT Edge Module Name** enter `objectcountingmodule`.
+1. On the **Add IoT Edge Module** pane, under **IoT Edge Module Name**, enter **objectcountingmodule**
 
-1. Under **Module Settings**, enter the full URI and tagged name of the Docker image for the custom IoT Edge Module that was copied previously, e. g
+1. Under **Module Settings**, to enter the full URI and tagged name of the Docker image for the custom IoT Edge Module, use the following format:
 
     ```text
     <container-registry-login-server>/<repository-name>:<tag>
@@ -679,32 +719,36 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     The resulting **Image URI** to be entered into the field will be similar to the following:
 
     ```text
-     az220acrcah191204.azurecr.io/objectcountingmodule:0.0.1-amd64
+    az220acrcah191204.azurecr.io/objectcountingmodule:0.0.1-amd64
     ```
 
-1. Leave the rest of the settings at their defaults and click **Add**.
+1. Leave the rest of the settings at their defaults, and then click **Add**.
 
-1. Now back on the **Set modules on device: objectcountingdevice** blade, click **Next: Routes**.
+1. On the **Set modules on device: objectcountingdevice** blade, at the bottom of the blade, click **Next: Routes >**.
 
-1. Within the **Specify Routes**, the editor will display the configured default route for the IoT Edge Device. At this time, it should be configured with a route that sends all messages from all modules to Azure IoT Hub:
+1. On the **Routes** tab, review the default route settings.
+
+    The editor will display the configured default route for the IoT Edge Device. At this time, it should be configured with a route that sends all messages from all modules to Azure IoT Hub:
 
     * Name: **route**
     * Value: `FROM /messages/* INTO $upstream`
 
-    Delete this route by clicking the trash icon to the right of the route and then add the two following routes:
+1. To the right of the default route, click **Remove route**.
+
+1. Add the following two routes:
 
     | NAME | VALUE |
     | --- | --- |
     | `AllMessagesToObjectCountingModule` | `FROM /* INTO BrokeredEndpoint("/modules/objectcountingmodule/inputs/input1")` |
     | `ObjectCountingModuleToIoTHub` | `FROM /messages/modules/objectcountingmodule/outputs/* INTO $upstream` |
 
-1. Notice the IoT Hub message routing query specified for the **AllMessagesToObjectCountingModule** route.
+1. Review the value assigned to the **AllMessagesToObjectCountingModule** route.
 
     This route specifies the **Source** value of `/*`. This applies the route to all device-to-cloud messages or twin change notifications from any module or leaf device.
 
     This route specifies the **Destination** value of `BrokeredEndpoint("/modules/objectcountingmodule/inputs/input1")`. This sends all messages from the Source of this route to the `objectcountingmodule` IoT Edge Module's input.
 
-1. Notice the IoT Hub message routing query specified for the  **ObjectCountingModuleToIoTHub** route.
+1. Review the value assigned to the **ObjectCountingModuleToIoTHub** route.
 
     This route specifies the **Source** value of `/messages/modules/objectcountingmodule/outputs/*`. This applies the route to all messages output from the `objectcountingmodule` IoT Edge Module.
 
@@ -714,8 +758,8 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     > * [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/en-us/azure/iot-edge/module-composition)
     > * [IoT Hub message routing query syntax](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-routing-query-syntax)
 
-1. Click **Next: Review + create**.
+1. At the bottom of the blade, click **Next: Review + create >**.
 
-1. On the **Review Deployment** step, click **Create**.
+1. Review the Deployment Manifest for the device, and then click **Create**.
 
-This completes the development of a sample custom IoT Edge Module * `objectcountingmodule`. Now that an IoT Edge Device is registered, the modules specified and the routes configured, the `objectcountingmodule` is ready to be deployed once the associated IoT Edge Device is connected to the Azure IoT Hub as shown in previous labs.
+This completes the development of the `objectcountingmodule` custom IoT Edge Module. Now that an IoT Edge Device is registered, the modules specified and the routes configured, the `objectcountingmodule` is ready to be deployed once the associated IoT Edge Device is connected to the Azure IoT Hub as shown in previous labs.
