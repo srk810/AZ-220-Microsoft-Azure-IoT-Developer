@@ -369,7 +369,9 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 
 ### Exercise 4: Configure IoT Edge Device as Gateway
 
-In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machine that was created previously to be an IoT Edge Transparent Gateway device. The configuration will be handled by a helper script that is part of this unit to make the process quicker.
+In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machine (that was created previously) to be an IoT Edge Transparent Gateway device.
+
+> **Note**: You will use a helper script to configure the IoT Edge Device as a Transparent Gateway. This will enable you to complete the process more quickly.
 
 1. Locate the labfiles for this lab, and open the `setup-iot-edge-gateway.sh` helper script within **Visual Studio Code**.
 
