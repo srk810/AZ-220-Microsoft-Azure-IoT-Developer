@@ -53,7 +53,7 @@ In this lab, you will complete the following activities:
 
 ## Lab Instructions
 
-### Exercise 1: Create a custom Azure IoT Hub, using the IoT Hub portal
+### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes the following Azure resources are available:
 
@@ -63,39 +63,88 @@ This lab assumes the following Azure resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | IoT Device | CheeseCaveID |
 
-To create these resources, please update and execute the **lab-setup.azcli** script before starting the lab.
+If these resources are not available, you will need to run the **lab15-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+
+The **lab15-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+
+>**Note:** You will need the connection string for the **CheeseCaveID** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
+>
+> ```bash
+> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id CheeseCaveID -o tsv
+> ```
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. To ensure the Azure Shell is using **Bash**, ensure the dropdown selected value in the top-left is **Bash**.
+    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. To upload the setup script, in the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. Verify that the Azure Cloud Shell is using **Bash**.
 
-1. In the dropdown, select **Upload** and in the file selection dialog, navigate to the **lab-setup.azcli** file for this lab. Select the file and click **Open** to upload it.
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 15-Remotely monitor and control devices with Azure IoT Hub
+            * Setup
+
+    The lab15-setup.azcli script file is located in the Setup folder for lab 15.
+
+1. Select the **lab15-setup.azcli** file, and then click **Open**.
 
     A notification will appear when the file upload has completed.
 
-1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
+1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
 
-1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
+    ```bash
+    ls
+    ```
+
+    The `ls` command lists the content of the current directory. You should see the lab15-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
     mkdir lab15
-    mv lab-setup.azcli lab15
+    mv lab15-setup.azcli lab15
     cd lab15
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
+1. To ensure that **lab15-setup.azcli** has the execute permission, enter the following command:
 
     ```bash
-    chmod +x lab-setup.azcli
+    chmod +x lab15-setup.azcli
     ```
 
-1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab15** to expand it and then select **lab-setup.azcli**.
+1. On the Cloud Shell toolbar, to edit the lab15-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-    The editor will now show the contents of the **lab-setup.azcli** file.
+1. In the **FILES** list, to expand the lab15 folder and open the script file, click **lab15**, and then click **lab15-setup.azcli**.
 
-1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CAH121119**, and set `Location` to the location that makes sense for your resources.
+    The editor will now show the contents of the **lab15-setup.azcli** file.
+
+1. In the editor, update the `{YOUR-ID}` and `SETLOCATION` assigned values.
+
+    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `SETLOCATION` to the location that makes sense for your resources.
+
+    ```bash
+    #!/bin/bash
+
+    YourID="{YOUR-ID}"
+    RGName="AZ-220-RG"
+    IoTHubName="AZ-220-HUB-$YourID"
+    DeviceID="CheeseCaveID"
+
+    Location="SETLOCATION"
+    ```
+
+
+
 
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >

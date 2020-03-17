@@ -101,7 +101,7 @@ If these resources are not available, you will need to run the **lab11-setup.azc
 
 1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
 
-    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash

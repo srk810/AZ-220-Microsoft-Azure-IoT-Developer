@@ -97,7 +97,7 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
 
 1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
 
-    In the sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash

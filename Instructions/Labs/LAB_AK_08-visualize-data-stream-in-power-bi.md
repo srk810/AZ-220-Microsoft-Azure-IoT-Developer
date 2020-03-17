@@ -122,7 +122,7 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
 > **Note**: If you have not completed lab 7 of this course, do that now.
 
-#### TAsk 1: Start the "vibrationdevice" app in Visual Studio Code
+#### Task 1: Start the "vibrationdevice" app in Visual Studio Code
 
 1. Open Visual Studio Code.
 
