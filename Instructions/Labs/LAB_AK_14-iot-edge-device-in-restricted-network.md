@@ -8,7 +8,7 @@ lab:
 
 ## Lab Scenario
 
-The conveyor belt monitoring system that you've implemented at Contoso's cheese packaging and shipping faciilites is paying off. The system is now sending telemetry data to Azure IoT Hub that helps operations to manage the vibration levels of the belts, and the new IoT Edge devices helping to manage inventory by tracking the number of cheese package that pass through the system. 
+The conveyor belt monitoring system that you've implemented at Contoso's cheese packaging and shipping facilities is paying off. The system is now sending telemetry data to Azure IoT Hub that helps operations to manage the vibration levels of the belts, and the new IoT Edge devices helping to manage inventory by tracking the number of cheese package that pass through the system. 
 
 Your manager wants the system to be resilient to network outages, which do still occur occasionally in some areas of the cheese processing facilities. In addition, the IT department has requested that you optimize the system to bulk upload any non-critcal telemetry data at specific times in the day to help load balance network usage. 
 
