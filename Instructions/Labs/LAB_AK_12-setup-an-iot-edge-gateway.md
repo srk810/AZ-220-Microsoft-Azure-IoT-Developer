@@ -228,15 +228,9 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
 1. On the **Connect** pane, under **4. Run the example command below to connect to your VM**, copy the example command.
 
-    This is a sample SSH command that can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. The command is formatted similar to `ssh -i <private key path> username@52.170.205.79`.
+    This is a sample SSH command that can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. The command should be formatted similar to `ssh username@52.170.205.79`.
 
-1. Paste the command into Notepad or another text editor of your choice.
-
-    You need to update the command to replace the `<private key path>` placeholder
-
-1. On the **Connect** pane, under **3. Provide a path to your SSH private key file**, make note of the **Private key path** displayed in the field.
-
-1. In your text editor containing `ssh` command from above, update the command by entering the value of the Private key path.
+    > **Note**: If the sample command includes `-i <private key path>`, use a text editor to remove that portion of the command, and then copy the updated command into the clipboard.
 
 1. On the Azure portal toolbar, click **Cloud Shell**
 
@@ -547,12 +541,10 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
 1. Under **4. Run the example command below to connect to your VM.**, to copy the command, click **Copy to clipboard**.
 
-    This sample SSH command can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. Now that the DNS name label has been configured, the command should look similar to the following: `ssh -i <private key path> demouser@AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com`
+    This sample SSH command can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. Now that the DNS name label has been configured, the command should look similar to the following: `ssh demouser@AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com`
 
-1. Use a text editor to replace `<private key path>` in the command with the path to your SSH private key file.
-
-    The path to your SSH private key file is shown on the **Connect** blade, under **3. Provide a path to your SSH private key file.**
-
+    > **Note**: If the sample command includes `-i <private key path>`, use a text editor to remove that portion of the command, and then copy the updated command into the clipboard.
+ 
 1. On the Azure portal toolbar, click **Cloud Shell**.
 
     Ensure that the Cloud Shell environment is set to use **Bash**.
