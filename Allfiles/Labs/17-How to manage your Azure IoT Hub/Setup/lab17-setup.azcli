@@ -1,11 +1,11 @@
 #!/bin/bash
 
-YourID="DM121619"
+YourID="{YOUR-ID}"
 RGName="AZ-220"
 IoTHubName="$RGName-HUB-$YourID"
 DPSName="$RGName-DPS-$YourID"
 DeviceName="asset-track"
-Location="westus"
+Location="{YOUR-LOCATION}"
 StorageAccountName="$RGName-STORAGE-$YourID"
 
 ToLowerAlphaNum () {

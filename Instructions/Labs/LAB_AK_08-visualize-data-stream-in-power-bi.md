@@ -22,7 +22,7 @@ lab:
 
 You have developed a simulated IoT device that generates vibration data and other telemetry outputs that are representative of the conveyor belt system used in Contoso's cheese packaging process. You have built and tested a logging route that sends data to Azure Blob storage. You will now start work on a new route within IoT hub that will send telemetry data to an Azure Event Hubs service.
 
-The primary difference between Azure IoT Hub and Azure Event Hubs is that Event Hubs designed for big data streaming, while IoT hub is optimized for an IoT solution. Both services support ingestion of data with low latency and high reliability. Since Azure Event Hubs provides a input to Stream Analytics ina manner that is similar to IoT hub, your choice of Event Hubs in this case is allows you explore an additional Azure service option within your solution.
+The primary difference between Azure IoT Hub and Azure Event Hubs is that Event Hubs designed for big data streaming, while IoT hub is optimized for an IoT solution. Both services support ingestion of data with low latency and high reliability. Since Azure Event Hubs provides a input to Stream Analytics in a manner that is similar to IoT hub, your choice of Event Hubs in this case is allows you explore an additional Azure service option within your solution.
 
 ### Make a Call to a Built-in Machine Learning Model
 

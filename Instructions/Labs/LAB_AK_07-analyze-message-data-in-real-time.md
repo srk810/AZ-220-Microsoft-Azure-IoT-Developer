@@ -582,11 +582,11 @@ In this task, you will use the Azure portal to verify that your IoT Hub is recei
 
 ### Exercise 3: Create a Message Route to Azure Blob Storage
 
-The architecture of our vibration monitoring system requires data be sent to two destinations: a storage location for archiving data, and a location for more emmediate analysis. Azure IoT provides a great method of directing data to the right service, through *message routing*.
+The architecture of our vibration monitoring system requires data be sent to two destinations: a storage location for archiving data, and a location for more immediate analysis. Azure IoT provides a great method of directing data to the right service, through *message routing*.
 
 In our scenario, we need to create two routes:
 
-* the first route will be to storage for achiving data
+* the first route will be to storage for archiving data
 * the second route will to an Event Hub for anomaly detection
 
 Since message routes are best built and tested one at a time, this exercise will focus on the storage route. We'll call this route the "logging" route, and it involves digging a few levels deep into the creation of Azure resources. All the features required to build this route are available in the Azure portal.
