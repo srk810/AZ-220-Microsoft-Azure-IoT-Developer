@@ -122,7 +122,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab15-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab15-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to edit the lab15-setup.azcli file, click **Open editor** (second button from the right - **{ }**).
 
 1. In the **FILES** list, to expand the lab15 folder and open the script file, click **lab15**, and then click **lab15-setup.azcli**.
 
@@ -143,9 +143,6 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     Location="SETLOCATION"
     ```
 
-
-
-
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
@@ -162,63 +159,67 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     > East US 2             36.6681     -78.3889     eastus2
     > ```
 
-1. To save the changes made to the file and close the editor, click **...** in the top-right of the editor window and select **Close Editor**.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
     If prompted to save, click **Save** and the editor will close.
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with an ID of **CheeseCaveID**, and display the device connection string, enter the following command:
+1. To create the resources required for this lab, enter the following command:
 
     ```bash
-    ./lab-setup.azcli
+    ./lab15-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This script can take a few minutes to run. You will see JSON output as each step completes.
 
-1. Once complete, the script will be display data similar to:
+    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **CheeseCaveID** to the IoT hub and display the device connection string.
+
+1. Notice that, once the script has completed, information pertaining to your IoT Hub and device is displayed.
+
+    The script will display information similar to the following:
 
     ```text
     Configuration Data:
     ------------------------------------------------
-    AZ-220-HUB-DM121119 Service connectionstring:
-    HostName=AZ-220-HUB-DM121119.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
+    AZ-220-HUB-{YourID} Service connectionstring:
+    HostName=AZ-220-HUB-{YourID}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
 
     CheeseCaveID device connection string:
-    HostName=AZ-220-HUB-DM121119.azure-devices.net;DeviceId=CheeseCaveID;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
+    HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=CheeseCaveID;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
 
-    AZ-220-HUB-DM121119 eventhub endpoint:
+    AZ-220-HUB-{YourID} eventhub endpoint:
     sb://iothub-ns-az-220-hub-2610348-5a463f1b56.servicebus.windows.net/
 
-    AZ-220-HUB-DM121119 eventhub path:
-    az-220-hub-dm121119
+    AZ-220-HUB-{YourID} eventhub path:
+    az-220-hub-{YourID}
 
-    AZ-220-HUB-DM121119 eventhub SaS primarykey:
+    AZ-220-HUB-{YourID} eventhub SaS primarykey:
     tGEwDqI+kWoZroH6lKuIFOI7XqyetQHf7xmoSf1t+zQ=
     ```
 
-    Copy these values to a local text file - you will need them for the coding portion of this lab.
+1. Copy the output displayed by the script into a text document for use later in this lab.
 
-You've now completed the preparatory work for this module, the next steps are all coding and testing. Before we advance though, a quick knowledge check!
+    Once you have saved the information to a location where you can find it easily, you will be ready to continue with the lab.
 
 ### Exercise 2: Write Code to Send and Receive Telemetry
 
-At the end of this unit, you'll be sending and receiving telemetry.
+In this exercise, you will be creating the simulated device app (for the CheeseCaveID device) that sends telemetry to your IoT Hub.
 
-#### Task 1: Create an app to send telemetry
+#### Task 1: Create a Console App in Visual Studio Code
 
-1. To use C# in Visual Studio Code, ensure both [.NET Core](https://dotnet.microsoft.com/download), and the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp) are installed.
+1. Open Visual Studio Code.
 
-1. To open a terminal in Visual Studio Code, open the **Terminal** menu and click **New Terminal**.
+1. On the **Terminal** menu, click **New Terminal**.
 
-1. In the terminal, to create a directory called "cheesecavedevice" and change the current directory to that directory, enter the following commands:
+1. At the Terminal command prompt, to create a directory called "cheesecavedevice" and change the current directory to that directory, enter the following commands:
 
-   ```bash
-   mkdir cheesecavedevice
-   cd cheesecavedevice
-   ```
+    ```bash
+    mkdir cheesecavedevice
+    cd cheesecavedevice
+    ```
 
-1. To create a new .NET console application. enter the following command in the terminal:
+1. To create a new .NET console application, enter the following command:
 
     ```bash
     dotnet new console
@@ -226,7 +227,7 @@ At the end of this unit, you'll be sending and receiving telemetry.
 
     This command creates a **Program.cs** file in your folder, along with a project file.
 
-1. In the terminal, to install the required libraries. Enter the following commands:
+1. To install the required libraries, enter the following commands:
 
     ```bash
     dotnet add package Microsoft.Azure.Devices.Client
@@ -234,19 +235,25 @@ At the end of this unit, you'll be sending and receiving telemetry.
     dotnet add package Newtonsoft.Json
     ```
 
-1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
+1. On the **File** menu, click **Open Folder**
 
-    > **Note**:  If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
+1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **cheesecavedevice**, and then click **Select Folder**
 
-1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
+    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `cheesecadedevice.csproj` files listed.
 
-#### Task 2: Add Code to Send Telemetry
+1. In the **EXPLORER** pane, click **Program.cs**.
 
-This section adds code to send telemetry from a simulated device. The device sends temperature (in degrees fahrenheit) and humidity (in percentages), regardless of whether any back-end app is listening or not.
+1. In the Code Editor pane, delete the contents of the Program.cs file.
 
-1. If it isn't already open in Visual Studio Code, open the **Program.cs** file for the device app.
+#### Task 2: Add Code to Simulate Your CheeseCaveID IoT Device
 
-1. Copy and paste the following code:
+This section adds code to send telemetry from a simulated device. The device sends temperature (in degrees Fahrenheit) and humidity (in percentages), regardless of whether any back-end app is listening or not.
+
+1. Ensure that you have the **Program.cs** file open in Visual Studio Code.
+
+    The Code Editor pane should display an empty code file.
+
+1. Copy-and-Paste the following code into the Code Editor pane:
 
     ```csharp
     // Copyright (c) Microsoft. All rights reserved.
@@ -401,15 +408,29 @@ This section adds code to send telemetry from a simulated device. The device sen
     }
     ```
 
-    > **Important:** Read through the comments in the code, noting how the temperature and humidity settings from the description of the scenario in the introduction have worked their way into the code.
+1. Take a few minutes to review the code.
 
-1. Replace the `<your device connection string>` with the device connection string you saved off in the previous unit. No other lines of code need to be changed.
+    > **Important:** Read through the comments in the code, noting how the temperature and humidity settings for our cheese cave scenario have worked their way into the code.
 
-1. Save the **Program.cs** file.
+1. Locate the code line used to assign the device connection string
+
+    ```csharp
+    private readonly static string s_deviceConnectionString = "<your device connection string>";
+    ```
+
+1. Replace `<your device connection string>` with the CheeseCaveID device connection string that you save earlier in this lab. 
+
+    You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1. 
+
+    No other lines of code need to be changed.
+
+1. On the **File** menu, to save your changes to the Program.cs file, click **Save**.
 
 #### Task 3: Test your Code to Send Telemetry
 
-1. To run the app in the terminal, enter the following command:
+1. In Visual Studio Code, ensure that you have the Terminal open.
+
+1. At the Terminal command prompt, to run the simulated device app, enter the following command:
 
     ```bash
     dotnet run
@@ -417,34 +438,38 @@ This section adds code to send telemetry from a simulated device. The device sen
 
    This command will run the **Program.cs** file in the current folder.
 
-1. You should quickly see console output, similar to the following:
+1. Notice the output being sent to the Terminal.
+
+    You should quickly see console output, similar to the following:
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-telemetry.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
-1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
+1. Leave this app running.
 
-1. You can leave this app running, as it's needed for the next section.
+    You need to be sending telemetry to IoT Hub later in this lab.
 
 ### Exercise 3: Create a Second App to Receive Telemetry
 
-Now we have a device pumping out telemetry, we need to listen for that telemetry with a back-end app, also connected to our IoT Hub.
+Now that you have your (simulated) CheeseCaveID device sending telemetry to your IoT Hub, you need to create a back-end app that can connect to IoT Hub and "listen" for that telemetry. Eventually, this back-end app will be used to automate the control of the temperature in the cheese cave.
 
 #### Task 1: Create an app to receive telemetry
 
-1. As the device app is running in a copy of Visual Studio Code, you will need to open a new instance of Visual Studio Code.
+1. Open a new instance of Visual Studio Code.
 
-1. To open a terminal in Visual Studio Code, open the **Terminal** menu and click **New Terminal**.
+    Since your simulated device app is running in the Visual Studio Code windows that you already have open, you need a new instance of Visual Studio Code for the back-end app.
 
-1. In the terminal, to create a directory called "cheesecaveoperator" and change the current directory to that directory, enter the following commands:
+1. On the **Terminal** menu, click **New Terminal**.
+
+1. At the Terminal command prompt, to create a directory named "cheesecaveoperator" and change the current directory to that directory, enter the following commands:
 
    ```bash
    mkdir cheesecaveoperator
    cd cheesecaveoperator
    ```
 
-1. To create a new .NET console application. enter the following command in the terminal:
+1. To create a new .NET console application, enter the following command:
 
     ```bash
     dotnet new console
@@ -452,7 +477,7 @@ Now we have a device pumping out telemetry, we need to listen for that telemetry
 
     This command creates a **Program.cs** file in your folder, along with a project file.
 
-1. In the terminal, to install the required libraries. Enter the following commands:
+1. To install the required libraries, enter the following commands:
 
     ```bash
     dotnet add package Microsoft.Azure.EventHubs
@@ -460,19 +485,26 @@ Now we have a device pumping out telemetry, we need to listen for that telemetry
     dotnet add package Newtonsoft.Json
     ```
 
-1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
+1. On the **File** menu, click **Open Folder**
 
-    > **Note**:  If you are unsure where the **Program.cs** file is located, enter the command `pwd` in the console to see the current directory.
+1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **cheesecaveoperator**, and then click **Select Folder**
 
-1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder.
+    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `cheesecaveoperator.csproj` files listed.
+
+1. In the **EXPLORER** pane, click **Program.cs**.
+
+1. In the Code Editor pane, delete the contents of the Program.cs file.
 
 #### Task 2: Add Code to Receive Telemetry
 
-This section adds code to receive telemetry from the IoT Hub Event Hub endpoint.
+In this task, you will add code your back-end app that will be used to receive telemetry from the IoT Hub Event Hub endpoint.
 
-1. If it isn't already open in Visual Studio Code, open the **Program.cs** file for the device app.
+1. Ensure that you have the **Program.cs** file open in Visual Studio Code.
 
-1. Copy and paste the following code:
+    The Code Editor pane should display an empty code file.
+
+1. Copy-and-Paste the following code into the Code Editor pane:
+
 
     ```csharp
     // Copyright (c) Microsoft. All rights reserved.
@@ -580,11 +612,21 @@ This section adds code to receive telemetry from the IoT Hub Event Hub endpoint.
     }
     ```
 
+1. Take a few minutes to review the code.
+
     > **Important:** Read through the comments in the code. Our implementation only reads messages after the back-end app has been started. Any telemetry sent prior to this isn't handled.
 
-1. Replace the `<your service connection string>` with the IoT Hub **iothubowner** shared access policy primary connection string - this value was displayed by the setup script executed in the first unit of this lab.
+1. Locate the code line used to assign the service connection string
 
-    > **Note:** You may be curious as to why the **iothubowner** shared policy is used rather than the **service** shared policy. The answer is related to the IoT Hub permissions assigned to each policy. The **service** policy has the **ServiceConnect** permission and is usually used by back-end cloud sercives. It confers the following rights:
+    ```csharp
+    private readonly static string s_serviceConnectionString = "<your service connection string>";
+    ```
+
+1. Replace `<your service connection string>` with the IoT Hub **iothubowner** shared access policy primary connection string that you save earlier in this lab. 
+
+    You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1. 
+
+    > **Note**: You may be curious as to why the **iothubowner** shared policy is used rather than the **service** shared policy. The answer is related to the IoT Hub permissions assigned to each policy. The **service** policy has the **ServiceConnect** permission and is usually used by back-end cloud sercives. It confers the following rights:
     >
     > * Grants access to cloud service-facing communication and monitoring endpoints.
     > * Grants permission to receive device-to-cloud messages, send cloud-to-device messages, and retrieve the corresponding delivery acknowledgments.
@@ -595,19 +637,19 @@ This section adds code to receive telemetry from the IoT Hub Event Hub endpoint.
     >
     > * Grants read access to the identity registry.
     >
-    > As the **iothubowner** policy has been granted the **Registry write** permission, it inherits the **Registry read** permission, so is suitable for our needs.
+    > As the **iothubowner** policy has been granted the **Registry write** permission, it inherits the **Registry read** permission, so it is suitable for our needs.
     >
     > In a production scenario, you might consider adding a new shared access policy that has just the **Service connect** and **Registry read** permissions.
 
-1. Replace the `<your event hub endpoint>`, `<your event hub path>`, and the `<your event hub Sas key>` with the strings you saved off to your text file.
+1. Replace the `<your event hub endpoint>`, `<your event hub path>`, and the `<your event hub Sas key>` with the values that you save earlier in this lab.
 
-1. Save the **Program.cs** file.
+1. On the **File** menu, to save your changes to the Program.cs file, click **Save**.
 
 #### Task 3: Test your Code to Receive Telemetry
 
 This test is important, checking whether your back-end app is picking up the telemetry being sent out by your simulated device. Remember your device app is still running, and sending telemetry.
 
-1. To run the app in the terminal, enter the following command:
+1. To run the `cheesecaveoperator` back-end app in the terminal, open a Terminal pane, and then enter the following command:
 
     ```bash
     dotnet run
@@ -617,23 +659,30 @@ This test is important, checking whether your back-end app is picking up the tel
 
    > **Note**:  You can ignore the warning about the unused variable `s_serviceConnectionString` - we will be using that variable shortly.
 
-1. You should quickly see console output, and immediately respond if it successfully connects to IoT Hub. If not, carefully check your IoT Hub service connection string, noting that this string should be the service connection string, and not any other.:
+1. Take a minute to observe the output to the Terminal.
+
+    You should quickly see console output, and the app will display telemetry message data almost immediately if it connects to IoT Hub successfully.
+
+    If not, carefully check your IoT Hub service connection string, noting that this string should be the service connection string, and not any other.:
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-telemetry-received.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
-1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
+1. Leave this app running for a monent longer.
 
-1. You can leave this app running, as it's needed for the next section.
+1. With both apps running, visually compare the telemetry that is being sent with the telemetry that is being received. 
 
-1. Visually compare the telemetry sent and received. Is there an exact match? Is there much of a delay? If it looks good, close both the console windows for now.
+    * Is there an exact data match?
+    * Is there much of a delay between when data is sent and when it is received?
 
-Completing this unit is great progress. you've an app sending telemetry from a device, and a back-end app acknowledging receipt of the data. This unit covers the monitoring side of our scenario. The next step handles the control side - what to do when issues arise with the data. Clearly, there are issues, we're getting temperature and humidity alerts!
+    Once you are satisfied, stop the running apps and then close the Terminal pane in both instances of VS Code. No not close the Visual Studio Code windows.
+
+    You now have an app sending telemetry from a device, and a back-end app acknowledging receipt of the data. This unit covers the monitoring side of our scenario. The next step handles the control side - what to do when issues arise with the data. Clearly, there are issues, we're getting temperature and humidity alerts!
 
 ### Exercise 4: Write Code to Invoke a Direct Method
 
-In this unit, we'll add code to the device app for a direct method to turn on the fan. Next, we add code to the back-end service app to invoke this direct method.
+In this Exercise, you will update your device app by adding the code for a direct method that will simulate turning on the fan in the cheese cave. Next, you will add code to the back-end service app to invoke this direct method.
 
 Calls from the back-end app to invoke direct methods can include multiple parameters as part of the payload. Direct methods are typically used to turn features of the device off and on, or specify settings for the device.
 
@@ -651,11 +700,13 @@ The device app contains the functional code for the direct method. The function 
 
 1. Return to the Visual Studio Code instance that is running the **cheesecavedevice** app.
 
-1. If the app is still running, place input focus on the terminal and press **CTRL+C** to exit the app.
+    > **Note**: If the app is still running, place input focus in the Terminal pane and press **CTRL+C** to exit the app.
 
-1. In the editor, ensure **Program.cs** is open.
+1. Ensure that **Program.cs** is open in the code editor.
 
-1. To define the direct method, add the following code at the end of the **SimulatedDevice** class:
+1. In the Code Editor pane, locate the bottom of the **SimulatedDevice** class.
+
+1. To define the direct method, add the following code inside the closing squiggly brace of the **SimulatedDevice** class:
 
     ```csharp
     // Handle the direct method call
@@ -696,16 +747,20 @@ The device app contains the functional code for the direct method. The function 
     }
     ```
 
-    > **Note**:  This code defines the implementation of the direct method and is executed when the direct method is invoked. The fan has three states: *on*, *off*, and *failed*. The method above sets the fan to either of the first two of these states. If the payload text doesn't match one of these two, or the fan is in a failed state, an error is returned.
+    > **Note**:  This code defines the implementation of the direct method and is executed when the direct method is invoked. The fan has three states: *on*, *off*, and *failed*. The method above sets the fan to either *on* or *off*. If the payload text doesn't match one of these two settings, or the fan is in a failed state, an error is returned.
 
-1. To register the direct method, add the following lines of code to the Main method, after creating the device client.
+1. In the Code Editor pane, scroll up slightly to locate the **Main** method.
+
+1. Within the **Main** method, position the cursor on the blank code line just after creating the device client.
+
+1. To register the direct method, add the following code:
 
     ```csharp
     // Create a handler for the direct method call
     s_deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
     ```
 
-    The modified **Main** method should look like:
+    After adding the code, the **Main** method should look like the following:
 
     ```csharp
     private static void Main(string[] args)
@@ -723,25 +778,27 @@ The device app contains the functional code for the direct method. The function 
     }
     ```
 
-1. Save the **Program.cs** file.
+1. On the **File** menu, to save the Program.cs file, click **Save**.
 
-You've completed what is needed at the device end of things. Next, we need to add code to the back-end service.
+You have now completed the coding that is required on the device side. Next, you need to add code to the back-end service that will invoke the direct method.
 
-#### Task 2: Add Code to Call a Direct Method in the Back End App
+#### Task 2: Add Code to Call Your Direct Method
 
 1. Return to the Visual Studio Code instance that is running the **cheesecaveoperator** app.
 
-1. If the app is still running, place input focus on the terminal and press **CTRL+C** to exit the app.
+    > **Note**: If the app is still running, place input focus in the Terminal pane and press **CTRL+C** to exit the app.
 
-1. In the editor, ensure **Program.cs** is open.
+1. Ensure that **Program.cs** is open in the code editor.
 
-1. Add the following line to the global variables at the top of the **ReadDeviceToCloudMessages** class:
+1. At the top of the **ReadDeviceToCloudMessages** class, add the following coe to the list of global variables:
 
     ```csharp
     private static ServiceClient s_serviceClient;
     ```
 
-1. Add the following task to the **ReadDeviceToCloudMessages** class, after the **Main** method:
+1. Scroll down to locate the **Main** method.
+
+1. On the blank code line below the **Main** method, add the following task:
 
     ```csharp
     // Handle invoking a direct method.
@@ -773,9 +830,12 @@ You've completed what is needed at the device end of things. Next, we need to ad
     }
     ```
 
-    > **Note**:  This code is used to invoke the **SetFanState** direct method on the device app.
+    > **Note**: This code is used to invoke the **SetFanState** direct method on the device app.
 
-1. Add the following code to the **Main** method, before creating the receivers to listen for messages:
+
+1. Within the **Main** method, position the cursor on the blank code line just above the `Create receivers to listen for messages` comment.
+
+1. Before the code for creating the receivers to listen for messages, add the following code:
 
     ```csharp
     // Create a ServiceClient to communicate with service-facing endpoint on your hub.
@@ -783,21 +843,27 @@ You've completed what is needed at the device end of things. Next, we need to ad
     InvokeMethod().GetAwaiter().GetResult();
     ```
 
-    > **Note**:  This code creates the client we used to connect to the IoT Hub so we can invoke the direct method on the device.
+    > **Note**: This code creates the ServiceClient object that we use to connect to the IoT Hub. The connection to IoT Hub enables us to invoke the direct method on the device.
 
-1. Save the **Program.cs** file.
+1. On the **File** menu, to save the Program.cs file, click **Save**.
 
 You have now completed the code changes to support the **SetFanState** direct method.
 
 #### Task 3: Test the direct method
 
-To test the method, start the apps in the correct order. We can't invoke a direct method that hasn't been registered!
+To test the direct method, you will need to start the apps in the correct order. You can't invoke a direct method that hasn't been registered!
 
-1. Start the **cheesecavedevice** device app. It will begin writing to the terminal, and telemetry will appear.
+1. Start the **cheesecavedevice** device app.
 
-1. Start the **cheesecaveoperator** back-end app. This app immediately calls the direct method. Do you notice it's handled by the back-end app, with output similar to the following?
+    It will begin writing to the terminal, and telemetry will appear.
+
+1. Start the **cheesecaveoperator** back-end app.
 
     > **Note**:  If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **cheesecavedevice** and started the app.
+
+    The cheesecaveoperator back-end app will immediately call the direct method.
+
+    Notice the output similar to the following:
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-sent.png)
 
@@ -805,7 +871,9 @@ To test the method, start the apps in the correct order. We can't invoke a direc
 
    ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-received.png)
 
-You are now successfully monitoring and controlling a remote device. We have turned on the fan, which will slowly move the environment in the cave to our initial desired settings. However, we might like to remotely specify those desired settings. We could specify desired settings with a direct method (which is a valid approach). Or we could use another feature of IoT Hub, called device twins. Let's look into the technology of device twins.
+You are now successfully monitoring and controlling a remote device. You have implemented a direct method on the device that can be invoked from the cloud. In our scenario, the direct method is used to turn on a fan, which will bring the environment in the cave to our desired settings. 
+
+What if you might want to remotely specify the desired settings for the cheese cave environment? Perhaps you want to set a particular target temperature for the cheese cave at a certain point in the aging process. You could specify desired settings with a direct method (which is a valid approach), or you could use another feature of IoT Hub, called device twins. In the next Exercise, you will work on implementing device twin properties within your solution.
 
 ### Exercise 5: Write Code for Device Twins
 
@@ -818,19 +886,21 @@ As a reminder, a device twin contains four types of information:
 * **Reported properties**: the reported values of the settings on the device.
 * **Device identity properties**: read-only information identifying the device.
 
-Device twins are designed for querying, and automatically synchronizing, with the real IoT Hub device. The device twin can be queried, at any time, by the back-end app. This query can return the current state information for the device. Getting this data doesn't involve a call to the device, as the device and twin will have synchronized automatically. Much of the functionality of device twins is provided by Azure IoT, so not much code needs to be written to make use of them.
+Device twins, which are managed through IoT Hub, are designed for querying, and they are synchronized with the real IoT device. The device twin can be queried, at any time, by the back-end app. This query can return the current state information for the device. Getting this data doesn't involve a call to the device, as the device and twin will have synchronized. Much of the functionality of device twins is provided by Azure IoT Hub, so not much code needs to be written to make use of them.
 
-There is some overlap between the functionality of device twins and direct methods. We could set desired properties using direct methods, which might seem an intuitive way of doing things. However, using direct methods would require the back-end app to record those settings explicitly, if they ever needed to be accessed. Using device twins, this information is stored and maintained by default.
+There is some overlap between the functionality of device twins and direct methods. We could set device properties using direct methods, which might seem an intuitive way of doing things. However, using direct methods would require the back-end app to record those settings explicitly, if they ever needed to be accessed. Using device twins, this information is stored and maintained by default.
 
 #### Task 1: Add Code To Use Device Twins To Synchronize Device Properties
 
-1. Return to the Visual Studio Code instance that is running the **cheesecaveoperator** app.
+1. Return to the Visual Studio Code instance that is running the **cheesecaveoperator** back-end app.
 
 1. If the app is still running, place input focus on the terminal and press **CTRL+C** to exit the app.
 
-1. In the editor, ensure **Program.cs** is open.
+1. Ensure that the **Program.cs** is open.
 
-1. Add the following code to the end of the **ReadDeviceToCloudMessages** class:
+1. In the Code Editor pane, locate the bottom of the **ReadDeviceToCloudMessages** class.
+
+1. Just above the closing squiggly brace for the **ReadDeviceToCloudMessages** class, add the following code:
 
     ```csharp
     // Device twins section.
@@ -864,9 +934,13 @@ There is some overlap between the functionality of device twins and direct metho
     }
     ```
 
-    > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates thew twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1". This query requires that the connection has the **Registry read** permission.
+    > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates the twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1". This query requires that the connection has the **Registry read** permission.
 
-1. Now, add the following lines to the **Main** method, before the lines creating a service client.
+1. In the Code Editor pane, scroll up to find the **Main** method.
+
+1. In the **Main** method, locate the code lines creating a service client.
+
+1. Before the code creating the service client, add the following code:
 
     ```csharp
     // A registry manager is used to access the digital twins.
@@ -874,9 +948,9 @@ There is some overlap between the functionality of device twins and direct metho
     SetTwinProperties().Wait();
     ```
 
-    > **Note**:  Read the comments in this section of code.
+    > **Note**: Read the comments that are included in the Main method.
 
-1. Save the **Program.cs** file.
+1. On the **File** menu, to save the Program.cs file, click **Save**.
 
 #### Task 2: Add Code to Synchronize Device Twin Settings for the Device
 
@@ -884,9 +958,11 @@ There is some overlap between the functionality of device twins and direct metho
 
 1. If the app is still running, place input focus on the terminal and press **CTRL+C** to exit the app.
 
-1. In the editor, ensure **Program.cs** is open.
+1. Ensure that the **Program.cs** file is open in the Code Editor pane.
 
-1. Add the following code at the end of the **SimulatedDevice** class:
+1. In the Code Editor pane, scroll down to locate the end of the **SimulatedDevice** class.
+
+1. Inside the closing squiggly brace of the **SimulatedDevice** class, add the following code:
 
     ```csharp
     private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
@@ -914,9 +990,15 @@ There is some overlap between the functionality of device twins and direct metho
     }
     ```
 
-    > **Note**:  This code defines handler invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
+    > **Note**: This code defines the handler that is invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
 
-1. To register the desired property changed handler, add the following lines after the statements creating a handler for the direct method:
+1. In the Code Editor pane, scroll up to the **Main** method.
+
+1. Within the **Main** method, locate the code that creates a handler for the direct method.
+
+1. Position the cursor on the blank line below the handler for the direct method.
+
+1. To register the desired property changed handler, add the following code:
 
     ```csharp
     // Get the device twin to report the initial desired properties.
@@ -927,9 +1009,9 @@ There is some overlap between the functionality of device twins and direct metho
     s_deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).Wait();
     ```
 
-1. Save the **Program.cs** file.
+1. On the **File** menu, to save the Program.cs file, click **Save**.
 
-> **Note**:  Now you have added device twins to your app, you can reconsider having explicit variables such as **desiredHumidity**. Instead, you can use the variables in the device twin object.
+    > **Note**:  Now you have added support for device twins to your app, you can reconsider having explicit variables such as **desiredHumidity**. You could use the variables in the device twin object instead.
 
 #### Task 3: Test the Device Twins
 
@@ -939,14 +1021,14 @@ To test the method, start the apps in the correct order.
 
 1. Start the **cheesecaveoperator** back-end app.
 
-1. Now check the console output for the **cheesecavedevice** device app, confirming the device twin synchronized correctly.
+1. Check the console output for the **cheesecavedevice** device app and confirm that the device twin synchronized correctly.
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-received.png)
 
-1. If we let the fan do its work, we should eventually get rid of those red alerts!
+    If we let the fan do its work, we should eventually get rid of those red alerts!
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-success.png)
 
-The code given in this module isn't industrial quality. It does show how to use direct methods, and device twins. However, the messages are sent only when the back-end service app is first run. Typically, a back-end service app would require a browser interface, for an operator to send direct methods, or set device twin properties, when required.
+1. For both instances of Visual Studio Code, stop the app and then close the Visual Studio Code window.
 
-> **Note**:  Before you go, don't forget to close both instances of Visual Studio Code - this will exit the apps if they are still running.
+The code provided in this module isn't industrial quality. It does show how to use direct methods and device twins. However, the messages are sent only when the back-end service app is first run. Typically, a back-end service app would require a browser interface, for an operator to send direct methods, or set device twin properties, when required.
