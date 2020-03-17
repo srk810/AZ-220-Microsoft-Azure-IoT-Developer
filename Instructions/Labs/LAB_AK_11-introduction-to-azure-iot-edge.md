@@ -302,15 +302,9 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
 1. On the **Connect** pane, under **4. Run the example command below to connect to your VM**, copy the example command.
 
-    This is a sample SSH command that can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. The command is formatted similar to `ssh -i <private key path> username@52.170.205.79`.
+    This is a sample SSH command that can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. The command should be formatted similar to `ssh username@52.170.205.79`.
 
-1. Paste the command into Notepad or another text editor of your choice.
-
-    You need to update the command to replace the `<private key path>` placeholder
-
-1. On the **Connect** pane, under **3. Provide a path to your SSH private key file**, make note of the **Private key path** displayed in the field.
-
-1. In your text editor containing `ssh` command from above, update the command by entering the value of the Private key path.
+    > **Note**: If the sample command includes `-i <private key path>`, use a text editor to remove that portion of the command, and then copy the updated command into the clipboard.
 
 1. If Cloud Shell is not still open, click **Cloud Shell**.
 
