@@ -1,12 +1,12 @@
 #!/bin/bash
 
 YourID="{YOUR-ID}"
-RGName="AZ-220"
-IoTHubName="$RGName-HUB-$YourID"
-DPSName="$RGName-DPS-$YourID"
+RGName="AZ-220-RG"
+IoTHubName="AZ-220-HUB-$YourID"
+DPSName="AZ-220-DPS-$YourID"
 DeviceName="asset-track"
 Location="{YOUR-LOCATION}"
-StorageAccountName="$RGName-STORAGE-$YourID"
+StorageAccountName="AZ-220-STORAGE-$YourID"
 
 ToLowerAlphaNum () {
     echo $1 | tr '[:upper:'] '[:lower:]' | tr -cd '[:alnum:]'
