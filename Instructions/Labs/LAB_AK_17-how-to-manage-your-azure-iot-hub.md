@@ -10,9 +10,11 @@ lab:
 
 Contoso's Asset Monitoring and Tracking Solution is working great. The system provides continuous monitoring throughout the packaging and shipping process. You have implemented Group Enrollments within DPS to provision devices at scale, and when the container arrives at the destination, the IoT device "decommissioned" through DPS so that it can re-used for future shipments.
 
+To help manage the general logistics of the system, the IT department has asked your team to implement Azure IoT monitoring and logging services.  
 
+You agree to begin by implementing some simple metrics that can be reviewed with the IT folks before you commit to any additional workload.
 
-In this lab, you will implement monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. Additionally you will create an alert that will be triggered based upon the average number of devices connected. You will configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
+In this lab, you will implement monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. In addition, you will create an alert that will be triggered based upon the average number of devices connected. To test the system, you will configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
 
 ## Lab Introduction
 
