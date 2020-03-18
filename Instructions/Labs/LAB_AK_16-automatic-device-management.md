@@ -6,15 +6,20 @@ lab:
 
 # Automate IoT Devices Management with Azure IoT Hub
 
-Azure IoT Hub is a cloud service designed to be your cloud gateway for IoT devices. It allows securely connect millions of devices and establish a bidirectional communication to not only collect data from sensors, but also allow for remote monitoring and management of the devices.
+Azure IoT Hub includes features for remote monitoring and management of the devices.
 
 ## Lab Scenario
 
-Suppose you manage a company that offers a solution to maintain and monitor cheese caves' temperature and humidity at optimal levels. You have been working with gourmet cheese making companies for a long time and established long term trust with these customers who value the quality of your product.
+The automated air processing system that you implemented in Contoso's cheese caves has helped the company to raise their already high quality bar. The company has more award winning cheeses than ever before.
 
-Your solution consists in sensors and a climate system installed in the cave that report in real time on the temperature and humidity and an online portal customers can use to monitor and remotely operate their devices to adapt the temperature and humidity to the type of cheese they stored in their cave or to fine tune the environment for perfectly aging their cheese.
+Your base solution consists of IoT devices that are integrated with sensors and a climate control system to provide real-time control of temperature and humidity within a multi-chamber cave system. You also developed a simple back-end app that demonstrated the ability to manage devices using both direct methods and device twin properties.
 
-Your company is always enhancing the software running on the devices to better adapt to your customers different cheeses and diverse types of rooms they use to store their cheese. In addition to the features updates, you also want to make sure the devices deployed at customers locations have the latest security patches to ensure privacy and prevent hackers to take control of the system. In order to do this, you need to keep the devices up to date by remotely updating their firmware.
+Contoso has extended the simple back-end app from your initial solution to include an online portal that operators can use to monitor and remotely manage the cave environment. With the new portal, operators can even customize the temperature and humidity within the cave based on the type of cheese or for a specific phase within the cheese aging process. Each chamber or zone within the cave can be controlled separately.
+
+The IT department will be maintaining the portal that they developed fo the operators, but your manager has agreed to manage the device-side of the solution. That means two things to you: 
+
+* The Operations team at Contoso is always looking for ways to make improvements. These improvements often lead to requests for new features in the device software. 
+* The IoT devices that are deployed to cave locations need the latest security patches to ensure privacy and prevent hackers from taking control of the system. In order to the system is safe, you need to keep the devices up to date by remotely updating their firmware.
 
 ## In This Lab
 
