@@ -156,7 +156,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 1. In the upper left corner of the Cloud Shell window, ensure that **Bash** is selected as the environment option.
 
-    > **Note**:  Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this unit you will use some helper scripts written for the *Bash* shell.
+    > **Note**:  Both *Bash* and *PowerShell* interfaces for the Azure Cloud Shell support the use of **OpenSSL**. In this Exercise you will be using some helper scripts written for the *Bash* shell.
 
 1. At the Cloud Shell command prompt, to download the Azure IoT helper scripts that you will be using, enter the following commands:
 
@@ -292,7 +292,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 ### Exercise 3: Create Group Enrollment (X.509 Certificate) in DPS
 
-In this exercise, you will create a new individual enrollment for a device within the Device Provisioning Service (DPS) using _certificate attestation_.
+In this exercise, you will create a new enrollment group within the Device Provisioning Service (DPS) that uses _certificate attestation_.
 
 #### Task 1: Create the enrollment
 
@@ -534,7 +534,7 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     We will take a minute to review the `RunAsync` method, pointing out some of the key points.
 
-1. Witin the `RunAsync` method, notice the code containing ProvisioningDeviceClient.RegisterAsync method (shown below).
+1. Within the `RunAsync` method, notice the code containing ProvisioningDeviceClient.RegisterAsync method (shown below).
 
     ```csharp
     DeviceRegistrationResult result = await _provClient.RegisterAsync().ConfigureAwait(false);
@@ -632,13 +632,13 @@ In this exercise, you will configure a simulated device written in C# to connect
 
 ### Exercise 5: Handle device twin desired property Changes
 
-In this exercise, you will modify the simulated device source code to include an event handler that updates the device configuration based on device twin desired property changes that are sent to the device from Azure IoT Hub.
-
 Device twins are JSON documents that store device state information including metadata, configurations, and conditions. Azure IoT Hub maintains a device twin for each device that you connect to IoT Hub.
 
 The Device Provisioning Service (DPS) contains the initial device twin desired properties for devices that are registered using Group Enrollment. Once the devices are registered they are created within IoT Hub using this initial device twin configuration from DPS. After registration, the Azure IoT Hub maintains a device twin (and its properties) for each device within the IoT Hub Device Registry.
 
 When the device twin desired properties are updated for a device within Azure IoT Hub, the desired changes are sent to the IoT device using the `DesiredPropertyUpdateCallback` event that is included in IoT SDKs (the C# SDK in this case). Handling this event within device code enables the device's configuration and properties to be updated as desired by easily managing the Device Twin state for the device (with IoT Hub providing access).
+
+In this exercise, you will modify the simulated device source code to include an event handler that updates the device configuration based on device twin desired property changes that are sent to the device from Azure IoT Hub.
 
 > **Note**: The set of steps used here are very similar to steps in earlier labs when working with a simulated device because the concepts and processes are the same.  The method used for authentication within the provisioning process doesn't change the handling of device twin property changes once the device is provisioned.
 
