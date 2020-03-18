@@ -183,28 +183,32 @@ In this exercise, you will create a simple simulator that will manage the device
 
 #### Task 1: Create the device simulator app
 
-1. To use C# in Visual Studio Code, ensure both [.NET Core](https://dotnet.microsoft.com/download), and the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp) are installed
+In this task, you will use Visual Studio Code to create a new console app.
 
-1. Open a terminal in Visual Studio Code. Create a folder called **fwupdatedevice** and Navigate to the **fwupdatedevice** folder by running the following commands in the terminal:
+1. Open Visual Studio Code.
+
+    If you completed Lab 3 of this course, you should have [.NET Core](https://dotnet.microsoft.com/download) and the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp) installed in your dev environment.
+
+1. On the **Terminal** menu, click **New Terminal**.
+
+1. At the Terminal command prompt, enter the following commands:
 
     ```cmd/sh
     mkdir fwupdatedevice
     cd fwupdatedevice
     ```
 
-1. Enter the following command in the terminal to create a **Program.cs** file in your folder, along with a project file.
+    The first command creates a folder called **fwupdatedevice**. The second command navigates into the **fwupdatedevice** folder.
+
+1. To create a new console app, enter the following command:
 
     ```cmd/sh
     dotnet new console
     ```
 
-1. Enter `dotnet restore` in the terminal. This command gives your app access to the required .NET packages.
+    > **Note**: When the new .NET console app is created, a `dotnet restore` should have been run as a post-creation process. If you do not see messages in the Terminal pane that indicate this has occurred, your app may not have access to required .NET packages. To address this, enter the following command: `dotnet restore`
 
-    ```cmd/sh
-    dotnet restore
-    ```
-
-1. In the terminal, install the required libraries. Enter the following commands and make sure all three libraries are installed:
+1. To install the libraries that will be required for your app, enter the following commands:
 
     ```cmd/sh
     dotnet add package Microsoft.Azure.Devices.Client
@@ -212,13 +216,27 @@ In this exercise, you will create a simple simulator that will manage the device
     dotnet add package Newtonsoft.Json
     ```
 
-1. From the **File** menu, open up the **Program.cs** file, and delete the default contents.
+    Review the messages in the Terminal pane and make sure that you installed all three libraries.
+
+1. On the **File** menu, click **Open Folder**
+
+1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **fwupdatedevice**, and then click **Select Folder**
+
+    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `fwupdatedevice.csproj` files listed.
+
+1. In the **EXPLORER** pane, click **Program.cs**.
+
+1. In the Code Editor pane, delete the contents of the Program.cs file.
 
 #### Task 2: Add code to your app
 
-1. Open the **Program.cs** file for the device app.
+In this task, you will enter the code for simulating a firmware update on the device in response to an IoT Hub generated request.
 
-1. Copy and paste the following code.
+1. Ensure that you have the **Program.cs** file open in Visual Studio Code.
+
+    The Code Editor pane should display an empty code file.
+
+1. Copy-and-Paste the following code into the Code Editor pane:
 
     ```cs
     // Copyright (c) Microsoft. All rights reserved.
@@ -424,61 +442,69 @@ In this exercise, you will create a simple simulator that will manage the device
             }
         }
     }
-
     ```
 
     > **Note**: 
     > Read through the comments in the code, noting how the device reacts to device twin changes to execute a firmware update based on the configuration shared in the desired Property "firmware". You can also note the function that will report the current firmware update status through the reported properties of the device twin.
 
-1. After you've entered the code below into the **Program.cs** file, you can run the app with the command `dotnet run`. This command will run the **Program.cs** file in the current folder, so ensure you are in the fwupdatedevice folder.
+1. On the **File** menu, click **Save**.
 
-    ```cmd/sh
-    dotnet run
-    ```
-
-1. Save the **Program.cs** file.
-
-At this point your device is ready to be manage from IoT Hub. Next, we will test that the firmware update process works as expected for this simulated device.
+Your device-side code is now complete. Next, you will test that the firmware update process works as expected for this simulated device.
 
 ### Exercise 3: Test firmware update on a single device
 
-In this exercise, we will use the Azure portal to create a new device management configuration and apply it to our single simulated device.
+In this exercise, you will use the Azure portal to create a new device management configuration and apply it to our single simulated device.
 
 #### Task 1: Start device simulator
 
-In the same terminal you setup the application for the simulated device, start the simulator typing the following command (replacing \<device connection string\> with the device connection string you got at the end of task 2):
+1. If necessary, open your **fwupdatedevice** project in Visual Studio Code.
 
-``` bash
-dotnet run "<device connection string>"
-```
+1. Ensure that you have the Terminal pane open.
 
-You should see the following output in the terminal (where "mydevice" is the device ID you used when creating the device identity):
+    The folder location of the command prompt be the `fwupdatedevice` folder.
 
-``` bash
-    mydevice: Device booted
-    mydevice: Current firmware version: 1.0.0
-```
+1. To run the `fwupdatedevice` app, enter the following command:
 
-> **Note**: 
-> Make sure to put "" around your connection string. For example: "HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=SimulatedSolutionThermostat;SharedAccessKey={}="
+    ``` bash
+    dotnet run "<device connection string>"
+    ```
+
+    > **Note**: Remember to replace the placeholder with the actual device connection string, and be sure to include "" around your connection string. 
+    > 
+    > For example: `"HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=SimulatedSolutionThermostat;SharedAccessKey={}="`
+
+1. Review the contents of the Terminal pane.
+
+    You should see the following output in the terminal (where "mydevice" is the device ID you used when creating the device identity):
+
+    ``` bash
+        mydevice: Device booted
+        mydevice: Current firmware version: 1.0.0
+    ```
 
 #### Task 2: Create the device management configuration
 
-1. Sign into the [Azure portal](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true).
+1. If necessary, log in to your [Azure portal](https://portal.azure.com/learn.docs.microsoft.com?azure-portal=true) using your Azure account credentials.
 
-1. Go to the IoT Hub blade. You can find your IoT Hub by typing in the search bar (on top) the name you used when creating it in task 2.
+    If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. In the IoT Hub, find the **Automatic Device Management** blade and select **IoT Device Configuration**, then select **Add Device Configuration**
+1. On your Azure portal Dashboard, click **AZ-220-HUB-{YOUR-ID}**.
 
-1. Enter an ID for the configuration such as **firmwareupdate** then click on **Next: Twins settings >** on the bottom.
+    Your IoT Hub blade should now be displayed.
+ 
+1. On the left side navigation menu, under **Automatic Device Management**, click **IoT device configuration**.
 
-1. For the **Device Twin Property** field, enter the following:
+1. On the **IoT device configuration** pane, click **+ Add Device Configuration**.
 
-    ``` bash
-    properties.desired.firmware
-    ```
+1. On the **Create Device Twin Configuration** blade, under **Name**, enter **firmwareupdate**
 
-1. In the **Device Twin Property Content** field type the following. Then click on **Next: Metrics >**
+    Ensure that you enter `firmwareupdate` under the the required **Name** field for the configuration, not under **Labels**. 
+
+1. At the bottom of the blade, click **Next: Twins Settings >**.
+
+1. Under **Device Twin Settings**, in the **Device Twin Property** field, enter **properties.desired.firmware**
+
+1. In the **Device Twin Property Content** field, enter the following:
 
     ``` json
     {
@@ -488,23 +514,48 @@ You should see the following output in the terminal (where "mydevice" is the dev
     }
     ```
 
-1. In the **Metrics** blade we will define a custom metric to track the firmware update was effective. Create a new custom metric called **"fwupdated"** and type in the below criteria, then click on **Next: Target devices >**
+1. At the bottom of the blade, click **Next: Metrics >**.
+
+    You will be using a custom metric to track whether the firmware update was effective. 
+
+1. On the **Metrics** tab, under **METRIC NAME**, enter **fwupdated**
+
+1. Under **METRIC CRITERIA**, enter the following:
 
     ``` SQL
-        SELECT deviceId FROM devices
-            WHERE properties.reported.firmware.currentFwVersion='1.0.1'
+    SELECT deviceId FROM devices
+        WHERE properties.reported.firmware.currentFwVersion='1.0.1'
     ```
 
-1. In the **Priority** field, type **"10"** and in the **Target Condition** field, type in the following query, replacing "\<your device id\>" with the device Id you used to create the device in task 2, then click on **Next: Review + Create >**
+1. At the bottom of the blade, click **Next: Target devices >**.
+
+1. On the **Target Devices** tab, under **Priority**, in the **Priority (higher values ...)** field, enter **10**.
+
+1. Under **Target Condition**, in the **Target Condition** field, enter the following query:
 
     ``` SQL
-        deviceId='<your device id>'
+    deviceId='<your device id>'
     ```
 
-1. On the next blade you should see the validation succeed for your new configuration. Click on **Create**.
+    > **Note**: Be sure to replace `'<your device id>'` with the Device ID that you used to create the device. For example: `'SimulatedSolutionThermostat'`
 
-1. Once the configuration has been created you will see it in the **Automatic Device Management** blade.
+1. At the bottom of the blade, click **Next: Review + Create >**
 
-At this point IoT Hub will look for devices matching the configuration's target devices criteria, and will apply the firmware update configuration automatically.
+    When the **Review + create** tab opens, you should see a "Validation passed" message for your new configuration. 
 
-You have validated that the firmware update process on your simulated device works. You can stop the device simulator by simply pressing the "Enter" key in the terminal.
+1. On the **Review + create** tab, if the "Validation passed" message is displayed, click **Create**.
+
+    If the "Validation passed" message is displayed, you will need to go back and check your work before you can create your configuration.
+
+1. On the **IoT device configuration** pane, under **Configuration Name**, verify that your new **firmwareupdate** configuration is listed.  
+
+    Once the new configuration is created, IoT Hub will look for devices matching the configuration's target devices criteria, and will apply the firmware update configuration automatically.
+
+1. Switch to the Visual Studio Code window, and review the contents of the Terminal pane.
+
+    The Terminal pane should include new output generated by your app that lists the progress of the firmware update process that was triggered.
+
+1. Stop the simulated app, and close Visual Studio Code.
+
+    You can stop the device simulator by simply pressing the "Enter" key in the terminal.
+

@@ -247,7 +247,7 @@ In this exercise, you will be creating the simulated device app (for the CheeseC
 
 #### Task 2: Add Code to Simulate Your CheeseCaveID IoT Device
 
-This section adds code to send telemetry from a simulated device. The device sends temperature (in degrees Fahrenheit) and humidity (in percentages), regardless of whether any back-end app is listening or not.
+In this task, you will add the code to send telemetry from a simulated device. The device sends temperature (in degrees Fahrenheit) and humidity (in percentages), regardless of whether any back-end app is listening or not.
 
 1. Ensure that you have the **Program.cs** file open in Visual Studio Code.
 
