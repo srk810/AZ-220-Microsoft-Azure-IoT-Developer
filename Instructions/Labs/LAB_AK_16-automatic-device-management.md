@@ -6,7 +6,22 @@ lab:
 
 # Automate IoT Devices Management with Azure IoT Hub
 
-Azure IoT Hub includes features for remote monitoring and management of the devices.
+IoT devices often use optimized operating systems or even run code directly on the silicon (without the need for an actual operating system). In order to update the software running on devices like these the most common method is to flash a new version of the entire software package, including the OS as well as the apps running on it (called firmware).
+
+Because each device has a specific purpose, its firmware is also very specific and optimized for the purpose of the device as well as the constrained resources available.
+
+The process for updating firmware can also be specific to the hardware and to the way the hardware manufacturer created the board. This means that a part of the firmware update process is not generic and you will need to work with your device manufacturer to get the details of the firmware update process (unless you are developing your own hardware which means you probably know what the firmware update process).
+
+While firmware updates used to be applied manually on individual devices, this practice no longer makes sense considering the number of devices used in typical IoT solutions. Firmware updates are now more commonly done over-the-air (OTA) with deployments of new firmware managed remotely from the cloud.
+
+There is a set of common denominators to all over-the-air firmware updates for IoT devices:
+
+1. Firmware versions are uniquely identified
+1. Firmware comes in a binary file format that the device will need to acquire from an online source
+1. Firmware is locally stored is some form of physical storage (ROM memory, hard drive,...)
+1. Device manufacturer provide a description of the required operations on the device to update the firmware.
+
+Azure IoT Hub offers advanced support for implementing device management operations on single devices and on collections of devices. The [Automatic Device Management](https://docs.microsoft.com/azure/iot-hub/iot-hub-auto-device-config) feature enables you to simply configure a set of operations, trigger them, and then monitor their progress.
 
 ## Lab Scenario
 
@@ -16,27 +31,29 @@ Your base solution consists of IoT devices that are integrated with sensors and 
 
 Contoso has extended the simple back-end app from your initial solution to include an online portal that operators can use to monitor and remotely manage the cave environment. With the new portal, operators can even customize the temperature and humidity within the cave based on the type of cheese or for a specific phase within the cheese aging process. Each chamber or zone within the cave can be controlled separately.
 
-The IT department will be maintaining the portal that they developed fo the operators, but your manager has agreed to manage the device-side of the solution. That means two things to you: 
+The IT department will be maintaining the back-end portal that they developed for the operators, but your manager has agreed to manage the device-side of the solution. 
 
-* The Operations team at Contoso is always looking for ways to make improvements. These improvements often lead to requests for new features in the device software. 
-* The IoT devices that are deployed to cave locations need the latest security patches to ensure privacy and prevent hackers from taking control of the system. In order to the system is safe, you need to keep the devices up to date by remotely updating their firmware.
+For you, this means two things: 
 
-## In This Lab
+1. The Operations team at Contoso is always looking for ways to make improvements. These improvements often lead to requests for new features in the device software. 
 
-In this lab, you will you'll learn how automate device management with IoT Hub to configure and manage IoT devices remotely at scale.
+1. The IoT devices that are deployed to cave locations need the latest security patches to ensure privacy and to prevent hackers from taking control of the system. In order to maintain system security, you need to keep the devices up to date by remotely updating their firmware.
 
-This lab includes:
+You plan to implement features of IoT Hub that enable automatic device management and device management at scale.
 
-* Create an Azure IoT Hub and a Device ID
-* Setup an Azure IoT environment: and Azure IoT Hub instance and a device Id
-* Write code for simulating the device that will implement the firmware update
+## In this lab
+
+In this lab, you will complete the following activities:
+
+* Verify Lab Prerequisites
+* Write code for a simulated device that will implement a firmware update
 * Test the firmware update process on a single device using Azure IoT Hub automatic device management
 
 ## Lab Instructions
 
-### Exercise 1: Create an Azure IoT Hub and a Device ID
+### Exercise 1: Verify Lab Prerequisites
 
-This lab assumes the following resources are available:
+This lab assumes the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
@@ -44,55 +61,89 @@ This lab assumes the following resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | IoT Device | SimulatedSolutionThermostat |
 
-To create these resources, please update and execute the **lab-setup.azcli** script before starting the lab.
+If these resources are not available, you will need to run the **lab16-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
-1. If necessary, log in to your Azure portal using your Azure account credentials.
+>**Note:** You will need the connection string for the **SimulatedSolutionThermostat** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
+>
+> ```bash
+> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id SimulatedThermostat -o tsv
+> ```
 
-    If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
+The **lab16-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
-1. Open the Azure Cloud Shell by clicking the **Terminal** icon within the top header bar of the Azure portal, and select the **Bash** shell option.
+1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. Before the Azure CLI can be used with commands for working with Azure IoT Hub, the **Azure IoT Extensions** need to be installed. To install the extension, run the following command:
+    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-    ```sh
-    az extension add --name azure-cli-iot-ext
-    ```
+1. Verify that the Azure Cloud Shell is using **Bash**.
 
-1. To upload the setup script, in the Azure Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. In the dropdown, select **Upload** and in the file selection dialog, navigate to the **lab-setup.azcli** file for this lab. Select the file and click **Open** to upload it.
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 16-Automate IoT Device Management with Azure IoT Hub
+            * Setup
+
+    The lab16-setup.azcli script file is located in the Setup folder for lab 16.
+
+1. Select the **lab16-setup.azcli** file, and then click **Open**.
 
     A notification will appear when the file upload has completed.
 
-1. You can verify that the file has uploaded by listing the content of the current directory by entering the `ls` command.
-
-1. To create a directory for this lab, move **lab-setup.azcli** into that directory, and make that the current working directory, enter the following commands:
+1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
 
     ```bash
-    mkdir lab14
-    mv lab-setup.azcli lab14
-    cd lab14
+    ls
     ```
 
-1. To ensure the **lab-setup.azcli** has the execute permission, enter the following commands:
+    The `ls` command lists the content of the current directory. You should see the lab16-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
-    chmod +x lab-setup.azcli
+    mkdir lab16
+    mv lab16-setup.azcli lab16
+    cd lab16
     ```
 
-1. To edit the **lab-setup.azcli** file, click **{ }** (Open Editor) in the toolbar (second button from the right). In the **Files** list, select **lab14** to expand it and then select **lab-setup.azcli**.
+1. To ensure that **lab16-setup.azcli** has the execute permission, enter the following command:
 
-    The editor will now show the contents of the **lab-setup.azcli** file.
+    ```bash
+    chmod +x lab16-setup.azcli
+    ```
 
-1. In the editor, update the values of the `YourID` and `Location` variables. Set `YourID` to your initials and todays date - i.e. **CP123019**, and set `Location` to the location that makes sense for your resources.
+1. On the Cloud Shell toolbar, to edit the lab16-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-    > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+1. In the **FILES** list, to expand the lab16 folder and open the script file, click **lab16**, and then click **lab16-setup.azcli**.
+
+    The editor will now show the contents of the **lab16-setup.azcli** file.
+
+1. In the editor, update the `{YOUR-ID}` and `{YOUR-LOCATION}` assigned values.
+
+    In the reference sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+
+    ```bash
+    #!/bin/bash
+
+    RGName="AZ-220-RG"
+    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+
+    Location="{YOUR-LOCATION}"
+    ```
+
+    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
-    > ```
     >
-    > ```text
     > DisplayName           Latitude    Longitude    Name
     > --------------------  ----------  -----------  ------------------
     > East Asia             22.267      114.188      eastasia
@@ -102,50 +153,33 @@ To create these resources, please update and execute the **lab-setup.azcli** scr
     > East US 2             36.6681     -78.3889     eastus2
     > ```
 
-1. To save the changes made to the file and close the editor, click **...** in the top-right of the editor window and select **Close Editor**.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
     If prompted to save, click **Save** and the editor will close.
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **AZ-220-RG**, create an IoT Hub named **AZ-220-HUB-{YourID}**, add a device with a Device ID of **SimulatedSolutionThermostat**, and display the device connection string, enter the following command:
+1. To create the resources required for this lab, enter the following command:
 
     ```bash
-    ./lab-setup.azcli
+    ./lab16-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This script can take a few minutes to run. You will see JSON output as each step completes.
 
-1. Once complete, the connection string for the device, starting with "HostName=", is displayed. Copy this connection string into a text document and note that it is for the **SimulatedSolutionThermostat** device.
+    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **SimulatedSolutionThermostat** to the IoT hub and display the device connection string.
+
+1. Notice that, once the script has completed, the connection string for the device is displayed.
+
+    The connection string starts with "HostName="
+
+1. Copy the connection string into a text document, and note that it is for the **SimulatedSolutionThermostat** device.
+
+    Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
 
 ### Exercise 2: Write code to simulate device that implements firmware update
 
-At the end of this task, you'll have a device simulator awaiting for a firmware update request from IoT Hub.
-
-Before getting started with your first firmware update on an IoT device, take a minute to review what it actually means to implement such an operation and how Azure IoT Hub helps making the process.
-
-#### What does updating an IoT device's firmware imply?
-
-IoT devices most often are powered by optimized operating systems or even sometimes running code directly on the silicon (without the need for an actual operating system). In order to update the software running on this kind of devices the most common method is to flash a new version of the entire software package, including the OS as well as the apps running on it (called firmware).
-
-Because each device has a specific purpose, its firmware is also very specific and optimized for the purpose of the device as well as the constrained resources available.
-
-The process for updating a firmware is also something that can be very specific to the hardware itself and to the way the hardware manufacturer does things. This means that a part of the firmware update process is not generic and you will need to work with your device manufacturer to get the details of the firmware update process (unless you are developing your own hardware which means you probably know what the firmware update process).
-
-While firmware updates can be and used to applied manually on devices, this is no longer possible considering the rapid growth in scale of IoT solutions. Firmware updates are now more commonly done over-the-air (OTA) with deployments of new firmware managed remotely from the cloud.
-
-There is a set of common denominators to all over-the-air firmware updates for IoT devices:
-
-1. Firmware versions are uniquely identified
-1. Firmware comes in a binary file format that the device will need to acquire from an online source
-1. Firmware is locally stored is some form of physical storage (ROM memory, hard drive,...)
-1. Device manufacturer provide a description of the required operations on the device to update the firmware.
-
-#### Azure IoT Hub Automatic Device Management
-
-Azure IoT Hub offers advanced support for implementing device management operations on a single and on collections of devices. The [Automatic Device Management](https://docs.microsoft.com/azure/iot-hub/iot-hub-auto-device-config) feature allows to simply configure a set of operations, trigger them and then monitor their execution.
-
-In this exercise, you will create a simple simulator that will manage the device twin desired properties changes and will trigger a local process simulating a firmware update. The overall process would be exactly the same for a real device with the exception of the actual steps for the local firmware update. You will then use the Azure Portal to configure and execute a firmware update for a single device. IoT Hub will use the device twin properties to transfer the configuration change request to the device and monitor the progress
+In this exercise, you will create a simple simulator that will manage the device twin desired properties changes and will trigger a local process simulating a firmware update. The overall process would be exactly the same for a real device with the exception of the actual steps for the local firmware update. You will then use the Azure Portal to configure and execute a firmware update for a single device. IoT Hub will use the device twin properties to transfer the configuration change request to the device and monitor the progress.
 
 #### Task 1: Create the device simulator app
 
