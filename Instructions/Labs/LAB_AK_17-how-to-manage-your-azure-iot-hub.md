@@ -10,21 +10,21 @@ lab:
 
 Contoso's Asset Monitoring and Tracking Solution is working great. The system provides continuous monitoring throughout the packaging and shipping process. You have implemented Group Enrollments within DPS to provision devices at scale, and when the container arrives at the destination, the IoT device "decommissioned" through DPS so that it can re-used for future shipments.
 
-To help manage the general logistics of the system, the IT department has asked your team to implement Azure IoT monitoring and logging services.  
+To help manage device utilization and other characteristics of the solution, the IT department has asked your team to implement Azure monitoring and logging services within the IoT solution.
 
 You agree to begin by implementing some simple metrics that can be reviewed with the IT folks before you commit to any additional workload.
 
 In this lab, you will implement monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. In addition, you will create an alert that will be triggered based upon the average number of devices connected. To test the system, you will configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
 
-## Lab Introduction
+## In This Lab
 
-In this lab, you will:
+In this lab, you will complete the following activities:
 
 * Verify Lab Prerequisites
 * Enable diagnostic logs.
 * Enable metrics.
 * Set up alerts for those metrics.
-* Download and run an app that simulates IoT devices connecting via X509 and sending messages to the hub.
+* Download and run an app that simulates IoT devices connecting via X.509 and sending messages to the hub.
 * Run the app until the alerts begin to fire.
 * View the metrics results and check the diagnostic logs.
 
@@ -32,121 +32,132 @@ In this lab, you will:
 
 ### Exercise 1: Verify Lab Prerequisites
 
-[tbd]
+This lab assumes that the following Azure resources are available:
 
-### Exercise 2: Set Up and Use Metrics and Diagnostic Logs with an IoT Hub
+| Resource Type | Resource Name |
+| :-- | :-- |
+| Resource Group | AZ-220-RG |
+| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
+| Storage Account | AZ-220-STORAGE-_{YOUR-ID}_ |
 
-If you have an IoT Hub solution running in production, you want to set up some metrics and enable diagnostic logs. Then if a problem occurs, you have data to look at that will help you diagnose the problem and fix it more quickly. In this lab, you'll see how to enable the diagnostic logs, and how to check them for errors. You'll also set up some metrics to watch, and alerts that fire when the metrics hit a certain boundary.
+If these resources are not available, you will need to run the **lab17-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
-For example, you could have an e-mail sent to you when the number of connected devices exceed a certain threshold, or when the number of messages used gets close to the quota of messages allowed per day for the IoT Hub.
+The **lab17-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
-#### Task 1: Setup Resources
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-In order to complete this lab, you will need to reuse a number of resources from a previous lab - **Automatic Enrollment of Devices in DPS** as well as a storage account.
+    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. Open a new tab on your browser and navigate to the [Azure Cloud Shell](https://shell.azure.com/).
+1. Verify that the Azure Cloud Shell is using **Bash**.
 
-1. Login to you Azure Subscription (the same one you used for your IoT Central App) and if your account is a member of more than one directory, choose the directory you used for your IoT Central account.
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
-1. Once the bash shell is open, create** a **monitoring** folder, and navigate to it by entering the following commands:
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 17-How to manage your Azure IoT Hub
+            * Setup
+
+    The lab17-setup.azcli script file is located in the Setup folder for lab 17.
+
+1. Select the **lab17-setup.azcli** file, and then click **Open**.
+
+    A notification will appear when the file upload has completed.
+
+1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
 
     ```bash
-    mkdir ~/monitoring
-    cd ~/monitoring
+    ls
     ```
 
-1. To create an empty file in which we will copy the setup script, enter the following commands:
+    The `ls` command lists the content of the current directory. You should see the lab17-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
-    touch setup.sh
-    chmod +x setup.sh
+    mkdir lab17
+    mv lab17-setup.azcli lab17
+    cd lab17
     ```
 
-1. To edit the contents of the **setup.sh** file, use the **{ }** icon in Azure Cloud Shell to open the **Cloud Editor**.
+1. To ensure the **lab17-setup.azcli** script has the execute permission, enter the following command:
 
-    To open the **setup.sh** file, you will have to expand the **monitoring** node in the **Files** list to locate it.
+    ```bash
+    chmod +x lab17-setup.azcli
+    ```
 
-1. Copy the following script into the cloud editor:
+1. On the Cloud Shell toolbar, to edit the lab17-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+
+1. In the **Files** list, to expand the lab17 folder and open the script file, click **lab17**, and then click **lab17-setup.azcli**.
+
+    The editor will now show the contents of the **lab17-setup.azcli** file.
+
+1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+
+    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
     YourID="{YOUR-ID}"
-    RGName="AZ-220"
-    Location="westus"
-    IoTHubName="$RGName-HUB-$YourID"
-    DPSName="$RGName-DPS-$YourID"
+    RGName="AZ-220-RG"
+    IoTHubName="AZ-220-HUB-$YourID"
+    DPSName="AZ-220-DPS-$YourID"
     DeviceName="asset-track"
-    StorageAccountName="$RGName-STORAGE-$YourID"
-
-    # Storage Account name must be in lowercase with no '-'
-    ToLowerAlphaNum () {
-        echo $1 | tr '[:upper:'] '[:lower:]' | tr -cd '[:alnum:]'
-    }
-
-    StorageAccountName=$( ToLowerAlphaNum $StorageAccountName )
-
-    # create resource group
-    az group create --name $RGName --location $Location -o Table
-
-    # create IoT Hub
-    az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location -o Table
-
-    # create DPS
-    az iot dps create --name $DPSName -g $RGName --sku S1 --location $Location -o Table
-
-    # Get IoT Hub Connection String so DPS can be linked
-    IoTHubConnectionString=$(
-        az iot hub show-connection-string --hub-name $IoTHubName --query connectionString --output tsv
-    )
-
-    # Link IoT Hub with DPS
-    az iot dps linked-hub create --dps-name $DPSName -g $RGName --connection-string $IoTHubConnectionString --location $Location
-
-    # Create a Storage Account
-    az storage account create --name $StorageAccountName --resource-group $RGName --location=$Location --sku Standard_LRS -o Table
-
-    StorageConnectionString=$( az storage account show-connection-string --name $StorageAccountName -o tsv )
+    Location="{YOUR-LOCATION}"
     ```
 
-    > **Note**:  Review this script. You can see that it perform the following actions (and create resources if they don't already exist):
-    > * Builds the resource names
-    >   * Note that the storage account name is set to lowercase with no dashes to match the naming rules.
-    > * Create Resource Group
-    > * Create IoT Hub
-    > * Create DPS
-    > * Link IoT Hub and DPS
-    > * Create Storage Account
+    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    >
+    > ```bash
+    > az account list-locations -o Table
+    >
+    > DisplayName           Latitude    Longitude    Name
+    > --------------------  ----------  -----------  ------------------
+    > East Asia             22.267      114.188      eastasia
+    > Southeast Asia        1.283       103.833      southeastasia
+    > Central US            41.5908     -93.6208     centralus
+    > East US               37.3719     -79.8164     eastus
+    > East US 2             36.6681     -78.3889     eastus2
+    > ```
 
-1. In order to specify the correct resource names and location, update the following variables at the top of the file:
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
-    * YourID
-    * RGName
-    * Location
+    If prompted to save, click **Save** and the editor will close.
 
-    > **Note**:  If you have existing resources you wish to reuse, ensure you set the **YourID** value to the same you used before, as well as the same **RGName** and **Location**.
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To save the edited **setup.sh** file, press **CTRL-Q**. If prompted to save you changes before closing the editor, click **Save**.
-
-1. To run the **setup.sh** script, run the following:
+1. To create the resources required for this lab, enter the following command:
 
     ```bash
-    ./setup.sh
+    ./lab17-setup.azcli
     ```
 
-    > **Note**:  If the IoT Hub and DPS resources already exist, you will see red warnings stating the name is not available - you can ignore these errors.
+    This script can take a few minutes to run. You will see JSON output as each step completes.
 
-You have now ensured the resources are available for this lab. Next, we shall setup monitoring and logging.
+    The script will first create a resource group named **AZ-220-RG**, then your IoT Hub named **AZ-220-HUB-{YourID}** and Device Provisioning Service named **AZ-220-DSP-{YourID}**. If the services already exist, a corresponding message will be displayed. The script will link your IoT Hub and DSP. The script will then create a storage account named **az220storage{your-id}**.
 
-### Exercise 3: Enable Logging
+    You should now be ready to proceed with Exercise 2 of this lab.
+
+### Exercise 2: Set Up and Use Metrics and Diagnostic Logs with an IoT Hub
 
 Azure Resource logs are platform logs emitted by Azure resources that describe their internal operation. All resource logs share a common top-level schema with the flexibility for each service to emit unique properties for their own events.
+
+When you have an IoT Hub solution running in production, you will want to set up various metrics and enable diagnostic logs. Then, if a problem occurs, you have data to look at that will help you to diagnose the problem and fix it more quickly. 
+
+In this exercise, you will enable diagnostic logs and use them to to check for errors. You will also set up some metrics to watch, and alerts that fire when the metrics hit a certain boundary.
 
 #### Task 1: Enable diagnostics
 
 1. Sign in to the **Azure portal** and navigate to your IoT hub.
 
-1. In the left hand navigation, under **Monitoring**, select **Diagnostic settings**.
+1. In the left hand navigation menu, under **Monitoring**, click **Diagnostic settings**.
 
     > **Note**:  Diagnostics are disabled by default.
 
@@ -252,11 +263,11 @@ Now set up some metrics to watch for when messages are sent to the hub.
 
 Now that we have enable logging and setup a chart to monitor metrics, we will set up an alert.
 
-### Exercise 4: Configure an Alert
+### Exercise 3: Configure an Alert
 
 Now let us create an alert. Alerts proactively notify you when important conditions are found in your monitoring data. They allow you to identify and address issues before the users of your system notice them. In our asset tracking scenario, we use sensors to track our assets being transported. Each time a sensor is added in a transportation box, it will auto provision through DPS. We want to have a metric for the warehouse manager of how many boxes were "tagged" and need to count the Device Connected events from IoT Hub.
 
-In this task we are going to add an alert that will inform the warehouse manager when 5 or more devices have connected.
+In this exercise, you are going to add an alert that will inform the warehouse manager when 5 or more devices have connected.
 
 1. In the Azure Portal, navigate to the IoT Hub we are using for this lab.
 
@@ -394,17 +405,15 @@ In this task we are going to add an alert that will inform the warehouse manager
 
 Now that we have create our alert, we should configure the environment we need for the device siumulation we will use to trigger the alert.
 
-### Exercise 5: Simulating the Sensors
+### Exercise 4: Simulating the Sensors
 
-As part of the asset-tracking scenario, we need to have devices that simulate the tags that will be used to track the assets during transportation. As each device is activated, it should use automatic device provisioning to connect to the Iot solution and start sending telemetry. In order to automatically connect, each device will need its own X509 certificate that is part of a chain to the root certificate used to create a group enrollment.
+As part of the asset-tracking scenario, we need to have devices that simulate the tags that will be used to track the assets during transportation. As each device is activated, it should use automatic device provisioning to connect to the Iot solution and start sending telemetry. In order to automatically connect, each device will need its own X.509 certificate that is part of a chain to the root certificate used to create a group enrollment.
 
-In this task, we will verify the existing environment, perform any necessary setup, generate 10 device certificates, and configure a console application that will simulate the 10 devices.
+In this exercise, you will verify the existing environment, perform any necessary setup, generate 10 device certificates, and configure a console application that will simulate the 10 devices.
 
-#### Task 1: Verify Environment
+> **Note**: In lab 6 of this course (**Lab 6-Automatic Enrollment of Devices in DPS**) you configured DPS to use X.509 resources. If you still have that configuration available, that will shortcut a few steps in the tasks below. If you did not complete lab 6, make sure you complete every step below.
 
-In **Lab 6-Automatic Enrollment of Devices in DPS** you configured DPS to use X509 resources. If you still have that configuration available, that will shortcut a few steps. However, if you did not complete the lab, make sure you check every step below.
-
-#### Task 2: Verify DPS Configuration
+#### Task 1: Verify DPS Configuration
 
 1. In your browser, navigate to the [Azure Portal](https://portal.azure.com/) and login to your subscription.
 
@@ -430,7 +439,7 @@ In **Lab 6-Automatic Enrollment of Devices in DPS** you configured DPS to use X5
 
 1. If the  **simulated-devices** enrollment group does not exist, continue with the **Verify OpenSSL** section below.
 
-#### Task 3: Verify OpenSSL
+#### Task 2: Verify OpenSSL
 
 In the following steps you will verify that OpenSSL tools installed in an earlier lab are still available.
 
@@ -454,7 +463,7 @@ In the following steps you will verify that OpenSSL tools installed in an earlie
 
 1. Jump down to the **Generate Device Certificates** in the next task.
 
-#### Task 4: Install OpenSSL Tools
+#### Task 3: Install OpenSSL Tools
 
 1. In the cloud shell, enter the following commands:
 
@@ -586,7 +595,7 @@ The first x.509 certificates needed are CA and intermediate certificates. These 
 
 Now that the environment is setup, it's time to generate our device certificates.
 
-### Exercise 6: Simulate Devices
+### Exercise 5: Simulate Devices
 
 In this task we will be generating X509 certificates from the root certifcate. We will then use these certificates in a console application that will simulate 10 devices connecting to DPS and sending telemetry to an IoT Hub.
 
@@ -737,13 +746,13 @@ This app is very similar to the app used in the earlier lab **L06-Automatic Enro
 
 Now, let's check the storage account to see if anything has been logged by Azure Monitor.
 
-### Exercise 7: Review Metrics, Alerts and Archive
+### Exercise 6: Review Metrics, Alerts and Archive
 
-[TBD]
+In this exercise, you will examine some of the reporting and logging resources that you configured earlier in this lab, and review whatever event data has been recorded in the short time that has elapsed.  
 
 #### Task 1: See the Metrics in the Portal
 
-1. In the Azure Portal, open the Metrics chart you pinned to the dashboard by clicking on the chart title.
+1. In the Azure portal, open the Metrics chart that you pinned to the dashboard by clicking on the chart title.
 
     The chart will open and fill the page.
 
