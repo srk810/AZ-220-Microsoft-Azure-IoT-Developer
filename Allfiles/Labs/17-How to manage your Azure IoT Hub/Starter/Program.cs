@@ -25,7 +25,7 @@ namespace X509CertificateSimulatedDevice
         private const string GlobalDeviceEndpoint = "global.azure-devices-provisioning.net";
 
         // Azure Device Provisioning Service (DPS) ID Scope
-        private static string dpsIdScope = "0ne000A65EE";
+        private static string dpsIdScope = "<DPS-ID-Scope>";
 
         // Certificate (PFX) File Name
         private static string[] s_certificateFileNames = new string[]
