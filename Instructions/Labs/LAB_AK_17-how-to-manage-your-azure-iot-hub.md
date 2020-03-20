@@ -161,7 +161,7 @@ In this exercise, you will enable diagnostic logs and use them to to check for e
 
 1. On your Azure dashboard, click **AZ-220-HUB-{YOUR-ID}**.
 
-    You dashboard should have a link to your IoT Hub on the on the AZ-220-RG resource group tile.
+    Your dashboard should have a link to your IoT Hub on the on the AZ-220-RG resource group tile.
 
 1. On the left side navigation menu, under **Monitoring**, click **Diagnostic settings**.
 

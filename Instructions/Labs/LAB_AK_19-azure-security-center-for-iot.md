@@ -8,15 +8,15 @@ lab:
 
 ## Lab Scenario
 
-Contoso has built all their solutions with security in mind. However, they want to see how they can better get a unified view of security across all of their on-premises and cloud workloads, including their Azure IoT solutions. Plus, when onboarding new devices, we want to apply security policies across workloads (Leaf devices, Microsoft Edge devices, IoT Hub) to ensure compliance with security standards and improved security posture.
+Contoso has built all their solutions with security in mind. However, they want to see how they can better get a unified view of security across all of their on-premises and cloud workloads, including their Azure IoT solutions. Plus, when onboarding new devices, the company wants to apply security policies across workloads (Leaf devices, Microsoft Edge devices, IoT Hub) to ensure compliance with security standards and improved security posture.
 
-Contoso is adding a brand new assembly line outfitted with new IoT devices to help with the increasing shipping and packing demands for new orders. You want to ensure that any new devices are secured and also want to be able to see security recommendations to continue improving your solution's security in your full end-to-end IoT solution. You will start investigating using Azure IoT Center for IoT for your solution.
+Contoso is adding a brand new assembly line outfitted with new IoT devices to help with the increasing shipping and packing demands for new orders. You want to ensure that any new devices are secured, and you also want to be able to see security recommendations that could help you to continue improving your solution's security (considering the full end-to-end IoT solution). You will start investigating using Azure IoT Center for IoT for your solution.
 
-Contoso is also installing new connected Thermostats to be able to monitor temperature across different cheese caves. As part of Contoso's security requirements, you will create a custom alert to monitor whether the Thermostats exceed expected telemetry transmission frequency.
+Contoso is also installing new connected Thermostats that will improve the ability to monitor and control temperature across different cheese caves. As part of Contoso's security requirements, you will create a custom alert to monitor whether the Thermostats exceed expected telemetry transmission frequency.
 
 ## In This Lab
 
-We will be enabling the Azure Security Center for IoT to be able to see securely in our end to end IoT solutions. Tasks include:
+In this lab, you will complete the following activities:
 
 * Verify Lab Prerequisites
 * Create a new IoT Hub
@@ -33,107 +33,116 @@ We will be enabling the Azure Security Center for IoT to be able to see securely
 
 ### Exercise 1: Verify Lab Prerequisites
 
-[tbd]
+This lab assumes that the following Azure resources are available:
 
-### Exercise 2: Create an IoT Hub using the Azure portal
+| Resource Type | Resource Name |
+| :-- | :-- |
+| Resource Group | AZ-220-RG |
+| IoT Hub | AZ-220-HUB-{YOUR-ID} |
 
-In this task, you will use the Azure portal to create an IoT Hub resource.
+If these resources are not available, you will need to run the **lab19-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
-1. Login to [portal.azure.com](https://portal.azure.com) using your Azure account credentials.
+> **Note**: The **lab19-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
-    If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. Notice that the AZ-220 dashboard that you created in the previous task has been loaded.
+1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-    You will be adding resources to your dashboard as the course continues.
+1. Verify that the Azure Shell is using **Bash**.
 
-1. On the portal menu, click **+ Create a resource**.
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-    The Azure Marketplace is a collection of all the resources you can create in Azure. The marketplace contains resources from both Microsoft and the community.
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
-1. In the Search textbox, type **IoT Hub** and then press Enter.
+1. In the dropdown, click **Upload**.
 
-1. On the search results blade, click **IoT Hub**.
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
 
-    Notice the "USEFUL LINKS" displayed on this blade.
+    In Lab 3 of this course, "Setup the Development Environment", you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
 
-1. In the list of links, click **Documentation**.
+    * Allfiles
+      * Labs
+          * 19-Detect if your IoT Device was Tampered with Azure Security Center for IoT
+            * Setup
 
-    The IoT Hub Documentation page is the root page for IoT Hub resources and documentation. You can use this page to explore current documentation and find tutorials and other resources that will help you to explore activities that are outside the scope of this course. We will refer you to the docs.microsoft.com site throughout this course for additional reading on specific topics.
+    The lab19-setup.azcli script file is located in the Setup folder for lab 19.
 
-1. Use your browser to navigate back to the Azure portal tab.
+1. Select the **lab19-setup.azcli** file, and then click **Open**.
 
-1. To begin the process of creating your new IoT Hub, click **Create**.
+    A notification will appear when the file upload has completed.
 
-    Next, you need to specify information about the Hub and your subscription. The following steps walk you through the settings, explaining each of the fields as you fill them in.
+1. To verify that the correct file has uploaded, enter the following command:
 
-1. On the IoT hub blade, on the **Basics** tab, ensure that the Azure subscription that you intend to use for this course is selected.
+    ```bash
+    ls
+    ```
 
-1. To the right of **Resource Group**, open the **Select existing** dropdown, and then click **AZ-220-RG**
+    The `ls` command lists the content of the current directory. You should see the lab19-setup.azcli file listed.
 
-    This is the resource group that you created in the previous lab. We will be grouping the resources that we create for this course together in the same resource group. This should help you to clean up your resources when you have completed the course.
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
-1. To the right of **Region**, open the drop-down list and select the geographic location that is closest to you and also supports Event Grid.
+    ```bash
+    mkdir lab19
+    mv lab19-setup.azcli lab19
+    cd lab19
+    ```
 
-    As we saw previously, Azure is supported by a series of datacenters that are placed in regions all around the world. When you create something in Azure, you deploy it to one of these datacenter locations.
+    These commands will create a directory for this lab, move the **lab19-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
 
-    > **Note**:  For the current list of Regions that support Event Grid, see the following link: [Products available by region](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=event-grid&regions=all)
+1. To ensure the **lab19-setup.azcli** has the execute permission, enter the following command:
+
+    ```bash
+    chmod +x lab19-setup.azcli
+    ```
+
+1. On the Cloud Shell toolbar, to edit the **lab19-setup.azcli** file, click **Open Editor** (second button from the right - **{ }**).
+
+1. In the **Files** list, to expand the lab19 folder, click **lab19**, and then click **lab19-setup.azcli**.
+
+    The editor will now show the contents of the **lab19-setup.azcli** file.
+
+1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+
+    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+
+    ```bash
+    #!/bin/bash
+
+    RGName="AZ-220-RG"
+    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+
+    Location="{YOUR-LOCATION}"
+    ```
+
+    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
-    > **Note**:  When picking a datacenter to host your app, keep in mind that picking a datacenter close to your end users will decrease load/response times. If you are on the other side of the world from your end users, you should not be picking the datacenter nearest you.
+    > ```bash
+    > az account list-locations -o Table
+    >
+    > DisplayName           Latitude    Longitude    Name
+    > --------------------  ----------  -----------  ------------------
+    > East Asia             22.267      114.188      eastasia
+    > Southeast Asia        1.283       103.833      southeastasia
+    > Central US            41.5908     -93.6208     centralus
+    > East US               37.3719     -79.8164     eastus
+    > East US 2             36.6681     -78.3889     eastus2
+    > ```
 
-1. To the right of IoT Hub **Name**, enter a globally unique name for your IoT Hub.
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
-    To provide a globally unique name, enter **AZ-220-HUB-_{YOUR-ID}_** (remember to replace **{YOUR-ID}** with the unique ID you created in Lab 1.).
+    If prompted to save, click **Save** and the editor will close.
 
-    For example: **AZ-220-HUB-CAH102119**
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-    The name of your IoT hub must be globally unique because it is a publicly accessible resource that you must be able to access from any IP connected device.
+1. To create the resources required for this lab, enter the following command:
 
-    Consider the following when you specify a unique name for your new IoT Hub:
+    ```bash
+    ./lab19-setup.azcli
+    ```
 
-    * The value that you apply to _IoT Hub Name_ must be unique across all of Azure. This is true because the value assigned to the name will be used in the IoT Hub's connection string. Since Azure enables you to connect devices from anywhere in the world to your hub, it makes sense that all Azure hubs must be accessible from the Internet using the connection string and that connection strings must therefore be unique. We'll explore connection strings later in this lab.
+    This will take a few minutes to run. You will see JSON output as each step completes.
 
-    * The value that you assign to _IoT Hub Name_ cannot be changed once the app service has been created. If you do need to change the name, you'll need to create a new IoT Hub, re-register your devices to it, and delete your old IoT Hub.
-
-    * The _IoT Hub Name_ field is a required field.
-
-    > **Note**:  Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with '**-01**' or '**-02**' as necessary to achieve a globally unique name.
-
-1. At the top of the blade, click **Size and scale**.
-
-    Take a minute to review the information presented on this blade.
-
-1. To the right of **Pricing and scale** tier, open the dropdown and then select **S1: Standard tier**.
-
-    You can choose from several tier options depending on how many features you want and how many messages you send through your solution per day. The free tier is intended for testing and evaluation. It allows 500 devices to be connected to the IoT hub and up to 8,000 messages per day. Each Azure subscription can create one IoT Hub in the free tier.
-
-    The **S1** tier that we are using in this course allows a total of 400,000 messages per unit per day and provides the all of the services that are required in this training. We won't actually need 400,000 messages per unit per day, but we will be using features provided at this tier level, such as Cloud-to-device commands, Device management, and IoT Edge. IoT Hub also offers a free tier that is meant for testing and evaluation. It has all the capabilities of the standard tier, but limited messaging allowances. However, you cannot upgrade from the free tier to either basic or standard.
-
-    > **Note**:  The "S1 - Standard" tier has a cost of $25.00 USD per month per unit. We will be specifying 1 unit.
-
-    For details about the other tier options, see [Choosing the right IoT Hub tier for your solution](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling)).
-
-1. To the right of **Number of S1 IoT Hub units**, ensure that **1** is selected.
-
-    As mentioned above, the pricing tier that you choose establishes the number of messages that your hub can process per unit per day. To increase the number of messages that you hub can process without moving to a higher pricing tier, you can increase the number of units. For example, if you want the IoT hub to support ingress of 700,000 messages, you choose *two* S1 tier units. For the IoT courses created by Microsoft we will be using just 1 unit.
-
-1. Under **Advanced Settings**, ensure that **Device-to-cloud partitions** is set to **4**.
-
-    The number of partitions relates the device-to-cloud messages to the number of simultaneous readers of these messages. Most IoT hubs will only need four partitions, which is the default value. For this course we will create our IoT Hub using the default number of partitions.
-
-1. At the top of the blade, click **Review + create**.
-
-1. At the bottom of the blade, to finalize the creation of your IoT Hub, click **Create**.
-
-    Deployment can take a minute or more to complete. You can open the Azure portal Notification pane to monitor progress.
-
-1. Notice that after a couple of minutes you receive a notification stating that your IoT Hub was successfully deployed to your **AZ-220-RG** resource group.
-
-1. On the portal menu, click **Dashboard**, and then click **Refresh**.
-
-    You should see that your Resource group tile lists your new IoT Hub.
-
-### Exercise 3: Enable Azure Security Center for IoT Hub
+### Exercise 2: Enable Azure Security Center for IoT Hub
 
 Azure Security Center for IoT enables you to unify security management and enable end-to-end threat detection and analysis across hybrid cloud workloads and your Azure IoT solution.
 
@@ -148,13 +157,22 @@ Azure Security Center for IoT is composed of the following components:
 
 You will enable the **Azure Security Center for IoT Hub**. 
 
-1. On the Azure portal menu, click Dashboard and open your IoT Hub - **CheeseCaveHub-{YOUR-ID}**.
+1. If necessary, log in to your Azure portal using your Azure account credentials.
 
-   You can also use the portal search bar by entering your IoT Hub name and then select your IoT Hub resource once it is listed.
+    If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Under **Security** menu on the left side, to onboard Azure Security Center for IoT Hub, click on any of the Security blades, such as **Overview**, and click **Secure your IoT solution**.
+1. On your Azure dashboard, click **AZ-220-HUB-{YOUR-ID}**.
 
-    After a few moments you may see the message **Onboarding succeeded for this IoT hub, please refresh for changes to take effect** - refresh the page.
+    Your dashboard should have a link to your IoT Hub on the on the AZ-220-RG resource group tile.
+
+1. On the left side navigation menu, under **Security**, and then click **Overview**.
+
+    Azure Security Center for IoT Hub will be onboarded the first time a Security pane is opened. 
+    
+    * You may be prompted click **Secure your IoT solution**.
+    * After a few moments you may see the message **Onboarding succeeded for this IoT hub, please refresh for changes to take effect**.
+
+1. Take a moment to review the contents on the Security Overview pane.
 
 #### Task 2: Log Analytics creation
 
@@ -170,7 +188,7 @@ To change the workspace configuration of Log Analytics:
 
 By default, turning on the Azure Security Center for IoT solution automatically secures all IoT Hubs under your Azure subscription.
 
-### Exercise 4: Create and Register a New Device
+### Exercise 3: Create and Register a New Device
 
 You are now going to create a new IoT device that will later be used to measure vibrations on a new conveyor belt. For this lab, you will be using a VM to act like an IoT device.
 
@@ -233,7 +251,7 @@ As a device must be registered with your IoT hub before it can connect, let's cr
 
 1. Click **Save**.
 
-### Exercise 5: Create a Security Module Twin
+### Exercise 4: Create a Security Module Twin
 
 Azure Security Center for IoT offers full integration with your existing IoT device management platform, enabling you to manage your device security status as well as make use of existing device control capabilities. Azure Security Center for IoT integration is achieved by making use of the IoT Hub twin mechanism.
 
@@ -280,7 +298,7 @@ In this task, you will be creating a security module twin manually.
 
     > **Note**: Example of what an IoT Hub hostname looks like: AZ-220-HUB-CAH102119.azure-devices.net
 
-### Exercise 6: Deploy Azure Security Center for IoT C# Security Agent
+### Exercise 5: Deploy Azure Security Center for IoT C# Security Agent
 
 Azure Security Center for IoT provides reference architecture for security agents that log, process, aggregate, and send security data through IoT Hub. You will be adding a security agent for C# to deploy on your simulated device (Linux VM). There are C and C# based agents. C agents are recommended for devices with more restricted or minimal device resources.
 
@@ -435,7 +453,7 @@ With the C# agent you will be connecting to your IoT Hub. This means you will ne
 
 Now that your Azure Security Center for IoT device agents on your device is installed, the agents will be able to collect, aggregate and analyze raw security events from your device.
 
-### Exercise 7: Configure Solution Management
+### Exercise 6: Configure Solution Management
 
 Azure Security Center for IoT provides comprehensive end-to-end security for Azure-based IoT solutions.
 
@@ -486,7 +504,7 @@ Now that you have your the security agent installed on your device and your solu
 
     ![Updated Screenshot of Azure IoT Security Module](media/LAB_AK_19-updated-security-dashboard.png)
 
-### Exercise 8: Introduce custom alerts
+### Exercise 7: Introduce custom alerts
 
 Using custom security groups and alerts, takes full advantage of the end-to-end security information and categorical device knowledge to ensure better security across your IoT solution. 
 
@@ -552,7 +570,7 @@ In our cheese cave scenario, we don't expect our temperature monitor devices to 
 
     ![Many custom alerts](media/LAB_AK_19-many-custom-alerts.png)
 
-### Exercise 9: Configure the Device App
+### Exercise 8: Configure the Device App
 
 In the previous unit, a Custom alert was created, In this unit, you will create an IoT Hub device and a C# .Net Core console application that will leverage the **Microsoft.Azure.Devices.Client** nuget package to connect to an IoT Hub. The console application will send telemetry every 10 seconds and is designed to exceed the Device to Cloud message threshold configured in the Custom Alert.
 
@@ -736,7 +754,7 @@ A device must be registered with your IoT hub before it can connect.
 
     You can leave the app running for the remainder of this module to generate multiple alerts.
 
-### Exercise 10: Review Security Center Alerts
+### Exercise 9: Review Security Center Alerts
 
 In the previous unit, a console application was created an executed. That console app will have sent too much telemetry and will trigger the Custom Alert created earlier. 
 
