@@ -20,6 +20,10 @@ In order to make these decisions, you'll need an up-to-date picture of all that 
 
 IoT Central provides all you need to handle this scenario. 
 
+The following resources will be created:
+
+![Lab 20 Architecture](media/LAB_AK_20-architecture.png)
+
 ## In This Lab
 
 In this lab you will:

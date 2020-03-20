@@ -14,6 +14,10 @@ Your manager wants the system to be resilient to network outages, which do still
 
 You propose configuring IoT Edge to support an offline scenario in case network drops, and you will look into storing telemetry from sensors locally (on device) and configuring the Edge devices for regular syncs at given times.
 
+The following resources will be created:
+
+![Lab 14 Architecture](media/LAB_AK_14-architecture.png)
+
 ## In this Lab
 
 In this lab, you will complete the following activities:

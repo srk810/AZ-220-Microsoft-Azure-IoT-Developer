@@ -12,6 +12,10 @@ Your work to-date on Contoso's Asset Monitoring and Tracking Solution has enable
 
 To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication.
 
+The following resources will be created:
+
+![Lab 6 Architecture](media/LAB_AK_06-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:

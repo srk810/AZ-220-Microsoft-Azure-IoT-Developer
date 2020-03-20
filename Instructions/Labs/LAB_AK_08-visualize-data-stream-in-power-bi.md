@@ -50,6 +50,10 @@ We use the dashboard feature of Power BI to create a number of tiles. One tile c
 
 The fourth tile allows you to compare the anomalies with the red text in the telemetry console window. Is there a cluster of anomalies being detected when forced, or increasing, or both, vibrations are in action?
 
+The following resources will be created:
+
+![Lab 8 Architecture](media/LAB_AK_08-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:

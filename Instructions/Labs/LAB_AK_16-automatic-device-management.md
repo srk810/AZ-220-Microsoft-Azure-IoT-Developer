@@ -41,6 +41,10 @@ For you, this means two things:
 
 You plan to implement features of IoT Hub that enable automatic device management and device management at scale.
 
+The following resources will be created:
+
+![Lab 16 Architecture](media/LAB_AK_16-architecture.png)
+
 ## In this lab
 
 In this lab, you will complete the following activities:

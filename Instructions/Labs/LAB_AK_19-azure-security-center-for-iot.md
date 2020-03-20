@@ -14,6 +14,10 @@ Contoso is adding a brand new assembly line outfitted with new IoT devices to he
 
 Contoso is also installing new connected Thermostats that will improve the ability to monitor and control temperature across different cheese caves. As part of Contoso's security requirements, you will create a custom alert to monitor whether the Thermostats exceed expected telemetry transmission frequency.
 
+The following resources will be created:
+
+![Lab 19 Architecture](media/LAB_AK_19-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:

@@ -18,6 +18,10 @@ There are three patterns for using an IoT Edge device as a gateway: transparent,
 
 **Identity translation** - Devices that cannot connect to IoT Hub can connect to a gateway device, instead. The gateway provides IoT Hub identity and protocol translation on behalf of the downstream devices. The gateway is smart enough to understand the protocol used by the downstream devices, provide them identity, and translate IoT Hub primitives. Downstream devices appear in IoT Hub as first-class devices with twins and methods. A user can interact with the devices in IoT Hub and is unaware of the intermediate gateway device.
 
+The following resources will be created:
+
+![Lab 12 Architecture](media/LAB_AK_12-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:

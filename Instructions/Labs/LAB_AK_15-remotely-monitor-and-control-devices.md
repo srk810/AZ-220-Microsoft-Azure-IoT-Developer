@@ -39,6 +39,10 @@ Coding in this lab is broken down into three parts: sending and receiving teleme
 
 You will start by writing two apps: one for a device to send telemetry, and one for a back-end service (that will run in the cloud) to receive the telemetry.
 
+The following resources will be created:
+
+![Lab 15 Architecture](media/LAB_AK_15-architecture.png)
+
 ## In this lab
 
 In this lab, you will complete the following activities:
