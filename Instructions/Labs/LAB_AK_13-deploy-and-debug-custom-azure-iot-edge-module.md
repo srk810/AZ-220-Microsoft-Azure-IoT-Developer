@@ -4,7 +4,7 @@ lab:
     module: 'Module 7: Azure IoT Edge Modules'
 ---
 
-# Develop, Deploy and debug a custom module on Azure IoT Edge with VS Code
+# Develop, Deploy, and debug a custom module on Azure IoT Edge with VS Code
 
 ## Lab Scenario
 
