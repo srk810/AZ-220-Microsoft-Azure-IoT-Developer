@@ -16,6 +16,10 @@ You agree to begin by implementing some simple metrics that can be reviewed with
 
 In this lab, you will implement monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. In addition, you will create an alert that will be triggered based upon the average number of devices connected. To test the system, you will configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
 
+The following resources will be created:
+
+![Lab 17 Architecture](media/LAB_AK_17-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:
@@ -474,7 +478,7 @@ In this exercise, you will verify the existing environment, perform any necessar
         * click the certificate to view the details, then click **Delete**. 
         * Enter the **Certificate Name** to confirm the deletion and click **OK**. 
         * Move directly to Task 2 of this exercise - **Task 2: Verify OpenSSL**.
-    *  If the certificate status is **Verified**, continue to the next step.
+    * If the certificate status is **Verified**, continue to the next step.
 
 1. On the left side navigation menu, under **Settings**, click **Manage enrollments**
 

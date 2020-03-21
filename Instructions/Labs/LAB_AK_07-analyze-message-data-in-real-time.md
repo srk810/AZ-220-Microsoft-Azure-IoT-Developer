@@ -24,6 +24,10 @@ You decide to prototype the solution using simulated telemetry from a single IoT
 
 To simulate the vibration data in a realistic manner, you work with one of the engineers to understand a little bit about what causes the vibrations. It turns out that there are a number of different types of vibration that contribute to the overall vibration level. For example, a "force vibration" could be introduced by a broken guide wheel or an especially heavy load placed improperly on the conveyor belt. There's also an "increasing vibration", that can be introduced when a system design limit (such as speed or weight) is exceeded. With a little help, you able to develop the code for a simulated IoT device that produces an acceptable representation of vibration data and will generate anomalies.
 
+The following resources will be created:
+
+![Lab 7 Architecture](media/LAB_AK_07-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:

@@ -16,6 +16,10 @@ In Contoso's cheese packaging facility, when an empty container enters the syste
 
 You have been tasked with validating the device provisioning and de-provisioning process using DPS. For the initial phase of the process you will use an Individual Enrollment approach.
 
+The following resources will be created:
+
+![Lab 5 Architecture](media/LAB_AK_05-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:

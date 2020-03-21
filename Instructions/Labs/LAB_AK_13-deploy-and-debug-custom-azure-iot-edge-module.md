@@ -14,7 +14,7 @@ In the past, Contoso has run their packaging process at full capacity, processin
 
 Since you have already implemented the IoT solution that monitors the conveyor belt system in the packaging and shipping area, you have been tasked with developing a solution that helps to manage/control packaging volumes.
 
-To ensure that the correct number of packages have been processed, you decide to create (and deploy to an IoT Edge device) a simple module that counts the number of packages detected on the conveyor belt system. You already have another module available that can be used to detect the packages (both modules be deployed to the same IoT Edge device). 
+To ensure that the correct number of packages have been processed, you decide to create (and deploy to an IoT Edge device) a simple module that counts the number of packages detected on the conveyor belt system. You already have another module available that can be used to detect the packages (both modules be deployed to the same IoT Edge device).
 
 You need to create and deploy a custom IoT Edge module that counts the number of packages detected by the other module.
 
@@ -27,7 +27,11 @@ This lab includes the following prerequisites for the development machine (lab h
 * Docker Community Edition installed on development machine, with Docker Client version 18.03.0 or later
   * [Download Docker Desktop for Mac and Windows](https://www.docker.com/products/docker-desktop)
 
-    > **Important**: Due to the January 13, 2020 removal of Azure Container Registry support for any TLS versions before TLS version 1.2, you must be runing Docker Client 18.03.0 or later. 
+    > **Important**: Due to the January 13, 2020 removal of Azure Container Registry support for any TLS versions before TLS version 1.2, you must be running Docker Client 18.03.0 or later. 
+
+The following resources will be created:
+
+![Lab 13 Architecture](media/LAB_AK_13-architecture.png)
 
 ## In This Lab
 

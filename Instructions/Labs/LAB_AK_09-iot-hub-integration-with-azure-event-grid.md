@@ -16,6 +16,10 @@ Nancy informs you that her team of facility technicians is responsible for insta
 
 To generate an alert, you will push a device created event type to Event Grid when a new thermostat device is created in IoT Hub. You will create a Logic Apps instance that reacts to this event (on Event Grid) and which will send an email to alert facilities when a new device has been created, specifying the device ID and connection state.
 
+The following resources will be created:
+
+![Lab 9 Architecture](media/LAB_AK_09-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:

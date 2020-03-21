@@ -16,6 +16,10 @@ Contoso has decided to launch an automated system that uses IoT devices to monit
 
 To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device (that includes temperature and humidity sensors) to IoT Hub.
 
+The following resources will be created:
+
+![Lab 4 Architecture](media/LAB_AK_04-architecture.png)
+
 ## In This Lab
 
 In this lab, you will complete the following activities:
