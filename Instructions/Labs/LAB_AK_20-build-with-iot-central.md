@@ -538,14 +538,6 @@ Using Visual Studio Code, build the device sensor app.
 
 1. Open a new instance of Visual Studio Code.
 
-
-
-
-
-
-
-
-
 1. On the **File** menu, click **Open Folder**.
 
 1. At the top of the **Open Folder** dialog, click **New folder**, type **RefrigeratedTruck** and then press **Enter**.

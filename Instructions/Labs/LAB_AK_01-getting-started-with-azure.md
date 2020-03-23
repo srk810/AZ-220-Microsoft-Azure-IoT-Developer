@@ -8,7 +8,9 @@ lab:
 
 ## Lab Scenario
 
-You are an Azure IoT Developer for a leading gourmet cheese company named Contoso. Contoso evaluated the business opportunity for IoT and concluded that there are significant benefits that they can achieve. They selected Microsoft Azure IoT based on their evaluations.
+You are an Azure IoT Developer for a leading gourmet cheese company named Contoso.
+
+Contoso's Chief Technology Officer has led an evaluation the business opportunity for IoT and concluded that they can realize significant benefits by implementing an IoT solution. They selected Microsoft Azure IoT based on these evaluations.
 
 To get started, you need to become familiar with the Azure tools.
 
