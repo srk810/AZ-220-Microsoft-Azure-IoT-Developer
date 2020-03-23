@@ -14,7 +14,7 @@ In the past, temperature and humidity data was collected by factory floor worker
 
 Contoso has decided to launch an automated system that uses IoT devices to monitor temperature and humidity. The rate at which telemetry data is communicated will be adjustable to help ensure that their manufacturing process is under control as batches of cheese proceed through environmentally sensitive processes.
 
-To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device (that includes temperature and humidity sensors) to IoT Hub.
+To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device (that includes temperature and humidity sensors) to IoT Hub. For the purposes of this lab, you will be simulating an actual IoT device by using a .NET Core Console application.
 
 The following resources will be created:
 
@@ -149,7 +149,9 @@ Once the script has completed, you will be ready to continue with the lab.
 
 The `iot` Azure CLI modules includes several commands for managing IoT Devices within Azure IoT Hub under the `az iot hub device-identity` command group. These commands can be used to manage IoT Devices within scripts or directly from the command-line / terminal.
 
-#### Task 1: Create the IoT Hub Device ID
+#### Task 1: Managing Subscriptions
+
+It is possible to have more than one subscription associated with a single account, so it is important to understand how to list the subscriptions, choose the current active subscription and to change the default subscription.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -160,6 +162,52 @@ The `iot` Azure CLI modules includes several commands for managing IoT Devices w
 1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
 1. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
+
+1. At the command prompt, to list the available subscriptions, enter the following command:
+
+    ```bash
+    az account list --output table
+
+    Name                      CloudName    SubscriptionId                        State    IsDefault
+    ------------------------  -----------  ------------------------------------  -------  -----------
+    Subscription1             AzureCloud   aa1122bb-4bd0-462b-8449-a1002aa2233a  Enabled  True
+    Subscription2             AzureCloud   aa1122bb-4bd0-462b-8449-a1002aa2233b  Enabled  False
+    Azure Pass - Sponsorship  AzureCloud   aa1122bb-4bd0-462b-8449-a1002aa2233c  Enabled  False
+    ```
+
+    As you can see, the **Azure Pass - Sponsorship** in use for the course is listed, but is not set to the default subscription.
+
+1. To view the currently active subscription, enter the following command:
+
+    ```bash
+    az account show -o table
+
+    EnvironmentName    IsDefault    Name           State    TenantId
+    -----------------  -----------  -------------  -------  ------------------------------------
+    AzureCloud         True         Subscription1  Enabled  aa1122bb-4bd0-462b-8449-a1002aa2233a
+    ```
+
+1. To change the default subscription for the current session to the **Azure Pass - Sponsorship**, enter the following command:
+
+    ```bash
+    az account set --subscription "Azure Pass - Sponsorship"
+    ```
+
+    > **Note**: You can use either the subscription **Name** or the **SubscriptionId** with **--subscription** argument. You **must** use the **SubscriptionId** if you have two subscriptions with the same name.
+
+1. To confirm the change, enter the following command:
+
+    ```bash
+    az account show -o table
+
+    EnvironmentName    IsDefault    Name                      State    TenantId
+    -----------------  -----------  ------------------------  -------  ------------------------------------
+    AzureCloud         True         Azure Pass - Sponsorship  Enabled  aa1122bb-4bd0-462b-8449-a1002aa2233c
+    ```
+
+This subscription will now be used in the current session whenever you create resources, etc.
+
+#### Task 2: Create the IoT Hub Device ID
 
 1. Within the Cloud Shell, to ensure the Cloud Shell has the IoT extension installed, run the following command:
 
@@ -179,7 +227,7 @@ The `iot` Azure CLI modules includes several commands for managing IoT Devices w
     >az iot hub list -o table
     >```
 
-#### Task 2: Get the Device Connection String
+#### Task 3: Get the Device Connection String
 
 1. Within the Cloud Shell, run the following Azure CLI command to get _device connection string_ for the Device ID that was just added to the IoT Hub. This connection string will be used to connect the Simulated Device to the Azure IoT Hub.
 
