@@ -243,7 +243,7 @@ Microsoft has created a GitHub repo to provide access to lab resource files. Hav
 
 1. To extract the files, click **Extract**.
 
-    Be sure to make not of where you located the files.
+    Be sure to make note of where you located the files.
 
 #### Task 2: Install Azure PowerShell Module
 
