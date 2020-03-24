@@ -26,7 +26,7 @@ In support of these decisions, you will be setting up the following environment:
   > **Note**: When setting up the development environment on a virtual machine, the VM environment must support nested virtualization - [nested virtualization](https://docs.microsoft.com/en-us/virtualization/hyper-v-on-windows/user-guide/nested-virtualization)
 
 * Azure CLI (current/latest)
-* .NET Core 3.0.100 (or later) SDK
+* .NET Core 3.1.200 (or later) SDK
 * VS Code (latest)
 * Python 3.7 (not 3.8)
 * Docker Desktop Community 2.1.0.5 (or later) set to Linux Containers
@@ -102,15 +102,15 @@ Visual Studio Code is a lightweight but powerful source code editor which runs o
 
 #### Task 3: Install Azure CLI
 
-Azure CLI 2.1 is a command-line tool that is designed to make scripting Azure-related tasks easier. It also enables you to flexibly query data, and it supports long-running operations as non-blocking processes.
+Azure CLI 2.2 is a command-line tool that is designed to make scripting Azure-related tasks easier. It also enables you to flexibly query data, and it supports long-running operations as non-blocking processes.
 
-1. Open your browser, and then navigate to the Azure CLI 2.1 tools download page: [Install Azure CLI 2.1](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest "Azure CLI 2.1 Install")
+1. Open your browser, and then navigate to the Azure CLI 2.2 tools download page: [Install Azure CLI 2.2](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest "Azure CLI 2.2 Install")
 
-    You should be installing the latest version of the Azure CLI tools. If version 2.1 is not the latest version listed on this "azure-cli-latest" download page, install the more recent version.
+    You should be installing the latest version of the Azure CLI tools. If version 2.2 is not the latest version listed on this "azure-cli-latest" download page, install the more recent version.
 
-1. On the Install Azure CLI 2.1 page, select the install option for your OS, and then follow the on-screen instructions to install the Azure CLI tool.
+1. On the Install Azure CLI 2.2 page, select the install option for your OS, and then follow the on-screen instructions to install the Azure CLI tool.
 
-    We will be providing detailed instructions for using the Azure CLI 2.1 tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI 2.1](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
+    We will be providing detailed instructions for using the Azure CLI 2.2 tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI 2.2](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
 
 #### Task 4: Install Python 3.7
 
@@ -200,15 +200,15 @@ You should verify that the development environment has been set up successfully.
     The `az --version` command will output the version information for Azure CLI that you have installed (the `azure-cli` version number). This command also outputs the version number for all the Azure CLI modules installed, including the IoT extension. You should see output similar to the following:
 
     ```cmd/sh
-    azure-cli                           2.1.0
+    azure-cli                           2.2.0
 
     command-modules-nspkg               2.0.3
-    core                                2.1.0
+    core                                2.2.0
     nspkg                               3.0.4
     telemetry                           1.0.4
 
     Extensions:
-    azure-cli-iot-ext                   0.8.5
+    azure-cli-iot-ext                   0.8.9
     ```
 
 1. Validate the **.NET Core 3.x SDK** installation by running the following command that will output the version number for the currently installed version of the .NET Core SDK.
@@ -217,7 +217,7 @@ You should verify that the development environment has been set up successfully.
     dotnet --version
     ```
 
-1. The `dotnet --version` command will output the version of the .NET Core SDK that is currently installed. This must be .NET Core 3.0 or higher.
+1. The `dotnet --version` command will output the version of the .NET Core SDK that is currently installed. This must be .NET Core 3.1 or higher.
 
 Your development environment should be now setup!
 
@@ -243,7 +243,7 @@ Microsoft has created a GitHub repo to provide access to lab resource files. Hav
 
 1. To extract the files, click **Extract**.
 
-    Be sure to make not of where you located the files.
+    Be sure to make note of where you located the files.
 
 #### Task 2: Install Azure PowerShell Module
 

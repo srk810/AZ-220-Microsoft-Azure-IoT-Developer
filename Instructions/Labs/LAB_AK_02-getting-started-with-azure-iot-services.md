@@ -37,19 +37,19 @@ YourInitialsYYMMDD
 So, your initials followed by the last two digits of the current year, the current numeric month, and the current numeric day. Here are some examples:
 
 ```text
-GWB190123
-BHO190504
-CAH191216
-DM190911
+GWB200123
+BHO200504
+CAH201216
+DM200911
 ```
 
 In some cases, you may be asked to use the lowercase version of your unique ID:
 
 ```text
-gwb190123
-bho190504
-cah191216
-dm190911
+gwb200123
+bho200504
+cah201216
+dm200911
 ```
 
 Whenever you are expected to use your unique ID, you will see `{YOUR-ID}`. You will replace the entire string (including the `{}`) with your unique value.
@@ -74,7 +74,7 @@ If your Unique ID is: **CAH191216**
 | :--- | :--- | :--- |
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ | AZ-220-HUB-CAH191216 |
 | Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ | AZ-220-DPS-CAH191216 |
-| Azure Storage Account (name must be lower-case and no dashes) | az220storage_{YOUR-ID}_ | az220storagecah191216 |
+| Azure Storage Account <br/>(name must be lower-case and no dashes) | az220storage_{YOUR-ID}_ | az220storagecah191216 |
 
 You may also be required to update values within bash scripts and C# source files as well as entering the names into the Azure Portal UI. Here are some examples:
 
@@ -160,6 +160,7 @@ There are several methods that you can use to create an IoT Hub. For example, yo
     As we saw previously, Azure is supported by a series of datacenters that are placed in regions all around the world. When you create something in Azure, you deploy it to one of these datacenter locations.
 
     > **Note**:  For the current list of regions that support Event Grid, see the following link: [Products available by region](https://azure.microsoft.com/en-us/global-infrastructure/services/?products=event-grid&regions=all)
+
     > **Note**:  When picking a region to host your app, keep in mind that picking a region close to your end users will decrease load/response times. If you are on the other side of the world from your end users, you should not be picking the region nearest you.
 
 1. To the right of **IoT Hub Name**, enter a globally unique name for your IoT Hub.
@@ -193,6 +194,10 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 1. To the right of **Number of S1 IoT Hub units**, ensure that **1** is selected.
 
     As mentioned above, the pricing tier that you choose establishes the number of messages that your hub can process per unit per day. To increase the number of messages that you hub can process without moving to a higher pricing tier, you can increase the number of units. For example, if you want the IoT hub to support ingress of 800,000 messages, you choose *two* S1 tier units. For the IoT courses created by Microsoft we will be using just 1 unit.
+
+1. To the right of **Azure Security Center**, ensure that **Off** is selected.
+
+    Azure Security Center unifies security management and enables end-to-end threat detection and analysis across hybrid cloud workloads and your Azure IoT solution. We will be exploring Azure Security Center in a later labs, so we will disable it for now. Currently, you can enable Azure Security Center at subscription level, through the Azure portal. The Standard tier is free for the first 30 days. Any usage beyond 30 days will be automatically charged as per the pricing scheme detailed [here](https://azure.microsoft.com/en-us/pricing/details/security-center/).
 
 1. Under _Advanced Settings_, ensure that **Device-to-cloud partitions** is set to **4**.
 
@@ -281,7 +286,7 @@ The Azure IoT Hub Device Provisioning Service is a helper service for IoT Hub th
 
 * Zero-touch provisioning to a single IoT solution without hardcoding IoT Hub connection information at the factory (initial setup)
 * Load balancing devices across multiple hubs
-* Connecting devices to their owner’s IoT solution based on sales transaction data (multitenancy)
+* Connecting devices to their owner's IoT solution based on sales transaction data (multitenancy)
 * Connecting devices to a particular IoT solution depending on use-case (solution isolation)
 * Connecting a device to the IoT hub with the lowest latency (geo-sharding)
 * Reprovisioning based on a change in the device
