@@ -215,6 +215,8 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. At the bottom of the blade, click **Review + create**.
 
+    > **Note**: If you are returned immediately to the *Event Source* pane, double check that you clicked **Add** to the right of the **IoT Hub consumer group** field - you cannot create the TSI resource until you have created the consumer group.
+
 1. At the bottom of the blade, click **Create**.
 
     > **Note**:  Deployment of Time Series Insights (TSI) will take a couple minutes to complete.
@@ -311,7 +313,7 @@ In this exercise, you will run the simulated devices so they starts sending tele
     12/27/2019 8:51:40 PM > CONTAINER transport changed to: TRUCK
     ```
 
-    > **Note**:  In production the shipping container would on change transport methods during the normal course of shipping. For the simulated scenario in this lab, it's performed every 30 seconds to give a short enough data duration that will fit during the course of performing the steps in this lab.
+    > **Note**:  In production the shipping container would only change transport methods during the normal course of shipping. For the simulated scenario in this lab, it's performed every 30 seconds to give a short enough data duration that will fit during the course of performing the steps in this lab.
 
 ### Exercise 4: View Time Series Insights Explorer
 

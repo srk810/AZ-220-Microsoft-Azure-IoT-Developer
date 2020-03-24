@@ -18,6 +18,6 @@ az iot hub device-identity create --hub-name $IoTHubName --device-id AirplaneDev
 az iot hub device-identity create --hub-name $IoTHubName --device-id ContainerDevice -o table
 
 # retrieve the Connection String for the IoT Device
-az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id TruckDevice
-az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id AirplaneDevice
-az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id ContainerDevice
+az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id TruckDevice -o tsv
+az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id AirplaneDevice -o tsv
+az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id ContainerDevice -o tsv
