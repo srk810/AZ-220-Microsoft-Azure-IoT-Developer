@@ -13,7 +13,7 @@ az group create --name $RGName --location $Location
 az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location
 
 # create a device ID using Symmetric Key Auth and Connect it to the IoT Hub
-az iot hub device-identity create --hub-name $IoTHubName --device-id VibrationSensorId -o tsv
+az iot hub device-identity create --hub-name $IoTHubName --device-id VibrationSensorId -o table
 
 # retreive the Connection String for the IoT Device
-az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id VibrationSensorId
+az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id VibrationSensorId -o tsv
