@@ -13,8 +13,8 @@ lab:
 > 1. The ability to sign in to a "Work or School Account" (Azure Active Directory account)
 > 2. You must know your account sign-in name, which may not match your e-mail address.
 > 3. Access to Power BI, which could be through:
-    1. An existing Power BI account
-    2. The ability to sign up for Power BI - some organizations block this.
+>       1. An existing Power BI account
+>       2. The ability to sign up for Power BI - some organizations block this.
 >
 > The first lab exercise will validate your ability to access Power BI.  If you are not successful in the first exercise, you will not be able to complete the lab, as there is no quick workaround for blocked access to a work or school account.
 
@@ -319,6 +319,8 @@ With this new IoT Hub route in place, and the telemetry data streaming into the 
  
     The **Stream Analytics Job** blade will open displaying the **Overview** pane.
 
+    > **Note**: Ensure the job status is **Stopped**.
+
 1. In the left hand navigation menu, under **Job topology**, click **Inputs**.
 
 1. On the **Inputs** pane, click **+ Add stream input** and then click **Event Hub**.
@@ -519,7 +521,7 @@ Now for the final part of the scenario - the actual data visualization. We have 
 
 1. Under **Visualization Type**, open the dropdown, and then click **Card**.
 
-1. Under **Value**, click **+ Add value**, opne the dropdown, and then click **IsSpikeAndDipAnomaly**.
+1. Under **Value**, click **+ Add value**, open the dropdown, and then click **IsSpikeAndDipAnomaly**.
 
 1. To display the Tile details pane, click **Next**.
 
