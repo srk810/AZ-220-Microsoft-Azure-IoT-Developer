@@ -180,7 +180,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Leave the **IoT Hub Device ID** field blank.
 
-    Leaving this field blank ensures that the IoT Hub will use the Registration ID as the Device ID. Don't worry if you see a default text value in the field that is not selectable, it will not be treated as an entered value.
+    Leaving this field blank ensures that the IoT Hub will use the Registration ID as the Device ID. Don't worry if you see a default text value in the field that is not selectable - this is placeholder text and will not be treated as an entered value.
 
 1. Leave the **IoT Edge device** field set to **False**.
 
@@ -188,7 +188,12 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Leave the **Select how you want to assign devices to hubs** field set to **Evenly weighted distribution**.
 
-   As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment.
+   As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. There are four supported allocation policies:
+
+    * **Lowest latency**: Devices are provisioned to an IoT hub based on the hub with the lowest latency to the device.
+    * **Evenly weighted distribution (default)**: Linked IoT hubs are equally likely to have devices provisioned to them. This is the default setting. If you are provisioning devices to only one IoT hub, you can keep this setting. 
+    * **Static configuration via the enrollment list**: Specification of the desired IoT hub in the enrollment list takes priority over the Device Provisioning Service-level allocation policy.
+    * **Custom (Use Azure Function)**: the device provisioning service calls your Azure Function code providing all relevant information about the device and the enrollment. Your function code is executed and returns the IoT hub information used to provisioning the device.
 
 1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **AZ-220-HUB-_{YOUR-ID}_** IoT hub that you created.
 
@@ -196,7 +201,11 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Leave the **Select how you want device data to be handled on re-provisioning** field set to the default value of **Re-provision and migrate data**.
 
-    This field gives you high-level control over the re-provisioning behavior, where the same device (as indicated through the same Registration ID) submits a later provisioning request after already being provisioned successfully at least once.
+    This field gives you high-level control over the re-provisioning behavior, where the same device (as indicated through the same Registration ID) submits a later provisioning request after already being provisioned successfully at least once. There are three options available:
+
+    * **Re-provision and migrate data**: This policy is the default for new enrollment entries. This policy takes action when devices associated with the enrollment entry submit a new provisioning request. Depending on the enrollment entry configuration, the device may be reassigned to another IoT hub. If the device is changing IoT hubs, the device registration with the initial IoT hub will be removed. All device state information from that initial IoT hub will be migrated over to the new IoT hub.
+    * **Re-provision and reset to initial config**: This policy is often used for a factory reset without changing IoT hubs. This policy takes action when devices associated with the enrollment entry submit a new provisioning request. Depending on the enrollment entry configuration, the device may be reassigned to another IoT hub. If the device is changing IoT hubs, the device registration with the initial IoT hub will be removed. The initial configuration data that the provisioning service instance received when the device was provisioned is provided to the new IoT hub.
+    * **Never reprovision**: The device is never reassigned to a different hub. This policy is provided for managing backwards compatibility.
 
 1. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to specify a property named `telemetryDelay` with the value of `"2"`.
 
@@ -303,7 +312,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 1. Near the top of the `ProvisioningDeviceLogic` class, locate the `_telemetryDelay` variable declaration.
 
-    Notice that the default value for the delay is set to `1` second. Your next step is to integrate the code that uses device twin value to control the delay time.
+    Notice that the default value for the delay is set to `1` second. Your next step is to integrate the code that uses a device twin value to control the delay time.
 
 #### Task 2: Integrate Device Twin Properties
 
