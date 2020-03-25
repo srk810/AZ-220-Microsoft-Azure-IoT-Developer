@@ -218,7 +218,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
 1. On the **Resource groups** blade, locate the AZ-220-GWVM-RG resource group.
 
-1. On the righthand side of the blade, across from **AZ-220-GWVM-RG**, click **Click to open contenxt menu** (the elipsis icon - **...**)
+1. On the righthand side of the blade, across from **AZ-220-GWVM-RG**, click **Click to open context menu** (the ellipsis icon - **...**)
 
 1. On the context menu, click **Pin to dashboard**, and then navigate back to your dashboard.
 
@@ -527,7 +527,7 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
     az-220-vm-edgegw-cah191230.westus2.cloudapp.azure.com
     ```
 
-    All Public IP Address DNS names in the standard Azure commercial cloud will be at the **.cloudapp.azure.com** domain name. This example is for the VM being hosted in the **westus2** Azure region. This part fo the DNS name will vary depending on what Azure region the VM is hosted within.
+    All Public IP Address DNS names in the standard Azure commercial cloud will be at the **.cloudapp.azure.com** domain name. This example is for the VM being hosted in the **westus2** Azure region. This part of the DNS name will vary depending on what Azure region the VM is hosted within.
 
     Setting the DNS name for the Public IP Address of the **AZ-220-VM-EDGEGW** virtual machine will give it a FQDN (Fully Qualified Domain Name) for the downstream device(s) to use as the `GatewayHostName` to connect to it. Since the VM, in this case, is accessible across the Internet, an Internet DNS name is needed. If the Azure IoT Edge Gateway were hosted in a Private or Hybrid network, then the machine name would meet the requirements of a `GatewayHostName` for on-premises downstream devices to connect.
 
