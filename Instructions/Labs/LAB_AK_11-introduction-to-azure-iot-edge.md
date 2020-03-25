@@ -591,7 +591,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
     This determines that the Stream Analytics job will deployed to an on-premises IoT Gateway Edge device.
 
-1. Atthe bottom of the blade, click **Create**.
+1. At the bottom of the blade, click **Create**.
 
     It can take a few moments to for this resource to be deployed.
 
