@@ -488,7 +488,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. Leave the other settings at their defaults, and then click **Save**.
 
-1. Swith to the **Visual Studio Code** instance containing your IoT Edge solution.
+1. Switch to the **Visual Studio Code** instance containing your IoT Edge solution.
 
 1. In the **Explorer** pane, right-click **deployment.debug.template.json**, and then click **Build and Run IoT Edge Solution in Simulator**. 
 
@@ -582,7 +582,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. To the left of the dropdown, click **Start Debugging**.
 
-    You could also press **F5** to start degugging
+    You could also press **F5** to start debugging
 
 1. When prompted to **Select the process to attach to**, click **dotnet ObjectCountingModule.dll**.
 
