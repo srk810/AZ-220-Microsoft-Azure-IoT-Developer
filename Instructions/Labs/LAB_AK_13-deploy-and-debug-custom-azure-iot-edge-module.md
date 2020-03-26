@@ -163,11 +163,11 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
 1. Verify that you have Python 3.7 installed in your development environment.
 
-    Lab 3 of this course has you prepare the lab environment, including the installation Python 3.7. If Pythin is not installed, refer back to the instructions in Lab 3.
+    Lab 3 of this course has you prepare the lab environment, including the installation Python 3.7. If Python is not installed, refer back to the instructions in Lab 3.
 
     > **Note**:  Currently, the Azure IoT EdgeHub Dev Tool uses a docker-py library that is not compatible with Python 3.8.
 
-1. With Pythion installed, open Windows Command Prompt.
+1. With Python installed, open Windows Command Prompt.
 
 1. At the command prompt, to install the package manager for Python (Pip), enter the following commands:
 
@@ -244,9 +244,13 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
     Azure Container Registry is available in multiple service tiers, known as SKUs. These SKUs provide predictable pricing and several options for aligning to the capacity and usage patterns of your private Docker registry in Azure.
 
-1. At the bottom of the blade, click **Create**.
+1. At the bottom of the blade, click **Review + create**.
 
-1. On your dashboard, refresh your Recources tile, and then click **AZ220ACR{YOUR-ID}**.
+    The settings you have entered will be validated.
+
+1. To complete the creation of the Container Registry, at the bottom of the blade, click **Create**.
+
+1. On your dashboard, refresh your Resources tile, and then click **AZ220ACR{YOUR-ID}**.
 
 1. On the left side navigation menu, under **Settings**, click **Access keys**.
 
@@ -275,6 +279,8 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
     ```
 
     This command will record your credentials in the local Docker client configuration file (`$HOME/.docker/config.json`) or your operating system's secure credential storage mechanism (depending on the Docker configuration) for future use by the Docker toolset.
+
+    > **Note**: You will not be promoted to enter your password - just type it after you enter the above command. You will see your password as you enter it. Hit **enter** to submit the password. It may take a few moments before the **Login Succeeded** message is shown.
 
 Now that you have created the Azure Container Registry and authenticated your local machine against it, you can create a custom IoT Edge Module container that will be stored in the registry.
 
