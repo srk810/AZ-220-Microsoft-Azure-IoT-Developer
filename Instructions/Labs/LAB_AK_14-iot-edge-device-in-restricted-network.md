@@ -12,7 +12,7 @@ The conveyor belt monitoring system that you've implemented at Contoso's cheese 
 
 Your manager wants the system to be resilient to network outages, which do still occur occasionally in some areas of the cheese processing facilities. In addition, the IT department has requested that you optimize the system to bulk upload any non-critical telemetry data at specific times in the day to help load balance network usage.
 
-You propose configuring IoT Edge to support an offline scenario in case network drops, and you will look into storing telemetry from sensors locally (on device) and configuring the Edge devices for regular syncs at given times.
+You propose configuring IoT Edge to support an offline scenario in case the network drops, and you will look into storing telemetry from sensors locally (on device) and configuring the Edge devices for regular syncs at given times.
 
 The following resources will be created:
 
@@ -51,7 +51,7 @@ The **lab14-setup.azcli** script is written to run in a **bash** shell environme
 >**Note:** You will need the connection string for the **SimulatedThermostat** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id SimulatedThermostat -o tsv
+> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id SimulatedThermostat -o tsv
 > ```
 
 #### Task 1: Execute Setup Script
@@ -278,7 +278,7 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 1. To retrieve the **Connection String** of the **IoTEdgeGateway** Device from IoT Hub, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id IoTEdgeGateway -o tsv
+    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id IoTEdgeGateway -o tsv
     ```
 
     > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
@@ -302,7 +302,7 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 1. To create an IoT Device and configure it as a child of your IoT Edge Device, run the following command:
 
     ```sh
-    az iot hub device-identity create -n AZ-220-HUB-_{YOUR-ID}_ --device-id ChildDevice1 --pd IoTEdgeGateway
+    az iot hub device-identity create -n AZ-220-HUB-{YOUR-ID} --device-id ChildDevice1 --pd IoTEdgeGateway
     ```
 
     > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
@@ -885,7 +885,7 @@ In this exercise, you will monitor events from the **ChildIoTDevice** that are b
 1. At the Cloud Shell command prompt, to start monitoring the Events being received by the Azure IoT Hub, enter the following command:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name AZ-220-HUB-_{YOUR-ID}_
+    az iot hub monitor-events --hub-name AZ-220-HUB-{YOUR-ID}
     ```
 
     Be sure to replace the `{Your-ID}` placeholder with your unique suffix for our Azure IoT Hub instance.
@@ -961,6 +961,19 @@ In this exercise, you will monitor events from the **ChildIoTDevice** that are b
 
     This will force the IoT Edge Runtime to disconnect from the Azure IoT Hub service, and then attempt to reconnect.
 
+1. To verify that the *edgeHub* module has restarted correctly, enter the following command:
+
+    ```bash
+    iotedge list
+    ```
+
+    If the *edgeHub* module failed to restart successfully, retry by entering the following commands:
+
+    ```bash
+    iotedge restart edgeHub
+    iotedge list
+    ```
+
 1. To end the `ssh` session with the **IoTEdgeGateway**, enter the following command:
 
     ```cmd/sh
@@ -970,7 +983,7 @@ In this exercise, you will monitor events from the **ChildIoTDevice** that are b
 1. At the Cloud Shell command prompt, to start monitoring the Events being received by the Azure IoT Hub, enter the following command
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name AZ-220-HUB-_{YOUR-ID}_
+    az iot hub monitor-events --hub-name AZ-220-HUB-{YOUR-ID}
     ```
 
     Be sure to replace the `{Your-ID}` placeholder with your unique suffix for our Azure IoT Hub instance.
