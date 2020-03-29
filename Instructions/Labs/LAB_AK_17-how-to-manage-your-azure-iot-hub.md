@@ -153,7 +153,7 @@ The **lab17-setup.azcli** script is written to run in a **bash** shell environme
 
 Azure Resource logs are platform logs emitted by Azure resources that describe their internal operation. All resource logs share a common top-level schema with the flexibility for each service to emit unique properties for their own events.
 
-When you have an IoT Hub solution running in production, you will want to set up various metrics and enable diagnostic logs. Then, if a problem occurs, you have data to look at that will help you to diagnose the problem and fix it more quickly. 
+When you have an IoT Hub solution running in production, you will want to set up various metrics and enable diagnostic logs. Then, if a problem occurs, you have data to look at that will help you to diagnose the problem and fix it more quickly.
 
 In this exercise, you will enable diagnostic logs and use them to to check for errors. You will also set up some metrics to watch, and alerts that fire when the metrics hit a certain boundary.
 
@@ -227,7 +227,7 @@ In this task, you will set up various metrics to watch for when messages are sen
 
 1. To save your time settings, click **Apply**.
 
-1. Take a minute to examine the settings are used to specify the cahrt Metrics.
+1. Take a minute to examine the settings are used to specify the chart Metrics.
 
     Under the **Chart Title** and the toolbar for the chart, you will see an area to specify Metrics. 
 

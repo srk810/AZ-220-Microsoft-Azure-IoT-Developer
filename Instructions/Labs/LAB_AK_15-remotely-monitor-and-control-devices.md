@@ -14,26 +14,26 @@ In recent years, Contoso has used environmental sensors to record the conditions
 
 These ideal temperature and humidity values work well for most types of cheese. However, minor variations are required for especially hard or especially soft cheeses. The environment must also be adjusted at critical times/phases within the aging process to achieve specific results, such as a desired condition for the cheese rind.
 
-Contoso is lucky enough to operate cheese caves (in certain geographic regions) that naturally maintain ideal conditions almost year-round. However, even in these locations, managing the environment during the aging process is critical. Also, natural caves often have a number of different chambers, each of which can have a slightly different environment. Cheese varities are placed in a chamber (zone) that matches their specific requirements. To keep environmental conditions within desired limits, Contoso uses an air processing/conditioning system that controls both temperature and humidity. 
+Contoso is lucky enough to operate cheese caves (in certain geographic regions) that naturally maintain ideal conditions almost year-round. However, even in these locations, managing the environment during the aging process is critical. Also, natural caves often have a number of different chambers, each of which can have a slightly different environment. Cheese varieties are placed in a chamber (zone) that matches their specific requirements. To keep environmental conditions within desired limits, Contoso uses an air processing/conditioning system that controls both temperature and humidity.
 
 Currently, an operator monitors the environmental conditions within each zone of a cave facility and adjusts the air processing system settings when required to maintain the desired temperature and humidity. Operators are able to visit each zone and check the environmental conditions every 4 hours. In locations where temperature changes dramatically between the daytime high and nighttime low, conditions can slip outside of the desired limits.
 
 Contoso has tasked you with implementing an automated system that keeps the cave environment within control limits.
 
-In this lab, you will be prototyping a cheese cave monitoring system that implements IoT devices. Each device is equiped with temperature and humidity sensors, and is connected to the air processing system that controls temperature and humidity for the zone where the device is located. 
+In this lab, you will be prototyping a cheese cave monitoring system that implements IoT devices. Each device is equipped with temperature and humidity sensors, and is connected to the air processing system that controls temperature and humidity for the zone where the device is located.
 
 ### Simplified Lab Conditions
 
-The frequency of telemetry output is an important consideration in production solutions. A temperature sensor in a refrigeration unit may only need to report once a minute, whereas an acceleration sensor on an aircraft may have to report ten times per second. In some cases, the frequency at which telemetry must be sent is dependent on current conditions. For example, if the temperature our cheese cave scenario tends to drop quickly at night, you may benefit from having more frequent sensor readings beginning two hours before sunset. Of course the requirement to change the frequency of telemetry does not need to be part of a predicatable pattern, the events that drive our need to change IoT device settings can be unpredictable.      
+The frequency of telemetry output is an important consideration in production solutions. A temperature sensor in a refrigeration unit may only need to report once a minute, whereas an acceleration sensor on an aircraft may have to report ten times per second. In some cases, the frequency at which telemetry must be sent is dependent on current conditions. For example, if the temperature our cheese cave scenario tends to drop quickly at night, you may benefit from having more frequent sensor readings beginning two hours before sunset. Of course the requirement to change the frequency of telemetry does not need to be part of a predictable pattern, the events that drive our need to change IoT device settings can be unpredictable.
 
 To keep things simple in this lab, we will make the following assumptions:
 
 * The device will send telemetry (temperature and humidity values) to the IoT Hub every few seconds. Although this frequency is unrealistic for a cheese cave, it is great for a lab environment when we need to see changes frequently, not every 15 minutes.
-* The air processing system is a fan that can be in one of three states: On, Off, or Failed. 
-    * The fan is initialized to the Off state.
-    * Electrical power to the fan is controlled (On/Off) using a direct method on the IoT device.
-    * Device Twin desired property values are used to set the desired state of the fan. The desired property values will override any default settings for the fan/device.
-    * Temperature can be controlled by turning the fan On/Off (turning the fan On will lower the temperature)
+* The air processing system is a fan that can be in one of three states: On, Off, or Failed.
+  * The fan is initialized to the Off state.
+  * Electrical power to the fan is controlled (On/Off) using a direct method on the IoT device.
+  * Device Twin desired property values are used to set the desired state of the fan. The desired property values will override any default settings for the fan/device.
+  * Temperature can be controlled by turning the fan On/Off (turning the fan On will lower the temperature)
 
 Coding in this lab is broken down into three parts: sending and receiving telemetry, invoking and running a direct method, setting and reading device twin properties.
 
@@ -74,7 +74,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 >**Note:** You will need the connection string for the **CheeseCaveID** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id CheeseCaveID -o tsv
+> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id CheeseCaveID -o tsv
 > ```
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
@@ -422,9 +422,9 @@ In this task, you will add the code to send telemetry from a simulated device. T
     private readonly static string s_deviceConnectionString = "<your device connection string>";
     ```
 
-1. Replace `<your device connection string>` with the CheeseCaveID device connection string that you save earlier in this lab. 
+1. Replace `<your device connection string>` with the CheeseCaveID device connection string that you save earlier in this lab.
 
-    You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1. 
+    You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1.
 
     No other lines of code need to be changed.
 
@@ -501,14 +501,13 @@ Now that you have your (simulated) CheeseCaveID device sending telemetry to your
 
 #### Task 2: Add Code to Receive Telemetry
 
-In this task, you will add code your back-end app that will be used to receive telemetry from the IoT Hub Event Hub endpoint.
+In this task, you will add code to your back-end app that will be used to receive telemetry from the IoT Hub Event Hub endpoint.
 
 1. Ensure that you have the **Program.cs** file open in Visual Studio Code.
 
     The Code Editor pane should display an empty code file.
 
 1. Copy-and-Paste the following code into the Code Editor pane:
-
 
     ```csharp
     // Copyright (c) Microsoft. All rights reserved.
@@ -626,11 +625,11 @@ In this task, you will add code your back-end app that will be used to receive t
     private readonly static string s_serviceConnectionString = "<your service connection string>";
     ```
 
-1. Replace `<your service connection string>` with the IoT Hub **iothubowner** shared access policy primary connection string that you save earlier in this lab. 
+1. Replace `<your service connection string>` with the IoT Hub **iothubowner** shared access policy primary connection string that you save earlier in this lab.
 
-    You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1. 
+    You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1.
 
-    > **Note**: You may be curious as to why the **iothubowner** shared policy is used rather than the **service** shared policy. The answer is related to the IoT Hub permissions assigned to each policy. The **service** policy has the **ServiceConnect** permission and is usually used by back-end cloud sercives. It confers the following rights:
+    > **Note**: You may be curious as to why the **iothubowner** shared policy is used rather than the **service** shared policy. The answer is related to the IoT Hub permissions assigned to each policy. The **service** policy has the **ServiceConnect** permission and is usually used by back-end cloud services. It confers the following rights:
     >
     > * Grants access to cloud service-facing communication and monitoring endpoints.
     > * Grants permission to receive device-to-cloud messages, send cloud-to-device messages, and retrieve the corresponding delivery acknowledgments.
@@ -675,7 +674,7 @@ This test is important, checking whether your back-end app is picking up the tel
 
 1. Leave this app running for a monent longer.
 
-1. With both apps running, visually compare the telemetry that is being sent with the telemetry that is being received. 
+1. With both apps running, visually compare the telemetry that is being sent with the telemetry that is being received.
 
     * Is there an exact data match?
     * Is there much of a delay between when data is sent and when it is received?
@@ -710,7 +709,7 @@ The device app contains the functional code for the direct method. The function 
 
 1. In the Code Editor pane, locate the bottom of the **SimulatedDevice** class.
 
-1. To define the direct method, add the following code inside the closing squiggly brace of the **SimulatedDevice** class:
+1. To define the direct method, add the following code inside the closing squiggly brace (`}`) of the **SimulatedDevice** class:
 
     ```csharp
     // Handle the direct method call
@@ -836,7 +835,6 @@ You have now completed the coding that is required on the device side. Next, you
 
     > **Note**: This code is used to invoke the **SetFanState** direct method on the device app.
 
-
 1. Within the **Main** method, position the cursor on the blank code line just above the `Create receivers to listen for messages` comment.
 
 1. Before the code for creating the receivers to listen for messages, add the following code:
@@ -875,7 +873,7 @@ To test the direct method, you will need to start the apps in the correct order.
 
    ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-received.png)
 
-You are now successfully monitoring and controlling a remote device. You have implemented a direct method on the device that can be invoked from the cloud. In our scenario, the direct method is used to turn on a fan, which will bring the environment in the cave to our desired settings. 
+You are now successfully monitoring and controlling a remote device. You have implemented a direct method on the device that can be invoked from the cloud. In our scenario, the direct method is used to turn on a fan, which will bring the environment in the cave to our desired settings.
 
 What if you might want to remotely specify the desired settings for the cheese cave environment? Perhaps you want to set a particular target temperature for the cheese cave at a certain point in the aging process. You could specify desired settings with a direct method (which is a valid approach), or you could use another feature of IoT Hub, called device twins. In the next Exercise, you will work on implementing device twin properties within your solution.
 
