@@ -171,7 +171,7 @@ In this task, you will enable **Azure Security Center for IoT** for your IoT Hub
 
 1. On the left side navigation menu, under **Security**, and then click **Overview**.
 
-    Azure Security Center for IoT Hub will be onboarded the first time a Security pane is opened. 
+    Azure Security Center for IoT Hub will be onboard the first time a Security pane is opened. 
     
     * You may be prompted click **Secure your IoT solution**.
     * After a few moments you may see the message **Onboarding succeeded for this IoT hub, please refresh for changes to take effect**.
@@ -806,7 +806,7 @@ A device must be registered with your IoT hub before it can connect.
     > **Note**:
     When the `DeviceClient` instance is created, the **MQTT** protocol is specified with `TransportType.Mqtt` - this ensures that the Device to Cloud messages are sent using the protocol specified in the custom alert created.
 
-1. At the Terminal con=mmand prompt, to build and run the application, enter the following command:
+1. At the Terminal command prompt, to build and run the application, enter the following command:
 
     ```bash
     dotnet run

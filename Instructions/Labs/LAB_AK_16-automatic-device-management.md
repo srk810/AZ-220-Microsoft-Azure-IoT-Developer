@@ -271,7 +271,7 @@ In this task, you will enter the code for simulating a firmware update on the de
                 Console.WriteLine(DeviceID + ": " + text);
             }
 
-            // Function to retreive firmware version from the OS/HW
+            // Function to retrieve firmware version from the OS/HW
             static string GetFirmwareVersion()
             {
                 // In here you would get the actual firmware version from the hardware. For the simulation purposes we will just send back the FWVersion variable value
@@ -369,7 +369,7 @@ In this task, you will enter the code for simulating a firmware update on the de
                 await UpdateFWUpdateStatus(client, null, null, "rebooting", null, null, DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ"));
                 await Task.Delay(5 * 1000);
 
-                // On a real device you would issue a command to reboot the device. Here we are simply runing the init function
+                // On a real device you would issue a command to reboot the device. Here we are simply running the init function
                 DeviceFWVersion = fwVersion;
                 await InitDevice(client);
 
