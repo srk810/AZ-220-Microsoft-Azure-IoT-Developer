@@ -444,12 +444,12 @@ In this lab, you will be using the symmetric key as authentication and will need
 
     Here is an example of what the command should look like:
 
-    `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn CheeseCaveHub-AB20200213.azure-devices.net -di vm-device01`
+    `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn AZ-220-HUB-AB20200213.azure-devices.net -di vm-device01`
 
     > **Note**: Make sure that specify your IoT Hub Hostname instead of the one listed 
     
     > **IMPORTANT**:
-    > Ensure you use the full IoT Hub host name - i.e. **CheeseCaveHub-AB20200213.azure-devices.net** for the `-hn` switch value.
+    > Ensure you use the full IoT Hub host name - i.e. **AZ-220-HUB-AB20200213.azure-devices.net** for the `-hn` switch value.
 
     This script performs the following function:
 

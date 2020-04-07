@@ -145,7 +145,7 @@ The **lab17-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **AZ-220-RG**, then your IoT Hub named **AZ-220-HUB-{YourID}** and Device Provisioning Service named **AZ-220-DSP-{YourID}**. If the services already exist, a corresponding message will be displayed. The script will link your IoT Hub and DSP. The script will then create a storage account named **az220storage{your-id}**.
+    The script will first create a resource group named **AZ-220-RG**, then your IoT Hub named **AZ-220-HUB-{YourID}** and Device Provisioning Service named **AZ-220-DPS-{YourID}**. If the services already exist, a corresponding message will be displayed. The script will link your IoT Hub and DPS. The script will then create a storage account named **az220storage{your-id}**.
 
     You should now be ready to proceed with Exercise 2 of this lab.
 

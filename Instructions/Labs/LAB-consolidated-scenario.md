@@ -4,21 +4,21 @@ This is a work-in-progress document that contains the complete scenario to assis
 
 > **Note**: This will be removed once the complete scenario has been rolled into the individual labs.
 
-# LAB_AK_01
+## LAB_AK_01
 
-## Lab Scenario
+### Lab Scenario
 
 You are an Azure IoT Developer for a leading gourmet cheese company named Contoso. Contoso evaluated the business opportunity for IoT and concluded that there are significant benefits that they can achieve. They selected Microsoft Azure IoT based on their evaluations.
 
 To get started, you need to become familiar with the Azure tools.
 
-### Exercise 1: Explore the Azure Portal and Dashboard
+#### Exercise 1: Explore the Azure Portal and Dashboard
 
 Before you begin working with the Azure IoT services, it's good to be familiar with how Azure itself works.
 
 Although we commonly refer to Azure as a 'cloud', it is actually a web portal that is designed to make Azure resources accessible from a single web site. All of Azure is accessible through the Azure portal.
 
-### Exercise 2: Create an Azure Dashboard and Resource Group
+#### Exercise 2: Create an Azure Dashboard and Resource Group
 
 On the Azure portal, dashboards are used to present a customized view of your resources. Information is displayed through the use of tiles which can be arranged and sized to help you organize your resources in useful ways. You can create many different dashboards that provide different views and serve different purposes.
 
@@ -31,17 +31,17 @@ In the following tasks, you will:
 * create a custom dashboard that you can use during this course
 * create a Resource Group and add a Resource Group tile to your dashboard
 
-# LAB_AK_02
+## LAB_AK_02
 
-## Lab Scenario
+### Lab Scenario
 
 You are an Azure IoT Developer working for Contoso, a company that crafts and distributes gourmet cheeses. You have been tasked with exploring Azure and the Azure IoT services that will be used in the IoT solution that the company is planning to implement. You have become familiar with the Azure portal and created a resource group for your project. Now you need to begin your investigation of Azure IoT services.
 
-### Exercise 1: Naming Resources with Unique Names
+#### Exercise 1: Naming Resources with Unique Names
 
 Throughout this course you will be creating resources. To ensure consistency across the labs and to help in tidying up resources whenever you have finished with them, we will be providing you with the names you should use. However, many of these resources expose services that can be consumed across the web, which means they must have globally unique names. To achieve this, you will be using a unique identifier that will be added to the end of the resource name. Let's create your unique ID.
 
-### Exercise 2: Create an IoT Hub using the Azure portal
+#### Exercise 2: Create an IoT Hub using the Azure portal
 
 The Azure IoT Hub is a fully managed service that enables reliable and secure bidirectional communications between IoT devices and Azure. The Azure IoT Hub service provides the following:
 
@@ -55,13 +55,13 @@ The Azure IoT Hub is a fully managed service that enables reliable and secure bi
 
 There are several methods that you can use to create an IoT Hub. For example, you can create an IoT Hub resource using the Azure portal, which is what you will do in ths task. But you can also create an IoT Hub (and other resources) programmatically. During this course we will be investigating additional methods that can be used to to create and manage Azure resources, including Azure CLI and PowerShell.
 
-### Exercise 3: Examine the IoT Hub Service
+#### Exercise 3: Examine the IoT Hub Service
 
 As we have already noted, the IoT Hub is a managed service, hosted in the cloud, that acts as a central message hub for bi-directional communication between your IoT application and the devices it manages.
 
 IoT Hub's capabilities help you build scalable, full-featured IoT solutions such as managing industrial equipment used in manufacturing, tracking valuable assets in healthcare, monitoring office building usage, and many more scenarios. IoT Hub monitoring helps you maintain the health of your solution by tracking events such as device creation, device failures, and device connections.
 
-### Exercise 4: Create a Device Provisioning Service using the Azure portal
+#### Exercise 4: Create a Device Provisioning Service using the Azure portal
 
 The Azure IoT Hub Device Provisioning Service is a helper service for IoT Hub that enables zero-touch, just-in-time provisioning to the right IoT hub without requiring human intervention. The Device Provisioning Service provides the following:
 
@@ -75,13 +75,13 @@ The Azure IoT Hub Device Provisioning Service is a helper service for IoT Hub th
 
 There are several methods that you can use to create an instance of the IoT Hub Device Provisioning Service. For example, you can use the Azure portal, which is what you will do in ths task. But you can also create a DPS instance using Azure CLI or an Azure Resource Manager Template.
 
-### Exercise 5: Examine the Device Provisioning Service
+#### Exercise 5: Examine the Device Provisioning Service
 
 The IoT Hub Device Provisioning Service is a helper service for IoT Hub that enables zero-touch, just-in-time provisioning to the right IoT hub without requiring human intervention, enabling customers to provision millions of devices in a secure and scalable manner.
 
-# LAB_AK_03
+## LAB_AK_03
 
-## Lab Scenario
+### Lab Scenario
 
 As one of the developers at Contoso, you know that setting up your development environment is an important step before starting to build your Azure IoT solution. You know that Microsoft provides a number of tools that can be used to develop and support your IoT solutions and that some decisions should be made about which tools your team will use. You will prepare a work environment that the team can use to develop your IoT solution, both on the Azure cloud side and for your local work environment.
 
@@ -110,21 +110,21 @@ In support of these decisions, you will be setting up the following environment:
 
 > **Note**: A virtual machine has been created for this course that provides a majority of the tools specified above. The instructions below support using the prepared VM or setting up the development environment locally using your PC.
 
-### Exercise 1: Install Developer Tools and Products
+#### Exercise 1: Install Developer Tools and Products
 
 > **Note**: The tools and products associated with this Exercise are pre-installed on the virtual machine created for this course. Before continuing, check with your course Instructor to understand if you will be completing labs using the hosted lab VM environment or setting up the dev environment locally on your PC.
 
-### Exercise 2: Install Dev Tool Extensions
+#### Exercise 2: Install Dev Tool Extensions
 
 The Visual Studio Code and Azure CLI tools both support extension that help developers to create their solutions more efficiently. Extensions for IoT have been developed by Microsoft that leverage the IoT SDKs and reduce development time.
 
-### Exercise 3: Set Up Course Lab Files and Alternative Tools
+#### Exercise 3: Set Up Course Lab Files and Alternative Tools
 
 A number of the labs in this course rely on pre-built resources, such as a code project that can be used as a starting point for the lab activity. We provide access to these lab resources through the use of a GitHub project. In addition to resources that directly support the course labs (the resources contained in the GitHub project), there are tools that can be used to support learning opportunities outside the actual course. The instructions below lead you through the configuration of both these resource types.
 
-# LAB_AK_04
+## LAB_AK_04
 
-## Lab Scenario
+### Lab Scenario
 
 Contoso is known for producing high quality cheeses. Due to the company's rapid growth in both popularity and sales, they want to take steps to ensure that their cheeses stay at the same high level of quality that their customers expect.
 
@@ -134,7 +134,7 @@ Contoso has decided to launch an automated system that uses IoT devices to monit
 
 To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device (that includes temperature and humidity sensors) to IoT Hub.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes that the following Azure resources are available:
 
@@ -143,17 +143,17 @@ This lab assumes that the following Azure resources are available:
 | Resource Group | AZ-220-RG |
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 
-### Exercise 2: Create Azure IoT Hub Device ID using Azure CLI
+#### Exercise 2: Create Azure IoT Hub Device ID using Azure CLI
 
 The `iot` Azure CLI modules includes several commands for managing IoT Devices within Azure IoT Hub under the `az iot hub device-identity` command group. These commands can be used to manage IoT Devices within scripts or directly from the command-line / terminal.
 
-### Exercise 3: Configure and Test a Simulated Device (C#)
+#### Exercise 3: Configure and Test a Simulated Device (C#)
 
 In this exercise you will configure a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise. You will then test the device and ensure that IoT Hub is receiving telemetry from the device as expected.
 
-# LAB_AK_05
+## LAB_AK_05
 
-## Lab Scenario
+### Lab Scenario
 
 Contoso management is pushing for an an update to their Asset Monitoring and Tracking Solution that will use IoT devices to reduce the manual data entry work that is required under the current system and provide more advanced monitoring during the shipping process. The solution relies on the ability to provision and de-provision IoT devices. The best option for managing the provisioning requirements appears to be DSP.
 
@@ -163,7 +163,7 @@ In Contoso's cheese packaging facility, when an empty container enters the syste
 
 You have been tasked with validating the device provisioning and de-provisioning process using DPS. For the initial phase of the process you will use an Individual Enrollment approach.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes that the following Azure resources are available:
 
@@ -173,11 +173,11 @@ This lab assumes that the following Azure resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
 
-### Exercise 2: Create new individual enrollment (Symmetric keys) in DPS
+#### Exercise 2: Create new individual enrollment (Symmetric keys) in DPS
 
 In this exercise, you will create a new individual enrollment for a device within the Device Provisioning Service (DPS) using _symmetric key attestation_.
 
-### Exercise 3: Configure Simulated Device
+#### Exercise 3: Configure Simulated Device
 
 In this exercise, you will configure a Simulated Device written in C# to connect to Azure IoT using the individual enrollment created in the previous unit. You will also add code to the Simulated Device that will read and update device configuration based on the device twin within Azure IoT Hub.
 
@@ -185,23 +185,23 @@ The simulated device that you create in this exercise represents an IoT Device t
 
 This is different than the earlier lab where a simulated device connected to Azure because in that lab, you used a shared access key to authenticate, which does not require device provisioning, but also does not give the provisioning management benefits (such as device twins), and requires fairly large distribution and management of a shared key.  In this lab, you are provisioning a unique device through the Device Provisioning Service.
 
-### Exercise 4: Test the Simulated Device
+#### Exercise 4: Test the Simulated Device
 
 In this exercise, you will run the Simulated Device and verify it's sending sensor telemetry to Azure IoT Hub. You will also update the delay at which telemetry is sent to Azure IoT Hub by updating the device twin for the simulated device within Azure IoT Hub.
 
-### Exercise 5: Retire the Device
+#### Exercise 5: Retire the Device
 
 In this unit you will perform the necessary tasks to retire the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully retire an IoT Device from an Azure IoT solution it must be removed from both of these services. When the transport box arrives at it's final destination, then sensor will be removed from the box, and needs to be "decommissioned". Complete device retirement is an important step in the life cycle of IoT devices within an IoT solution.
 
-# LAB_AK_06
+## LAB_AK_06
 
-## Lab Scenario
+### Lab Scenario
 
 Your work to-date on Contoso's Asset Monitoring and Tracking Solution has enabled you to validate the device provisioning and de-provisioning process using an Individual Enrollment. The management team has now asked you to begin rolling out the process on a larger scale.
 
 To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes that the following Azure resources are available:
 
@@ -211,19 +211,19 @@ This lab assumes that the following Azure resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
 
-### Exercise 2: Generate and Configure X.509 CA Certificates using OpenSSL
+#### Exercise 2: Generate and Configure X.509 CA Certificates using OpenSSL
 
 In this exercise, you will generate an X.509 CA Certificate using OpenSSL within the Azure Cloud Shell. This certificate will be used to configure the Group Enrollment within the Device Provisioning Service (DPS).
 
-### Exercise 3: Create Group Enrollment (X.509 Certificate) in DPS
+#### Exercise 3: Create Group Enrollment (X.509 Certificate) in DPS
 
 In this exercise, you will create a new individual enrollment for a device within the Device Provisioning Service (DPS) using _certificate attestation_.
 
-### Exercise 4: Configure simulated device with X.509 certificate
+#### Exercise 4: Configure simulated device with X.509 certificate
 
 In this exercise, you will configure a simulated device written in C# to connect to your Azure IoT Hub via your Device Provisioning Service (DPS) using an X.509 certificate. This exercise will also introduce you to the workflow within the **simulated device** source code within the `/LabFiles` directory, and how it works to authenticate with DPS and send messages to IoT Hub.
 
-### Exercise 5: Handle device twin desired property Changes
+#### Exercise 5: Handle device twin desired property Changes
 
 In this exercise, you will modify the simulated device source code to include an event handler to update device configurations based on device twin desired property changes sent to the device from Azure IoT Hub.
 
@@ -235,17 +235,17 @@ When the device twin desired properties are updated for a device within Azure Io
 
 This set of steps will be very similar to steps in earlier labs for working with a simulated device, because the concepts and processes are the same.  The method used for authentication of the provisioning process doesn't change the handing of device twin property changes once the device is provisioned.
 
-### Exercise 6: Test the Simulated Device
+#### Exercise 6: Test the Simulated Device
 
 In this exercise, you will run the simulated device. When the device is started for the first time, it will connect to the Device Provisioning Service (DPS) and automatically be enrolled using the configured group enrollment. Once enrolled into the DPS group enrollment, the device will be automatically registered within the Azure IoT Hub device registry. Once enrolled and registered, the device will begin communicating with Azure IoT Hub securely using the configured X.509 certificate authentication.
 
-### Exercise 7: Retire Group Enrollment
+#### Exercise 7: Retire Group Enrollment
 
 In this exercise, you will retire the enrollment group and its devices from both the Device Provisioning Service and Azure IoT Hub.
 
-# LAB_AK_07
+## LAB_AK_07
 
-## Lab Scenario
+### Lab Scenario
 
 Contoso Management is impressed with the implementation of automatic device enrollment and is now ready to explore a scenario that can deliver business value.
 
@@ -265,7 +265,7 @@ It's not always easy to detect abnormal vibration levels. For this reason, you a
 
 You decide to build a prototype of the planned system, initially using simulated telemetry.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes the following resources are available:
 
@@ -275,7 +275,7 @@ This lab assumes the following resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | Device ID | VibrationSensorId |
 
-### Exercise 2: Write Code for Vibration Telemetry
+#### Exercise 2: Write Code for Vibration Telemetry
 
 The key to monitoring our conveyor belt is the output of vibration telemetry. Vibration is usually measured as an acceleration (m/s&#x00B2;), although sometimes it's measured in g-forces, where 1 g = 9.81 m/s&#x00B2;. There are three types of vibration.
 
@@ -298,7 +298,7 @@ In this exercise, you will:
 
 Later in this lab you will complete a small amount of SQL coding.
 
-### Exercise 3: Create a Message Route to Azure Blob Storage
+#### Exercise 3: Create a Message Route to Azure Blob Storage
 
 The architecture of our vibration monitoring system requires data be sent to two destinations: storage and analysis. Azure IoT provides a great method of directing data to the right service, through *message routing*.
 
@@ -324,7 +324,7 @@ An SQL query embedded into our message route can test the `sensorID` value.
 
 In this exercise, you will create and test the logging route.
 
-### Exercise 4: Logging Route Azure Stream Analytics Job
+#### Exercise 4: Logging Route Azure Stream Analytics Job
 
 To verify that the logging route is working as expected, we will create a Stream Analytics job that routes logging messages to Blob storage, which can then be validated using Storage Explorer in the Azure Portal.
 
@@ -338,9 +338,9 @@ This will enable us to verify that our route includes the following settings:
 
 > **Note**: It may seem odd to be routing data to storage, then again sending it to storage through Azure Stream Analytics.  In a production scenario, you wouldn't have both paths long-term.  Instead, the second path that we're creating here would not exist.  We're using it here simply as a way to demonstrate Azure Stream Analytics in an easy-to-validate way in a lab environment.
 
-# LAB_AK_08
+## LAB_AK_08
 
-## Lab Scenario
+### Lab Scenario
 
 You have developed a device simulator that generates vibration data and other telemetry outputs for a conveyor belt system that takes packages and drops them off in mailing bins. You have built and tested a logging route that sends data to Azure Blob storage.
 
@@ -356,7 +356,7 @@ In this exercise, you will create an Event Hubs *namespace*. You then have to cr
 
 After the route is created, we move on to updating the query.
 
-### Make a Call to a Built-in Machine Learning Model
+#### Make a Call to a Built-in Machine Learning Model
 
 The built-in Machine Learning (ML) function we're going to call is `AnomalyDetection_SpikeAndDip`.
 
@@ -372,7 +372,7 @@ Spikes and dips in telemetry data are temporary anomalies. However, as we're dea
 
 There are other built-in ML models, such as a model for detecting trends. We don't include these models as part of this module, but the student is encouraged to investigate further.
 
-### Visualize data using Power BI
+#### Visualize data using Power BI
 
 Visualizing numerical data, especially volumes of it, is a challenge in itself. How can we alert a human operator of the sequence of anomalies that infer something is wrong?
 
@@ -384,41 +384,41 @@ The fourth tile allows you to compare the anomalies with the red text in the tel
 
 Let's create the Event Hub, create the second route, update the SQL query, create a Power BI dashboard, and let it all run!
 
-### Exercise 1: Sign Up For PowerBI
+#### Exercise 1: Sign Up For PowerBI
 
 Power BI can be your personal data analysis and visualization tool, and can also serve as the analytics and decision engine behind group projects, divisions, or entire corporations. Later on in this lab, you will build a dashboard and visualize data using PowerBI. This exercise explains how to sign up for Power BI as an individual.
 
 >**Note:** If you already have a PowerBI subscription, you can skip to the next step.
 
-### Exercise 2: Verify Lab Prerequisites
+#### Exercise 2: Verify Lab Prerequisites
 
 In order to visualize data in a dashboard, we need some real-time telemetry. In this exercise you will ensure the Device Simulator app from the previous lab is running.
 
-### Exercise 3: Add Azure Event Hub Route and Anomaly Query
+#### Exercise 3: Add Azure Event Hub Route and Anomaly Query
 
 Now that we have telemetry data streaming into the IoT Hub, we're going to add an Azure Event Hub Namespace and Azure Event Hub instance to our solution. Azure Event hubs are ideal for processing streaming data and support live dashboarding scenarios - perfect for passing our vibration data to Power BI.
 
-### Exercise 4: Create Real-Time Message Route
+#### Exercise 4: Create Real-Time Message Route
 
 Now that we have an Event Hubs Namespace and an Event Hub, we need to pass the telemetry data from the IoT hub to the Event Hub.
 
-### Exercise 5: Add Telemetry Route
+#### Exercise 5: Add Telemetry Route
 
 With this new IoT Hub route in place, and the telemetry data streaming into the Event Hub, we need to update our Stream Analytics job. This job will need to consume the data from the Event Hub, perform analysis using the **AnomalyDetection_SpikeAndDip** ML model and then output the results to Power BI.
 
-### Exercise 6: Create a Power BI Dashboard
+#### Exercise 6: Create a Power BI Dashboard
 
 Now for the final part of the scenario - the actual data visualization. We have updated our job to process the vibration telemetry via the ML model and output the results to Power BI. Within Power BI, we need to create a dashboard with a number of tiles to visualize the results and provide decision support for the operator.
 
-# LAB_AK_09
+## LAB_AK_09
 
-## Lab Scenario
+### Lab Scenario
 
 Contoso is installing new connected Thermostats to be able to monitor temperature across different cheese caves. You will create an alert to notify facilities manager when a new thermostat has been created.
 
 To create an alert, you will push device created event type to Event Grid when a new thermostat is created in IoT Hub. You will have a Logic Apps instance that will react on this event (on Event Grid) and will send an email to alert a facilities manager device a new device has been created, device ID, and connection state.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes the following resources are available:
 
@@ -429,27 +429,27 @@ This lab assumes the following resources are available:
 
 If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
 
-### Exercise 2: Create HTTP Web Hook Logic App that sends an email
+#### Exercise 2: Create HTTP Web Hook Logic App that sends an email
 
 Azure Logic Apps is a cloud service that helps you schedule, automate, and orchestrate tasks, business processes, and workflows when you need to integrate apps, data, systems, and services across enterprises or organizations.
 
 In this exercise, you will create a new Azure Logic App that will be triggered via an HTTP Web Hook, then send an email using an Outlook.com email address.
 
-### Exercise 3: Configure Azure IoT Hub Event Subscription
+#### Exercise 3: Configure Azure IoT Hub Event Subscription
 
 Azure IoT Hub integrates with Azure Event Grid so that you can send event notifications to other services and trigger downstream processes. You can configure business applications to listen for IoT Hub events so that you can react to critical events in a reliable, scalable, and secure manner. For example, build an application that updates a database, creates a work ticket, and delivers an email notification every time a new IoT device is registered to your IoT hub.
 
 In this exercise, you will create an Event Subscription within Azure IoT Hub to setup Event Grid integration that will trigger a Logic App to send an alert email.
 
-# LAB_AK_10
+## LAB_AK_10
 
-## Lab Scenario
+### Lab Scenario
 
 Contoso's asset condition tracking revealed a spike in temperature for a specific asset, and we want to find the root cause. We want to understand what happened: we correlate the IoT device's sensor data from transportation trucks and planes sensors. The temperature in one of the trucks rose and created the heat spike in one of the transport box equipped with an IoT device with temperature and humidity sensors. Your team will need to be able to explore data in near real time and perform root-cause analysis to help with improving delivery processes to ensure products are kept in the best condition.
 
 You will add Time Series Insights to the solution to quickly store, visualize, and query large amounts of time series data, that are generated by the IoT devices in the trucks, planes, and the transport boxes themselves to visualize changes over time.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes the following resources are available:
 
@@ -461,55 +461,55 @@ This lab assumes the following resources are available:
 | Device ID | `AirplaneDevice` |
 | Device ID | `ContainerDevice` |
 
-### Exercise 2: Setup Time Series Insights
+#### Exercise 2: Setup Time Series Insights
 
 Azure Time Series Insights (TSI) is an end-to-end platform-as-a-service (PaaS) offering used to collect, process, store, analyze, and query data from Internet of Things (IoT) solutions at scale. TSI is designed for ad hoc data exploration and operational analysis of data that's highly contextualized and optimized for time series.
 
 In this exercise, you will setup Time Series Insights (TSI) integration with Azure IoT Hub.
 
-### Exercise 3: Run Simulated IoT Devices
+#### Exercise 3: Run Simulated IoT Devices
 
 In this exercise, you will run the simulated devices so they starts sending telemetry events to Azure IoT Hub.
 
-### Exercise 4: View Time Series Insights Explorer
+#### Exercise 4: View Time Series Insights Explorer
 
 In this exercise, you will be introduced to working with time series data using the Time Series Insights (TSI) Explorer.
 
-# LAB_AK_11
+## LAB_AK_11
 
-## Lab Scenario
+### Lab Scenario
 
 Contoso has cheese producing factories worldwide. Factories are equipped with production lines have multiple machines to create their cheeses. At the moment they have IoT devices connected to each machine that streams sensor data to Azure and processes all data in the cloud. Due to the large amount of data being collected and urgent time response needed on some of the machines, Contoso's wants to add a gateway device to bring the intelligence to the edge for processing data to the only send important data to the cloud. Plus, be able to process data and react quickly even if the local network is poor.
 
 You will be setting up a new IoT Edge device that can monitor temperature of one of the machines and deploying Stream Analytics module to calculate the average temperature and send an alert to the device to act quickly.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 [tbd]
 
-### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
+#### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
 In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace.
 
-### Exercise 3: Create IoT Edge Device Identity in IoT Hub using Azure CLI
+#### Exercise 3: Create IoT Edge Device Identity in IoT Hub using Azure CLI
 
 In this exercise, you will create a new IoT Edge Device Identity within Azure IoT Hub using the Azure CLI.
 
-### Exercise 4: Connect IoT Edge Device to IoT Hub
+#### Exercise 4: Connect IoT Edge Device to IoT Hub
 
 In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
-### Exercise 5: Add Edge Module to Edge Device
+#### Exercise 5: Add Edge Module to Edge Device
 
 In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Edge Module, and deploy it to run on the IoT Edge Device.
 
-### Exercise 6: Deploy Azure Stream Analytics as IoT Edge Module
+#### Exercise 6: Deploy Azure Stream Analytics as IoT Edge Module
 
 Now that the tempSensor module is deployed and running on the IoT Edge device, we can add a Stream Analytics module that can process messages on the IoT Edge device before sending them on to the IoT Hub.
 
-# LAB_AK_12
+## LAB_AK_12
 
-## Lab Scenario
+### Lab Scenario
 
 This lab is theoretical and will walk you through how an IoT Edge device can be used as a gateway.
 
@@ -521,31 +521,31 @@ There are three patterns for using an IoT Edge device as a gateway: transparent,
 
 **Identity translation** - Devices that cannot connect to IoT Hub can connect to a gateway device, instead. The gateway provides IoT Hub identity and protocol translation on behalf of the downstream devices. The gateway is smart enough to understand the protocol used by the downstream devices, provide them identity, and translate IoT Hub primitives. Downstream devices appear in IoT Hub as first-class devices with twins and methods. A user can interact with the devices in IoT Hub and is unaware of the intermediate gateway device.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 [tbd]
 
-### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
+#### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
 In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace.
 
-### Exercise 3: Generate and Configure IoT Edge Device CA Certificates
+#### Exercise 3: Generate and Configure IoT Edge Device CA Certificates
 
 In this exercise, you will generate test certificates using Linux. You will do this on the `AZ-220-VM-EDGEGW-{YOUR-ID}` Virtual Machine using a helper script contained within the `Azure/IoTEdge` GitHub project.
 
-### Exercise 4: Create IoT Edge Device Identity in IoT Hub using Azure Portal
+#### Exercise 4: Create IoT Edge Device Identity in IoT Hub using Azure Portal
 
 In this exercise, you will create a new IoT Edge Device identity in Azure IoT Hub for the IoT Edge Transparent Gateway.
 
-### Exercise 5: Setup IoT Edge Gateway Hostname
+#### Exercise 5: Setup IoT Edge Gateway Hostname
 
 In this exercise, you will configure the DNS name for Public IP Address of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_**, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
 
-### Exercise 6: Connect IoT Edge Gateway Device to IoT Hub
+#### Exercise 6: Connect IoT Edge Gateway Device to IoT Hub
 
 In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
-### Exercise 7: Open IoT Edge Gateway Device Ports for Communication
+#### Exercise 7: Open IoT Edge Gateway Device Ports for Communication
 
 In this exercise, you will configure the Network Security Group (NSG) that secures access to the Azure IoT Edge Gateway from the Internet. The necessary ports for MQTT, AMQP, and HTTPS communications need to be opened so the downstream IoT device(s) can communicate with the gateway.
 
@@ -563,21 +563,21 @@ The IoT communication protocol chosen for your devices will need to have the cor
 
 In a production scenario, you will only want to open the minimum number of ports for your devices to communicate. If you are using MQTT, then only open port 8883 for inbound communications. Opening additional ports will introduce addition security attack vectors that attackers could take exploit. It is a security best practice to only open the minimum number of ports necessary for your solution.
 
-### Exercise 8: Create Downstream Device Identity in IoT Hub
+#### Exercise 8: Create Downstream Device Identity in IoT Hub
 
 In this exercise, you will create a new IoT Device identity in Azure IoT Hub for the downstream IoT device. This device identity will be configured so that the Azure IoT Edge Gateway is a parent device for this downstream device.
 
-### Exercise 9: Connect Downstream Device to IoT Edge Gateway
+#### Exercise 9: Connect Downstream Device to IoT Edge Gateway
 
 In this exercise, you will configure a pre-built Downstream Device to connect to the IoT Edge Gateway.
 
-### Exercise 10: Verify Event Flow
+#### Exercise 10: Verify Event Flow
 
 In this exercise, you will use the Azure CLI to monitor the events being sent to Azure IoT Hub from the downstream IoT Device through the IoT Edge Gateway. This will validate that everything is working correctly.
 
-# LAB_AK_13
+## LAB_AK_13
 
-## Lab Scenario
+### Lab Scenario
 
 Contoso's warehouse moves inventory that is ready to be packed for delivery on a conveyor belt.
 
@@ -594,41 +594,41 @@ This lab includes the following prerequisites for the development machine (lab h
 
     > **Important**: Because of removal of Azure Container Registry support for TLS before TLS version 1.2 on January 13, 2020, you must be on Docker Client 18.03.0 or later.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 [tbd]
 
-### Exercise 2: Install Azure IoT EdgeHub Dev Tool
+#### Exercise 2: Install Azure IoT EdgeHub Dev Tool
 
 In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
-### Exercise 3: Create Azure Container Registry
+#### Exercise 3: Create Azure Container Registry
 
 Azure Container Registry provides storage of private Docker images for container deployments. The service is a managed, private Docker registry service based on the open-source Docker Registry 2.0. Azure Container Registry is used to store and manage your private Docker container images.
 
 In this exercise, you will use the Azure portal to create a new Azure Container Registry resource.
 
-### Exercise 4: Create Custom Edge Module in C\#
+#### Exercise 4: Create Custom Edge Module in C\#
 
 In this exercise, you will create an Azure IoT Edge Solution that contains a custom Azure IoT Edge Module written in C#.
 
-### Exercise 5: Debug in Attach Mode with IoT Edge Simulator
+#### Exercise 5: Debug in Attach Mode with IoT Edge Simulator
 
 In this exercise, you will build and run a custom IoT Edge Module solution using the IoT Edge Simulator from within Visual Studio Code.
 
-### Exercise 6: Deploy IoT Edge Solution
+#### Exercise 6: Deploy IoT Edge Solution
 
 In this exercise, you will build and publish the custom IoT Edge Module into the Azure Container Registry (ACR) service. Once published to ACR, the custom module will then be made available to be deployed to any IoT Edge Device.
 
-# LAB_AK_14
+## LAB_AK_14
 
-## Lab Scenario
+### Lab Scenario
 
 The conveyor belt system monitors vibrations, telemetry, and counts objects. We want our system to be resilient to network outages and also optimize the bulk upload of telemetry data at specific times in the day (load balancing network usage). We will configure IoT Edge to support offline in case network drops and we will look into storing telemetry from sensors locally and configure for regular syncs at given times.
 
 You will learn the different scenarios where IoT Edge device is on an enterprise network (needs proxy settings) or needs extended offline capabilities.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 This lab assumes the following resources are available:
 
@@ -638,11 +638,11 @@ This lab assumes the following resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | IoT Device | SimulatedThermostat |
 
-### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
+#### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
 In this unit you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace. In previous labs you have created the VM using the Azure Portal. This time around, we will create the VM using the Azure CLI.
 
-### Exercise 3: Setup IoT Edge Parent with Child IoT Devices
+#### Exercise 3: Setup IoT Edge Parent with Child IoT Devices
 
 In this exercise, you will register an IoT Edge Device within Azure IoT Hub, and an IoT Device that is configured in a child relationship. This will enable the scenario to the the child IoT Device send messages through the IoT Edge Device as a gateway before communicating to the Azure IoT Hub in the cloud.
 
@@ -656,11 +656,11 @@ In this scenario, the child device connects to, and authenticate against the par
 
 When the parent IoT Edge Device is disconnected (or loses connection to the Azure IoT Hub) it will automatically store all device messages to the IoT Edge Device. Once the connection is restored, the IoT Edge Device will resume connectivity and send any stored messages to Azure IoT Hub. Messages stored on the IoT Edge Device may expire according to the Time-to-Live (TTL) configurations for the device; which defaults to store messages for up to `7200` seconds (two hours).
 
-### Exercise 4: Configure IoT Edge Device as Gateway
+#### Exercise 4: Configure IoT Edge Device as Gateway
 
 In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machine that was created previously to be an IoT Edge Transparent Gateway device. The configuration will be handled by a helper script that is part of this unit to make the process quicker.
 
-### Exercise 5: Open IoT Edge Gateway Device Inbound Ports using Azure CLI
+#### Exercise 5: Open IoT Edge Gateway Device Inbound Ports using Azure CLI
 
 In this exercise, you will use the Azure CLI to configure the Network Security Group (NSG) that secures access to the Azure IoT Edge Gateway from the Internet. The necessary ports for MQTT, AMQP, and HTTPS communications need to be opened so the downstream IoT device(s) can communicate with the gateway.
 
@@ -674,7 +674,7 @@ These are the TCP/IP port numbers for the supported protocols:
 | AMQP | 5671 |
 | HTTPS<br/>MQTT + WS (Websocket)<br/>AMQP + WS (Websocket) | 443 |
 
-### Exercise 6: Configure IoT Edge Device Time-to-Live and Message Storage
+#### Exercise 6: Configure IoT Edge Device Time-to-Live and Message Storage
 
 In this exercise, you will configure the message Time-to-Live (TTL) of the Edge Hub module on the Azure IoT Edge Gateway device to be longer than the default. You will also configure the storage location on the IoT Edge Device where the messages are to be stored.
 
@@ -684,7 +684,7 @@ The Module Twin for the IoT Edge Hub is called `$edgeHub` and is used to coordin
 
 The `timeToLiveSecs` property for the Edge Hub can be specified in the Deployment Manifest on a specific device as part of a single-device or at-scale deployment. In this unit, you will use the Azure Portal user interface for Azure IoT Hub to modify the `timeToLiveSecs` property for the Edge Hub (`$edgeHub`) module on the single IoT Edge Gateway device.
 
-### Exercise 7: Connect Child IoT Device to IoT Edge Gateway
+#### Exercise 7: Connect Child IoT Device to IoT Edge Gateway
 
 In this exercise, you will configure the downstream, child IoT Devices to connect to IoT Hub using their configured Symmetric Keys. The devices will be configured to connect to IoT Hub and the parent IoT Edge Device using a Connection String that contains the Symmetric Key; in addition to the Gateway Hostname for the Parent IoT Edge Device.
 
@@ -692,13 +692,13 @@ The process to authenticate regular IoT devices to IoT Hub with symmetric keys a
 
 In a previous unit, you created the IoT Device Identities in Azure IoT Hub. You copied the **Connection String** for the IoT Device. Alternatively, the Connection String can be accessed with the Azure portal for the Device ID of the device within Azure IoT Hub.
 
-### Exercise 8: Test Device Connectivity and Offline Support
+#### Exercise 8: Test Device Connectivity and Offline Support
 
 In this exercise, you will monitor events from the **ChildIoTDevice** are being sent to Azure IoT Hub through the **IoTEdgeGateway** IoT Edge Transparent Gateway. You will then interrupt connectivity between the **IoTEdgeGateway** and Azure IoT Hub to see that telemetry is still sent from the child IoT Device to the IoT Edge Gateway. After this, you will resume connectivity with Azure IoT Hub and monitor that the IoT Edge Gateway resumes sending telemetry to Azure IoT Hub.
 
-# LAB_AK_15
+## LAB_AK_15
 
-## Lab Scenario
+### Lab Scenario
 
 Suppose you manage a gourmet cheese making company in a southern location. The company is proud of its cheese, and is careful to maintain the perfect temperature and humidity of a natural cave that is used to age the cheese. There are sensors in the cave that report on the temperature and humidity. A remote operator can set a fan to new settings if needed, to maintain the perfect environment for the aging cheese. The fan can heat and cool, and humidify and de-humidify.
 
@@ -708,13 +708,13 @@ The accepted ideal temperature for aging cheese is 50 degrees fahrenheit (10 deg
 
 In a southern location, a natural cave near the surface might have an ambient temperature of around 70 degrees. The cave might also have a relative humidity of close to 100 percent, because of water seeping through the roof. These high numbers aren't perfect conditions for aging cheese. At a more northerly location, the ambient temperature of a natural cave can be the ideal of 50 degrees. Because of our location, we need some Azure IoT intervention!
 
-### Sending and Receiving Telemetry
+#### Sending and Receiving Telemetry
 
 The frequency of telemetry output is an important factor. A temperature sensor in a refrigeration unit may only have to report every minute, or less. An acceleration sensor on an aircraft may have to report at least every second.
 
 An IoT device may contain one or more sensors, and have some computational power. There may be LED lights, and even a small screen, on the IoT device. However, the device isn't intended for direct use by a human operator. An IoT device is designed to receive its instructions from the cloud.
 
-### Control a Cheese Cave Device
+#### Control a Cheese Cave Device
 
 In this module, we assume the IoT cheese cave monitoring device has temperature and humidity sensors. The device has a fan capable of both cooling or heating, and humidifying or de-humidifying. Every few seconds, the device sends current temperature and humidity values to the IoT Hub. This rapid frequency is unrealistic for a cheese cave (maybe every 15 minutes, or less, would be granular enough), except during code development when we want rapid activity!
 
@@ -722,13 +722,13 @@ For this lab, we assume that the fan can be in one of three states: on, off, and
 
 Another feature of our IoT device is that it can accept desired values from the IoT Hub. The device can then adjust its fan to target these desired values. These values are coded in this module using a feature called device twins. Desired values will override any default settings for the device.
 
-### Coding the Sample
+#### Coding the Sample
 
 The coding in this module is broken down into three parts: sending and receiving telemetry, sending and receiving a direct method, and managing device twins.
 
 Let's start by writing two apps: one for the device to send telemetry, and one back-end service to run in the cloud, to receive the telemetry. You'll be able to select your preferred language (Node.js or C#), and development environment (Visual Studio Code, or Visual Studio).
 
-### Exercise 1: Create a custom Azure IoT Hub, using the IoT Hub portal
+#### Exercise 1: Create a custom Azure IoT Hub, using the IoT Hub portal
 
 This lab assumes the following resources are available:
 
@@ -738,21 +738,21 @@ This lab assumes the following resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | IoT Device | CheeseCaveID |
 
-### Exercise 2: Write Code to Send and Receive Telemetry
+#### Exercise 2: Write Code to Send and Receive Telemetry
 
 At the end of this unit, you'll be sending and receiving telemetry.
 
-### Exercise 2: Create a Second App to Receive Telemetry
+#### Exercise 2: Create a Second App to Receive Telemetry
 
 Now we have a device pumping out telemetry, we need to listen for that telemetry with a back-end app, also connected to our IoT Hub.
 
-### Exercise 3: Write Code to Invoke a Direct Method
+#### Exercise 3: Write Code to Invoke a Direct Method
 
 In this unit, we'll add code to the device app for a direct method to turn on the fan. Next, we add code to the back-end service app to invoke this direct method.
 
 Calls from the back-end app to invoke direct methods can include multiple parameters as part of the payload. Direct methods are typically used to turn features of the device off and on, or specify settings for the device.
 
-### Exercise 4: Write Code for Device Twins
+#### Exercise 4: Write Code for Device Twins
 
 In this exercise, we'll add some code to both the device app and back-end service app, to show device twin synchronization in operation.
 
@@ -767,9 +767,9 @@ Device twins are designed for querying, and automatically synchronizing, with th
 
 There is some overlap between the functionality of device twins and direct methods. We could set desired properties using direct methods, which might seem an intuitive way of doing things. However, using direct methods would require the back-end app to record those settings explicitly, if they ever needed to be accessed. Using device twins, this information is stored and maintained by default.
 
-# LAB_AK_16
+## LAB_AK_16
 
-## Lab Scenario
+### Lab Scenario
 
 Suppose you manage a company that offers a solution to maintain and monitor cheese caves' temperature and humidity at optimal levels. You have been working with gourmet cheese making companies for a long time and established long term trust with these customers who value the quality of your product.
 
@@ -777,7 +777,7 @@ Your solution consists in sensors and a climate system installed in the cave tha
 
 Your company is always enhancing the software running on the devices to better adapt to your customers different cheeses and diverse types of rooms they use to store their cheese. In addition to the features updates, you also want to make sure the devices deployed at customers locations have the latest security patches to ensure privacy and prevent hackers to take control of the system. In order to do this, you need to keep the devices up to date by remotely updating their firmware.
 
-### Exercise 1: Create an Azure IoT Hub and a Device ID
+#### Exercise 1: Create an Azure IoT Hub and a Device ID
 
 This lab assumes the following resources are available:
 
@@ -787,12 +787,12 @@ This lab assumes the following resources are available:
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
 | IoT Device | SimulatedSolutionThermostat |
 
-### Exercise 2: Write code to simulate device that implements firmware update
+#### Exercise 2: Write code to simulate device that implements firmware update
 
 At the end of this task, you'll have a device simulator awaiting for a firmware update request from IoT Hub.
 
 Before getting started with your first firmware update on an IoT device, take a minute to review what it actually means to implement such an operation and how Azure IoT Hub helps making the process.
-#### What does updating an IoT device's firmware imply?
+##### What does updating an IoT device's firmware imply?
 
 IoT devices most often are powered by optimized operating systems or even sometimes running code directly on the silicon (without the need for an actual operating system). In order to update the software running on this kind of devices the most common method is to flash a new version of the entire software package, including the OS as well as the apps running on it (called firmware).
 
@@ -809,87 +809,87 @@ There is a set of common denominators to all over-the-air firmware updates for I
 1. Firmware is locally stored is some form of physical storage (ROM memory, hard drive,...)
 1. Device manufacturer provide a description of the required operations on the device to update the firmware.
 
-#### Azure IoT Hub Automatic Device Management
+##### Azure IoT Hub Automatic Device Management
 
 Azure IoT Hub offers advanced support for implementing device management operations on a single and on collections of devices. The [Automatic Device Management](https://docs.microsoft.com/azure/iot-hub/iot-hub-auto-device-config) feature allows to simply configure a set of operations, trigger them and then monitor their execution.
 
 In this exercise, you will create a simple simulator that will manage the device twin desired properties changes and will trigger a local process simulating a firmware update. The overall process would be exactly the same for a real device with the exception of the actual steps for the local firmware update. You will then use the Azure Portal to configure and execute a firmware update for a single device. IoT Hub will use the device twin properties to transfer the configuration change request to the device and monitor the progress
 
-### Exercise 3: Test firmware update on a single device
+#### Exercise 3: Test firmware update on a single device
 
 In this exercise, we will use the Azure portal to create a new device management configuration and apply it to our single simulated device.
 
-# LAB_AK_17
+## LAB_AK_17
 
-## Lab Scenario
+### Lab Scenario
 
 Our asset tracking solution is getting bigger, and provisioning devices one by one (even through DPS) cannot scale. We want to use DPS to enroll many devices automatically and securely using x.509 certificate authentication. Within our solution, we will use sensors to track our assets being transported. Each time a sensor is added in a transportation box, it will auto provision through DPS. We want to have a metric for the warehouse manager of how many boxes were "tagged" and need to count the Device Connected events from IoT Hub.
 
 In this lab, you will setup a Group Enrollment within Device Provisioning Service (DPS) using a Root CA x.509 certificate chain. You will configure the linked IoT Hub to using monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. Additionally you will create an alert that will be triggered based upon the average number of devices connected. You will the configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 [tbd]
 
-### Exercise 2: Set Up and Use Metrics and Diagnostic Logs with an IoT Hub
+#### Exercise 2: Set Up and Use Metrics and Diagnostic Logs with an IoT Hub
 
 If you have an IoT Hub solution running in production, you want to set up some metrics and enable diagnostic logs. Then if a problem occurs, you have data to look at that will help you diagnose the problem and fix it more quickly. In this lab, you'll see how to enable the diagnostic logs, and how to check them for errors. You'll also set up some metrics to watch, and alerts that fire when the metrics hit a certain boundary.
 
 For example, you could have an e-mail sent to you when the number of connected devices exceed a certain threshold, or when the number of messages used gets close to the quota of messages allowed per day for the IoT Hub.
 
-### Exercise 3: Enable Logging
+#### Exercise 3: Enable Logging
 
 Azure Resource logs are platform logs emitted by Azure resources that describe their internal operation. All resource logs share a common top-level schema with the flexibility for each service to emit unique properties for their own events.
 
-### Exercise 4: Configure an Alert
+#### Exercise 4: Configure an Alert
 
 Now let us create an alert. Alerts proactively notify you when important conditions are found in your monitoring data. They allow you to identify and address issues before the users of your system notice them. In our asset tracking scenario, we use sensors to track our assets being transported. Each time a sensor is added in a transportation box, it will auto provision through DPS. We want to have a metric for the warehouse manager of how many boxes were "tagged" and need to count the Device Connected events from IoT Hub.
 
 In this task we are going to add an alert that will inform the warehouse manager when 5 or more devices have connected.
 
-### Exercise 5: Simulating the Sensors
+#### Exercise 5: Simulating the Sensors
 
 As part of the asset-tracking scenario, we need to have devices that simulate the tags that will be used to track the assets during transportation. As each device is activated, it should use automatic device provisioning to connect to the Iot solution and start sending telemetry. In order to automatically connect, each device will need its own X509 certificate that is part of a chain to the root certificate used to create a group enrollment.
 
 In this task, we will verify the existing environment, perform any necessary setup, generate 10 device certificates, and configure a console application that will simulate the 10 devices.
 
-### Exercise 6: Simulate Devices
+#### Exercise 6: Simulate Devices
 
 In this task we will be generating X509 certificates from the root certifcate. We will then use these certificates in a console application that will simulate 10 devices connecting to DPS and sending telemetry to an IoT Hub.
 
-### Exercise 7: Review Metrics, Alerts and Archive
+#### Exercise 7: Review Metrics, Alerts and Archive
 
 [TBD]
 
-# LAB_AK_18
+## LAB_AK_18
 
 **MISING**
 
-# LAB_AK_19
+## LAB_AK_19
 
-## Lab Scenario
+### Lab Scenario
 
 Contoso has built all their solutions with security in mind. However, they want to see how they can better get a unified view of security across all of their on-premises and cloud workloads, including their Azure IoT solutions. Plus, when onboarding new devices, we want to apply security policies across workloads (Leaf devices, Microsoft Edge devices, IoT Hub) to ensure compliance with security standards and improved security posture.
 
 Contoso is adding a brand new assembly line outfitted with new IoT devices to help with the increasing shipping and packing demands for new orders. You want to ensure that any new devices are secured and also want to be able to see security recommendations to continue improving your solution's security in your full end-to-end IoT solution. You will start investigating using Azure IoT Center for IoT for your solution.
 
-### Exercise 1: Verify Lab Prerequisites
+#### Exercise 1: Verify Lab Prerequisites
 
 [tbd]
 
-### Exercise 2: Create an IoT Hub using the Azure portal
+#### Exercise 2: Create an IoT Hub using the Azure portal
 
 In this task, you will use the Azure portal to create an IoT Hub resource.
 
-### Exercise 3: Enable Azure Security Center for IoT Hub
+#### Exercise 3: Enable Azure Security Center for IoT Hub
 
 The Azure Security Center for IoT Hub unifies security management and enables end-to-end threat detection and analysis across hybrid cloud workloads and your Azure IoT solution.
 
-### Exercise 4: Create and Register a New Device
+#### Exercise 4: Create and Register a New Device
 
 [TBD]
 
-### Exercise 5: Create a Security Module Twin
+#### Exercise 5: Create a Security Module Twin
 
 Azure Security Center for IoT offers full integration with your existing IoT device management platform, enabling you to manage your device security status as well as make use of existing device control capabilities. Azure Security Center for IoT integration is achieved by making use of the IoT Hub twin mechanism.
 
@@ -906,7 +906,7 @@ The security module twin **azureiotsecurity** can be created in two ways:
 
 In this task, you will be creating a security module twin manually.
 
-### Exercise 6: Deploy Azure Security Center for IoT C# Security Agent
+#### Exercise 6: Deploy Azure Security Center for IoT C# Security Agent
 
 Azure Security Center for IoT provides reference architecture for security agents that log, process, aggregate, and send security data through IoT Hub. You will be adding a security agent for C# to deploy on your simulated device (Linux VM). There are C and C# based agents. C agents are recommended for devices with more restricted or minimal device resources.
 
@@ -917,7 +917,7 @@ Security agents support the following features:
 * Authenticate with existing device identity, or a dedicated module identity. See Security agent authentication methods to learn more.
 * Configure remotely through use of the **azureiotsecurity** module twin. To learn more, see Configure an Azure Security Center for IoT agent.
 
-### Exercise 7: Configure Solution Management
+#### Exercise 7: Configure Solution Management
 
 Azure Security Center for IoT provides comprehensive end-to-end security for Azure-based IoT solutions.
 
@@ -927,9 +927,9 @@ Once enabled on your IoT Hub, Azure Security Center for IoT automatically identi
 
 In addition to automatic relationship detection, you can also pick and choose which other Azure resource groups to tag as part of your IoT solution. Your selections allow you to add entire subscriptions, resource groups, or single resources.
 
-# LAB_AK_20
+## LAB_AK_20
 
-## Lab Scenario
+### Lab Scenario
 
 Azure IoT Central enables the easy monitoring and management of a fleet of remote devices.
 
@@ -943,35 +943,35 @@ In order to make these decisions, you'll need an up-to-date picture of all that 
 
 IoT Central provides all you need to handle this scenario. 
 
-### Exercise 1: Create a Custom IoT Central app
+#### Exercise 1: Create a Custom IoT Central app
 
 [TBD]
 
-### Exercise 2: Create Device Template
+#### Exercise 2: Create Device Template
 
 The data communicated between a remote device, and IoT Central, is specified in a _device template_. The device template encapsulates all the details of the data, so that both the device and IoT Central have all they need to make sense of the communication.
 
 In this Lab, you'll create a device template for a refrigerated truck.
 
-### Exercise 3: Monitor Simulated Device
+#### Exercise 3: Monitor Simulated Device
 
 You'll first create a dashboard showing all the capabilities of the device template. Next, you'll create a real device, and record the connection settings needed for the remote device app.
 
-### Exercise 4: Create a free Azure Maps account
+#### Exercise 4: Create a free Azure Maps account
 
 If you do not already have an Azure Maps account, you'll need to create one.
 
-### Exercise 5: Create a Programming Project for a Real Device
+#### Exercise 5: Create a Programming Project for a Real Device
 
 In this task, you are going to create a programming project to simulate a sensor device in a refrigerated truck. This simulation enables you to test the code long before requiring a real truck!
 
 IoT Central treats this simulation as "real" because the communication code between the device app and the IoT Central app is the same for a real truck. In other words, if you do run a refrigerated truck company, you would start with simulated code similar to the code in this task. After this code works to your satisfaction, the simulation-specific code would be replaced with code that receives sensor data. This limited update makes writing the following code a valuable experience.
 
-### Exercise 6: Test Your IoT Central Device
+#### Exercise 6: Test Your IoT Central Device
 
 Working through this task is an exciting time in IoT Central development! Finally, you get to check whether all the moving parts you've created work together.
 
-### Exercise 7: Create multiple devices
+#### Exercise 7: Create multiple devices
 
 In this task, we consider what steps would be necessary to add multiple trucks to our system.
 

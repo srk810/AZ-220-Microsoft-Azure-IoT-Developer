@@ -532,7 +532,7 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     Notice that the `security` and `transport` objects, along with the DPS ID scope and DPS global device endpoint, are passed to `ProvisioningDeviceClient.Create` method. The ProvisioningDeviceClient object, `provClient`, will be used to register the device with the Device Provisioning Service.
 
-    Notice that `ProvisioningDeviceLogic` is instantiated by passing it the `provClient` and `security` objects. The `ProvisioningDeviceLogic` class is used to define the logic for the device (simualted device). It contains the code for simulating a running device by reading from the simulated device sensors and sending device-to-cloud messages to Azure IoT Hub. It will also be modified later to include code that updates the device according to changes to device twin desired properties that are sent to the device from the cloud.
+    Notice that `ProvisioningDeviceLogic` is instantiated by passing it the `provClient` and `security` objects. The `ProvisioningDeviceLogic` class is used to define the logic for the device (simulated device). It contains the code for simulating a running device by reading from the simulated device sensors and sending device-to-cloud messages to Azure IoT Hub. It will also be modified later to include code that updates the device according to changes to device twin desired properties that are sent to the device from the cloud.
 
 1. Scroll down to the `ProvisioningDeviceLogic` class, and then locate the `RunAsync` method.
 
@@ -569,7 +569,7 @@ In this exercise, you will configure a simulated device written in C# to connect
     await SendDeviceToCloudMessagesAsync(iotClient);
     ```
 
-    The `SendDeviceToCloudMessagesAsync` method is a seperate method that is defined further done in the code. This method contains the code that is used to read from simulated sensors and to send device-to-cloud messages to Azure IoT Hub. This method also contains a loop that continues to execute while the simulated device is running.
+    The `SendDeviceToCloudMessagesAsync` method is a separate method that is defined further done in the code. This method contains the code that is used to read from simulated sensors and to send device-to-cloud messages to Azure IoT Hub. This method also contains a loop that continues to execute while the simulated device is running.
 
 1. Still within the RunAsync method, notice the call to the `DeviceClient.CloseAsync` method.
 
@@ -737,9 +737,9 @@ In this exercise, you will run the simulated device. When the device is started 
 
 1. On the Visual Studio Code **View** menu, click **Terminal**.
 
-    This will open the integrated Terminal at the bootom of the Visual Studio Code window.
+    This will open the integrated Terminal at the bottom of the Visual Studio Code window.
 
-1. At the Terminal commnad prompt, ensure that the current directory path is set to the `/Starter` folder.
+1. At the Terminal command prompt, ensure that the current directory path is set to the `/Starter` folder.
 
     You should see something similar to the following:
 

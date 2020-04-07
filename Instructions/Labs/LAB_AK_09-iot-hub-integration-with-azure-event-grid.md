@@ -393,7 +393,6 @@ Test your logic app by creating a new device to trigger an event notification em
 
 1. To test the event subscription filters, create additional devices using the following device IDs:
 
-    * `CheeseCave1_Building1_Thermostat`
     * `CheeseCave1_Building1_Light`
     * `CheeseCave2_Building1_Thermostat`
     * `CheeseCave2_Building2_Light`

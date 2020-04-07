@@ -162,7 +162,7 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
 1. Leave this app running.
 
-    The telemtry data is needed for data visualization.
+    The telemetry data is needed for data visualization.
 
 ### Exercise 3: Create an Azure Event Hubs service
 
