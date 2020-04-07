@@ -41,12 +41,8 @@ You can find a processed, formatted version of the Markdown files at https://aka
 
 **Please** refer to the current open issues to be sure that a new issue doesn't duplicate an existing issue.  The following are known issues that are not in the open issues as we are working on them already:
 
-* The initial lab setup - where to find the source files, where to find the scripts, is included in the instructions.
-
 * Most labs require running the setup script in order to create specifically named IoT devices. Work is being done to "clean up" the device resources within and across labs.
 
-* The exercise numbers/names are not on the formatted version of the labs.
+* Many of the lab Exercises have not been broken up into defined Tasks, which can make it easy to get lost or miss a step. Work is being done to address this formatting.
 
-* The formatted version of the labs does not have proper indicators on some of the notes.
-
-* Images are currently being added to the labs where we feel they are required. We intend to keep image count low due to the fluid nature of the Azure UI.
+* There are places within the lab steps where images could improve the clarity of the instructions. Images are currently being added to the labs where we feel they are required. However, we intend to keep image count low due to the fluid nature of the Azure UI.
