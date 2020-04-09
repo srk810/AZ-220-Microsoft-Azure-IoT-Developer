@@ -105,7 +105,7 @@ namespace cheesecave_operator
                 methodInvocation.SetPayloadJson(payload);
 
                 // Invoke the direct method asynchronously and get the response from the simulated device.
-                var response = await s_serviceClient.InvokeDeviceMethodAsync("CheeseCaveID", methodInvocation);
+                var response = await s_serviceClient.InvokeDeviceMethodAsync("sensor-th-0055", methodInvocation);
 
                 if (response.Status == 200)
                 {
@@ -143,7 +143,7 @@ namespace cheesecave_operator
 
         private static async Task SetTwinProperties()
         {
-            var twin = await registryManager.GetTwinAsync("CheeseCaveID");
+            var twin = await registryManager.GetTwinAsync("sensor-th-0055");
             var patch =
                 @"{
                 tags: {

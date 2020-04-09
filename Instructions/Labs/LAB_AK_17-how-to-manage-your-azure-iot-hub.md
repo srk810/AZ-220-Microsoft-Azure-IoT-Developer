@@ -703,8 +703,8 @@ You will now generate and download 10 device certificates.
         chmod +w ./certs/new-device.cert.pem
         ./certGen.sh create_device_certificate asset-track$i
         sleep 5
-        cp ./certs/new-device.cert.pfx ./certs/new-asset-track$i.cert.pfx
-        download ./certs/new-asset-track$i.cert.pfx
+        cp ./certs/new-device.cert.pfx ./certs/sensor-thl-200$i.cert.pfx
+        download ./certs/sensor-thl-200$i.cert.pfx
     done
     popd
     ```
@@ -728,16 +728,16 @@ You will now generate and download 10 device certificates.
 
     Once it completes, you will have 10 certificates available in your browser download location:
 
-    * new-asset-track1.cert.pfx
-    * new-asset-track2.cert.pfx
-    * new-asset-track3.cert.pfx
-    * new-asset-track4.cert.pfx
-    * new-asset-track5.cert.pfx
-    * new-asset-track6.cert.pfx
-    * new-asset-track7.cert.pfx
-    * new-asset-track8.cert.pfx
-    * new-asset-track9.cert.pfx
-    * new-asset-track10.cert.pfx
+    * sensor-thl-2001.cert.pfx
+    * sensor-thl-2002.cert.pfx
+    * sensor-thl-2003.cert.pfx
+    * sensor-thl-2004.cert.pfx
+    * sensor-thl-2005.cert.pfx
+    * sensor-thl-2006.cert.pfx
+    * sensor-thl-2007.cert.pfx
+    * sensor-thl-2008.cert.pfx
+    * sensor-thl-2009.cert.pfx
+    * sensor-thl-2010.cert.pfx
 
 With these certificates available, you are ready to configure the device simulator.
 
@@ -757,16 +757,16 @@ With these certificates available, you are ready to configure the device simulat
     After copied, the certificate files will be located in the following locations:
 
     ```text
-    /Starter/new-asset-track1.cert.pfx
-    /Starter/new-asset-track2.cert.pfx
-    /Starter/new-asset-track3.cert.pfx
-    /Starter/new-asset-track4.cert.pfx
-    /Starter/new-asset-track5.cert.pfx
-    /Starter/new-asset-track6.cert.pfx
-    /Starter/new-asset-track7.cert.pfx
-    /Starter/new-asset-track8.cert.pfx
-    /Starter/new-asset-track9.cert.pfx
-    /Starter/new-asset-track10.cert.pfx
+    /Starter/sensor-thl-2001.cert.pfx
+    /Starter/sensor-thl-2002.cert.pfx
+    /Starter/sensor-thl-2003.cert.pfx
+    /Starter/sensor-thl-2004.cert.pfx
+    /Starter/sensor-thl-2005.cert.pfx
+    /Starter/sensor-thl-2006.cert.pfx
+    /Starter/sensor-thl-2007.cert.pfx
+    /Starter/sensor-thl-2008.cert.pfx
+    /Starter/sensor-thl-2009.cert.pfx
+    /Starter/sensor-thl-2010.cert.pfx
     ```
 
 1. Open Visual Studio Code.

@@ -11,15 +11,15 @@
     <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.1.6" />
   </ItemGroup>
 <ItemGroup>
-    <None Update="new-asset-track1.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track2.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track3.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track4.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track5.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track6.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track7.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track8.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track9.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    <None Update="new-asset-track10.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2001.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2002.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2003.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2004.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2005.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2006.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2007.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2008.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2009.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="sensor-thl-2010.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

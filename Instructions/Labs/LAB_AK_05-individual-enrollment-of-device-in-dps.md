@@ -174,7 +174,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     This sets DPS to automatically generate both the **Primary Key** and **Secondary Key** values for the device enrollment when it's created. Optionally, un-checking this option enables custom keys to be manually entered.
 
-1. In the **Registration ID** field, to specify the Registration ID to use for the device enrollment within DPS, enter **DPSSimulatedDevice1**
+1. In the **Registration ID** field, to specify the Registration ID to use for the device enrollment within DPS, enter **sensor-thl-1000**
 
     By default, the Registration ID will be used as the IoT Hub Device ID when the device is provisioned from the enrollment. If these values need to be different, then enter the required IoT Hub Device ID in that field.
 
@@ -234,7 +234,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. On the **Manage enrollments** blade, to view the list of individual device enrollments, click **individual enrollments**.
 
-1. Under Individual Enrollments, click **DPSSimulatedDevice1**.
+1. Under Individual Enrollments, click **sensor-thl-1000**.
 
     This enables you to view the enrollment details for the individual enrollment that you just created.
 
@@ -246,7 +246,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Locate the **Initial device twin State**, and notice the JSON for the device twin Desired State contains the `telemetryDelay` property set to the value of `"2"`.
 
-1. Close the **DPSSimulatedDevice1** view to return to the **AZ-220-DPS-_{YOUR-ID}_** blade.
+1. Close the **sensor-thl-1000** view to return to the **AZ-220-DPS-_{YOUR-ID}_** blade.
 
 ### Exercise 3: Configure Simulated Device
 
@@ -291,7 +291,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
     > **Note**: If you don't have the value of ID Scope available to you, you can find it on the Overview blade of the DPS service (in the Azure portal).
 
-1. Locate the `registrationId` variable, and replace the value with **DPSSimulatedDevice1**
+1. Locate the `registrationId` variable, and replace the value with **sensor-thl-1000**
 
     This variable represents the **Registration ID** value for the individual enrollment that you created in the Device Provisioning Service.
 
@@ -299,7 +299,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
     > **Note**: If you don't have these Key values available, you can copy them from the Azure portal as follows -
     >
-    > Open the **Manage enrollments** blade, click **Individual Enrollments**, click **DPSSimulatedDevice1**. Copy the values and then paste as noted above.
+    > Open the **Manage enrollments** blade, click **Individual Enrollments**, click **sensor-thl-1000**. Copy the values and then paste as noted above.
 
 1. Review the source code for the simulated device, and take notice of the following items:
 
@@ -413,9 +413,9 @@ In this exercise, you will run the Simulated Device and verify it's sending sens
     You can scroll up in the terminal pane to review the output. It should be similar to the following:
 
     ```text
-    RegistrationID = DPSSimulatedDevice1
+    RegistrationID = sensor-thl-1000
     ProvisioningClient RegisterAsync . . . Device Registration Status: Assigned
-    ProvisioningClient AssignedHub: AZ-220-HUB-CP1019.azure-devices.net; DeviceID: DPSSimulatedDevice1
+    ProvisioningClient AssignedHub: AZ-220-HUB-CP1019.azure-devices.net; DeviceID: sensor-thl-1000
     Creating Symmetric Key DeviceClient authentication
     Simulated Device. Ctrl-C to exit.
     DeviceClient OpenAsync.
@@ -454,12 +454,12 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
 1. In the Azure Cloud Shell, enter the following command:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name {IoTHubName} --device-id DPSSimulatedDevice1
+    az iot hub monitor-events --hub-name {IoTHubName} --device-id sensor-thl-1000
     ```
 
     _Be sure to replace the **{IoTHubName}** placeholder with the name of your Azure IoT Hub._
 
-1. Notice that your IoT hub is receiving the telemetry messages from the DPSSimulatedDevice1 device.
+1. Notice that your IoT hub is receiving the telemetry messages from the sensor-thl-1000 device.
 
     Continue to leave the simulated device application running for the next task.
 
@@ -471,7 +471,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click **IoT devices**.
 
-1. Within the list of IoT devices, click **DPSSimulatedDevice1**.
+1. Within the list of IoT devices, click **sensor-thl-1000**.
 
     > **IMPORTANT**: Make sure you select the device that you are using for this lab.
 
@@ -549,7 +549,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. On the Manage enrollments blade, to view the list of individual device enrollments, click **Individual Enrollments**.
 
-1. To select the DPSSimulatedDevice1 individual device enrollment, select the checkbox to the left of the name.
+1. To select the sensor-thl-1000 individual device enrollment, select the checkbox to the left of the name.
 
     Note that you don't want to open the device enrollment, you just want to select it.
 
@@ -569,7 +569,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click on **IoT devices**.
 
-1. Within the list of IoT devices, select the checkbox to the left of the DPSSimulatedDevice1 Device ID.
+1. Within the list of IoT devices, select the checkbox to the left of the sensor-thl-1000 Device ID.
 
     > **IMPORTANT**: Make sure you select the device representing the simulated device that you used for this lab.
 

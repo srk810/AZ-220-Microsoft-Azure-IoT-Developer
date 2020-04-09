@@ -636,7 +636,7 @@ This lab assumes the following resources are available:
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| IoT Device | SimulatedThermostat |
+| IoT Device | sensor-th-0050 |
 
 #### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
@@ -736,7 +736,7 @@ This lab assumes the following resources are available:
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| IoT Device | CheeseCaveID |
+| IoT Device | sensor-th-0055 |
 
 #### Exercise 2: Write Code to Send and Receive Telemetry
 

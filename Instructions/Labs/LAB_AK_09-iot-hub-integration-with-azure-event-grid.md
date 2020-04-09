@@ -387,15 +387,15 @@ Test your logic app by creating a new device to trigger an event notification em
 
 1. At the top of the IoT devices blade, click **+ New**.
 
-1. In the **Device ID** field, enter **CheeseCave1_Building1_Thermostat**
+1. In the **Device ID** field, enter **sensor-th-0050**
 
 1. Leave all other fields at the defaults, and then click **Save**.
 
 1. To test the event subscription filters, create additional devices using the following device IDs:
 
-    * `CheeseCave1_Building1_Light`
-    * `CheeseCave2_Building1_Thermostat`
-    * `CheeseCave2_Building2_Light`
+    * `sensor-v-3002`
+    * `sensor-th-0030`
+    * `sensor-v-3003`
 
     If you added the four examples total, your list of IoT devices should look like the following image:
 

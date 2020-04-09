@@ -30,16 +30,16 @@ namespace X509CertificateSimulatedDevice
         // Certificate (PFX) File Name
         private static string[] s_certificateFileNames = new string[]
         {
-            "new-asset-track1.cert.pfx",
-            "new-asset-track2.cert.pfx",
-            "new-asset-track3.cert.pfx",
-            "new-asset-track4.cert.pfx",
-            "new-asset-track5.cert.pfx",
-            "new-asset-track6.cert.pfx",
-            "new-asset-track7.cert.pfx",
-            "new-asset-track8.cert.pfx",
-            "new-asset-track9.cert.pfx",
-            "new-asset-track10.cert.pfx",
+            "sensor-thl-2001.cert.pfx",
+            "sensor-thl-2002.cert.pfx",
+            "sensor-thl-2003.cert.pfx",
+            "sensor-thl-2004.cert.pfx",
+            "sensor-thl-2005.cert.pfx",
+            "sensor-thl-2006.cert.pfx",
+            "sensor-thl-2007.cert.pfx",
+            "sensor-thl-2008.cert.pfx",
+            "sensor-thl-2009.cert.pfx",
+            "sensor-thl-2010.cert.pfx",
         };
 
         // Certificate (PFX) Password

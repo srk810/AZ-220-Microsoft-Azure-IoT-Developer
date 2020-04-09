@@ -194,11 +194,11 @@ In this exercise, you will:
 
     Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
   
-1. At the terminal command prompt, to create a directory named "vibrationdevice" and change the current directory to that directory, enter the following commands:
+1. At the terminal command prompt, to create a directory named "sensor-v-3000" and change the current directory to that directory, enter the following commands:
 
    ```bash
-   mkdir vibrationdevice
-   cd vibrationdevice
+   mkdir sensor-v-3000
+   cd sensor-v-3000
    ```
 
 1. To create a new .NET console application. enter the following command:
@@ -226,7 +226,7 @@ The simulated device app that you build in this task simulates an IoT device tha
 
     You will use the folder path listed within the Terminal command prompt to locate your project folder.
   
-1. In the Open Folder dialog, navigate to the directory path displayed within the Terminal command prompt, click **vibrationdevice**, and then click **Select Folder**.
+1. In the Open Folder dialog, navigate to the directory path displayed within the Terminal command prompt, click **sensor-v-3000**, and then click **Select Folder**.
 
     If you are prompted to load required assetts, click **Yes**.
 

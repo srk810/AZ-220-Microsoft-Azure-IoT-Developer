@@ -405,10 +405,10 @@ In this exercise, you will configure a simulated device written in C# to connect
 1. To generate an _X.509 device certificate_ within the CA certificate chain, enter the following command:
 
     ```sh
-    ./certGen.sh create_device_certificate simulated-device1
+    ./certGen.sh create_device_certificate sensor-thl-2000
     ```
 
-    This command will create a new X.509 certificate that's signed by the CA certificate that was generated previously. Notice that the device id (`simulated-device1`) is passed to the `create_device_certificate` command of the `certGen.sh` script. This device id will be set within the _common name_, or `CN=`, value of the device certificate. This certificate will generate a leaf device X.509 certificate for your simulated device, and will be used to authenticate the device with the Device Provisioning Service (DPS).
+    This command will create a new X.509 certificate that's signed by the CA certificate that was generated previously. Notice that the device id (`sensor-thl-2000`) is passed to the `create_device_certificate` command of the `certGen.sh` script. This device id will be set within the _common name_, or `CN=`, value of the device certificate. This certificate will generate a leaf device X.509 certificate for your simulated device, and will be used to authenticate the device with the Device Provisioning Service (DPS).
 
     Once the `create_device_certificate` command has completed, the generated X.509 device certificate will be named `new-device.cert.pfx`, and will be located within the `/certs` sub-directory.
 
@@ -755,9 +755,9 @@ In this exercise, you will run the simulated device. When the device is started 
     >
     > ```text
     > localmachine:LabFiles User$ dotnet run
-    > Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=simulated-device1; PrivateKey: True
-    > Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=simulated-device1
-    > RegistrationID = simulated-device1
+    > Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000; PrivateKey: True
+    > Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000
+    > RegistrationID = sensor-thl-2000
     > ProvisioningClient RegisterAsync . . . Unhandled exception. Microsoft.Azure.Devices.Provisioning.Client.ProvisioningTransportException: {"errorCode":401002,"trackingId":"2e298c80-0974-493c-9fd9-6253fb055ade","message":"Invalid certificate.","timestampUtc":"2019-12-13T14:55:40.2764134Z"}
     >   at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.ValidateOutcome(Outcome outcome)
     >   at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterDeviceAsync(AmqpClientConnection client, String correlationId, DeviceRegistration deviceRegistration)
@@ -777,11 +777,11 @@ In this exercise, you will run the simulated device. When the device is started 
 
     ```text
     localmachine:LabFiles User$ dotnet run
-    Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=simulated-device1; PrivateKey: True
-    Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=simulated-device1
-    RegistrationID = simulated-device1
+    Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000; PrivateKey: True
+    Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000
+    RegistrationID = sensor-thl-2000
     ProvisioningClient RegisterAsync . . . Device Registration Status: Assigned
-    ProvisioningClient AssignedHub: AZ-220-HUB-CP1119.azure-devices.net; DeviceID: simulated-device1
+    ProvisioningClient AssignedHub: AZ-220-HUB-CP1119.azure-devices.net; DeviceID: sensor-thl-2000
     Creating X509 DeviceClient authentication.
     simulated device. Ctrl-C to exit.
     DeviceClient OpenAsync.
@@ -818,7 +818,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click on **IoT devices**.
 
-1. Within the list of IoT devices, click **simulated-device1**.
+1. Within the list of IoT devices, click **sensor-thl-2000**.
 
     > **IMPORTANT**: Make sure you select the device from this lab. You may also see a device named _SimulatedDevice1_ that was created during a previous lab.
 
@@ -875,7 +875,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. In the Azure Portal, close the **Device twin** blade.
 
-1. Still in the Azure Portal, on the simulated-device1 blade, click **Device Twin**.
+1. Still in the Azure Portal, on the sensor-thl-2000 blade, click **Device Twin**.
 
 1. Scroll down to locate the JSON for the `properties.reported` object.
 
@@ -883,7 +883,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Again close the **Device twin** blade.
 
-1. Close the simulated-device1 blade, and then navigate back to your Azure portal Dashboard.
+1. Close the sensor-thl-2000 blade, and then navigate back to your Azure portal Dashboard.
 
 ### Exercise 7: Retire Group Enrollment
 
@@ -931,9 +931,9 @@ Once the enrollment group has been removed from the Device Provisioning Service 
 
 1. On the left side of the **IoT Hub** blade, under **Explorers**, click **IoT devices**.
 
-1. Notice that the **simulated-device1** device ID still exists within the Azure IoT Hub device registry.
+1. Notice that the **sensor-thl-2000** device ID still exists within the Azure IoT Hub device registry.
 
-1. To remove the device, select the check box to the left of **simulated-device1**, then click **Delete**.
+1. To remove the device, select the check box to the left of **sensor-thl-2000**, then click **Delete**.
 
     The **Delete** button located at the top of the blade will be enabled once a device (check box) is selected.
 
@@ -962,9 +962,9 @@ With the group enrollment deleted from the Device Provisioning Service, and the 
     Now that the group enrollment and registered device have been deleted, the simulated device will no longer be able to provision nor connect. When the application attempts to use the configured X.509 certificate to connect to DPS, it will return a `ProvisioningTransportException` error message.
 
     ```txt
-    Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=simulated-device1; PrivateKey: True
-    Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=simulated-device1
-    RegistrationID = simulated-device1
+    Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000; PrivateKey: True
+    Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000
+    RegistrationID = sensor-thl-2000
     ProvisioningClient RegisterAsync . . . Unhandled exception. Microsoft.Azure.Devices.Provisioning.Client.ProvisioningTransportException: {"errorCode":401002,"trackingId":"df969401-c766-49a4-bab7-e769cd3cb585","message":"Unauthorized","timestampUtc":"2019-12-20T21:30:46.6730046Z"}
        at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.ValidateOutcome(Outcome outcome)
        at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterDeviceAsync(AmqpClientConnection client, String correlationId, DeviceRegistration deviceRegistration)

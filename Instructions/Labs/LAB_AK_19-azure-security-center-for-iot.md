@@ -650,19 +650,19 @@ A device must be registered with your IoT hub before it can connect.
 
 1. At the top of the **IoT devices** pane, click  **+ New**
 
-1. On the **Create a device** blade, under **Device ID**, enter **CheeseCave1-Sensor1**
+1. On the **Create a device** blade, under **Device ID**, enter **sensor-th-0070**
 
     You will be using **symmetric Keys** for authentication, so leave the other values at the defaults.
 
 1. At the bottom of the blade, click **Save**.
 
-1. On the **IoT devices** pane, under **Device ID**, click **CheeseCave1-Sensor1**.
+1. On the **IoT devices** pane, under **Device ID**, click **sensor-th-0070**.
 
-    You may need to click **Load More** in order to access the **CheeseCave1-Sensor1** device.
+    You may need to click **Load More** in order to access the **sensor-th-0070** device.
 
 1. To the right of **Primary connection string**, click **Copy**, and then save the value to a text file.
 
-    Be sure to note that it is the connection string for the CheeseCave1-Sensor1 device. You will need the connection string value for the device app.
+    Be sure to note that it is the connection string for the sensor-th-0070 device. You will need the connection string value for the device app.
 
 #### Task 2: Create a Console App
 
@@ -844,7 +844,7 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
     ![Device security alert chart](media/LAB_AK_19-device-security-alert-chart.png)
 
-    You should also see an entry for the **CheeseCave1-Sensor1** device in the **Devices with the most alerts** tile:
+    You should also see an entry for the **sensor-th-0070** device in the **Devices with the most alerts** tile:
 
     ![Devices with the most alerts tile](media/LAB_AK_19-devices-with-most-alerts-tile.png)
 
@@ -863,7 +863,7 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
 1. Click the latest alert.
 
-    A detail pane will open. The **General information** provides high-level information concerning the alert. Beneath this, the **Last 10 Affected Devices** should list the **CheeseCave1-Sensor1** device.
+    A detail pane will open. The **General information** provides high-level information concerning the alert. Beneath this, the **Last 10 Affected Devices** should list the **sensor-th-0070** device.
 
     ![Custom Alert Details Pane](media/LAB_AK_19-custom-alert-details-pane.png)
 

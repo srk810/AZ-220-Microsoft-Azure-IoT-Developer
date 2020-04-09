@@ -126,15 +126,15 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
 > **Note**: If you have not completed lab 7 of this course, do that now.
 
-#### Task 1: Start the "vibrationdevice" app in Visual Studio Code
+#### Task 1: Start the "sensor-v-3000" app in Visual Studio Code
 
 1. Open Visual Studio Code.
 
 1. On the **File** menu, click **Open Folder**.
 
-1. In the Open Folder dialog, navigate to the **vibrationdevice** folder, and then click **Select Folder**.
+1. In the Open Folder dialog, navigate to the **sensor-v-3000** folder, and then click **Select Folder**.
 
-    You should see the Program.cs and vibrationdevice.csproj files listed in the EXPLORER pane.
+    You should see the Program.cs and sensor-v-3000.csproj files listed in the EXPLORER pane.
 
     You may want to verify that the connection string for your device is assigned to the `s_deviceConnectionString` variable in the Program.cs file. If you completed Lab 7, you should see a variable assignment in your code that is similar to the following:
 
@@ -144,7 +144,7 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
 1. On the **View** menu, click **Terminal**.
 
-    Verify that the command prompt shows the folder path to the **vibrationdevice** folder.
+    Verify that the command prompt shows the folder path to the **sensor-v-3000** folder.
  
 1. To run the app in the terminal, enter the following command:
 

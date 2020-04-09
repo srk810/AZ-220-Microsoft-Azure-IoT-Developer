@@ -218,7 +218,8 @@ This subscription will now be used in the current session whenever you create re
 1. Still within the Cloud Shell, run the following Azure CLI command to create **Device Identity** in Azure IoT Hub that will be used for a Simulated Device.
 
     ```sh
-    az iot hub device-identity create --hub-name {IoTHubName} --device-id SimulatedDevice1
+    az iot hub device-identity create --hub-name {IoTHubName} --device-id sensor-th-0001
+
     ```
 
     > **Note**:  Be sure to replace the _{IoTHubName}_ placeholder with the name of your Azure IoT Hub. If you have forgotten your IoT Hub name, you can enter the following command:
@@ -232,7 +233,8 @@ This subscription will now be used in the current session whenever you create re
 1. Within the Cloud Shell, run the following Azure CLI command to get _device connection string_ for the Device ID that was just added to the IoT Hub. This connection string will be used to connect the Simulated Device to the Azure IoT Hub.
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name {IoTHUbName} --device-id SimulatedDevice1 --output table
+    az iot hub device-identity show-connection-string --hub-name {IoTHUbName} --device-id sensor-th-0001
+ --output table
     ```
 
 1. Make note of the **Device Connection String** that was output from the previous command. You will need to save this for use later.
@@ -240,7 +242,8 @@ This subscription will now be used in the current session whenever you create re
     The connection string will be in the following format:
 
     ```text
-    HostName={IoTHubName}.azure-devices.net;DeviceId=SimulatedDevice1;SharedAccessKey={SharedAccessKey}
+    HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0001
+;SharedAccessKey={SharedAccessKey}
     ```
 
 ### Exercise 3: Configure and Test a Simulated Device (C#)
@@ -293,7 +296,8 @@ In this exercise you will configure a simulated device written in C# to connect 
     Once configured, the variable will look similar to the following (with your specific connection information included):
 
     ```csharp
-    private readonly static string s_connectionString = "HostName={IoTHubName}.azure-devices.net;DeviceId=SimulatedDevice1;SharedAccessKey={SharedAccessKey}";
+    private readonly static string s_connectionString = "HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0001
+;SharedAccessKey={SharedAccessKey}";
     ```
 
 1. On the **View** menu, click **Terminal**.
@@ -338,7 +342,8 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
 1. In the Azure Cloud Shell, enter the following command:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name {IoTHubName} --device-id SimulatedDevice1
+    az iot hub monitor-events --hub-name {IoTHubName} --device-id sensor-th-0001
+
     ```
 
     _Be sure to replace the **{IoTHubName}** placeholder with the name of your Azure IoT Hub._
@@ -356,16 +361,19 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
     You should see messages displayed that are similar to the following:
 
     ```cmd/sh
-    Starting event monitor, filtering on device: SimulatedDevice1, use ctrl-c to stop...
+    Starting event monitor, filtering on device: sensor-th-0001
+, use ctrl-c to stop...
     {
         "event": {
-            "origin": "SimulatedDevice1",
+            "origin": "sensor-th-0001
+",
             "payload": "{\"temperature\":25.058683971901743,\"humidity\":67.54816981383979}"
         }
     }
     {
         "event": {
-            "origin": "SimulatedDevice1",
+            "origin": "sensor-th-0001
+",
             "payload": "{\"temperature\":29.202181296051563,\"humidity\":69.13840303623043}"
         }
     }

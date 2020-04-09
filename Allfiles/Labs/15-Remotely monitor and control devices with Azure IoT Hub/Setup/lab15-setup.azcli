@@ -3,7 +3,7 @@
 YourID="{YOUR-ID}"
 RGName="AZ-220-RG"
 IoTHubName="AZ-220-HUB-$YourID"
-DeviceID="CheeseCaveID"
+DeviceID="sensor-th-0055"
 
 Location="SETLOCATION"
 

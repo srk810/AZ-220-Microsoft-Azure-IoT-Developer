@@ -65,16 +65,16 @@ This lab assumes the following Azure resources are available:
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
 | IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| IoT Device | CheeseCaveID |
+| IoT Device | sensor-th-0055 |
 
 If these resources are not available, you will need to run the **lab15-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
 The **lab15-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
->**Note:** You will need the connection string for the **CheeseCaveID** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
+>**Note:** You will need the connection string for the **sensor-th-0055** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id CheeseCaveID -o tsv
+> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id sensor-th-0055 -o tsv
 > ```
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
@@ -142,7 +142,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     YourID="{YOUR-ID}"
     RGName="AZ-220-RG"
     IoTHubName="AZ-220-HUB-$YourID"
-    DeviceID="CheeseCaveID"
+    DeviceID="sensor-th-0055"
 
     Location="SETLOCATION"
     ```
@@ -177,7 +177,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **CheeseCaveID** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0055** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, information pertaining to your IoT Hub and device is displayed.
 
@@ -189,8 +189,8 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     AZ-220-HUB-{YourID} Service connectionstring:
     HostName=AZ-220-HUB-{YourID}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
 
-    CheeseCaveID device connection string:
-    HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=CheeseCaveID;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
+    sensor-th-0055 device connection string:
+    HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=sensor-th-0055;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
 
     AZ-220-HUB-{YourID} eventhub endpoint:
     sb://iothub-ns-az-220-hub-2610348-5a463f1b56.servicebus.windows.net/
@@ -208,7 +208,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
 ### Exercise 2: Write Code to Send and Receive Telemetry
 
-In this exercise, you will be creating the simulated device app (for the CheeseCaveID device) that sends telemetry to your IoT Hub.
+In this exercise, you will be creating the simulated device app (for the sensor-th-0055 device) that sends telemetry to your IoT Hub.
 
 #### Task 1: Create a Console App in Visual Studio Code
 
@@ -249,7 +249,7 @@ In this exercise, you will be creating the simulated device app (for the CheeseC
 
 1. In the Code Editor pane, delete the contents of the Program.cs file.
 
-#### Task 2: Add Code to Simulate Your CheeseCaveID IoT Device
+#### Task 2: Add Code to Simulate Your sensor-th-0055 IoT Device
 
 In this task, you will add the code to send telemetry from a simulated device. The device sends temperature (in degrees Fahrenheit) and humidity (in percentages), regardless of whether any back-end app is listening or not.
 
@@ -422,7 +422,7 @@ In this task, you will add the code to send telemetry from a simulated device. T
     private readonly static string s_deviceConnectionString = "<your device connection string>";
     ```
 
-1. Replace `<your device connection string>` with the CheeseCaveID device connection string that you save earlier in this lab.
+1. Replace `<your device connection string>` with the sensor-th-0055 device connection string that you save earlier in this lab.
 
     You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1.
 
@@ -456,7 +456,7 @@ In this task, you will add the code to send telemetry from a simulated device. T
 
 ### Exercise 3: Create a Second App to Receive Telemetry
 
-Now that you have your (simulated) CheeseCaveID device sending telemetry to your IoT Hub, you need to create a back-end app that can connect to IoT Hub and "listen" for that telemetry. Eventually, this back-end app will be used to automate the control of the temperature in the cheese cave.
+Now that you have your (simulated) sensor-th-0055 device sending telemetry to your IoT Hub, you need to create a back-end app that can connect to IoT Hub and "listen" for that telemetry. Eventually, this back-end app will be used to automate the control of the temperature in the cheese cave.
 
 #### Task 1: Create an app to receive telemetry
 
@@ -815,7 +815,7 @@ You have now completed the coding that is required on the device side. Next, you
             methodInvocation.SetPayloadJson(payload);
 
             // Invoke the direct method asynchronously and get the response from the simulated device.
-            var response = await s_serviceClient.InvokeDeviceMethodAsync("CheeseCaveID", methodInvocation);
+            var response = await s_serviceClient.InvokeDeviceMethodAsync("sensor-th-0055", methodInvocation);
 
             if (response.Status == 200)
             {
@@ -910,7 +910,7 @@ There is some overlap between the functionality of device twins and direct metho
 
     private static async Task SetTwinProperties()
     {
-        var twin = await registryManager.GetTwinAsync("CheeseCaveID");
+        var twin = await registryManager.GetTwinAsync("sensor-th-0055");
         var patch =
             @"{
                 tags: {
