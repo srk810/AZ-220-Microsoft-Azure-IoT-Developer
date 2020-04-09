@@ -36,7 +36,7 @@ This lab assumes the following Azure resources are available:
 | Resource Type  | Resource Name          |
 |----------------|------------------------|
 | Resource Group | rg-az220              |
-| IoT Hub        | iot-az220-training-_{YOUR-ID}_ |
+| IoT Hub        | iot-az220-training-_{your-id}_ |
 
 If these resources are not available, you will need to run the **lab09-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -97,18 +97,18 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
 
     The editor will now show the contents of the **lab09-setup.azcli** file.
 
-1. In the editor, update the `{YOUR-ID}` and `{YOUR-LOCATION}` assigned values.
+1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
-    YourID="{YOUR-ID}"
+    YourID="{your-id}"
     RGName="rg-az220"
     IoTHubName="iot-az220-training-$YourID"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
@@ -165,7 +165,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. In the **Resource group** dropdown, under **Select existing**, click **rg-az220**.
 
-1. Under **Instance details**, in the **Name** field, enter **AZ-220-LogicApp-_{YOUR-ID}_**
+1. Under **Instance details**, in the **Name** field, enter **AZ-220-LogicApp-_{your-id}_**
 
     For example: **AZ-220-LogicApp-CP191218**
 
@@ -187,7 +187,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. On your resource group tile, click the link to the Logic App resource that was just deployed.
 
-    If the **AZ-220-LogicApp-_{YOUR-ID}_** Logic app is not displayed, refresh the resource group tile.
+    If the **AZ-220-LogicApp-_{your-id}_** Logic app is not displayed, refresh the resource group tile.
 
     > **Note**: When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed. If this page doesn't come up automatically, click **Logic app designer** under the **Development Tools** section on the **Logic App** blade.
 
@@ -325,7 +325,7 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
 
 1. Navigate back to your Azure portal dashboard.
 
-1. On your resource group tile, to navigate to your IoT Hub, click **iot-az220-training-_{YOUR-ID}_**.
+1. On your resource group tile, to navigate to your IoT Hub, click **iot-az220-training-_{your-id}_**.
 
 1. On the **IoT Hub** blade, on the left side navigation menu, click **Events**.
 

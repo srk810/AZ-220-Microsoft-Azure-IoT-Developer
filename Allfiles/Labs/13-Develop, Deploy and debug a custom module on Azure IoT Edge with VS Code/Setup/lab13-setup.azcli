@@ -1,9 +1,9 @@
 #!/bin/bash
 
 RGName="rg-az220"
-IoTHubName="iot-az220-training-{YOUR-ID}"
+IoTHubName="iot-az220-training-{your-id}"
 
-Location="{YOUR-LOCATION}"
+Location="{your-location}"
 
 # create resource group
 az group create --name $RGName --location $Location
@@ -12,4 +12,4 @@ az group create --name $RGName --location $Location
 az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location
 
 # create Azure Container Registry
-# az acr create --name "AZ-220-ACR-{YOUR-ID}" --location $Location --resource-group $RGName
+# az acr create --name "AZ-220-ACR-{your-id}" --location $Location --resource-group $RGName

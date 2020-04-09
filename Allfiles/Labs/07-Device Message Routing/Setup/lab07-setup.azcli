@@ -1,10 +1,10 @@
 #!/bin/bash
 
-YourID="{YOUR-ID}"
+YourID="{your-id}"
 RGName="rg-az220"
 IoTHubName="iot-az220-training-$YourID"
 
-Location="{YOUR-LOCATION}"
+Location="{your-location}"
 
 # create resource group
 az group create --name $RGName --location $Location

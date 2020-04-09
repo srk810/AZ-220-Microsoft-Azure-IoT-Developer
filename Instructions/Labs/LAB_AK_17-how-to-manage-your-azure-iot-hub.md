@@ -41,8 +41,8 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-{YOUR-ID} |
-| Device Provisioning Service | dps-az220-training-{YOUR-ID} |
+| IoT Hub | iot-az220-training-{your-id} |
+| Device Provisioning Service | dps-az220-training-{your-id} |
 | Storage Account | staz220training{your-id} |
 
 If these resources are not available, you will need to run the **lab17-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -102,22 +102,22 @@ The **lab17-setup.azcli** script is written to run in a **bash** shell environme
 
     The editor will now show the contents of the **lab17-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
-    YourID="{YOUR-ID}"
+    YourID="{your-id}"
     RGName="rg-az220"
     IoTHubName="iot-az220-training-$YourID"
     DPSName="dps-az220-training-$YourID"
     DeviceName="asset-track"
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -163,7 +163,7 @@ In this exercise, you will enable diagnostic logs and use them to to check for e
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Azure dashboard, click **iot-az220-training-{YOUR-ID}**.
+1. On your Azure dashboard, click **iot-az220-training-{your-id}**.
 
     Your dashboard should have a link to your IoT Hub on the on the rg-az220 resource group tile.
 
@@ -231,7 +231,7 @@ In this task, you will set up various metrics to watch for when messages are sen
 
     Under the **Chart Title** and the toolbar for the chart, you will see an area to specify Metrics. 
 
-    * Notice that the **Scope** is already set to **iot-az220-training-{YOUR-ID}**.
+    * Notice that the **Scope** is already set to **iot-az220-training-{your-id}**.
     * Notice that **Metric Namespace** is already set to **IoT Hub standard metrics**.
 
     > **Note**: By default, there is only one metric namespace available. Namespaces are a way to categorize or group similar metrics together. By using namespaces, you can achieve isolation between groups of metrics that might collect different insights or performance indicators. For example, you might have a namespace called **az220memorymetrics** that tracks memory-use metrics which profile your app. Another namespace called **az220apptransaction** might track all metrics about user transactions in your application. You can learn more about custom metrics and namespaces [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/metrics-custom-overview?toc=%2Fazure%2Fazure-monitor%2Ftoc.json#namespace).
@@ -420,7 +420,7 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     The name should be descriptive enough to identify the alert.
 
-1. Under **Description**, enter **This alert is raised when the number of devices connected to the iot-az220-training-{YOUR-ID} hub is greater than or equal to 5.**
+1. Under **Description**, enter **This alert is raised when the number of devices connected to the iot-az220-training-{your-id} hub is greater than or equal to 5.**
 
     The description field is optional, but recommended.
 
@@ -459,11 +459,11 @@ In this exercise, you will verify the existing environment, perform any necessar
 
 1. In your browser, navigate to the [Azure Portal](https://portal.azure.com/) and login to your subscription.
 
-1. On your Dashboard, check the "rg-az220" resource group tile for the **dps-az220-training-{YOUR-ID}** Device Provisioning Service.
+1. On your Dashboard, check the "rg-az220" resource group tile for the **dps-az220-training-{your-id}** Device Provisioning Service.
 
-    > **Note**:  If **dps-az220-training-{YOUR-ID}** does not exist, return to Exercise 1 in this lab and run the setup script.
+    > **Note**:  If **dps-az220-training-{your-id}** does not exist, return to Exercise 1 in this lab and run the setup script.
 
-1. On your resource group tile, click  **dps-az220-training-{YOUR-ID}**.
+1. On your resource group tile, click  **dps-az220-training-{your-id}**.
 
 1. On the left side navigation menu, under **Settings**, click **Certificates**.
 
@@ -554,7 +554,7 @@ The first X.509 certificates needed are CA and intermediate certificates. These 
     download ~/certificates/certs/azure-iot-test-only.root.ca.cert.pem
     ```
 
-1. In the Azure portal, open the **dps-az220-training-{YOUR-ID}** Device Provisioning Service.
+1. In the Azure portal, open the **dps-az220-training-{your-id}** Device Provisioning Service.
 
 1. On the **Device Provisioning Service** blade, in the left side navigation menu under **Settings**, click **Certificates**.
 
@@ -620,7 +620,7 @@ The first X.509 certificates needed are CA and intermediate certificates. These 
 
 #### Task 5: Create an Enrollment Group
 
-1. In the Azure portal, ensure that you have your **dps-az220-training-{YOUR-ID}** Device Provisioning Service blade open.
+1. In the Azure portal, ensure that you have your **dps-az220-training-{your-id}** Device Provisioning Service blade open.
 
 1. On the left side navigation menu, under **Settings**, click **Manage enrollments**.
 
@@ -636,7 +636,7 @@ The first X.509 certificates needed are CA and intermediate certificates. These 
 
 1. In the **Primary Certificate** dropdown, click **root-ca-cert**.
 
-    Verify that the **Select the IoT hubs this group can be assigned to** dropdown includes your **iot-az220-training-_{YOUR-ID}_** IoT Hub. This will ensure when the device is provisioned, it gets added to this IoT Hub.
+    Verify that the **Select the IoT hubs this group can be assigned to** dropdown includes your **iot-az220-training-_{your-id}_** IoT Hub. This will ensure when the device is provisioned, it gets added to this IoT Hub.
 
 1. In the Initial Device Twin State field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"1"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
 
@@ -802,10 +802,10 @@ With these certificates available, you are ready to configure the device simulat
 1. At the Cloud Shell command prompt, to display the ID Scope of your DPS service, enter the following command:
 
     ```bash
-    az iot dps show --name dps-az220-training-{YOUR-ID} --query properties.idScope
+    az iot dps show --name dps-az220-training-{your-id} --query properties.idScope
     ```
 
-    > **Note**: Be sure to replace {YOUR-ID} with the ID you created at the start of this class
+    > **Note**: Be sure to replace {your-id} with the ID you created at the start of this class
 
 1. Copy the output of the command
 
@@ -885,7 +885,7 @@ To use the Azure Portal to review alerts, complete the following steps.
 
 1. In the **Resource group** dropdown, click **rg-az220**.
 
-1. In the **Resource** dropdown, click **iot-az220-training-{YOUR-ID}**.
+1. In the **Resource** dropdown, click **iot-az220-training-{your-id}**.
 
 1. In the **Time range** dropdown, click **Past hour**.
 
@@ -963,7 +963,7 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
     ```json
     {
         "time": "2019-12-26T14:32:45Z",
-        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-DM121619",
+        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-cah191216",
         "operationName": "deviceConnect",
         "category": "Connections",
         "level": "Information",
@@ -972,7 +972,7 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
     }
     {
         "time": "2019-12-26T14:33:12Z",
-        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-DM121619",
+        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-cah191216",
         "operationName": "deviceConnect",
         "category": "Connections",
         "level": "Information",
@@ -981,7 +981,7 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
     }
     {
         "time": "2019-12-26T14:37:29Z",
-        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-DM121619",
+        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-cah191216",
         "operationName": "deviceDisconnect",
         "category": "Connections",
         "level": "Information",
@@ -990,7 +990,7 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
     }
     {
         "time": "2019-12-26T14:37:29Z",
-        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-DM121619",
+        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-cah191216",
         "operationName": "deviceDisconnect",
         "category": "Connections",
         "level": "Information",

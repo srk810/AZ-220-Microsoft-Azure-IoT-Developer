@@ -42,7 +42,7 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-{YOUR-ID} |
+| IoT Hub | iot-az220-training-{your-id} |
 
 If these resources are not available, you will need to run the **lab19-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -105,20 +105,20 @@ If these resources are not available, you will need to run the **lab19-setup.azc
 
     The editor will now show the contents of the **lab19-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash
 
     RGName="rg-az220"
-    IoTHubName="iot-az220-training-{YOUR-ID}"
+    IoTHubName="iot-az220-training-{your-id}"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -165,7 +165,7 @@ In this task, you will enable **Azure Security Center for IoT** for your IoT Hub
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Azure dashboard, click **iot-az220-training-{YOUR-ID}**.
+1. On your Azure dashboard, click **iot-az220-training-{your-id}**.
 
     Your dashboard should have a link to your IoT Hub on the on the rg-az220 resource group tile.
 
@@ -259,7 +259,7 @@ As a device must be registered with your IoT hub before it can connect, let's cr
 
 1. On the Azure portal menu, click **Dashboard**.
 
-1. On your rg-az220 resource group tile, click **iot-az220-training-{YOUR-ID}**.
+1. On your rg-az220 resource group tile, click **iot-az220-training-{your-id}**.
 
     There are plenty of other ways to open your IoT Hub blade, use whatever method you prefer.
 

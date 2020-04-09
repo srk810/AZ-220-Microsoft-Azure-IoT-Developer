@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace simulated_device
 {
-    class SimulatedDevice
+    class CaveDevice
     {
         private static DeviceClient s_deviceClient;
 
@@ -56,7 +56,7 @@ namespace simulated_device
         }
         private static void Main(string[] args)
         {
-            Console.WriteLine("IoT Hub C# Simulated Device. Ctrl-C to exit.\n");
+            Console.WriteLine("IoT Hub C# Simulated Cave Device. Ctrl-C to exit.\n");
 
             // Connect to the IoT hub using the MQTT protocol
             s_deviceClient = DeviceClient.CreateFromConnectionString(s_connectionString, TransportType.Mqtt);

@@ -39,8 +39,8 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
-| Device Provisioning Service | dps-az220-training-_{YOUR-ID}_ |
+| IoT Hub | iot-az220-training-_{your-id}_ |
+| Device Provisioning Service | dps-az220-training-_{your-id}_ |
 
 If these resources are not available, you will need to run the **lab05-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -85,7 +85,7 @@ The **lab05-setup.azcli** script is written to run in a **bash** shell environme
 
     ```bash
     mkdir lab5
-    mv lab05-setup.azcli lab4
+    mv lab05-setup.azcli lab5
     cd lab5
     ```
 
@@ -97,26 +97,26 @@ The **lab05-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab05-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab06-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to edit the lab05-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
 1. In the **Files** list, to expand the lab6 folder and open the script file, click **lab5**, and then click **lab05-setup.azcli**.
 
     The editor will now show the contents of the **lab05-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
     RGName="rg-az220"
-    IoTHubName="iot-az220-training-{YOUR-ID}"
+    IoTHubName="iot-az220-training-{your-id}"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -160,7 +160,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     You should see both your IoT Hub and DPS resources listed.
 
-1. On your Resource group tile, click **dps-az220-training-_{YOUR-ID}_**.
+1. On your Resource group tile, click **dps-az220-training-_{your-id}_**.
 
 1. On the Device Provisioning Service **Settings** pane on the left side, click **Manage enrollments**.
 
@@ -195,7 +195,7 @@ In this exercise, you will create a new individual enrollment for a device withi
     * **Static configuration via the enrollment list**: Specification of the desired IoT hub in the enrollment list takes priority over the Device Provisioning Service-level allocation policy.
     * **Custom (Use Azure Function)**: the device provisioning service calls your Azure Function code providing all relevant information about the device and the enrollment. Your function code is executed and returns the IoT hub information used to provisioning the device.
 
-1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **iot-az220-training-_{YOUR-ID}_** IoT hub that you created.
+1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **iot-az220-training-_{your-id}_** IoT hub that you created.
 
    This field is used to specify the IoT Hub(s) that your _DPSSimulatedDevice1_ device can be assigned to.
 
@@ -246,7 +246,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Locate the **Initial device twin State**, and notice the JSON for the device twin Desired State contains the `telemetryDelay` property set to the value of `"2"`.
 
-1. Close the **sensor-thl-1000** view to return to the **dps-az220-training-_{YOUR-ID}_** blade.
+1. Close the **sensor-thl-1000** view to return to the **dps-az220-training-_{your-id}_** blade.
 
 ### Exercise 3: Configure Simulated Device
 
@@ -258,7 +258,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 #### Task 1: Create the Simulated Device
 
-1. On the **dps-az220-training-_{YOUR-ID}_** blade, navigate to the **Overview** pane.
+1. On the **dps-az220-training-_{your-id}_** blade, navigate to the **Overview** pane.
 
 1. In the top-right area of the blade, hover the mouse pointer over value assigned to ID Scope, and then click **Copy to clipboard**.
 
@@ -285,7 +285,7 @@ This is different than the earlier lab where a simulated device connected to Azu
     dotnet restore
     ```
 
-1. In the Visual Studio Code Explorer pane, click **Program.cs**.
+1. In the Visual Studio Code Explorer pane, click **ContainerDevice.cs**.
 
 1. In the code editor, near the top of the Program class, locate the `dpsIdScope` variable, and then update the assigned value using the ID Scope value that you copied from the Device Provisioning Service in the Azure portal.
 
@@ -398,7 +398,7 @@ In this exercise, you will run the Simulated Device and verify it's sending sens
 
 1. On the top menu, click **View**, and then click **Terminal**.
 
-1. In the Terminal pane, ensure the command prompt shows the directory path for the `Program.cs` file.
+1. In the Terminal pane, ensure the command prompt shows the directory path for the `ContainerDevice.cs` file.
 
 1. At the command prompt, to build and run the Simulated Device application, enter the following command:
 
@@ -543,7 +543,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
     You should see both your IoT Hub and DPS resources listed.
 
-1. On your Resource group tile, to navigate to your Device Provisioning Service, click **dps-az220-training-_{YOUR-ID}_**.
+1. On your Resource group tile, to navigate to your Device Provisioning Service, click **dps-az220-training-_{your-id}_**.
 
 1. On the Device Provisioning Service blade, on the left side menu, click **Manage enrollments**.
 
@@ -565,7 +565,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. In the Azure portal, navigate back to your Dashboard.
 
-1. On your resource group tile, click **iot-az220-training-_{YOUR-ID}_** to navigate to the Azure IoT Hub.
+1. On your resource group tile, click **iot-az220-training-_{your-id}_** to navigate to the Azure IoT Hub.
 
 1. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click on **IoT devices**.
 

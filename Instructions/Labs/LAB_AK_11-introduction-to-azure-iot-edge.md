@@ -40,7 +40,7 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| IoT Hub | iot-az220-training-_{your-id}_ |
 
 If these resources are not available, you will need to run the **lab11-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -103,20 +103,20 @@ If these resources are not available, you will need to run the **lab11-setup.azc
 
     The editor will now show the contents of the **lab11-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash
 
     RGName="rg-az220"
-    IoTHubName="iot-az220-training-{YOUR-ID}"
+    IoTHubName="iot-az220-training-{your-id}"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -221,10 +221,10 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 1. At the command prompt, to create an IoT Edge device identity in your IoT hub, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity create --hub-name iot-az220-training-{YOUR-ID} --device-id myEdgeDevice --edge-enabled
+    az iot hub device-identity create --hub-name iot-az220-training-{your-id} --device-id myEdgeDevice --edge-enabled
     ```
 
-    Be sure to replace the `{YOUR-ID}` placeholder with the YOUR-ID value that you created at the start of this course.
+    Be sure to replace the `{your-id}` placeholder with the YOUR-ID value that you created at the start of this course.
 
     > **Note**: You could also create this IoT Edge device using your IoT Hub in the Azure portal: **IoT Hub** -> **IoT Edge** -> **Add an IoT Edge device**.
 
@@ -265,10 +265,10 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 1. To display the **Connection String** for your IoT Edge device, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --device-id myEdgeDevice --hub-name iot-az220-training-_{YOUR-ID}_
+    az iot hub device-identity show-connection-string --device-id myEdgeDevice --hub-name iot-az220-training-_{your-id}_
     ```
 
-    Be sure to replace the `{YOUR-ID}` placeholder with the YOUR-ID value that you created at the start of this course.
+    Be sure to replace the `{your-id}` placeholder with the YOUR-ID value that you created at the start of this course.
 
 1. Copy the value of the `connectionString` from the JSON output of the command, and then save it for reference later.
 
@@ -360,7 +360,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, to open your IoT Hub, click **iot-az220-training-_{YOUR-ID}_**.
+1. On your Resource group tile, to open your IoT Hub, click **iot-az220-training-_{your-id}_**.
 
 1. At the left of the **IoT Hub** blade, under **Automatic Device Management**, click **IoT Edge**.
 
@@ -559,9 +559,9 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. In the **Resource group** dropdown, click **rg-az220**.
 
-1. In the **Storage account name** textbox, enter **az220store{YOUR-ID}**.
+1. In the **Storage account name** textbox, enter **az220store{your-id}**.
 
-    > **Note**: For this field, {YOUR-ID} must be entered in lower-case, and no dash or underline characters are allowed.
+    > **Note**: For this field, {your-id} must be entered in lower-case, and no dash or underline characters are allowed.
 
 1. Set the **Location** field to the same Azure Region used for Azure IoT Hub.
 
@@ -581,7 +581,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. On the **New** blade, under **Azure Marketplace**, click **Internet of Things**, and then click **Stream Analytics job**.
 
-1. On the **New Stream Analytics job** blade, in the **Job name** field, enter **asa-az220-training-_{YOUR-ID}_**
+1. On the **New Stream Analytics job** blade, in the **Job name** field, enter **asa-az220-training-_{your-id}_**
 
 1. In the **Resource group** dropdown, click **rg-az220**.
 
@@ -680,7 +680,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 #### Task 5: Deploy the Stream Analytics Job
 
-1. In the Azure portal, navigate to your **iot-az220-training-_{YOUR-ID}_** IoT Hub resource.
+1. In the Azure portal, navigate to your **iot-az220-training-_{your-id}_** IoT Hub resource.
 
 1. On the left side navigation menu, under **Automatic Device Management**, click **IoT Edge**.
 
@@ -694,9 +694,9 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 1. On the **Edge deployment** pane, under **Subscription**, ensure that the subscription you are using for this course is selected.
 
-1. In the **Edge job** dropdown, ensure that the **asa-az220-training-_{YOUR-ID}_** Steam Analytics job is selected.
+1. In the **Edge job** dropdown, ensure that the **asa-az220-training-_{your-id}_** Steam Analytics job is selected.
 
-    > **Note**:  The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **asa-az220-training-_{YOUR-ID}_** job again. The **Save** button should then become enabled.
+    > **Note**:  The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **asa-az220-training-_{your-id}_** job again. The **Save** button should then become enabled.
 
 1. At the bottom of the pane, click **Save**.
 
@@ -704,7 +704,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 1. Once the Edge package has been successfully published, notice that the new ASA module is listed under the **IoT Edge Modules** section
 
-1. Under **IoT Edge Modules**, click **asa-az220-training-_{YOUR-ID}_**. 
+1. Under **IoT Edge Modules**, click **asa-az220-training-_{your-id}_**. 
 
     This is the Steam Analytics module that was just added to your Edge device.
 
@@ -731,12 +731,12 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
         * VALUE: `FROM /messages/modules/tempsensor/* INTO $upstream`
     * Route 2
         * NAME: **alertsToReset**
-        * VALUE: `FROM /messages/modules/asa-az220-training-{YOUR-ID}/* INTO BrokeredEndpoint("/modules/tempsensor/inputs/control")`
+        * VALUE: `FROM /messages/modules/asa-az220-training-{your-id}/* INTO BrokeredEndpoint("/modules/tempsensor/inputs/control")`
     * Route 3
         * NAME: **telemetryToAsa**
-        * VALUE: `FROM /messages/modules/tempsensor/* INTO BrokeredEndpoint("/modules/asa-az220-training-{YOUR-ID}/inputs/temperature")`
+        * VALUE: `FROM /messages/modules/tempsensor/* INTO BrokeredEndpoint("/modules/asa-az220-training-{your-id}/inputs/temperature")`
 
-    > **Note**: Be sure to replace the `asa-az220-training-{YOUR-ID}` placeholder with the name of your Azure Stream Analytics job module. You can click **Previous** to view the list of modules and their names, then click **Next** to come back to this step.
+    > **Note**: Be sure to replace the `asa-az220-training-{your-id}` placeholder with the name of your Azure Stream Analytics job module. You can click **Previous** to view the list of modules and their names, then click **Next** to come back to this step.
 
     The routes being defined are as follows:
 

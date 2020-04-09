@@ -13,7 +13,7 @@ using Newtonsoft.Json;
 
 namespace SymmetricKeySimulatedDevice
 {
-    class Program
+    class ContainerDevice
     {
         // ////////////////////////////////////////////////////////
 

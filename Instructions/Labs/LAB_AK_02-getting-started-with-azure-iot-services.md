@@ -24,26 +24,17 @@ In this lab, you will begin exploring the Azure IoT services that will be used t
 
 ### Exercise 1: Naming Resources with Unique Names
 
-Throughout this course you will be creating resources. To ensure consistency across the labs and to help in tidying up resources whenever you have finished with them, we will be providing you with the names you should use. However, many of these resources expose services that can be consumed across the web, which means they must have globally unique names. To achieve this, you will be using a unique identifier that will be added to the end of the resource name. Let's create your unique ID.
+Throughout this course you will be creating resources. To ensure consistency across the labs and to help in tidying up resources whenever you have finished with them, we will be providing you with the names you should use and will be following the naming guidelines recommended here: [Recommended naming and tagging conventions](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). However, many of these resources expose services that can be consumed across the web, which means they must have globally unique names. To achieve this, you will be using a unique identifier that will be added to the end of the resource name. Let's create your unique ID.
 
 #### Unique ID
 
-Your unique ID will be constructed using your initials and the current date using the following pattern:
+Your unique ID will be constructed using your lower-case initials and the current date using the following pattern:
 
 ```text
 YourInitialsYYMMDD
 ```
 
-So, your initials followed by the last two digits of the current year, the current numeric month, and the current numeric day. Here are some examples:
-
-```text
-GWB200123
-BHO200504
-CAH201216
-DM200911
-```
-
-In some cases, you may be asked to use the lowercase version of your unique ID:
+So, your lower-case initials followed by the last two digits of the current year, the current numeric month, and the current numeric day. Here are some examples:
 
 ```text
 gwb200123
@@ -52,7 +43,7 @@ cah201216
 dm200911
 ```
 
-Whenever you are expected to use your unique ID, you will see `{YOUR-ID}`. You will replace the entire string (including the `{}`) with your unique value.
+Whenever you are expected to use your unique ID, you will see `{your-id}`. You will replace the entire string (including the `{}`) with your unique value.
 
 Make a note of your unique ID now and **use the same value through the entire course** - don't update the date each day.
 
@@ -66,36 +57,36 @@ A resource group must have a unique name within a subscription; however, it does
 
 #### Publicly Visible Resources
 
-Many of the resources that you create will have publicly-addressable (although secured) endpoints and therefore must have globally unique. Examples of such resources include IoT Hubs, Device Provisioning Services, and Azure Storage Accounts. For each of these you will be provided with a name template and expected to replace `{YOUR-ID}` with your unique ID. Here are some examples:
+Many of the resources that you create will have publicly-addressable (although secured) endpoints and therefore must have globally unique. Examples of such resources include IoT Hubs, Device Provisioning Services, and Azure Storage Accounts. For each of these you will be provided with a name template and expected to replace `{your-id}` with your unique ID. Here are some examples:
 
-If your Unique ID is: **CAH191216**
+If your Unique ID is: **cah191216**
 
 | Resource Type | Name Template | Example |
 | :--- | :--- | :--- |
-| IoT Hub | iot-az220-training-_{YOUR-ID}_ | iot-az220-training-CAH191216 |
-| Device Provisioning Service | dps-az220-training-_{YOUR-ID}_ | dps-az220-training-CAH191216 |
-| Azure Storage Account <br/>(name must be lower-case and no dashes) | az220storage_{YOUR-ID}_ | az220storagecah191216 |
+| IoT Hub | iot-az220-training-_{your-id}_ | iot-az220-training-cah191216 |
+| Device Provisioning Service | dps-az220-training-_{your-id}_ | dps-az220-training-cah191216 |
+| Azure Storage Account <br/>(name must be lower-case and no dashes) | az220storage{your-id} | az220storagecah191216 |
 
 You may also be required to update values within bash scripts and C# source files as well as entering the names into the Azure Portal UI. Here are some examples:
 
 ```bash
 #!/bin/bash
 
-YourID="{YOUR-ID}"
+YourID="{your-id}"
 RGName="rg-az220"
 IoTHubName="iot-az220-training-$YourID"
 
 ```
 
-Notice that `YourID="{YOUR-ID}"` should be updated to `YourID="CAH191216"` - you do not change `$YourID`. Similarly, in C# you might see:
+Notice that `YourID="{your-id}"` should be updated to `YourID="cah191216"` - you do not change `$YourID`. Similarly, in C# you might see:
 
 ```csharp
-private string _yourId = "{YOUR-ID}";
+private string _yourId = "{your-id}";
 private string _rgName = "rg-az220";
 private string _iotHubName = $"iot-az220-training-{_yourId}";
 ```
 
-Again, `private string _yourId = "{YOUR-ID}";` should be updated to `private string _yourId = "CAH191216";` - you do not change `_yourId`.
+Again, `private string _yourId = "{your-id}";` should be updated to `private string _yourId = "cah191216";` - you do not change `_yourId`.
 
 ### Exercise 2: Create an IoT Hub using the Azure portal
 
@@ -165,9 +156,9 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
 1. To the right of **IoT Hub Name**, enter a globally unique name for your IoT Hub.
 
-    To provide a globally unique name, enter **iot-az220-training-_{YOUR-ID}_** (remember to replace **_{YOUR-ID}_** with the unique ID you created in Lab 1.).
+    To provide a globally unique name, enter **iot-az220-training-_{your-id}_** (remember to replace **_{your-id}_** with the unique ID you created in Lab 1.).
 
-    For example: **iot-az220-training-CAH191021**
+    For example: **iot-az220-training-cah191216**
 
     The name of your IoT Hub must be globally unique because it is a publicly accessible resource that you must be able to access from any IP connected device.
 
@@ -231,7 +222,7 @@ IoT Hub's capabilities help you build scalable, full-featured IoT solutions such
 
 1. Verify that your AZ-220 dashboard is being displayed.
 
-1. On the rg-az220 resource group tile, click **iot-az220-training-_{YOUR-ID}_**
+1. On the rg-az220 resource group tile, click **iot-az220-training-_{your-id}_**
 
     When you first open your IoT Hub, it will display the _Overview_ blade. As you can see, the area at the top of this blade provides some essential information about your IoT Hub service, such as datacenter location and subscription. But this blade also includes tiles that provide information about how you are using your hub and recent activities. Let's take a look at these tiles before exploring further.
 
@@ -324,9 +315,9 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. Under **Name**, enter a unique name for your Device Provisioning Service.
 
-    To provide a unique name, enter **dps-az220-training-_{YOUR-ID}_**.
+    To provide a unique name, enter **dps-az220-training-_{your-id}_**.
 
-    For example: **dps-az220-training-CAH191216**
+    For example: **dps-az220-training-cah191216**
 
 1. Under **Subscription**, ensure that the subscription you are using for this course is selected.
 
@@ -356,7 +347,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     You should see both your IoT Hub and DPS resources listed - (you may need to hit **Refresh** if the resources were only recently created)
 
-1. On your Resource group tile, click **dps-az220-training-_{YOUR-ID}_**.
+1. On your Resource group tile, click **dps-az220-training-_{your-id}_**.
 
 1. On the _Device Provisioning Service_ blade, under **Settings**, click **Linked IoT hubs**.
 
@@ -368,7 +359,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     The subscription is used to provide a list of the available IoT hubs.
 
-1. Open the IoT hub dropdown, and then click **iot-az220-training-_{YOUR-ID}_**.
+1. Open the IoT hub dropdown, and then click **iot-az220-training-_{your-id}_**.
 
     This is the IoT Hub that you created in the previous exercise.
 
@@ -394,7 +385,7 @@ The IoT Hub Device Provisioning Service is a helper service for IoT Hub that ena
 
 1. Verify that your AZ-220 dashboard is being displayed.
 
-1. On the _AZ-220-RG_ resource group tile, click **dps-az220-training-_{YOUR-ID}_**
+1. On the _rg-az220_ resource group tile, click **dps-az220-training-_{your-id}_**
 
     When you first open your Device Provisioning Service instance, it will display the _Overview_ blade. As you can see, the area at the top of this blade provides some essential information about your DPS instance, such as status, datacenter location and subscription. This blade also provides the _Quick Links_ section, which provide access to:
 

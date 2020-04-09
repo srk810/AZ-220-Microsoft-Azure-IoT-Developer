@@ -64,7 +64,7 @@ This lab assumes the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| IoT Hub | iot-az220-training-_{your-id}_ |
 | IoT Device | sensor-th-0055 |
 
 If these resources are not available, you will need to run the **lab15-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -74,7 +74,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 >**Note:** You will need the connection string for the **sensor-th-0055** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name iot-az220-training-{YOUR-ID} --device-id sensor-th-0055 -o tsv
+> az iot hub device-identity show-connection-string --hub-name iot-az220-training-{your-id} --device-id sensor-th-0055 -o tsv
 > ```
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
@@ -132,14 +132,14 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
     The editor will now show the contents of the **lab15-setup.azcli** file.
 
-1. In the editor, update the `{YOUR-ID}` and `SETLOCATION` assigned values.
+1. In the editor, update the `{your-id}` and `SETLOCATION` assigned values.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `SETLOCATION` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `SETLOCATION` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
-    YourID="{YOUR-ID}"
+    YourID="{your-id}"
     RGName="rg-az220"
     IoTHubName="iot-az220-training-$YourID"
     DeviceID="sensor-th-0055"

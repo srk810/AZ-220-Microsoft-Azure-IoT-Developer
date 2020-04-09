@@ -51,7 +51,7 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| IoT Hub | iot-az220-training-_{your-id}_ |
 
 If these resources are not available, you will need to run the **lab13-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -114,20 +114,20 @@ If these resources are not available, you will need to run the **lab13-setup.azc
 
     The editor will now show the contents of the **lab13-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash
 
     RGName="rg-az220"
-    IoTHubName="iot-az220-training-{YOUR-ID}"
+    IoTHubName="iot-az220-training-{your-id}"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -216,7 +216,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. On the **Create container registry** blade, under **Registry name**, enter a globally unique name.
 
-    To provide a globally unique name, enter **AZ220ACR{YOUR-ID}**.
+    To provide a globally unique name, enter **AZ220ACR{your-id}**.
 
     For example: **AZ220ACRCAH191204**
 
@@ -250,7 +250,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. To complete the creation of the Container Registry, at the bottom of the blade, click **Create**.
 
-1. On your dashboard, refresh your Resources tile, and then click **AZ220ACR{YOUR-ID}**.
+1. On your dashboard, refresh your Resources tile, and then click **AZ220ACR{your-id}**.
 
 1. On the left side navigation menu, under **Settings**, click **Access keys**.
 
@@ -262,7 +262,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
     * **Username**
     * **password**
 
-    By default, the admin Username will match the ACR name - **AZ220ACR{YOUR-ID}**
+    By default, the admin Username will match the ACR name - **AZ220ACR{your-id}**
 
     This information will enable you to authenticate to the new registry, which is required to perform Docker operations in the upcoming steps.  
 
@@ -458,7 +458,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **iot-az220-training-_{YOUR-ID}_**.
+1. On your Resource group tile, click **iot-az220-training-_{your-id}_**.
 
 1. On the left hand navigation menu, under **Settings**, click **Shared access policies**.
 
@@ -540,10 +540,10 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 1. At the Cloud Shell command prompt, to monitor the messages being sent to Azure IoT Hub from the `SimulatedDevice` running in the IoT Edge Simulator on your local machine, enter the following command:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name "iot-az220-training-{YOUR-ID}"
+    az iot hub monitor-events --hub-name "iot-az220-training-{your-id}"
     ```
 
-    Be sure to replace the `iot-az220-training-{YOUR-ID}` value in the above command with the name of your Azure IoT Hub service.
+    Be sure to replace the `iot-az220-training-{your-id}` value in the above command with the name of your Azure IoT Hub service.
 
 1. Observe the output displayed in the Cloud Shell.
 
@@ -645,7 +645,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, to open your Azure Container Registry (ACR) service, click **AZ220ACR{YOUR-ID}**.
+1. On your Resource group tile, to open your Azure Container Registry (ACR) service, click **AZ220ACR{your-id}**.
 
 1. On the left side navigation menu, under **Services**, click **Repositories**.
 
@@ -685,7 +685,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
     With the custom `objectcountingmodule` IoT Edge Module published to Azure Container Registry (ACR), the next step is to create a new IoT Edge Device within IoT Hub and configure it to run the new custom IoT Edge Module.
 
-1. On the **iot-az220-training-{YOUR-ID}** blade, on the left side navigation menu under **Automatic Device Management**, click **IoT Edge**.
+1. On the **iot-az220-training-{your-id}** blade, on the left side navigation menu under **Automatic Device Management**, click **IoT Edge**.
 
 1. On the **IoT Edge** pane, at the top of the pane, click **Add an IoT Edge device**.
 

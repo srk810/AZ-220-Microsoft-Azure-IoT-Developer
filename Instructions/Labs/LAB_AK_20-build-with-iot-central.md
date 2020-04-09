@@ -49,13 +49,13 @@ In this lab, you will complete the following activities:
 
 1. Under **Featured**, click **Custom apps**.
 
-1. On the **New application** page, under **Application name**, enter **Refrigerated-Trucks-{YOUR-ID}**.
+1. On the **New application** page, under **Application name**, enter **Refrigerated-Trucks-{your-id}**.
 
     Notice that the Application name that you enter is being used as the root for your application URL (converted to lower-case).
 
     Although your Application name can be any friendly name, the **URL** _must_ be unique. The two don't have to match exactly, but it can be less confusing when they do.
 
-    Appending `{YOUR-ID}` to the Application name helps to ensure that the URL will be unique.
+    Appending `{your-id}` to the Application name helps to ensure that the URL will be unique.
 
 1. Under **Application template**, leave the default **Custom application** value.
 
@@ -79,11 +79,11 @@ In this lab, you will complete the following activities:
 
 1. Close the Azure IoT Central browser tab.
 
-    The next time you open the Azure IoT Central home page, you will select **My apps** from the left side navigation menu, and your  **Refrigerated-Trucks-{YOUR-ID}** app will be listed.
+    The next time you open the Azure IoT Central home page, you will select **My apps** from the left side navigation menu, and your  **Refrigerated-Trucks-{your-id}** app will be listed.
 
 1. Use your browser to open [Azure IoT Central](https://apps.azureiotcentral.com/?azure-portal=true).
 
-1. On the left side navigation menu, click **My apps**, and then click **Refrigerated-Trucks-{YOUR-ID}**.
+1. On the left side navigation menu, click **My apps**, and then click **Refrigerated-Trucks-{your-id}**.
 
     Your next step is to specify a _device template_.
 

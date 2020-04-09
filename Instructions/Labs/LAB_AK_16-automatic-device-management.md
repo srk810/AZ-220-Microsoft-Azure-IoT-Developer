@@ -62,7 +62,7 @@ This lab assumes the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| IoT Hub | iot-az220-training-_{your-id}_ |
 | IoT Device | SimulatedSolutionThermostat |
 
 If these resources are not available, you will need to run the **lab16-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -70,7 +70,7 @@ If these resources are not available, you will need to run the **lab16-setup.azc
 >**Note:** You will need the connection string for the **SimulatedSolutionThermostat** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name iot-az220-training-_{YOUR-ID}_ --device-id sensor-th-0050 -o tsv
+> az iot hub device-identity show-connection-string --hub-name iot-az220-training-_{your-id}_ --device-id sensor-th-0050 -o tsv
 > ```
 
 The **lab16-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
@@ -130,20 +130,20 @@ The **lab16-setup.azcli** script is written to run in a **bash** shell environme
 
     The editor will now show the contents of the **lab16-setup.azcli** file.
 
-1. In the editor, update the `{YOUR-ID}` and `{YOUR-LOCATION}` assigned values.
+1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
 
-    In the reference sample below, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    In the reference sample below, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
     RGName="rg-az220"
-    IoTHubName="iot-az220-training-{YOUR-ID}"
+    IoTHubName="iot-az220-training-{your-id}"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -492,7 +492,7 @@ In this exercise, you will use the Azure portal to create a new device managemen
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Azure portal Dashboard, click **iot-az220-training-{YOUR-ID}**.
+1. On your Azure portal Dashboard, click **iot-az220-training-{your-id}**.
 
     Your IoT Hub blade should now be displayed.
  

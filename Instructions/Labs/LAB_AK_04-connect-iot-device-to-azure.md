@@ -39,7 +39,7 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| IoT Hub | iot-az220-training-_{your-id}_ |
 
 If these resources are not available, you will need to run the **lab04-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -102,20 +102,20 @@ If these resources are not available, you will need to run the **lab04-setup.azc
 
     The editor will now show the contents of the **lab04-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash
 
     RGName="rg-az220"
-    IoTHubName="iot-az220-training-{YOUR-ID}"
+    IoTHubName="iot-az220-training-{your-id}"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -219,7 +219,6 @@ This subscription will now be used in the current session whenever you create re
 
     ```sh
     az iot hub device-identity create --hub-name {IoTHubName} --device-id sensor-th-0001
-
     ```
 
     > **Note**:  Be sure to replace the _{IoTHubName}_ placeholder with the name of your Azure IoT Hub. If you have forgotten your IoT Hub name, you can enter the following command:
@@ -233,8 +232,7 @@ This subscription will now be used in the current session whenever you create re
 1. Within the Cloud Shell, run the following Azure CLI command to get _device connection string_ for the Device ID that was just added to the IoT Hub. This connection string will be used to connect the Simulated Device to the Azure IoT Hub.
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name {IoTHUbName} --device-id sensor-th-0001
- --output table
+    az iot hub device-identity show-connection-string --hub-name {IoTHUbName} --device-id sensor-th-0001 --output table
     ```
 
 1. Make note of the **Device Connection String** that was output from the previous command. You will need to save this for use later.
@@ -242,8 +240,7 @@ This subscription will now be used in the current session whenever you create re
     The connection string will be in the following format:
 
     ```text
-    HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0001
-;SharedAccessKey={SharedAccessKey}
+    HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0001;SharedAccessKey={SharedAccessKey}
     ```
 
 ### Exercise 3: Configure and Test a Simulated Device (C#)
@@ -276,12 +273,12 @@ In this exercise you will configure a simulated device written in C# to connect 
 
     The Explorer pane of Visual Studio Code should now list two C# project files:
 
-    * SimulatedDevice.cs
-    * SimulatedDevice.csproj
+    * CaveDevice.cs
+    * CaveDevice.csproj
 
 #### Task 2: Update the Device Connection String
 
-1. In Visual Studio Code Explorer pane, to open the SimulatedDevice.cs file, click **SimulatedDevice.cs**.
+1. In Visual Studio Code Explorer pane, to open the CaveDevice.cs file, click **CaveDevice.cs**.
 
 1. In the Editor view, locate the code line containing the `s_connectionString` variable.
 
@@ -296,8 +293,7 @@ In this exercise you will configure a simulated device written in C# to connect 
     Once configured, the variable will look similar to the following (with your specific connection information included):
 
     ```csharp
-    private readonly static string s_connectionString = "HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0001
-;SharedAccessKey={SharedAccessKey}";
+    private readonly static string s_connectionString = "HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0001;SharedAccessKey={SharedAccessKey}";
     ```
 
 1. On the **View** menu, click **Terminal**.
@@ -310,7 +306,7 @@ In this exercise you will configure a simulated device written in C# to connect 
     dotnet run
     ```
 
-    This command will build and run the Simulated Device application. Be sure the terminal location is set to the directory with the `SimulatedDevice.cs` file.
+    This command will build and run the Simulated Device application. Be sure the terminal location is set to the directory with the `CaveDevice.cs` file.
 
     > **Note**:  If the command outputs a `Malformed Token` or other error message, then make sure the **Device Connection String** is configured correctly as the value of the `s_connectionString` variable.
 
@@ -319,7 +315,7 @@ In this exercise you will configure a simulated device written in C# to connect 
     The terminal output will look similar to the following:
 
     ```text
-    IoT Hub C# Simulated Device. Ctrl-C to exit.
+    IoT Hub C# Simulated Cave Device. Ctrl-C to exit.
 
     10/25/2019 6:10:12 PM > Sending message: {"temperature":27.714212817472504,"humidity":63.88147743599558}
     10/25/2019 6:10:13 PM > Sending message: {"temperature":20.017463779085066,"humidity":64.53511070671263}
@@ -343,7 +339,6 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
 
     ```cmd/sh
     az iot hub monitor-events --hub-name {IoTHubName} --device-id sensor-th-0001
-
     ```
 
     _Be sure to replace the **{IoTHubName}** placeholder with the name of your Azure IoT Hub._
@@ -361,19 +356,16 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
     You should see messages displayed that are similar to the following:
 
     ```cmd/sh
-    Starting event monitor, filtering on device: sensor-th-0001
-, use ctrl-c to stop...
+    Starting event monitor, filtering on device: sensor-th-0001, use ctrl-c to stop...
     {
         "event": {
-            "origin": "sensor-th-0001
-",
+            "origin": "sensor-th-0001",
             "payload": "{\"temperature\":25.058683971901743,\"humidity\":67.54816981383979}"
         }
     }
     {
         "event": {
-            "origin": "sensor-th-0001
-",
+            "origin": "sensor-th-0001",
             "payload": "{\"temperature\":29.202181296051563,\"humidity\":69.13840303623043}"
         }
     }

@@ -47,7 +47,7 @@ This lab assumes the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| IoT Hub | iot-az220-training-_{your-id}_ |
 | Device ID | VibrationSensorId |
 
 If these resources are not available, you will need to run the **lab07-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -109,21 +109,21 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
 
     The editor will now show the contents of the **lab07-setup.azcli** file.
 
-1. In the editor, update the `{YOUR-ID}` and `{YOUR-LOCATION}` assigned values.
+1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
-    YourID="{YOUR-ID}"
+    YourID="{your-id}"
     RGName="rg-az220"
     IoTHubName="iot-az220-training-$YourID"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
