@@ -1,6 +1,4 @@
-# AZ-220: Microsoft Azure IoT Developer - Initial Public Release
-
-*Please note: This course is in "initial release" while the corresponding exam is in beta. The labs will be updated periodically to improve clarity as we receive your feedback. Please be patient and be sure to review the known issues below before filing a new issue.  Thanks!*
+# AZ-220: Microsoft Azure IoT Developer
 
 - **[Download Latest Student Handbook and AllFiles Content](../../releases/latest)**
 - **Are you a MCT?** - Have a look at our [GitHub User Guide for MCTs](https://microsoftlearning.github.io/MCT-User-Guide/)
@@ -39,16 +37,12 @@ It is strongly recommended that MCTs and Partners access these materials and in 
 
 You can find a processed, formatted version of the Markdown files at https://aka.ms/az220labs.
 
-### Known Issues in the Current Beta release
+### Known Issues in the Current release
 
 **Please** refer to the current open issues to be sure that a new issue doesn't duplicate an existing issue.  The following are known issues that are not in the open issues as we are working on them already:
 
-* The initial lab setup - where to find the source files, where to find the scripts, etc. - is not in the instructions right now.
+* Most labs require running the setup script in order to create specifically named IoT devices. Work is being done to "clean up" the device resources within and across labs.
 
-* At least one lab requires running the setup script although it should always be a "catch up," not required.
+* Many of the lab Exercises have not been broken up into defined Tasks, which can make it easy to get lost or miss a step. Work is being done to address this formatting.
 
-* The exercise numbers/names are not on the formatted version of the labs.
-
-* The formatted version of the labs does not have proper indicators on some of the notes.
-
-* Image references in the lab are generally broken.
+* There are places within the lab steps where images could improve the clarity of the instructions. Images are currently being added to the labs where we feel they are required. However, we intend to keep image count low due to the fluid nature of the Azure UI.
