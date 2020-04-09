@@ -50,8 +50,8 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 
 If these resources are not available, you will need to run the **lab13-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -121,8 +121,8 @@ If these resources are not available, you will need to run the **lab13-setup.azc
     ```bash
     #!/bin/bash
 
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-{YOUR-ID}"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -232,7 +232,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. Under **Subscription**, ensure that the subscription you are using for this course is selected.
 
-1. In the **Resource group** dropdown, click **AZ-220-RG**.
+1. In the **Resource group** dropdown, click **rg-az220**.
 
 1. In the **Location** dropdown, choose the same Azure region that was used for the resource group.
 
@@ -458,7 +458,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. On your Resource group tile, click **iot-az220-training-_{YOUR-ID}_**.
 
 1. On the left hand navigation menu, under **Settings**, click **Shared access policies**.
 
@@ -540,10 +540,10 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 1. At the Cloud Shell command prompt, to monitor the messages being sent to Azure IoT Hub from the `SimulatedDevice` running in the IoT Edge Simulator on your local machine, enter the following command:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name "AZ-220-HUB-{YOUR-ID}"
+    az iot hub monitor-events --hub-name "iot-az220-training-{YOUR-ID}"
     ```
 
-    Be sure to replace the `AZ-220-HUB-{YOUR-ID}` value in the above command with the name of your Azure IoT Hub service.
+    Be sure to replace the `iot-az220-training-{YOUR-ID}` value in the above command with the name of your Azure IoT Hub service.
 
 1. Observe the output displayed in the Cloud Shell.
 
@@ -685,7 +685,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
     With the custom `objectcountingmodule` IoT Edge Module published to Azure Container Registry (ACR), the next step is to create a new IoT Edge Device within IoT Hub and configure it to run the new custom IoT Edge Module.
 
-1. On the **AZ-220-HUB-{YOUR-ID}** blade, on the left side navigation menu under **Automatic Device Management**, click **IoT Edge**.
+1. On the **iot-az220-training-{YOUR-ID}** blade, on the left side navigation menu under **Automatic Device Management**, click **IoT Edge**.
 
 1. On the **IoT Edge** pane, at the top of the pane, click **Add an IoT Edge device**.
 

@@ -40,8 +40,8 @@ This lab assumes the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | `AZ-220-RG` |
-| IoT Hub | `AZ-220-HUB-{YOUR-ID}` |
+| Resource Group | `rg-az220` |
+| IoT Hub | `iot-az220-training-{YOUR-ID}` |
 | Device ID | `TruckDevice` |
 | Device ID | `AirplaneDevice` |
 | Device ID | `ContainerDevice` |
@@ -111,8 +111,8 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
     #!/bin/bash
 
     YourID="{YOUR-ID}"
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-$YourID"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-$YourID"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -147,7 +147,7 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **TruckDevice**, **AirplaneDevice**, and **ContainerDevice**.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **TruckDevice**, **AirplaneDevice**, and **ContainerDevice**.
 
 1. Notice that, once the script has completed, the connection string for each device is displayed.
 
@@ -179,7 +179,7 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. In the **Subscription** dropdown, select the subscription that you are using for this course.
 
-1. In the **Resource group** dropdown, click **AZ-220-RG**.
+1. In the **Resource group** dropdown, click **rg-az220**.
 
 1. In the **Location** dropdown, select the Azure region used by your resource group.
 
@@ -189,7 +189,7 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. Under the **EVENT SOURCE DETAILS** section, ensure that **Create an event source?** is set to **Yes**.
 
-1. In the **Name** field, enter **AZ-220-HUB-{YOUR-ID}** to specify a unique name for this Event Source.
+1. In the **Name** field, enter **iot-az220-training-{YOUR-ID}** to specify a unique name for this Event Source.
 
 1. In the **Source type** dropdown, ensure that **IoT Hub** is selected.
 
@@ -199,7 +199,7 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. In the **Subscription** dropdown, select the subscription that you are using for this course.
 
-1. In the **IoT Hub name** dropdown, select the **AZ-220-HUB-_{YOUR_ID}_** Azure IoT Hub service that's already been provisioned.
+1. In the **IoT Hub name** dropdown, select the **iot-az220-training-_{YOUR_ID}_** Azure IoT Hub service that's already been provisioned.
 
 1. In the **IoT Hub access policy name** dropdown, click **iothubowner**.
 
@@ -231,11 +231,11 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
  
 1. On the **Time Series Insights environment** blade, in the left side navigation menu, under **Settings**, click **Event Sources**.
 
-1. On the **Event Sources** pane, notice the **AZ-220-HUB-_{YOUR-ID}_** Event Source in the list.
+1. On the **Event Sources** pane, notice the **iot-az220-training-_{YOUR-ID}_** Event Source in the list.
 
     This is the event source that was configured when the TSI resource was created.
 
-1. To view the event source details, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. To view the event source details, click **iot-az220-training-_{YOUR-ID}_**.
 
     Notice that the configuration of the event source matches what was set when the Time Series Insights resource was created.
 

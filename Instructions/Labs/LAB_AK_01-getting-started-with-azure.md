@@ -187,7 +187,7 @@ In the following tasks, you will:
 
 1. In the **Subscription** dropdown, select the Azure subscription that you are using for this course.
 
-1. In the **Resource group** textbox, enter **AZ-220-RG**
+1. In the **Resource group** textbox, enter **rg-az220**
 
     The name of the resource group must be **unique** within your subscription. A green check mark will appear if the name that you enter has not already been used and confirms to resource group naming rules.
 
@@ -209,7 +209,7 @@ In the following tasks, you will:
 
     You will learn more about managing your resources as you continue through this course.
 
-1. In the list of named resource groups, click the box to the left of the **AZ-220-RG** resource group that your just created.
+1. In the list of named resource groups, click the box to the left of the **rg-az220** resource group that your just created.
 
     > **Note**:  You don't want to open the resource group in a new blade, you just want to select it (check mark on the left).
 

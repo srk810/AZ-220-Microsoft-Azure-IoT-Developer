@@ -41,8 +41,8 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-{YOUR-ID} |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{YOUR-ID} |
 
 If these resources are not available, you will need to run the **lab19-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -112,8 +112,8 @@ If these resources are not available, you will need to run the **lab19-setup.azc
     ```bash
     #!/bin/bash
 
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-{YOUR-ID}"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -165,9 +165,9 @@ In this task, you will enable **Azure Security Center for IoT** for your IoT Hub
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Azure dashboard, click **AZ-220-HUB-{YOUR-ID}**.
+1. On your Azure dashboard, click **iot-az220-training-{YOUR-ID}**.
 
-    Your dashboard should have a link to your IoT Hub on the on the AZ-220-RG resource group tile.
+    Your dashboard should have a link to your IoT Hub on the on the rg-az220 resource group tile.
 
 1. On the left side navigation menu, under **Security**, and then click **Overview**.
 
@@ -216,7 +216,7 @@ In this task, you will create the VM that will represent your IoT device.
 
 1. Under the **Resource group** dropdown, click **Create new**
 
-1. In the context menu, under **Name**, enter **AZ-220-SECVM-RG** and then click **OK**
+1. In the context menu, under **Name**, enter **rg-az220vm** and then click **OK**
 
     > **Note**: Best practice is to create a resource group for your VMs. This helps you to keep track of any addition resources that you add/create for the VM. For the simple use case in this course, the primary benefit could be ease of clean-up, but you will do a bit more with this resource group later in the lab.
 
@@ -259,7 +259,7 @@ As a device must be registered with your IoT hub before it can connect, let's cr
 
 1. On the Azure portal menu, click **Dashboard**.
 
-1. On your AZ-220-RG resource group tile, click **AZ-220-HUB-{YOUR-ID}**.
+1. On your rg-az220 resource group tile, click **iot-az220-training-{YOUR-ID}**.
 
     There are plenty of other ways to open your IoT Hub blade, use whatever method you prefer.
 
@@ -320,7 +320,7 @@ In this task, you will be creating a security module twin manually.
 
 1. In the Essentials area near the top of the blade, to the right of **Hostname**, click **Copy to clipboard**, and then save the value for later.
 
-    > **Note**: The IoT Hub Hostname looks similar to: AZ-220-HUB-CAH102119.azure-devices.net
+    > **Note**: The IoT Hub Hostname looks similar to: iot-az220-training-CAH102119.azure-devices.net
 
 ### Exercise 5: Deploy Azure Security Center for IoT C# Security Agent
 
@@ -444,12 +444,12 @@ In this lab, you will be using the symmetric key as authentication and will need
 
     Here is an example of what the command should look like:
 
-    `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn AZ-220-HUB-AB20200213.azure-devices.net -di vm-device01`
+    `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn iot-az220-training-AB20200213.azure-devices.net -di vm-device01`
 
     > **Note**: Make sure that specify your IoT Hub Hostname instead of the one listed 
     
     > **IMPORTANT**:
-    > Ensure you use the full IoT Hub host name - i.e. **AZ-220-HUB-AB20200213.azure-devices.net** for the `-hn` switch value.
+    > Ensure you use the full IoT Hub host name - i.e. **iot-az220-training-AB20200213.azure-devices.net** for the `-hn` switch value.
 
     This script performs the following function:
 
@@ -530,7 +530,7 @@ In addition to automatic relationship detection, you can also pick and choose wh
     > **Note:**
     > You can add resources from multiple subscriptions to your security solution.
 
-1. Under **Resource groups**, select the resource group for your VM - **AZ-220-SECVM-RG**.
+1. Under **Resource groups**, select the resource group for your VM - **rg-az220vm**.
 
     You should now have two Resource Groups selected. Notice that the Resources list has updated to reflect the additional resources in the resource group you just added.
 

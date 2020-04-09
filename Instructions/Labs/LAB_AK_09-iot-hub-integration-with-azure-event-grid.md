@@ -35,8 +35,8 @@ This lab assumes the following Azure resources are available:
 
 | Resource Type  | Resource Name          |
 |----------------|------------------------|
-| Resource Group | AZ-220-RG              |
-| IoT Hub        | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220              |
+| IoT Hub        | iot-az220-training-_{YOUR-ID}_ |
 
 If these resources are not available, you will need to run the **lab09-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -105,8 +105,8 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
     #!/bin/bash
 
     YourID="{YOUR-ID}"
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-$YourID"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-$YourID"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -133,7 +133,7 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}** enter the following command:
+1. To create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}** enter the following command:
 
     ```bash
     ./lab09-setup.azcli
@@ -163,7 +163,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. On the **Basics** tab, under **Project details**, select the **Subscription** that you are using for this course.
 
-1. In the **Resource group** dropdown, under **Select existing**, click **AZ-220-RG**.
+1. In the **Resource group** dropdown, under **Select existing**, click **rg-az220**.
 
 1. Under **Instance details**, in the **Name** field, enter **AZ-220-LogicApp-_{YOUR-ID}_**
 
@@ -325,7 +325,7 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
 
 1. Navigate back to your Azure portal dashboard.
 
-1. On your resource group tile, to navigate to your IoT Hub, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. On your resource group tile, to navigate to your IoT Hub, click **iot-az220-training-_{YOUR-ID}_**.
 
 1. On the **IoT Hub** blade, on the left side navigation menu, click **Events**.
 

@@ -139,7 +139,7 @@ In this exercise, you will ensure that the Device Simulator app from the previou
     You may want to verify that the connection string for your device is assigned to the `s_deviceConnectionString` variable in the Program.cs file. If you completed Lab 7, you should see a variable assignment in your code that is similar to the following:
 
     ```csharp
-    s_deviceConnectionString = "HostName=AZ-220-HUB-CAH200509.azure-devices.net;DeviceId=VibrationSensorId;SharedAccessKey=nSUbphUKsS1jEd7INrEtmVWZesMBDIxzjVe4jn01KJI=";
+    s_deviceConnectionString = "HostName=iot-az220-training-CAH200509.azure-devices.net;DeviceId=VibrationSensorId;SharedAccessKey=nSUbphUKsS1jEd7INrEtmVWZesMBDIxzjVe4jn01KJI=";
     ```
 
 1. On the **View** menu, click **Terminal**.
@@ -202,7 +202,7 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
 1. Under **Subscription**, select the subscription you are using for this lab.
 
-1. Under **Resource group**, select the resource group you are using for this lab - **AZ-220-RG**.
+1. Under **Resource group**, select the resource group you are using for this lab - **rg-az220**.
 
 1. Under **Location**, choose the region you are using for all lab work.
 
@@ -258,7 +258,7 @@ Now that we have an Event Hubs Namespace and an Event Hubs service, we need to p
 
 In this task we will add a message route to our IoT hub that will send telemetry messages to the Event Hubs instance we just created.
 
-1. Navigate to your Azure Portal dashboard, and select your IoT Hub **AZ-220-HUB-*{YOURID}***) from the resource group tile.
+1. Navigate to your Azure Portal dashboard, and select your IoT Hub **iot-az220-training-*{YOURID}***) from the resource group tile.
 
     The **Overview** pane for the IoT Hub will be displayed.
 

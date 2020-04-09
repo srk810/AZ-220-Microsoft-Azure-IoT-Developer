@@ -45,8 +45,8 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 
 If these resources are not available, you will need to run the **lab12-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -116,8 +116,8 @@ If these resources are not available, you will need to run the **lab12-setup.azc
     ```bash
     #!/bin/bash
 
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-{YOUR-ID}"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -170,7 +170,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. Below the **Resource group** dropdown, click **Create new**.
 
-1. In the resource group Name popup, under **Name**, enter **AZ-220-GWVM-RG** and then click **OK**.
+1. In the resource group Name popup, under **Name**, enter **rg-az220vm** and then click **OK**.
 
 1. Under **Instance details**, in the **Virtual machine name** textbox, enter **AZ-220-VM-EDGEGW-{YOUR-ID}**.
 
@@ -216,15 +216,15 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
 1. On the Azure portal menu, click **Resource groups**.
 
-1. On the **Resource groups** blade, locate the AZ-220-GWVM-RG resource group.
+1. On the **Resource groups** blade, locate the rg-az220vm resource group.
 
-1. On the righthand side of the blade, across from **AZ-220-GWVM-RG**, click **Click to open context menu** (the ellipsis icon - **...**)
+1. On the righthand side of the blade, across from **rg-az220vm**, click **Click to open context menu** (the ellipsis icon - **...**)
 
 1. On the context menu, click **Pin to dashboard**, and then navigate back to your dashboard.
 
     You can **Edit** your dashboard to rearrange the tiles if that makes it easier to access your resources.
  
-1. On the **AZ-220-GWVM-RG** resource group tile, to open the Edge Gateway virtual machine, click **AZ-220-GWVM-EDGE-{YOUR-ID}**.
+1. On the **rg-az220vm** resource group tile, to open the Edge Gateway virtual machine, click **AZ-220-GWVM-EDGE-{YOUR-ID}**.
 
     > **Note**: Since the resource names are long and some are similar, be sure to select the VM, not the Disk, Public IP address, or Network security group.  
 
@@ -438,9 +438,9 @@ In this exercise, you will use Azure IoT Hub to create a new IoT Edge Device ide
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your **AZ-220-RG** tile, to open your IoT hub, click **AZ-220-HUB-{YOUR-ID}**.
+1. On your **rg-az220** tile, to open your IoT hub, click **iot-az220-training-{YOUR-ID}**.
 
-1. On the **AZ-220-HUB-{YOUR-ID}** blade, on the left side navigation menu under **Automatic Device Management**, click **IoT Edge**.
+1. On the **iot-az220-training-{YOUR-ID}** blade, on the left side navigation menu under **Automatic Device Management**, click **IoT Edge**.
 
     The IoT Edge pane allows you to manage the IoT Edge devices connected to the IoT Hub.
 
@@ -692,9 +692,9 @@ In this exercise, you will create a new IoT Device identity in Azure IoT Hub for
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Azure dashboard, to open your IoT Hub, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. On your Azure dashboard, to open your IoT Hub, click **iot-az220-training-_{YOUR-ID}_**.
 
-1. On the **AZ-220-HUB-_{YOUR-ID}_** blade, on the left side navigation menu under **Explorers**, click **IoT devices**.
+1. On the **iot-az220-training-_{YOUR-ID}_** blade, on the left side navigation menu under **Explorers**, click **IoT devices**.
 
     This pane of the IoT Hub blade allows you to manage the IoT Devices connected to the IoT Hub.
 
@@ -787,7 +787,7 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
     The `s_connectionString` variable with the Connection String value will look similar to the following:
 
     ```csharp
-    private readonly static string s_connectionString = "HostName=AZ-220-HUB-1119.azure-devices.net;DeviceId=DownstreamDevice1;SharedAccessKey=ygNT/WqWs2d8AbVD9NAlxcoSS2rr628fI7YLPzmBdgE=;GatewayHostName=AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com";
+    private readonly static string s_connectionString = "HostName=iot-az220-training-1119.azure-devices.net;DeviceId=DownstreamDevice1;SharedAccessKey=ygNT/WqWs2d8AbVD9NAlxcoSS2rr628fI7YLPzmBdgE=;GatewayHostName=AZ-220-VM-EDGEGW.eastus.cloudapp.azure.com";
     ```
 
 1. On the **File** menu, click **Save**.
@@ -860,7 +860,7 @@ In this exercise, you will use the Azure CLI to monitor the events being sent to
 1. At the Cloud Shell command prompt, to monitor the stream of events flowing to the Azure IoT Hub, run the following command:
 
     ```bash
-    az iot hub monitor-events -n AZ-220-HUB-{YOUR-ID}
+    az iot hub monitor-events -n iot-az220-training-{YOUR-ID}
     ```
 
     Be sure to replace the `{YOUR-ID}` placeholder for the `-n` parameter with the name of your Azure IoT Hub.
@@ -870,7 +870,7 @@ In this exercise, you will use the Azure CLI to monitor the events being sent to
 1. With everything working correctly, the output from the `az iot hub monitor-events` command will look similar to the following:
 
     ```bash
-    chris@Azure:~$ az iot hub monitor-events -n AZ-220-HUB-1119
+    chris@Azure:~$ az iot hub monitor-events -n iot-az220-training-1119
     Starting event monitor, use ctrl-c to stop...
     {
         "event": {

@@ -36,9 +36,9 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| Device Provisioning Service | dps-az220-training-_{YOUR-ID}_ |
 
 If these resources are not available, you will need to run the **lab06-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -106,8 +106,8 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
     ```bash
     #!/bin/bash
 
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-{YOUR-ID}"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -216,7 +216,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 1. In your Azure portal, open your Device Provisioning Service.
 
-    This is the Device Provisioning Service name `AZ-220-DPS-{YOUR-ID}`.
+    This is the Device Provisioning Service name `dps-az220-training-{YOUR-ID}`.
 
 1. On the left side of the **Device Provisioning Service** blade, in the **Settings** section, click **Certificates**.
 
@@ -304,7 +304,7 @@ In this exercise, you will create a new enrollment group within the Device Provi
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your resource group tile, click **AZ-220-DPS-_{YOUR-ID}_**.
+1. On your resource group tile, click **dps-az220-training-_{YOUR-ID}_**.
 
 1. On the left side of the Device Provisioning Service blade, under **Settings**, click **Manage enrollments**.
 
@@ -328,7 +328,7 @@ In this exercise, you will create a new enrollment group within the Device Provi
 
    In large environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. You will have a single IoT Hub associated with the enrollment in this lab, so how you assign devices to IoT hubs doesn't really apply within this lab scenario. 
 
-1. Notice that the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub is selected within the **Select the IoT hubs this device can be assigned to:** dropdown.
+1. Notice that the **iot-az220-training-_{YOUR-ID}_** IoT Hub is selected within the **Select the IoT hubs this device can be assigned to:** dropdown.
 
    This field specifies the IoT Hub(s) this device can be assigned to.
 
@@ -336,7 +336,7 @@ In this exercise, you will create a new enrollment group within the Device Provi
 
     This field gives you high-level control over the re-provisioning behavior, where the same device (as indicated through the same Registration ID) submits a later provisioning request after already being provisioned successfully at least once.
 
-1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **AZ-220-HUB-*{YOUR-ID}*** IoT Hub selected.
+1. Notice the **Select the IoT hubs this group can be assigned to** dropdown has the **iot-az220-training-*{YOUR-ID}*** IoT Hub selected.
 
     This will ensure when the device is provisioned, it gets added to this IoT Hub.
 
@@ -377,7 +377,7 @@ In this exercise, you will create a new enrollment group within the Device Provi
     * **Primary Certificate** is set to **root-ca-cert**
     * **Secondary Certificate** is set to **No certificate selected**
     * **Select how you want to assign devices to hubs** is set to **Evenly weighted distribution**
-    * **Select the IoT hubs this group can be assigned to:** is set to **AZ-220-HUB-{YOUR-ID}.azure-devices.net**
+    * **Select the IoT hubs this group can be assigned to:** is set to **iot-az220-training-{YOUR-ID}.azure-devices.net**
     * **Initial device Twin State** contains the `telemetryDelay` property set to the value of `"1"`
 
 1. After you have verified the Enrollment Group settings, close the **Enrollment Group Details** blade.
@@ -773,7 +773,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
     Scroll up to the top of the information displayed in the Terminal window.
 
-    Notice the X.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub, and the device twin desired properties are loaded.
+    Notice the X.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the **iot-az220-training-_{YOUR-ID}_** IoT Hub, and the device twin desired properties are loaded.
 
     ```text
     localmachine:LabFiles User$ dotnet run
@@ -781,7 +781,7 @@ In this exercise, you will run the simulated device. When the device is started 
     Using certificate AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000
     RegistrationID = sensor-thl-2000
     ProvisioningClient RegisterAsync . . . Device Registration Status: Assigned
-    ProvisioningClient AssignedHub: AZ-220-HUB-CP1119.azure-devices.net; DeviceID: sensor-thl-2000
+    ProvisioningClient AssignedHub: iot-az220-training-CP1119.azure-devices.net; DeviceID: sensor-thl-2000
     Creating X509 DeviceClient authentication.
     simulated device. Ctrl-C to exit.
     DeviceClient OpenAsync.
@@ -895,7 +895,7 @@ In this exercise, you will retire the enrollment group and its devices from both
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your resource group tile, to navigate to the Device Provisioning Service, click **AZ-220-DPS-_{YOUR-ID}_**.
+1. On your resource group tile, to navigate to the Device Provisioning Service, click **dps-az220-training-_{YOUR-ID}_**.
 
 1. On the left side menu, under **Settings**, click **Manage enrollments**.
 
@@ -927,7 +927,7 @@ In this exercise, you will retire the enrollment group and its devices from both
 
 Once the enrollment group has been removed from the Device Provisioning Service (DPS), the device registration will still exist within Azure IoT Hub. To fully retire the devices, you will need to remove that registration as well.
 
-1. Within the Azure portal, on your resource group tile, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. Within the Azure portal, on your resource group tile, click **iot-az220-training-_{YOUR-ID}_**.
 
 1. On the left side of the **IoT Hub** blade, under **Explorers**, click **IoT devices**.
 

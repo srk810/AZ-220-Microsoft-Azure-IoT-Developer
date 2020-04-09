@@ -60,9 +60,9 @@ Let's review some examples of resources and the names associated with them.
 
 #### Resource Groups
 
-A resource group must have a unique name within a subscription; however, it does not need to be globally unique. Therefore, throughout this course you will be using the resource group name: **AZ-220-RG**.
+A resource group must have a unique name within a subscription; however, it does not need to be globally unique. Therefore, throughout this course you will be using the resource group name: **rg-az220**.
 
-  > **Information:** Resource Group Name - **AZ-220-RG**
+  > **Information:** Resource Group Name - **rg-az220**
 
 #### Publicly Visible Resources
 
@@ -72,8 +72,8 @@ If your Unique ID is: **CAH191216**
 
 | Resource Type | Name Template | Example |
 | :--- | :--- | :--- |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ | AZ-220-HUB-CAH191216 |
-| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ | AZ-220-DPS-CAH191216 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ | iot-az220-training-CAH191216 |
+| Device Provisioning Service | dps-az220-training-_{YOUR-ID}_ | dps-az220-training-CAH191216 |
 | Azure Storage Account <br/>(name must be lower-case and no dashes) | az220storage_{YOUR-ID}_ | az220storagecah191216 |
 
 You may also be required to update values within bash scripts and C# source files as well as entering the names into the Azure Portal UI. Here are some examples:
@@ -82,8 +82,8 @@ You may also be required to update values within bash scripts and C# source file
 #!/bin/bash
 
 YourID="{YOUR-ID}"
-RGName="AZ-220-RG"
-IoTHubName="AZ-220-HUB-$YourID"
+RGName="rg-az220"
+IoTHubName="iot-az220-training-$YourID"
 
 ```
 
@@ -91,8 +91,8 @@ Notice that `YourID="{YOUR-ID}"` should be updated to `YourID="CAH191216"` - you
 
 ```csharp
 private string _yourId = "{YOUR-ID}";
-private string _rgName = "AZ-220-RG";
-private string _iotHubName = $"AZ-220-HUB-{_yourId}";
+private string _rgName = "rg-az220";
+private string _iotHubName = $"iot-az220-training-{_yourId}";
 ```
 
 Again, `private string _yourId = "{YOUR-ID}";` should be updated to `private string _yourId = "CAH191216";` - you do not change `_yourId`.
@@ -151,7 +151,7 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
 1. On the _IoT hub_ blade, on the _Basics_ tab, ensure that the Azure **Subscription** that you intend to use for this course is selected.
 
-1. To the right of **Resource Group**, open the **Select existing** dropdown, and then click **AZ-220-RG**
+1. To the right of **Resource Group**, open the **Select existing** dropdown, and then click **rg-az220**
 
     This is the resource group that you created in the previous lab. We will be grouping the resources that we create for this course together in the same resource group. This should help you to clean up your resources when you have completed the course.
 
@@ -165,9 +165,9 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
 1. To the right of **IoT Hub Name**, enter a globally unique name for your IoT Hub.
 
-    To provide a globally unique name, enter **AZ-220-HUB-_{YOUR-ID}_** (remember to replace **_{YOUR-ID}_** with the unique ID you created in Lab 1.).
+    To provide a globally unique name, enter **iot-az220-training-_{YOUR-ID}_** (remember to replace **_{YOUR-ID}_** with the unique ID you created in Lab 1.).
 
-    For example: **AZ-220-HUB-CAH191021**
+    For example: **iot-az220-training-CAH191021**
 
     The name of your IoT Hub must be globally unique because it is a publicly accessible resource that you must be able to access from any IP connected device.
 
@@ -211,7 +211,7 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
     Deployment can take a minute or more to complete. You can open the Azure portal Notification pane to monitor progress.
 
-1. Notice that after a couple of minutes you receive a notification stating that your IoT Hub was successfully deployed to your **AZ-220-RG** resource group.
+1. Notice that after a couple of minutes you receive a notification stating that your IoT Hub was successfully deployed to your **rg-az220** resource group.
 
 1. On the Azure portal menu, click **Dashboard**, and then click **Refresh**.
 
@@ -231,7 +231,7 @@ IoT Hub's capabilities help you build scalable, full-featured IoT solutions such
 
 1. Verify that your AZ-220 dashboard is being displayed.
 
-1. On the AZ-220-RG resource group tile, click **AZ-220-HUB-_{YOUR-ID}_**
+1. On the rg-az220 resource group tile, click **iot-az220-training-_{YOUR-ID}_**
 
     When you first open your IoT Hub, it will display the _Overview_ blade. As you can see, the area at the top of this blade provides some essential information about your IoT Hub service, such as datacenter location and subscription. But this blade also includes tiles that provide information about how you are using your hub and recent activities. Let's take a look at these tiles before exploring further.
 
@@ -324,13 +324,13 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. Under **Name**, enter a unique name for your Device Provisioning Service.
 
-    To provide a unique name, enter **AZ-220-DPS-_{YOUR-ID}_**.
+    To provide a unique name, enter **dps-az220-training-_{YOUR-ID}_**.
 
-    For example: **AZ-220-DPS-CAH191216**
+    For example: **dps-az220-training-CAH191216**
 
 1. Under **Subscription**, ensure that the subscription you are using for this course is selected.
 
-1. Under **Resource Group**, open the **Select existing** dropdown, and then click **AZ-220-RG**
+1. Under **Resource Group**, open the **Select existing** dropdown, and then click **rg-az220**
 
     This is the resource group that you created in the previous lab. We will be grouping the resources that we create for this course together in the same resource group. This should help you to clean up your resources when you have completed the course.
 
@@ -344,7 +344,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     Deployment can take a minute or more to complete. You can open the Azure portal Notification pane to monitor progress.
 
-1. Notice that after a couple of minutes you receive a notification stating that your IoT Hub Device Provisioning Service instance was successfully deployed to your **AZ-220-RG** resource group.
+1. Notice that after a couple of minutes you receive a notification stating that your IoT Hub Device Provisioning Service instance was successfully deployed to your **rg-az220** resource group.
 
 1. On the Azure portal menu, click **Dashboard**, and then click **Refresh**.
 
@@ -356,7 +356,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     You should see both your IoT Hub and DPS resources listed - (you may need to hit **Refresh** if the resources were only recently created)
 
-1. On your Resource group tile, click **AZ-220-DPS-_{YOUR-ID}_**.
+1. On your Resource group tile, click **dps-az220-training-_{YOUR-ID}_**.
 
 1. On the _Device Provisioning Service_ blade, under **Settings**, click **Linked IoT hubs**.
 
@@ -368,7 +368,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     The subscription is used to provide a list of the available IoT hubs.
 
-1. Open the IoT hub dropdown, and then click **AZ-220-HUB-_{YOUR-ID}_**.
+1. Open the IoT hub dropdown, and then click **iot-az220-training-_{YOUR-ID}_**.
 
     This is the IoT Hub that you created in the previous exercise.
 
@@ -394,7 +394,7 @@ The IoT Hub Device Provisioning Service is a helper service for IoT Hub that ena
 
 1. Verify that your AZ-220 dashboard is being displayed.
 
-1. On the _AZ-220-RG_ resource group tile, click **AZ-220-DPS-_{YOUR-ID}_**
+1. On the _AZ-220-RG_ resource group tile, click **dps-az220-training-_{YOUR-ID}_**
 
     When you first open your Device Provisioning Service instance, it will display the _Overview_ blade. As you can see, the area at the top of this blade provides some essential information about your DPS instance, such as status, datacenter location and subscription. This blade also provides the _Quick Links_ section, which provide access to:
 

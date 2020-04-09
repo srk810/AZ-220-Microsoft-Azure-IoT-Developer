@@ -1,8 +1,8 @@
 #!/bin/bash
 
-RGName="AZ-220-RG"
-IoTHubName="AZ-220-HUB-{YOUR-ID}"
-DPSName="AZ-220-DPS-{YOUR-ID}"
+RGName="rg-az220"
+IoTHubName="iot-az220-training-{YOUR-ID}"
+DPSName="dps-az220-training-{YOUR-ID}"
 
 Location="{YOUR-LOCATION}"
 

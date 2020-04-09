@@ -40,8 +40,8 @@ This lab assumes the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 | IoT Device | sensor-th-0050 |
 
 If these resources are not available, you will need to run the **lab14-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -51,7 +51,7 @@ The **lab14-setup.azcli** script is written to run in a **bash** shell environme
 >**Note:** You will need the connection string for the **sensor-th-0050** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id sensor-th-0050 -o tsv
+> az iot hub device-identity show-connection-string --hub-name iot-az220-training-{YOUR-ID} --device-id sensor-th-0050 -o tsv
 > ```
 
 #### Task 1: Execute Setup Script
@@ -118,8 +118,8 @@ The **lab14-setup.azcli** script is written to run in a **bash** shell environme
     ```bash
     #!/bin/bash
 
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-{YOUR-ID}"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -152,7 +152,7 @@ The **lab14-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0050** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0050** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, the connection string for the device is displayed.
 
@@ -179,7 +179,7 @@ In previous labs you have created the VM using the Azure Portal. In this lab, yo
 1. To create a resource group for the Azure IoT Edge enabled VM, enter the following command:
 
     ```bash
-    az group create --name AZ-220-IoTEdge-RG --location {YOUR-LOCATION}
+    az group create --name rg-az220vm --location {YOUR-LOCATION}
     ```
 
     Remember to replace `{YOUR-LOCATION}` with a region close to you.
@@ -188,7 +188,7 @@ In previous labs you have created the VM using the Azure Portal. In this lab, yo
 
     ```bash
     az vm image terms accept --urn microsoft_iot_edge:iot_edge_vm_ubuntu:ubuntu_1604_edgeruntimeonly:latest
-    az vm create --resource-group AZ-220-IoTEdge-RG --name AZ220EdgeVM{YOUR-ID} --image microsoft_iot_edge:iot_edge_vm_ubuntu:ubuntu_1604_edgeruntimeonly:latest --admin-username vmadmin --admin-password {YOUR-PASSWORD-HERE} --authentication-type password
+    az vm create --resource-group rg-az220vm --name AZ220EdgeVM{YOUR-ID} --image microsoft_iot_edge:iot_edge_vm_ubuntu:ubuntu_1604_edgeruntimeonly:latest --admin-username vmadmin --admin-password {YOUR-PASSWORD-HERE} --authentication-type password
     ```
 
     > **Note**: Be sure to replace the placeholders that are included in the second command.
@@ -226,10 +226,10 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 1. To create a new **IoT Edge Device Identity** within Azure IoT Hub, enter the following command:
 
     ```sh
-    az iot hub device-identity create --edge-enabled --hub-name AZ-220-HUB-{YOUR-ID} --auth-method shared_private_key --device-id IoTEdgeGateway
+    az iot hub device-identity create --edge-enabled --hub-name iot-az220-training-{YOUR-ID} --auth-method shared_private_key --device-id IoTEdgeGateway
     ```
 
-    > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **iot-az220-training-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     Notice that the following parameters are included in the `az iot hub device-identity create` command:
 
@@ -278,10 +278,10 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 1. To retrieve the **Connection String** of the **IoTEdgeGateway** Device from IoT Hub, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id IoTEdgeGateway -o tsv
+    az iot hub device-identity show-connection-string --hub-name iot-az220-training-{YOUR-ID} --device-id IoTEdgeGateway -o tsv
     ```
 
-    > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **iot-az220-training-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     Notice the `az iot hub device-identity show-connection-string` command is called by passing in several parameters:
 
@@ -302,10 +302,10 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 1. To create an IoT Device and configure it as a child of your IoT Edge Device, run the following command:
 
     ```sh
-    az iot hub device-identity create -n AZ-220-HUB-{YOUR-ID} --device-id ChildDevice1 --pd IoTEdgeGateway
+    az iot hub device-identity create -n iot-az220-training-{YOUR-ID} --device-id ChildDevice1 --pd IoTEdgeGateway
     ```
 
-    > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **iot-az220-training-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
     This command is passed the following parameters:
 
@@ -358,10 +358,10 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 1. To retrieve the **Connection String** of the **ChildDevice1** Device from IoT Hub, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id ChildDevice1 -o tsv
+    az iot hub device-identity show-connection-string --hub-name iot-az220-training-{YOUR-ID} --device-id ChildDevice1 -o tsv
     ```
 
-    > **Note**:  Be sure to replace the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **iot-az220-training-_{YOUR-ID}_** IoT Hub name with the name of your Azure IoT Hub.
 
 1. Save a copy of the connection string value for reference later in this lab.
 
@@ -375,9 +375,9 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 
 1. On the Azure portal menu, click **Resource groups**.
 
-1. On the **Resource groups** blade, under **Name**, locate the **AZ-220-IoTEdge-RG** resource group.
+1. On the **Resource groups** blade, under **Name**, locate the **rg-az220vm** resource group.
 
-1. On the **AZ-220-IoTEdge-RG** row, on the right side of the blade, click **...** and then click **Pin to dashboard**.
+1. On the **rg-az220vm** row, on the right side of the blade, click **...** and then click **Pin to dashboard**.
 
     You may want to edit your dashboard to make the RG tiles and listed resources more accessable.
 
@@ -542,7 +542,7 @@ These are the TCP/IP port numbers for the supported protocols:
 1. At the Cloud Shell command prompt, to list the name of the Network Security Group (NSG) being used by your Azure IoT Edge Gateway VM, enter the following command:
 
     ```bash
-    az network nsg list --resource-group AZ-220-IoTEdge-RG -o table
+    az network nsg list --resource-group rg-az220vm -o table
     ```
 
     You should see output similar to the following:
@@ -550,15 +550,15 @@ These are the TCP/IP port numbers for the supported protocols:
     ```text
     Location    Name                     ProvisioningState    ResourceGroup            ResourceGuid
     ----------  -----------------------  -------------------  -----------------------  ------------------------------------
-    westus2     AZ220EdgeVM{YOUR-ID}NSG  Succeeded            AZ-220-IoTEdge-RG        <GUID>
+    westus2     AZ220EdgeVM{YOUR-ID}NSG  Succeeded            rg-az220vm        <GUID>
     ```
 
 1. At the Cloud Shell command prompt, to add **Inbound rules** to the NSG for MQTT, AMQP, and HTTPS communication protocols, enter the following commands:
 
     ```cmd/sh
-    az network nsg rule create --name MQTT --nsg-name AZ220EdgeVM{YOUR-ID}NSG --resource-group AZ-220-IoTEdge-RG --destination-port-ranges 8883 --priority 101
-    az network nsg rule create --name AMQP --nsg-name AZ220EdgeVM{YOUR-ID}NSG --resource-group AZ-220-IoTEdge-RG --destination-port-ranges 5671 --priority 102
-    az network nsg rule create --name HTTPS --nsg-name AZ220EdgeVM{YOUR-ID}NSG --resource-group AZ-220-IoTEdge-RG --destination-port-ranges 443 --priority 103
+    az network nsg rule create --name MQTT --nsg-name AZ220EdgeVM{YOUR-ID}NSG --resource-group rg-az220vm --destination-port-ranges 8883 --priority 101
+    az network nsg rule create --name AMQP --nsg-name AZ220EdgeVM{YOUR-ID}NSG --resource-group rg-az220vm --destination-port-ranges 5671 --priority 102
+    az network nsg rule create --name HTTPS --nsg-name AZ220EdgeVM{YOUR-ID}NSG --resource-group rg-az220vm --destination-port-ranges 443 --priority 103
     ```
 
     Be sure to replace the **{YOUR-ID}** placeholders above with the appropriate value before running the commands.
@@ -583,9 +583,9 @@ The `timeToLiveSecs` property for the Edge Hub can be specified in the Deploymen
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-HUB-{YOUR-ID}**.
+1. On your Resource group tile, click **iot-az220-training-{YOUR-ID}**.
 
-1. On left side navigation menu of **AZ-220-HUB-{YOUR-ID}** blade, under **Automatic Device Management**, click **IoT Edge**.
+1. On left side navigation menu of **iot-az220-training-{YOUR-ID}** blade, under **Automatic Device Management**, click **IoT Edge**.
 
     This pane allows you to manage the IoT Edge devices connected to the IoT Hub.
 
@@ -885,7 +885,7 @@ In this exercise, you will monitor events from the **ChildIoTDevice** that are b
 1. At the Cloud Shell command prompt, to start monitoring the Events being received by the Azure IoT Hub, enter the following command:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name AZ-220-HUB-{YOUR-ID}
+    az iot hub monitor-events --hub-name iot-az220-training-{YOUR-ID}
     ```
 
     Be sure to replace the `{Your-ID}` placeholder with your unique suffix for our Azure IoT Hub instance.
@@ -914,7 +914,7 @@ In this exercise, you will monitor events from the **ChildIoTDevice** that are b
 
     > **Note**: Next, you will need to test the **Offline** capabilities. To do this, you need to make the **IoTEdgeGateway** device go offline. Since this is a Virtual Machine running in Azure, this can be simulated by adding an **Outbound rule** to the **Network security group** for the VM.
 
-1. Within the **Azure portal**, navigate to your Dashboard, and then locate the **AZ-220-IoTEdge-RG** resource group tile.
+1. Within the **Azure portal**, navigate to your Dashboard, and then locate the **rg-az220vm** resource group tile.
 
 1. In the list of resources, to open the **Network Security Group** for the **AZ220EdgeVM{YOUR-ID}** virtual machine, click **AZ220EdgeVM{YOUR-ID}NSG**.
 
@@ -983,7 +983,7 @@ In this exercise, you will monitor events from the **ChildIoTDevice** that are b
 1. At the Cloud Shell command prompt, to start monitoring the Events being received by the Azure IoT Hub, enter the following command
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name AZ-220-HUB-{YOUR-ID}
+    az iot hub monitor-events --hub-name iot-az220-training-{YOUR-ID}
     ```
 
     Be sure to replace the `{Your-ID}` placeholder with your unique suffix for our Azure IoT Hub instance.

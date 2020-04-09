@@ -140,8 +140,8 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 
 #### Exercise 2: Create Azure IoT Hub Device ID using Azure CLI
 
@@ -169,9 +169,9 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| Device Provisioning Service | dps-az220-training-_{YOUR-ID}_ |
 
 #### Exercise 2: Create new individual enrollment (Symmetric keys) in DPS
 
@@ -207,9 +207,9 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
+| Device Provisioning Service | dps-az220-training-_{YOUR-ID}_ |
 
 #### Exercise 2: Generate and Configure X.509 CA Certificates using OpenSSL
 
@@ -271,8 +271,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 | Device ID | VibrationSensorId |
 
 #### Exercise 2: Write Code for Vibration Telemetry
@@ -424,8 +424,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 
 If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
 
@@ -455,8 +455,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | `AZ-220-RG` |
-| IoT Hub | `AZ-220-HUB-{YOUR-ID}` |
+| Resource Group | `rg-az220` |
+| IoT Hub | `iot-az220-training-{YOUR-ID}` |
 | Device ID | `TruckDevice` |
 | Device ID | `AirplaneDevice` |
 | Device ID | `ContainerDevice` |
@@ -634,8 +634,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 | IoT Device | sensor-th-0050 |
 
 #### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
@@ -734,8 +734,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 | IoT Device | sensor-th-0055 |
 
 #### Exercise 2: Write Code to Send and Receive Telemetry
@@ -783,8 +783,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 | IoT Device | SimulatedSolutionThermostat |
 
 #### Exercise 2: Write code to simulate device that implements firmware update

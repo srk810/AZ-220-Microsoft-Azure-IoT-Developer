@@ -61,8 +61,8 @@ This lab assumes the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 | IoT Device | SimulatedSolutionThermostat |
 
 If these resources are not available, you will need to run the **lab16-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -70,7 +70,7 @@ If these resources are not available, you will need to run the **lab16-setup.azc
 >**Note:** You will need the connection string for the **SimulatedSolutionThermostat** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-_{YOUR-ID}_ --device-id sensor-th-0050 -o tsv
+> az iot hub device-identity show-connection-string --hub-name iot-az220-training-_{YOUR-ID}_ --device-id sensor-th-0050 -o tsv
 > ```
 
 The **lab16-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
@@ -137,8 +137,8 @@ The **lab16-setup.azcli** script is written to run in a **bash** shell environme
     ```bash
     #!/bin/bash
 
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-{YOUR-ID}"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -171,7 +171,7 @@ The **lab16-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **SimulatedSolutionThermostat** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **SimulatedSolutionThermostat** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, the connection string for the device is displayed.
 
@@ -475,7 +475,7 @@ In this exercise, you will use the Azure portal to create a new device managemen
 
     > **Note**: Remember to replace the placeholder with the actual device connection string, and be sure to include "" around your connection string. 
     > 
-    > For example: `"HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=SimulatedSolutionThermostat;SharedAccessKey={}="`
+    > For example: `"HostName=iot-az220-training-{YourID}.azure-devices.net;DeviceId=SimulatedSolutionThermostat;SharedAccessKey={}="`
 
 1. Review the contents of the Terminal pane.
 
@@ -492,7 +492,7 @@ In this exercise, you will use the Azure portal to create a new device managemen
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Azure portal Dashboard, click **AZ-220-HUB-{YOUR-ID}**.
+1. On your Azure portal Dashboard, click **iot-az220-training-{YOUR-ID}**.
 
     Your IoT Hub blade should now be displayed.
  

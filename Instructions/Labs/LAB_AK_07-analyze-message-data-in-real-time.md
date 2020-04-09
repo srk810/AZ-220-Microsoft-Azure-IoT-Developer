@@ -46,8 +46,8 @@ This lab assumes the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 | Device ID | VibrationSensorId |
 
 If these resources are not available, you will need to run the **lab07-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -117,8 +117,8 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
     #!/bin/bash
 
     YourID="{YOUR-ID}"
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-$YourID"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-$YourID"
 
     Location="{YOUR-LOCATION}"
     ```
@@ -151,7 +151,7 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **VibrationSensorId** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **VibrationSensorId** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, the connection string for the device is displayed.
 
@@ -574,7 +574,7 @@ In this task, you will use the Azure portal to verify that your IoT Hub is recei
 
 1. Open the [Azure Portal](https://portal.azure.com).
 
-1. On your Dashboard, in the **AZ-220-RG** resource group tile, click **AZ-220-HUB-_{YourID}_**.
+1. On your Dashboard, in the **rg-az220** resource group tile, click **iot-az220-training-_{YourID}_**.
 
 1. On the **Overview** pane, scroll down to view the metrics tiles.
 
@@ -746,7 +746,7 @@ This will enable us to verify that our route includes the following settings:
 
 1. Under **Subscription**, choose the subscription you are using for the lab.
 
-1. Under **Resource group**, select **AZ-220-RG**.
+1. Under **Resource group**, select **rg-az220**.
 
 1. Under **Location**, select the region you are using for all of your lab work.
 
@@ -782,7 +782,7 @@ This will enable us to verify that our route includes the following settings:
 
 1. Under **Subscription**, ensure that the subscription you used to create the IoT Hub earlier is selected.
 
-1. Under **IoT Hub**, select the IoT Hub you created at the beginning of the course labs, **AZ-220-HUB-_{YourID}_**.
+1. Under **IoT Hub**, select the IoT Hub you created at the beginning of the course labs, **iot-az220-training-_{YourID}_**.
 
 1. Under **Endpoint**, ensure that **Messaging** is selected.
 

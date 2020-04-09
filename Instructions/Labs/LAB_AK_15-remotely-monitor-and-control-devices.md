@@ -63,8 +63,8 @@ This lab assumes the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-_{YOUR-ID}_ |
 | IoT Device | sensor-th-0055 |
 
 If these resources are not available, you will need to run the **lab15-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -74,7 +74,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 >**Note:** You will need the connection string for the **sensor-th-0055** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name AZ-220-HUB-{YOUR-ID} --device-id sensor-th-0055 -o tsv
+> az iot hub device-identity show-connection-string --hub-name iot-az220-training-{YOUR-ID} --device-id sensor-th-0055 -o tsv
 > ```
 
 1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
@@ -140,8 +140,8 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     #!/bin/bash
 
     YourID="{YOUR-ID}"
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-$YourID"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-$YourID"
     DeviceID="sensor-th-0055"
 
     Location="SETLOCATION"
@@ -177,7 +177,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0055** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0055** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, information pertaining to your IoT Hub and device is displayed.
 
@@ -186,19 +186,19 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     ```text
     Configuration Data:
     ------------------------------------------------
-    AZ-220-HUB-{YourID} Service connectionstring:
-    HostName=AZ-220-HUB-{YourID}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
+    iot-az220-training-{YourID} Service connectionstring:
+    HostName=iot-az220-training-{YourID}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
 
     sensor-th-0055 device connection string:
-    HostName=AZ-220-HUB-{YourID}.azure-devices.net;DeviceId=sensor-th-0055;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
+    HostName=iot-az220-training-{YourID}.azure-devices.net;DeviceId=sensor-th-0055;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
 
-    AZ-220-HUB-{YourID} eventhub endpoint:
-    sb://iothub-ns-az-220-hub-2610348-5a463f1b56.servicebus.windows.net/
+    iot-az220-training-{YourID} eventhub endpoint:
+    sb://iothub-ns-iot-az220-training-2610348-5a463f1b56.servicebus.windows.net/
 
-    AZ-220-HUB-{YourID} eventhub path:
-    az-220-hub-{YourID}
+    iot-az220-training-{YourID} eventhub path:
+    iot-az220-training-{YourID}
 
-    AZ-220-HUB-{YourID} eventhub SaS primarykey:
+    iot-az220-training-{YourID} eventhub SaS primarykey:
     tGEwDqI+kWoZroH6lKuIFOI7XqyetQHf7xmoSf1t+zQ=
     ```
 
