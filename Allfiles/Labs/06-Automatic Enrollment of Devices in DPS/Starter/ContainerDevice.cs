@@ -16,7 +16,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace X509CertificateSimulatedDevice
 {
-    class Program
+    class ContainerDevice
     {
         // ////////////////////////////////////////////////////////
 

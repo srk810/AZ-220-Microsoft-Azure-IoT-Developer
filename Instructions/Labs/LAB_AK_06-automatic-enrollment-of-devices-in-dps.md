@@ -458,12 +458,12 @@ In this exercise, you will configure a simulated device written in C# to connect
     You should see the following files listed in the EXPLORER pane of Visual Studio Code:
 
     * new-device.cert.pfx
-    * Program.cs
-    * SimulatedDevice.csproj
+    * ContainerDevice.cs
+    * ContainerDevice.csproj
 
-1. Open the `SimulatedDevice.csproj` file.
+1. Open the `ContainerDevice.csproj` file.
 
-1. In the `SimulatedDevice.csproj` file, ensure that the `<ItemGroup>` tag includes the following: 
+1. In the `ContainerDevice.csproj` file, ensure that the `<ItemGroup>` tag includes the following: 
 
     ```xml
         <None Update="new-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
@@ -745,7 +745,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
     `Allfiles\Labs\06-Automatic Enrollment of Devices in DPS\Starter>`
 
-1. To build and run the **SimulatedDevice** project, enter the following command:
+1. To build and run the **ContainerDevice** project, enter the following command:
 
     ```cmd/sh
     dotnet run
@@ -762,8 +762,8 @@ In this exercise, you will run the simulated device. When the device is started 
     >   at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.ValidateOutcome(Outcome outcome)
     >   at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterDeviceAsync(AmqpClientConnection client, String correlationId, DeviceRegistration deviceRegistration)
     >   at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterAsync(ProvisioningTransportRegisterMessage message, CancellationToken cancellationToken)
-    >   at X509CertificateSimulatedDevice.ProvisioningDeviceLogic.RunAsync() in /Users/User/Documents/AZ-220/LabFiles/Program.cs:line 121
-    >   at X509CertificateSimulatedDevice.Program.Main(String[] args) in /Users/User/Documents/AZ-220/LabFiles/Program.cs:line 55
+    >   at X509CertificateContainerDevice.ProvisioningDeviceLogic.RunAsync() in /Users/User/Documents/AZ-220/LabFiles/Program.cs:line 121
+    >   at X509CertificateContainerDevice.Program.Main(String[] args) in /Users/User/Documents/AZ-220/LabFiles/Program.cs:line 55
     > ...
     > ```
 
@@ -820,7 +820,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Within the list of IoT devices, click **sensor-thl-2000**.
 
-    > **IMPORTANT**: Make sure you select the device from this lab. You may also see a device named _SimulatedDevice1_ that was created during a previous lab.
+    > **IMPORTANT**: Make sure you select the device from this lab. You may also see a device named _ContainerDevice1_ that was created during a previous lab.
 
 1. On the device blade, at the top of the blade, click **Device Twin**.
 
@@ -943,7 +943,7 @@ Once the enrollment group has been removed from the Device Provisioning Service 
 
 With the group enrollment deleted from the Device Provisioning Service, and the device deleted from the Azure IoT Hub device registry, the device(s) have fully been removed from the solution.
 
-1. Switch to the Visual Studio Code window containing your SimulatedDevice code project.
+1. Switch to the Visual Studio Code window containing your ContainerDevice code project.
 
     If you closed Visual Studio Code after the previous exercise, use Visual Studio Code to open the lab 6 Starter folder.
 
