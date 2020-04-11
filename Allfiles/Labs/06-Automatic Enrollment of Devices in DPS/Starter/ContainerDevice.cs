@@ -14,9 +14,9 @@ using System.Text.RegularExpressions;
 using Newtonsoft.Json;
 using System.Security.Cryptography.X509Certificates;
 
-namespace X509CertificateSimulatedDevice
+namespace ContainerDevice
 {
-    class ContainerDevice
+    class Program
     {
         // ////////////////////////////////////////////////////////
 

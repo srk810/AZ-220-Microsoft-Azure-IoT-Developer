@@ -11,9 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace SymmetricKeySimulatedDevice
+namespace ContainerDevice
 {
-    class ContainerDevice
+    class Program
     {
         // ////////////////////////////////////////////////////////
 

@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Client;
 
-namespace simulated_device
+namespace ChildIoTDevice
 {
     class SimulatedDevice
     {

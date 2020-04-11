@@ -10,9 +10,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.Devices.Client;
 
-namespace simulated_device
+namespace DownstreamDevice
 {
-    class SimulatedDevice
+    class Program
     {
         private static DeviceClient s_deviceClient;
 

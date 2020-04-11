@@ -48,7 +48,7 @@ This lab assumes the following Azure resources are available:
 | :-- | :-- |
 | Resource Group | rg-az220 |
 | IoT Hub | iot-az220-training-_{your-id}_ |
-| Device ID | VibrationSensorId |
+| Device ID | sensor-v-3000 |
 
 If these resources are not available, you will need to run the **lab07-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -151,13 +151,13 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **VibrationSensorId** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-v-3000** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, the connection string for the device is displayed.
 
     The connection string starts with "HostName="
 
-1. Copy the connection string into a text document, and note that it is for the **VibrationSensorId** device.
+1. Copy the connection string into a text document, and note that it is for the **sensor-v-3000** device.
 
     Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
 
@@ -194,11 +194,11 @@ In this exercise, you will:
 
     Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
   
-1. At the terminal command prompt, to create a directory named "sensor-v-3000" and change the current directory to that directory, enter the following commands:
+1. At the terminal command prompt, to create a directory named "VibrationDevice" and change the current directory to that directory, enter the following commands:
 
    ```bash
-   mkdir sensor-v-3000
-   cd sensor-v-3000
+   mkdir VibrationDevice
+   cd VibrationDevice
    ```
 
 1. To create a new .NET console application. enter the following command:
@@ -250,9 +250,9 @@ The simulated device app that you build in this task simulates an IoT device tha
     using System.Text;
     using System.Threading.Tasks;
 
-    namespace vibration_device
+    namespace VibrationDevice
     {
-        class SimulatedDevice
+        class Program
         {
             // Telemetry globals.
             private const int intervalInMilliseconds = 2000;                                // Time interval required by wait function.

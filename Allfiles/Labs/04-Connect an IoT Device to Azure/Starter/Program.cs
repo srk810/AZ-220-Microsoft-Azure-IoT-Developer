@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace simulated_device
+namespace CaveDevice
 {
-    class CaveDevice
+    class Program
     {
         private static DeviceClient s_deviceClient;
 

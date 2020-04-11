@@ -458,7 +458,7 @@ In this exercise, you will configure a simulated device written in C# to connect
     You should see the following files listed in the EXPLORER pane of Visual Studio Code:
 
     * new-device.cert.pfx
-    * ContainerDevice.cs
+    * Program.cs
     * ContainerDevice.csproj
 
 1. Open the `ContainerDevice.csproj` file.
@@ -971,4 +971,4 @@ With the group enrollment deleted from the Device Provisioning Service, and the 
        at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterAsync(ProvisioningTransportRegisterMessage message, CancellationToken cancellationToken)
     ```
 
-    You have completed the registration, configuration, and retirement as part of the IoT devices life cycle with Device Provisioning Service.
+You have completed the registration, configuration, and retirement as part of the IoT devices life cycle with Device Provisioning Service.

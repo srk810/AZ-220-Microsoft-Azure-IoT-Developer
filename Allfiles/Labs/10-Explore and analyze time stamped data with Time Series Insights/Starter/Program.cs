@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace device_simulation
+namespace ContainerSimulation
 {
-    class DeviceSimulation
+    class Program
     {
 
         // The three connection string for the different IoT Devices being simulated (Truck, Airplane, Container)
@@ -30,7 +30,7 @@ namespace device_simulation
 
         private static void Main(string[] args)
         {
-            Console.WriteLine("Device Simulation");
+            Console.WriteLine("Container Simulation");
             Console.WriteLine("This app simulations Temperature and Humidity sensors from the following devices:");
             Console.WriteLine(" - Container: The shipping container.");
             Console.WriteLine(" - Truck: The truck transporting the container.");

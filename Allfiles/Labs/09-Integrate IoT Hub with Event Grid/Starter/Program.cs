@@ -10,9 +10,9 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace simulated_thermostat
+namespace SimulatedThermostat
 {
-    class SimulatedThermostat
+    class Program
     {
         private static DeviceClient s_deviceClient;
 
