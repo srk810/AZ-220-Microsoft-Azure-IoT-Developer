@@ -30,7 +30,6 @@ In support of these decisions, you will be setting up the following environment:
 * VS Code (latest)
 * Python 3.7 (not 3.8)
 * Docker Desktop Community 2.1.0.5 (or later) set to Linux Containers
-* Power BI Desktop (for data visualization)
 * IoT Extensions for VS Code and Azure CLI
 
 > **Note**: A virtual machine has been created for this course that provides a majority of the tools specified above. The instructions below support using the prepared VM or setting up the development environment locally using your PC.

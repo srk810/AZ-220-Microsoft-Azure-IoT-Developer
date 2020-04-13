@@ -70,11 +70,11 @@ Let's create the Event Hub, create the second route, update the SQL query, creat
 
 ## Lab Instructions
 
-### Exercise 1: Sign Up For PowerBI
+### Exercise 1: Sign Up For Power BI
 
-Power BI can be your personal data analysis and visualization tool, and can also serve as the analytics and decision engine behind group projects, divisions, or entire corporations. Later on in this lab, you will build a dashboard and visualize data using PowerBI. This exercise explains how to sign up for Power BI as an individual.
+Power BI can be your personal data analysis and visualization tool, and can also serve as the analytics and decision engine behind group projects, divisions, or entire corporations. Later on in this lab, you will build a dashboard and visualize data using Power BI. This exercise explains how to sign up for Power BI as an individual.
 
->**Note:** If you already have a PowerBI subscription, you can skip to the next step.
+>**Note:** If you already have a Power BI subscription, you can skip to the next step.
 
 #### Task 1: Understand Supported Email Addresses
 
@@ -98,7 +98,7 @@ Follow these steps to sign up for a Power BI account. Once you complete this pro
 
     ![Are you a robot](./Media/LAB_AK_08-prove-robot.png)
 
-    If, instead, you are informed that you already have an account, continue to sign-in and you are ready to use PowerBI.
+    If, instead, you are informed that you already have an account, continue to sign-in and you are ready to use Power BI.
 
     ![Are you a robot](./Media/LAB_AK_08-existing-account.png)
 
@@ -547,35 +547,35 @@ Now to create a fourth tile, the `Anomalies Over the Hour` line chart.  This one
 
 1. At the top of the blank dashboard, click **+ Add tile**.
 
-2. In the **Add tile** pane, under **REAL-TIME DATA**, click **Custom Streaming Data**, and then click **Next**.
+1. In the **Add tile** pane, under **REAL-TIME DATA**, click **Custom Streaming Data**, and then click **Next**.
 
-3. On the **Add a custom streaming data tile** pane, under **YOUR DATASETS**, click **vibrationDataset**, and then click **Next**.
+1. On the **Add a custom streaming data tile** pane, under **YOUR DATASETS**, click **vibrationDataset**, and then click **Next**.
 
     The pane will refresh to allow you to choose a visualization type and fields.
 
-4. Under **Visualization Type**, open the dropdown, and then click **Line chart**.
+1. Under **Visualization Type**, open the dropdown, and then click **Line chart**.
 
     Notice that changing the visualization type changes the fields below.
 
-5. Under **Axis**, click **+ Add value**, and then select **time** from the dropdown.
+1. Under **Axis**, click **+ Add value**, and then select **time** from the dropdown.
 
-6. Under **Values**, click **+ Add value**, and then select **IsSpikeAndDipAnomaly** from the dropdown.
+1. Under **Values**, click **+ Add value**, and then select **IsSpikeAndDipAnomaly** from the dropdown.
 
     Notice that the chart appears immediately on the dashboard with a value that begins to update!
 
-7. Under **Time window to display**, to the right of **Last**, open the dropdown, and then click **60**
+1. Under **Time window to display**, to the right of **Last**, open the dropdown, and then click **60**
 
     Leave the units set to **Minutes**.
 
-8. To dispaly the Tile details pane, click **Next**.
+1. To display the Tile details pane, click **Next**.
 
-9. In the **Tile details** pane, under **Title**, enter **Anomalies over the hour**.
+1. In the **Tile details** pane, under **Title**, enter **Anomalies over the hour**.
 
-10. To close the Tile details pane, click **Apply**.
+1. To close the Tile details pane, click **Apply**.
 
     If you see a notification about creating a phone view, you can ignore it and it will disappear shortly (or dismiss it yourself).
 
-11. This time, stretch the tile so its height matches the 3 tiles to the left and its width fits the remaining space of the dashboard.
+1. This time, stretch the tile so its height matches the 3 tiles to the left and its width fits the remaining space of the dashboard.
 
     There is a latency with so many routes and connections, but you should start seeing the vibration data in the visualizations
 

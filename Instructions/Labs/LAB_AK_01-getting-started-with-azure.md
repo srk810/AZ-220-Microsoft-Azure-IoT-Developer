@@ -91,7 +91,7 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
     >**Tip:** When you add a new item to your list of favorites, it is placed at the bottom of the favorites list on the Azure portal menu. You can rearrange your favorites into the order that you want by using a drag-and-drop operation.
 
-    Use the same process to add the following services to your favorites: **Device Provisioning Services**, **Function App**, **Stream Analytics jobs**, and **Azure Cosmos DB**.
+    Use the same process to add the following services to your favorites: **Device Provisioning Services**, **Logic Apps**, **Stream Analytics jobs**, and **Storage Accounts**.
 
     > **Note**:  You can remove a service from the list of your favorite services by clicking the star of a selected service.
 
