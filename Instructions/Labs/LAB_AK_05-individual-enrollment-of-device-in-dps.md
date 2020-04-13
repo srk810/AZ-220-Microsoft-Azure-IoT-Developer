@@ -174,6 +174,8 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     This sets DPS to automatically generate both the **Primary Key** and **Secondary Key** values for the device enrollment when it's created. Optionally, un-checking this option enables custom keys to be manually entered.
 
+    > **Note**: The Primary Key and Secondary Key values are generated after this record is saved. In the next task you will go back into this record to obtain the values, and then use them within a simulated device app later in this lab.
+
 1. In the **Registration ID** field, to specify the Registration ID to use for the device enrollment within DPS, enter **sensor-thl-1000**
 
     By default, the Registration ID will be used as the IoT Hub Device ID when the device is provisioned from the enrollment. If these values need to be different, then enter the required IoT Hub Device ID in that field.
@@ -197,7 +199,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **iot-az220-training-_{your-id}_** IoT hub that you created.
 
-   This field is used to specify the IoT Hub(s) that your _DPSSimulatedDevice1_ device can be assigned to.
+   This field is used to specify the IoT Hub(s) that your device can be assigned to.
 
 1. Leave the **Select how you want device data to be handled on re-provisioning** field set to the default value of **Re-provision and migrate data**.
 
@@ -230,9 +232,11 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. At the top of the **Add Enrollment** blade, click **Save**.
 
-#### Task 2: Validate the enrollment
+#### Task 2: Review Enrollment and Obtain Authentication Keys
 
 1. On the **Manage enrollments** blade, to view the list of individual device enrollments, click **individual enrollments**.
+
+    As you may recall, you will be using the enrollment record to obtain he Authentication keys.
 
 1. Under Individual Enrollments, click **sensor-thl-1000**.
 
@@ -260,7 +264,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 1. On the **dps-az220-training-_{your-id}_** blade, navigate to the **Overview** pane.
 
-1. In the top-right area of the blade, hover the mouse pointer over value assigned to ID Scope, and then click **Copy to clipboard**.
+1. In the top-right area of the blade, hover the mouse pointer over value assigned to **ID Scope**, and then click **Copy to clipboard**.
 
     You will be using this value shortly, so make note of the value if you are unable to use the clipboard. Be sure to differentiate between uppercase "O" and the number "0".
 
@@ -275,7 +279,7 @@ This is different than the earlier lab where a simulated device connected to Azu
           * 05-Individual Enrollment of a Device in DPS
             * Starter
 
-1. on the **View** menu, click **Terminal**.
+1. On the **View** menu, click **Terminal**.
 
     Verify that the selected terminal shell is the windows command prompt.
 
@@ -529,11 +533,11 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Close the simulated device blade, and then close the IoT Hub blade.
 
-### Exercise 5: Retire the Device
+### Exercise 5: Deprovision the Device
 
-In this unit you will perform the necessary tasks to retire the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully retire an IoT Device from an Azure IoT solution it must be removed from both of these services. When the transport box arrives at it's final destination, then sensor will be removed from the box, and needs to be "decommissioned". Complete device retirement is an important step in the life cycle of IoT devices within an IoT solution.
+In this unit you will perform the necessary tasks to deprovision the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully deprovision an IoT Device from an Azure IoT solution it must be removed from both of these services. When the transport box arrives at it's final destination, then sensor will be removed from the box, and needs to be deprovisioned. Complete device deprovisioning is an important step in the life cycle of IoT devices within an IoT solution.
 
-#### Task 1: Retire the device from the DPS
+#### Task 1: Disenroll the device from the DPS
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -561,7 +565,7 @@ In this unit you will perform the necessary tasks to retire the device from both
 
     The individual enrollment is now removed from the Device Provisioning Service (DPS). To complete the device retirement, the **Device ID** for the Simulated Device also must be removed from the **Azure IoT Hub** service.
 
-#### Task 2: Retire the device from the IoT Hub
+#### Task 2: Deregister the device from the IoT Hub
 
 1. In the Azure portal, navigate back to your Dashboard.
 
