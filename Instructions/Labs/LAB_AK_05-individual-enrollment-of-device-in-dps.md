@@ -28,7 +28,7 @@ In this lab, you will complete the following activities:
 * Create a new Individual Enrollment in DPS
 * Configure a Simulated Device
 * Test the Simulated Device
-* Retire the Device
+* Deprovision the Device
 
 ## Lab Instructions
 

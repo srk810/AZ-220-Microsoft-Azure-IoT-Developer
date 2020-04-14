@@ -26,7 +26,7 @@ In this lab, you will complete the following activities:
 * Configure simulated device with X.509 Certificate
 * Handle device twin desired property Changes
 * Automatic Enrollment of simulated device
-* Retire Group Enrollment of simulated device
+* Deprovision the Group Enrollment of simulated device
 
 ## Lab Instructions
 
@@ -236,9 +236,9 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 1. At the bottom of the pane, click **Save**.
 
-    Once the X.509 CA Certificate has been uploaded, the _Certificates_ pane will display the certificate with the _Status_ of _Unverified_. Before this CA Certificate can be used to authenticate devices to DPS, you will need to verify **Proof of Possession** of the certificate.
+    Once the X.509 CA Certificate has been uploaded, the _Certificates_ pane will display the certificate with the _Status_ of _Unverified_. Before this CA Certificate can be used to authenticate devices to DPS, you will need to verify _Proof of Possession_ of the certificate.
 
-1. To start the process of verifying **Proof of Possession** of the certificate, click **root-ca-cert**.
+1. To start the process of verifying Proof of Possession of the certificate, click **root-ca-cert**.
 
 1. On the **Certificate Details** pane, click **Generate Verification Code**.
 
@@ -248,7 +248,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
 1. To the right of **Verification Code**, click **Copy to clipboard**.
 
-    _Proof of Possession_ of the CA certificate is provided to DPS by uploading a certificate generated from the CA certificate with the verification code that was just generated within DPS. This is how you provide proof that you actually own the CA Certificate.
+    Proof of Possession of the CA certificate is provided to DPS by uploading a certificate generated from the CA certificate with the verification code that was just generated within DPS. This is how you provide proof that you actually own the CA Certificate.
 
     > **IMPORTANT**: You will need to leave the **Certificate Details** pane open while you generate the verification certificate. If you close the pane, you will invalidate the verification code, and will need to generate a new one.
 
@@ -294,17 +294,9 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
     You may need to use the **Refresh** button at the top of the pane (to the right of the **Add** button) to see this change.
 
-### Exercise 3: Create Group Enrollment (X.509 Certificate) in DPS
+#### Task 3: Create Group Enrollment (X.509 Certificate) in DPS
 
-In this exercise, you will create a new enrollment group within the Device Provisioning Service (DPS) that uses _certificate attestation_.
-
-#### Task 1: Create the enrollment
-
-1. If necessary, log in to your Azure portal using your Azure account credentials.
-
-    If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
-
-1. On your resource group tile, click **dps-az220-training-_{your-id}_**.
+In this task, you will create a new enrollment group within the Device Provisioning Service (DPS) that uses _certificate attestation_.
 
 1. On the left side of the Device Provisioning Service blade, under **Settings**, click **Manage enrollments**.
 
@@ -363,28 +355,14 @@ In this exercise, you will create a new enrollment group within the Device Provi
 
 1. At the top of the **Add Enrollment** blade, click **Save**.
 
-#### Task 2: Validate the enrollment
-
-1. Verify that the **Enrollment Groups** tab is displayed and that your new enrollment group is listed.
-
-    If your enrollment group is not listed, click **Refresh** at the top of the blade.
-
-1. In the Group Name list, click **simulated-devices**.
-
-1. In the **Enrollment Group Details** blade, verify the following:
-
-    * **Certificate Type** is set to **CA Certificate**
-    * **Primary Certificate** is set to **root-ca-cert**
-    * **Secondary Certificate** is set to **No certificate selected**
-    * **Select how you want to assign devices to hubs** is set to **Evenly weighted distribution**
-    * **Select the IoT hubs this group can be assigned to:** is set to **iot-az220-training-{your-id}.azure-devices.net**
-    * **Initial device Twin State** contains the `telemetryDelay` property set to the value of `"1"`
-
-1. After you have verified the Enrollment Group settings, close the **Enrollment Group Details** blade.
-
 ### Exercise 4: Configure simulated device with X.509 certificate
 
-In this exercise, you will configure a simulated device written in C# to connect to your Azure IoT Hub via your Device Provisioning Service (DPS) using an X.509 certificate. This exercise will also introduce you to the workflow within the **simulated device** source code, and how it works to authenticate with DPS and send messages to IoT Hub.
+In this exercise, you will complete the following:
+
+* Generate a device certificate using the root certificate
+* Configure a simulated device that connects by using the device certificate.
+
+#### Task 1: Generate a device certificate
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -422,6 +400,14 @@ In this exercise, you will configure a simulated device written in C# to connect
 
     The simulated device will be configured to use this X.509 device certificate to authenticate with the Device Provisioning Service.
 
+#### Task 2: Configure a simulated device
+
+In this task, you will complete the following:
+
+* Get the ID Scope from DPS that will be placed in code
+* Copy the downloaded device certificate into the root folder of the application
+* Configure the application in Visual Studio Code 
+
 1. Within the Azure portal, navigate to the **Device Provisioning Service** blade, and the **Overview** pane.
 
 1. On the **Overview** pane, copy the **ID Scope** for the Device Provisioning Service, and save it for reference later.
@@ -446,6 +432,8 @@ In this exercise, you will configure a simulated device written in C# to connect
 1. Paste the `new-device.cert.pfx` file into the Starter folder.
 
     The root directory of the Lab 6 Starter folder includes the `Program.cs` file. The **simulated device** project will need to access this certificate file when authenticating to the Device Provisioning Service.
+
+
 
 1. Open **Visual Studio Code**.
 
@@ -885,11 +873,11 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Close the sensor-thl-2000 blade, and then navigate back to your Azure portal Dashboard.
 
-### Exercise 7: Retire Group Enrollment
+### Exercise 7: Deprovision Group Enrollment
 
-In this exercise, you will retire the enrollment group and its devices from both the Device Provisioning Service and Azure IoT Hub.
+In this exercise, you will deprovision the enrollment group and its devices from both the Device Provisioning Service and Azure IoT Hub.
 
-#### Task 1: Retire the enrollment group from the DPS
+#### Task 1: Disenroll the enrollment group from the DPS
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -923,9 +911,9 @@ In this exercise, you will retire the enrollment group and its devices from both
 
 1. Navigate back to your Azure portal Dashboard
 
-#### Task 2: Retire the device from the IoT Hub
+#### Task 2: Deregister the device from the IoT Hub
 
-Once the enrollment group has been removed from the Device Provisioning Service (DPS), the device registration will still exist within Azure IoT Hub. To fully retire the devices, you will need to remove that registration as well.
+Once the enrollment group has been removed from the Device Provisioning Service (DPS), the device registration will still exist within Azure IoT Hub. To fully deprovision the devices, you will need to remove that registration as well.
 
 1. Within the Azure portal, on your resource group tile, click **iot-az220-training-_{your-id}_**.
 
@@ -939,7 +927,7 @@ Once the enrollment group has been removed from the Device Provisioning Service 
 
 1. When prompted with "_Are you certain you wish to delete selected device(s)_", click **Yes**.
 
-#### Task 3: Verify the retirement
+#### Task 3: Confirm device deprovisioned
 
 With the group enrollment deleted from the Device Provisioning Service, and the device deleted from the Azure IoT Hub device registry, the device(s) have fully been removed from the solution.
 
@@ -971,4 +959,4 @@ With the group enrollment deleted from the Device Provisioning Service, and the 
        at Microsoft.Azure.Devices.Provisioning.Client.Transport.ProvisioningTransportHandlerAmqp.RegisterAsync(ProvisioningTransportRegisterMessage message, CancellationToken cancellationToken)
     ```
 
-You have completed the registration, configuration, and retirement as part of the IoT devices life cycle with Device Provisioning Service.
+You have completed the registration, configuration, and deprovisioning as part of the IoT devices life cycle with Device Provisioning Service.
