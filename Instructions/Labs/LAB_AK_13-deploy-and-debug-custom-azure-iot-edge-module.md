@@ -37,8 +37,8 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
-* Create Container Registry
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+* Create the Container Registry
 * Create and customize an Edge module
 * Deploy modules to Edge device
 
@@ -196,7 +196,7 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
 Now that you have configured the Python environment and installed these tools, you are ready to create an Azure Container Registry which will be used to store our custom IoT Edge module.
 
-### Exercise 3: Create Azure Container Registry
+### Exercise 3: Create an Azure Container Registry
 
 Azure Container Registry provides storage of private Docker images for container deployments. The service is a managed, private Docker registry service based on the open-source Docker Registry 2.0. Azure Container Registry is used to store and manage your private Docker container images.
 
@@ -249,6 +249,11 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
     The settings you have entered will be validated.
 
 1. To complete the creation of the Container Registry, at the bottom of the blade, click **Create**.
+
+
+#### Task ?:
+
+
 
 1. On your dashboard, refresh your Resources tile, and then click **AZ220ACR{your-id}**.
 
@@ -512,7 +517,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. In the **Explorer** pane, right-click **deployment.debug.template.json**, and then click **Build and Run IoT Edge Solution in Simulator**.
 
-    > **Note**: If you are on Windows and see a message in in **TERMINAL** that reads, in part, `open //./pipe/docker_engine: The system cannot find the file specified.`, Docker is likely not started, or running correctly.  A Docker restart or even a full computer restart might be necessary.
+    > **Note**: If you are on Windows and see a message in the Terminal that reads, in part, `open //./pipe/docker_engine: The system cannot find the file specified.`, Docker is likely not started, or running correctly.  A Docker restart or even a full computer restart might be necessary.
 
     > **Note**: If you see a message that reads, in part, `image operating system "linux" cannot be used on this platform`, change your Docker configuration to support Linux containers.  (Ask your instructor for assistance if necessary.)
 
@@ -614,7 +619,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 Now that the module has been created and tested in the IoT Edge simulator, it is time to deploy it to the cloud.
 
-### Exercise 6: Deploy IoT Edge Solution
+### Exercise 6: Deploy the IoT Edge Solution
 
 In this exercise, you will build and publish the custom IoT Edge Module into the Azure Container Registry (ACR) service. Once published to ACR, the custom module will then be made available to be deployed to any IoT Edge Device.
 

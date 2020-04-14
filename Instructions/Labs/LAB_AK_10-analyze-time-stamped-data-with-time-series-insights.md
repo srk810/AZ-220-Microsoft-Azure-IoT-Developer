@@ -27,10 +27,13 @@ The following resources will be created:
 In this lab, you will complete the following activities:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
+
+    * The script will create an IoT Hub if needed.
+    * The script will create the three simulated devices needed for this lab.
+
 * Create an Azure Time Series Insights (TSI) environment
-* Create IoT Hub and simulated device (using CLI)
 * Connect to IoT Hub with Time Series Insights (TSI)
-* Create and deploy TSI resources by using templates with Time Series Insights
+* View time series data using the Time Series Insights (TSI) Explorer
 
 ## Lab Instructions
 

@@ -26,15 +26,15 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
-* Deploy Azure IoT Edge Enabled Linux VM as an IoT Edge Device
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+* Deploy an Azure IoT Edge Enabled Linux VM as an IoT Edge Device
 * Generate and Configure IoT Edge Device CA Certificates
-* Create IoT Edge Device Identity in IoT Hub using Azure Portal
-* Setup IoT Edge Gateway Hostname
-* Connect IoT Edge Gateway Device to IoT Hub
+* Create an IoT Edge Device Identity in IoT Hub using Azure Portal
+* Setup the IoT Edge Gateway Hostname
+* Connect an IoT Edge Gateway Device to IoT Hub
 * Open IoT Edge Gateway Device Ports for Communication
-* Create Downstream Device Identity in IoT Hub
-* Connect Downstream Device to IoT Edge Gateway
+* Create the Downstream Device Identity in IoT Hub
+* Connect a Downstream Device to IoT Edge Gateway
 * Verify Event Flow
 
 ## Lab Instructions
@@ -754,7 +754,7 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
 1. Copy the `azure-iot-test-only.root.ca.cert.pem` X.509 certificate file to the `/Starter/DownstreamDevice` directory where the source code for the downstream IoT device is located.
 
-    > **Important**: Make sure the file has that exact name.  It may have a different name (for example, with `(1)` added) from previous labs, so rename it after copying it if necessary.
+    > **Important**: Make sure the file has that exact name. It may have a different name (for example, with `(1)` added) from previous labs, so rename it after copying it if necessary.
 
 1. Open Visual Studio Code.
 

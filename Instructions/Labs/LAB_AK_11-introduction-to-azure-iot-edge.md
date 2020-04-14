@@ -24,12 +24,12 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
-* Deploy Azure IoT Edge Enabled Linux VM
-* Create IoT Edge Device Identity in IoT Hub using Azure CLI
-* Connect IoT Edge Device to IoT Hub
-* Add Edge Module to Edge Device
-* Deploy Azure Stream Analytics as IoT Edge Module
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+* Deploy an Azure IoT Edge Enabled Linux VM
+* Create an IoT Edge Device Identity in IoT Hub using Azure CLI
+* Connect the IoT Edge Device to IoT Hub
+* Add an Edge Module to the Edge Device
+* Deploy Azure Stream Analytics as an IoT Edge Module
 
 ## Lab Instructions
 
@@ -146,7 +146,7 @@ If these resources are not available, you will need to run the **lab11-setup.azc
 
 Once the script has completed, you will be ready to continue with the lab.
 
-### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
+### Exercise 2: Deploy an Azure IoT Edge enabled Linux VM
 
 In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace.
 
@@ -202,7 +202,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
     > **Note**:  Deployment can take as much as 5 minutes to complete. You can continue on to the next exercise while it is deploying.
 
-### Exercise 3: Create IoT Edge Device Identity in IoT Hub using Azure CLI
+### Exercise 3: Create an IoT Edge Device Identity in IoT Hub using Azure CLI
 
 In this exercise, you will create a new IoT Edge Device Identity within Azure IoT Hub using the Azure CLI.
 
@@ -294,7 +294,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
 1. On the **Resource groups** blade, locate the rg-az220vm resource group.
 
-1. On the righthand side of the blade, across from **rg-az220vm**, click **Click to open contenxt menu** (the elipsis icon - **...**)
+1. On the right-hand side of the blade, across from **rg-az220vm**, click **Click to open context menu** (the ellipsis icon - **...**)
 
 1. On the context menu, click **Pin to dashboard**, and then navigate back to your dashboard.
 
@@ -384,7 +384,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
     > **Note**: This image is a published image on Docker Hub that is provided by the product group to support this testing scenario.
 
-1. To change the selected tab, Click **Module Twin Settings**.
+1. To change the selected tab, click **Module Twin Settings**.
 
 1. To specify the desired properties for the module twin, enter the following JSON:
 
@@ -478,6 +478,10 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
 1. At the bottom of the blade, to finish setting the modules for the device, click **Create**.
 
+
+#### Task ?:
+
+
 1. On the **myEdgeDevice** blade, under **Modules**, notice that **tempsensor** is now listed.
 
     > **Note**: You may have to click **Refresh** to see the module listed for the first time.
@@ -555,7 +559,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. On the **Storage account - blob, file, table, queue** blade, click **Create**.
 
-1. On the **Create storage account** blade, ensure that the Subscription dropdown is diplaying the subscription that you are using for this course.
+1. On the **Create storage account** blade, ensure that the Subscription dropdown is displaying the subscription that you are using for this course.
 
 1. In the **Resource group** dropdown, click **rg-az220**.
 
@@ -575,7 +579,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
     It can take a few moments for the deployment to complete - you can continue creating the Stream Analytics resource while this is being created.
 
-#### Task 2: Create Azure Stream Analytics
+#### Task 2: Create an Azure Stream Analytics job
 
 1. On the Azure portal menu, click **+ Create a resource**.
 
@@ -599,7 +603,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. When you see the **Your deployment is complete** message, click **Go to resource**.
 
-    You should nopw be on the Overview pane of your new Stream Analytics job.
+    You should now be on the Overview pane of your new Stream Analytics job.
  
 1. On the left side navigation menu, under **Job topology**, click **Inputs**.
 
