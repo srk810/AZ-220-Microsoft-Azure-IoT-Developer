@@ -33,10 +33,13 @@ The following resources will be created:
 In this lab, you will complete the following activities:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
-* Create an Azure IoT Hub, and a device ID using Azure CLI
-* Create a C# app to send device telemetry to the IoT Hub, using Visual Studio code
-* Create a message route, through to blob storage, using the Azure portal
-* Create a second message route, through to an Azure Stream Analytics job, using the Azure portal
+
+    * The script will create an Azure IoT Hub if you don't have one.
+    * The script will also create a new device (sensor-v-3000) for this lab
+
+* Create a simulated device that sends device telemetry to the IoT Hub
+* Create an IoT Hub message route that outputs to blob storage
+* Create a second message route that outputs to an Azure Stream Analytics job.
 
 ## Lab Instructions
 
@@ -161,7 +164,7 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
 
     Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
 
-### Exercise 2: Write Code for Vibration Telemetry
+### Exercise 2: Write Code to generate Vibration Telemetry
 
 The key to monitoring our conveyor belt is the output of vibration telemetry. Vibration is usually measured as an acceleration (m/s&#x00B2;), although sometimes it's measured in g-forces, where 1 g = 9.81 m/s&#x00B2;. There are three types of vibration.
 
@@ -182,7 +185,7 @@ In this exercise, you will:
 * build the conveyor belt simulator
 * send telemetry messages to the IoT Hub created in the previous unit
 
-#### Task 1: Create an App to Send Telemetry
+#### Task 1: Create a simulated device that generates telemetry
 
 1. Open Visual Studio Code, and then verify that the C# Extension is installed.
 
@@ -591,7 +594,7 @@ The architecture of our vibration monitoring system requires data be sent to two
 In our scenario, we need to create two routes:
 
 * the first route will be to storage for archiving data
-* the second route will to an Event Hub for anomaly detection
+* the second route will be to an Azure Stream Analytics job
 
 Since message routes are best built and tested one at a time, this exercise will focus on the storage route. We'll call this route the "logging" route, and it involves digging a few levels deep into the creation of Azure resources. All the features required to build this route are available in the Azure portal.
 
