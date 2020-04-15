@@ -22,15 +22,18 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
-* Create an IoT Hub and Device ID
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+
+    * The script will create an IoT Hub if needed.
+    * The script will create a device identity needed for this lab.
+
 * Deploy Azure IoT Edge Enabled Linux VM
-* Setup IoT Edge Parent with Child IoT Devices
-* Configure IoT Edge Device as Gateway
-* Open IoT Edge Gateway Device Inbound Ports using Azure CLI
-* Configure IoT Edge Device Time-to-Live and Message Storage
-* Connect Child IoT Device to IoT Edge Gateway
-* Test Device Connectivity and Offline Support
+* Setup an IoT Edge Parent device with a Child IoT device
+* Configure the IoT Edge device as Gateway
+* Open the IoT Edge Gateway device inbound ports using Azure CLI
+* Configure the IoT Edge Gateway device Time-to-Live and Message Store
+* Connect the Child IoT device to the IoT Edge Gateway
+* Test the device connectivity and offline support
 
 ## Lab Instructions
 
@@ -162,7 +165,7 @@ The **lab14-setup.azcli** script is written to run in a **bash** shell environme
 
     Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
 
-### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
+### Exercise 2: Deploy an Azure IoT Edge enabled Linux VM
 
 In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace.
 
@@ -174,7 +177,7 @@ In previous labs you have created the VM using the Azure Portal. In this lab, yo
 
 1. On the Azure portal toolbar, click **Cloud Shell**.
 
-    Ensure that the evironment is set to **Bash** in the shell.
+    Ensure that the environment is set to **Bash** in the shell.
 
 1. To create a resource group for the Azure IoT Edge enabled VM, enter the following command:
 
@@ -201,7 +204,7 @@ In previous labs you have created the VM using the Azure Portal. In this lab, yo
     >
     > **Note**:  Deployment will take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
 
-### Exercise 3: Setup IoT Edge Parent with Child IoT Devices
+### Exercise 3: Set up the IoT Edge Parent with Child IoT Devices
 
 The use of a Parent / Child relationship that includes an IoT Edge Gateway (the parent) and other IoT Devices (the child or leaf devices) enables the implementation of Offline capabilities within an Azure IoT solution. As long as the IoT Edge device has had one opportunity to connect to IoT Hub, that device and any child devices can continue to function with intermittent or no Internet connection.
 
@@ -577,7 +580,7 @@ The IoT Edge Hub module (`$edgeHub`) is used to coordinate communications betwee
 
 The `timeToLiveSecs` property for the Edge Hub can be specified in the Deployment Manifest on a specific device as part of a single-device or at-scale deployment. In this exercise, you will use the Azure Portal user interface for Azure IoT Hub to modify the `timeToLiveSecs` property for the Edge Hub (`$edgeHub`) module on the single IoT Edge Gateway device.
 
-#### Task 1: Configure the Module Twin
+#### Task 1: Configure the $edgeHub Module Twin
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -838,7 +841,7 @@ In this exercise, you will configure the downstream IoT Devices (child or leaf d
 
 1. On the **File** menu, click **Save**.
 
-1. On the **View** mneu, click **Terminal**.
+1. On the **View** menu, click **Terminal**.
 
     Ensure that the **Terminal** command prompt lists the `/Starter/ChildIoTDevice` directory.
 

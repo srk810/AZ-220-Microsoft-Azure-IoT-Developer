@@ -47,13 +47,15 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
-* Create a custom Azure IoT Hub, using the IoT Hub portal
-* Create an IoT Hub device ID, using the IoT Hub portal
-* Create an app to send device telemetry to the custom IoT Hub
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+
+    * The script will create an IoT Hub if needed.
+    * The script will create a device identity needed for this lab.
+
+* Create a simulated device app to send device telemetry to the IoT Hub
 * Create a back-end service app to listen for the telemetry
-* Implement a direct method, to communicate settings to the remote device
-* Implement device twins, to maintain remote device properties
+* Implement a direct method, to communicate settings to the IoT device
+* Implement device twins functionality, to manage IoT device properties
 
 ## Lab Instructions
 
@@ -239,11 +241,11 @@ In this exercise, you will be creating the simulated device app (for the sensor-
     dotnet add package Newtonsoft.Json
     ```
 
-1. On the **File** menu, click **Open Folder**
+1. On the **File** menu, click **Open Folder**.
 
 1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **cheesecavedevice**, and then click **Select Folder**
 
-    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `cheesecadedevice.csproj` files listed.
+    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `cheesecavedevice.csproj` files listed.
 
 1. In the **EXPLORER** pane, click **Program.cs**.
 
@@ -644,7 +646,7 @@ In this task, you will add code to your back-end app that will be used to receiv
     >
     > In a production scenario, you might consider adding a new shared access policy that has just the **Service connect** and **Registry read** permissions.
 
-1. Replace the `<your event hub endpoint>`, `<your event hub path>`, and the `<your event hub Sas key>` with the values that you save earlier in this lab.
+1. Replace the `<your event hub endpoint>`, `<your event hub path>`, and the `<your event hub SaS key>` with the values that you save earlier in this lab.
 
 1. On the **File** menu, to save your changes to the Program.cs file, click **Save**.
 
@@ -672,7 +674,7 @@ This test is important, checking whether your back-end app is picking up the tel
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
-1. Leave this app running for a monent longer.
+1. Leave this app running for a moment longer.
 
 1. With both apps running, visually compare the telemetry that is being sent with the telemetry that is being received.
 
@@ -681,7 +683,9 @@ This test is important, checking whether your back-end app is picking up the tel
 
     Once you are satisfied, stop the running apps and then close the Terminal pane in both instances of VS Code. No not close the Visual Studio Code windows.
 
-    You now have an app sending telemetry from a device, and a back-end app acknowledging receipt of the data. This unit covers the monitoring side of our scenario. The next step handles the control side - what to do when issues arise with the data. Clearly, there are issues, we're getting temperature and humidity alerts!
+    You now have an app sending telemetry from a device, and a back-end app acknowledging receipt of the data. 
+
+In the next Exercise you will begin work on the steps that handle the control side - what to do when issues arise with the data. Clearly, there are issues, we're getting temperature and humidity alerts!
 
 ### Exercise 4: Write Code to Invoke a Direct Method
 
@@ -877,7 +881,7 @@ You are now successfully monitoring and controlling a remote device. You have im
 
 What if you might want to remotely specify the desired settings for the cheese cave environment? Perhaps you want to set a particular target temperature for the cheese cave at a certain point in the aging process. You could specify desired settings with a direct method (which is a valid approach), or you could use another feature of IoT Hub, called device twins. In the next Exercise, you will work on implementing device twin properties within your solution.
 
-### Exercise 5: Write Code for Device Twins
+### Exercise 5: Implement the Device Twin functionality
 
 In this exercise, we'll add some code to both the device app and back-end service app, to show device twin synchronization in operation.
 

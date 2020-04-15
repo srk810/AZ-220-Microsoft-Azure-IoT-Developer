@@ -4,7 +4,7 @@ lab:
     module: 'Module 8: Device Management'
 ---
 
-# Automate IoT Devices Management with Azure IoT Hub
+# Automate IoT Device Management with Azure IoT Hub
 
 IoT devices often use optimized operating systems or even run code directly on the silicon (without the need for an actual operating system). In order to update the software running on devices like these the most common method is to flash a new version of the entire software package, including the OS as well as the apps running on it (called firmware).
 
