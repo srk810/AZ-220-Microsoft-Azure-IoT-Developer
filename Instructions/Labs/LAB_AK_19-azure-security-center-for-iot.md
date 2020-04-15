@@ -22,14 +22,16 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
-* Create a new IoT Hub
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+
+    * The script will create an IoT Hub if needed
+
 * Enable Azure Security Center for IoT
 * Create and register a new Device
 * Create a Security Module Twin
 * Install C#-based Security Agent on a Linux Device
-* Configure Solution
-* Configure custom alerts
+* Configure monitored resources
+* Create custom alerts
 * Create a console app to trigger the alert
 * Review the alert in the Azure Security Center
 
@@ -393,7 +395,7 @@ In this lab, you will be using the symmetric key as authentication and will need
 
 1. Verify that you have the **Primary key** value for your **vm-device01** device available.
 
-    You should have save the Primary key value earlier in this lab. If not, complete the following:
+    You should have saved the Primary key value earlier in this lab. If not, complete the following:
 
     1. Open a new browser tab, and on that new tab, navigate to the Azure portal.
     1. On the Azure portal menu, click **Dashboard**, and then open your IoT Hub.
@@ -505,7 +507,7 @@ Now that your Azure Security Center for IoT device agents are installed on your 
 
 ### Exercise 6: Configure Solution Management
 
-Azure Security Center for IoT provides comprehensive end-to-end security for Azure-based IoT solutions.
+Azure Security Center for IoT provides end-to-end security for Azure-based IoT solutions.
 
 With Azure Security Center for IoT, you can monitor your entire IoT solution in one dashboard, surfacing all of your IoT devices, IoT platforms and back-end resources in Azure.
 

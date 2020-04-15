@@ -24,13 +24,13 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
+* Verify that the lab prerequisites are met (that you have the required Azure resources).
 * Enable diagnostic logs.
 * Enable metrics.
 * Set up alerts for those metrics.
 * Download and run an app that simulates IoT devices connecting via X.509 and sending messages to the hub.
 * Run the app until the alerts begin to fire.
-* View the metrics results and check the diagnostic logs.
+* Observe the metrics and check the diagnostic logs.
 
 ## Lab Instructions
 
@@ -155,7 +155,7 @@ Azure Resource logs are platform logs emitted by Azure resources that describe t
 
 When you have an IoT Hub solution running in production, you will want to set up various metrics and enable diagnostic logs. Then, if a problem occurs, you have data to look at that will help you to diagnose the problem and fix it more quickly.
 
-In this exercise, you will enable diagnostic logs and use them to to check for errors. You will also set up some metrics to watch, and alerts that fire when the metrics hit a certain boundary.
+In this exercise, you will enable diagnostic logs and use them to check for errors. You will also set up some metrics to watch, and alerts that fire when the metrics hit a certain boundary criteria.
 
 #### Task 1: Enable diagnostics
 

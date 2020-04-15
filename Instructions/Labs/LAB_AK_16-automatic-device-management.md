@@ -49,7 +49,7 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
 * Write code for a simulated device that will implement a firmware update
 * Test the firmware update process on a single device using Azure IoT Hub automatic device management
 
@@ -181,9 +181,11 @@ The **lab16-setup.azcli** script is written to run in a **bash** shell environme
 
     Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
 
-### Exercise 2: Write code to simulate device that implements firmware update
+### Exercise 2: Write code for a simulated device that implements firmware update
 
-In this exercise, you will create a simple simulator that will manage the device twin desired properties changes and will trigger a local process simulating a firmware update. The overall process would be exactly the same for a real device with the exception of the actual steps for the local firmware update. You will then use the Azure Portal to configure and execute a firmware update for a single device. IoT Hub will use the device twin properties to transfer the configuration change request to the device and monitor the progress.
+In this exercise, you will create a simulated device that will manage the device twin desired property changes and will trigger a local process simulating a firmware update. The process that you implement for launching the firmware update will be similar to the process used for a firmware update on a real device. The process of downloading the new firmware version, installing the firmware update, and restarting the device is simulated.
+
+You will use the Azure Portal to configure and execute a firmware update using the device twin properties. You will configure the device twin properties to transfer the configuration change request to the device and monitor the progress.
 
 #### Task 1: Create the device simulator app
 
