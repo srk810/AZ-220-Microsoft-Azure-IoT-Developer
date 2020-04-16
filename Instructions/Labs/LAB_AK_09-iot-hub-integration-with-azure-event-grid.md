@@ -165,9 +165,9 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. In the **Resource group** dropdown, under **Select existing**, click **rg-az220**.
 
-1. Under **Instance details**, in the **Name** field, enter **AZ-220-LogicApp-{your-id}**
+1. Under **Instance details**, in the **Name** field, enter **logic-az220-training-{your-id}**
 
-    For example: **AZ-220-LogicApp-CP191218**
+    For example: **logic-az220-training-cp191218**
 
     The name of your Azure Logic App must be globally unique because it is a publicly accessible resource that you must be able to access from any IP connected device.
 
@@ -187,7 +187,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. On your resource group tile, click the link to the Logic App resource that was just deployed.
 
-    If the **AZ-220-LogicApp-{your-id}** Logic app is not displayed, refresh the resource group tile.
+    If the **logic-az220-training-{your-id}** Logic app is not displayed, refresh the resource group tile.
 
     > **Note**: When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed. If this page doesn't come up automatically, click **Logic app designer** under the **Development Tools** section on the **Logic App** blade.
 
@@ -275,7 +275,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. In the **Body** field, enter the following message content:
 
-    ```
+    ```text
     This is an automated email to inform you that:
 
     {eventType} occurred at {eventTime}
@@ -361,19 +361,9 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
 
     * **Operator**: Select `String begins with`
 
-    * **Value**:  Enter `devices/CheeseCave1_`
+    * **Value**:  Enter `devices/sensor-th`
 
-    We will use this value to filter for device events associated with the Cheese Cave 1 location (CheeseCave1).
-
-1. To create a second filter, click **Add new filter**, and then fill in the fields with these values:
-
-    * **Key**: Enter `Subject`
-
-    * **Operator**: Select `String ends with`
-
-    * **Value**: Enter `_Thermostat`
-
-    We will use this value to filter for device events related to temperature.
+    We will use this value to filter for device events associated with the Cheese Cave temperature and humidity sensors.
 
 1. To save the event subscription, click **Create**.
 

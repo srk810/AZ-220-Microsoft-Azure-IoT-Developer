@@ -168,7 +168,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. In the popup for the new reasouce group, under **Name**, enter **rg-az220vm** and then click **OK**.
 
-1. In the **Virtual machine name** textbox, enter **AZ-220-VM-EDGE**
+1. In the **Virtual machine name** textbox, enter **vm-az220-edge**
 
 1. In the **Region** dropdown, select the region where your Azure IoT Hub is provisioned.
 
@@ -300,7 +300,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
     You can **Edit** your dashboard to rearrange the tiles if that makes it easier to access your resources.
  
-1. On the **rg-az220vm** resource group tile, to open the IoT Edge virtual machine, click **AZ-220-VM-EDGE**.
+1. On the **rg-az220vm** resource group tile, to open the IoT Edge virtual machine, click **vm-az220-edge**.
 
 1. At the top of the **Overview** pane, click **Connect**, and then click **SSH**.
 
@@ -323,7 +323,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 1. Once connected, the terminal command prompt will change to show the name of the Linux VM, similar to the following.
 
     ```cmd/sh
-    username@AZ-220-VM-EDGE:~$
+    username@vm-az220-edge:~$
     ```
 
     This tells you which VM you are connected to.
@@ -496,7 +496,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
  
 1. Open a Cloud Shell session (if it is not still open).
 
-    If you are no longer connected to the `AZ-220-VM-EDGE` virtual machine, connect using **SSH** as before.
+    If you are no longer connected to the `vm-az220-edge` virtual machine, connect using **SSH** as before.
 
 1. At the Cloud Shell command prompt, to list the modules currently running on the IoT Edge Device, enter the following command:
 
@@ -507,7 +507,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 1. The output of the command look similar to the following. 
 
     ```cmd/sh
-    demouser@AZ-220-VM-EDGE:~$ iotedge list
+    demouser@vm-az220-edge:~$ iotedge list
     NAME             STATUS           DESCRIPTION      CONFIG
     edgeHub          running          Up a minute      mcr.microsoft.com/azureiotedge-hub:1.0
     edgeAgent        running          Up 26 minutes    mcr.microsoft.com/azureiotedge-agent:1.0
@@ -525,7 +525,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
     The output of the command looks similar to the following:
 
     ```cmd/sh
-    demouser@AZ-220-VM-EDGE:~$ iotedge logs tempsensor
+    demouser@vm-az220-edge:~$ iotedge logs tempsensor
     11/14/2019 18:05:02 - Send Json Event : {"machine":{"temperature":41.199999999999925,"pressure":1.0182182583425192},"ambient":{"temperature":21.460937846433808,"humidity":25},"timeCreated":"2019-11-14T18:05:02.8765526Z"}
     11/14/2019 18:05:03 - Send Json Event : {"machine":{"temperature":41.599999999999923,"pressure":1.0185790159334602},"ambient":{"temperature":20.51992724976499,"humidity":26},"timeCreated":"2019-11-14T18:05:03.3789786Z"}
     11/14/2019 18:05:03 - Send Json Event : {"machine":{"temperature":41.999999999999922,"pressure":1.0189397735244012},"ambient":{"temperature":20.715225311096397,"humidity":26},"timeCreated":"2019-11-14T18:05:03.8811372Z"}
@@ -802,7 +802,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     It can take a minute for the new Stream Analytics module to be deployed to the IoT Edge Device. Once it's there, you will see it in the list output by this command.
 
     ```cmd/sh
-    demouser@AZ-220-VM-EDGE:~$ iotedge list
+    demouser@vm-az220-edge:~$ iotedge list
     NAME               STATUS           DESCRIPTION      CONFIG
     asa-az220-training-CP1119  running          Up a minute      mcr.microsoft.com/azure-stream-analytics/azureiotedge:1.0.5
     edgeAgent          running          Up 6 hours       mcr.microsoft.com/azureiotedge-agent:1.0

@@ -531,7 +531,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 #### Exercise 3: Generate and Configure IoT Edge Device CA Certificates
 
-In this exercise, you will generate test certificates using Linux. You will do this on the `AZ-220-VM-EDGEGW-{your-id}` Virtual Machine using a helper script contained within the `Azure/IoTEdge` GitHub project.
+In this exercise, you will generate test certificates using Linux. You will do this on the `vm-az220-gw-{your-id}` Virtual Machine using a helper script contained within the `Azure/IoTEdge` GitHub project.
 
 #### Exercise 4: Create IoT Edge Device Identity in IoT Hub using Azure Portal
 
@@ -539,7 +539,7 @@ In this exercise, you will create a new IoT Edge Device identity in Azure IoT Hu
 
 #### Exercise 5: Setup IoT Edge Gateway Hostname
 
-In this exercise, you will configure the DNS name for Public IP Address of the **AZ-220-VM-EDGEGW-{your-id}**, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
+In this exercise, you will configure the DNS name for Public IP Address of the **vm-az220-gw-{your-id}**, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
 
 #### Exercise 6: Connect IoT Edge Gateway Device to IoT Hub
 

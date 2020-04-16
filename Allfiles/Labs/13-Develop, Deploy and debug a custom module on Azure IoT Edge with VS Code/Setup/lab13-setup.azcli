@@ -12,4 +12,4 @@ az group create --name $RGName --location $Location
 az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location
 
 # create Azure Container Registry
-# az acr create --name "AZ-220-ACR-{your-id}" --location $Location --resource-group $RGName
+# az acr create --name "acr-az220-training-{your-id}" --location $Location --resource-group $RGName
