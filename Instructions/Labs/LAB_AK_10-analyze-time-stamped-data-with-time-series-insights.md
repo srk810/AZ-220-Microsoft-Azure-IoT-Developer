@@ -178,7 +178,7 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. On the **Time Series Insights** blade, click **Create**.
 
-1. On the **Create Time Series Insights environment** blade, in the **Environment name** field, enter **AZ-220-TSI**
+1. On the **Create Time Series Insights environment** blade, in the **Environment name** field, enter **tsi-az220-training**
 
 1. In the **Subscription** dropdown, select the subscription that you are using for this course.
 
@@ -226,11 +226,11 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. Once your Time Series Insights deployment is complete, navigate back to your dashboard.
 
-1. Refresh your resource group tile, and then click **AZ-220-TSI**.
+1. Refresh your resource group tile, and then click **tsi-az220-training**.
 
     You may need to resize your dashboard to see all of your resources.
 
-    > **Note**: You gave the **Time Series Insights environment** resource the name **AZ-220-TSI**. You should also see the *Time Series Insights event source* that you created, but for now you want to have the TSI environment opened.  
+    > **Note**: You gave the **Time Series Insights environment** resource the name **tsi-az220-training**. You should also see the *Time Series Insights event source* that you created, but for now you want to have the TSI environment opened.  
  
 1. On the **Time Series Insights environment** blade, in the left side navigation menu, under **Settings**, click **Event Sources**.
 
@@ -326,7 +326,7 @@ In this exercise, you will be introduced to working with time series data using 
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-TSI**.
+1. On your Resource group tile, click **tsi-az220-training**.
 
 1. On the **Time Series Insights environment** blade, at the top of the **Overview** pane, click **Go to Environment**.
 
