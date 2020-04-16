@@ -457,8 +457,8 @@ This lab assumes the following resources are available:
 | :-- | :-- |
 | Resource Group | `rg-az220` |
 | IoT Hub | `iot-az220-training-{your-id}` |
-| Device ID | `TruckDevice` |
-| Device ID | `AirplaneDevice` |
+| Device ID | `sensor-thl-truck0001` |
+| Device ID | `sensor-thl-airplane0001` |
 | Device ID | `ContainerDevice` |
 
 #### Exercise 2: Setup Time Series Insights

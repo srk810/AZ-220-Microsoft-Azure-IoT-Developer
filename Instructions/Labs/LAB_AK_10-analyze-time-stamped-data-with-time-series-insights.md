@@ -45,9 +45,9 @@ This lab assumes the following Azure resources are available:
 | :-- | :-- |
 | Resource Group | `rg-az220` |
 | IoT Hub | `iot-az220-training-{your-id}` |
-| Device ID | `TruckDevice` |
-| Device ID | `AirplaneDevice` |
-| Device ID | `ContainerDevice` |
+| Device ID | `sensor-thl-truck0001` |
+| Device ID | `sensor-thl-airplane0001` |
+| Device ID | `sensor-thl-container0001` |
 
 If these resources are not available, you will need to run the **lab10-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -150,7 +150,7 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **TruckDevice**, **AirplaneDevice**, and **ContainerDevice**.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **sensor-thl-truck0001**, **sensor-thl-airplane0001**, and **sensor-thl-container0001**.
 
 1. Notice that, once the script has completed, the connection string for each device is displayed.
 
@@ -360,9 +360,9 @@ In this exercise, you will be introduced to working with time series data using 
 
 1. Take a moment to examine the temperature data (graphs) for the telemetry streaming into the system from the three simulated devices.
 
-1. Notice that the spikes in **temperature** of the **ContainerDevice** correlate with the temperature spikes of either the **TruckDevice** or the **AirplaneDevice**.
+1. Notice that the spikes in **temperature** of the **sensor-thl-container0001** correlate with the temperature spikes of either the **sensor-thl-truck0001** or the **sensor-thl-airplane0001**.
 
-    This gives you an indication that the ContainerDevice is being transported by Truck or Airplane at those times.
+    This gives you an indication that the sensor-thl-container0001 is being transported by Truck or Airplane at those times.
 
 1. To add a second query to the display, set the **MEASURE** dropdown to **humidity**, set the **SPLIT BY** dropdown to **iothub-connection-device-id**, and then click **Add**.
 
