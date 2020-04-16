@@ -97,8 +97,7 @@ The data that will be communicated between a remote device and IoT Central is sp
 
     You should see a range of custom and preconfigured device template options.
 
-    > [!TIP]
-    > Take note of the preconfigured options. You may want to use one of these preconfigured device templates for a future project if you have the associated hardware.
+    > **TIP**: Take note of the preconfigured options. You may want to use one of these preconfigured device templates for a future project if you have the associated hardware.
 
 1. Under **Create a custom device template**, click **IoT device**.
 
