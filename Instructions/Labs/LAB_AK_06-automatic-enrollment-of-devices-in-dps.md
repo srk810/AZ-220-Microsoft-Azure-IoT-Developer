@@ -37,8 +37,8 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{your-id}_ |
-| Device Provisioning Service | dps-az220-training-_{your-id}_ |
+| IoT Hub | iot-az220-training-{your-id} |
+| Device Provisioning Service | dps-az220-training-{your-id} |
 
 If these resources are not available, you will need to run the **lab06-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -320,7 +320,7 @@ In this task, you will create a new enrollment group within the Device Provision
 
    In large environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. You will have a single IoT Hub associated with the enrollment in this lab, so how you assign devices to IoT hubs doesn't really apply within this lab scenario. 
 
-1. Notice that the **iot-az220-training-_{your-id}_** IoT Hub is selected within the **Select the IoT hubs this device can be assigned to:** dropdown.
+1. Notice that the **iot-az220-training-{your-id}** IoT Hub is selected within the **Select the IoT hubs this device can be assigned to:** dropdown.
 
    This field specifies the IoT Hub(s) this device can be assigned to.
 
@@ -761,7 +761,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
     Scroll up to the top of the information displayed in the Terminal window.
 
-    Notice the X.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the **iot-az220-training-_{your-id}_** IoT Hub, and the device twin desired properties are loaded.
+    Notice the X.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the **iot-az220-training-{your-id}** IoT Hub, and the device twin desired properties are loaded.
 
     ```text
     localmachine:LabFiles User$ dotnet run
@@ -883,7 +883,7 @@ In this exercise, you will deprovision the enrollment group and its devices from
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your resource group tile, to navigate to the Device Provisioning Service, click **dps-az220-training-_{your-id}_**.
+1. On your resource group tile, to navigate to the Device Provisioning Service, click **dps-az220-training-{your-id}**.
 
 1. On the left side menu, under **Settings**, click **Manage enrollments**.
 
@@ -915,7 +915,7 @@ In this exercise, you will deprovision the enrollment group and its devices from
 
 Once the enrollment group has been removed from the Device Provisioning Service (DPS), the device registration will still exist within Azure IoT Hub. To fully deprovision the devices, you will need to remove that registration as well.
 
-1. Within the Azure portal, on your resource group tile, click **iot-az220-training-_{your-id}_**.
+1. Within the Azure portal, on your resource group tile, click **iot-az220-training-{your-id}**.
 
 1. On the left side of the **IoT Hub** blade, under **Explorers**, click **IoT devices**.
 

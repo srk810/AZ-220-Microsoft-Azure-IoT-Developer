@@ -234,11 +234,11 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
  
 1. On the **Time Series Insights environment** blade, in the left side navigation menu, under **Settings**, click **Event Sources**.
 
-1. On the **Event Sources** pane, notice the **iot-az220-training-_{your-id}_** Event Source in the list.
+1. On the **Event Sources** pane, notice the **iot-az220-training-{your-id}** Event Source in the list.
 
     This is the event source that was configured when the TSI resource was created.
 
-1. To view the event source details, click **iot-az220-training-_{your-id}_**.
+1. To view the event source details, click **iot-az220-training-{your-id}**.
 
     Notice that the configuration of the event source matches what was set when the Time Series Insights resource was created.
 

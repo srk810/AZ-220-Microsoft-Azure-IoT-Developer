@@ -39,8 +39,8 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{your-id}_ |
-| Device Provisioning Service | dps-az220-training-_{your-id}_ |
+| IoT Hub | iot-az220-training-{your-id} |
+| Device Provisioning Service | dps-az220-training-{your-id} |
 
 If these resources are not available, you will need to run the **lab05-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -160,7 +160,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     You should see both your IoT Hub and DPS resources listed.
 
-1. On your Resource group tile, click **dps-az220-training-_{your-id}_**.
+1. On your Resource group tile, click **dps-az220-training-{your-id}**.
 
 1. On the Device Provisioning Service **Settings** pane on the left side, click **Manage enrollments**.
 
@@ -197,7 +197,7 @@ In this exercise, you will create a new individual enrollment for a device withi
     * **Static configuration via the enrollment list**: Specification of the desired IoT hub in the enrollment list takes priority over the Device Provisioning Service-level allocation policy.
     * **Custom (Use Azure Function)**: the device provisioning service calls your Azure Function code providing all relevant information about the device and the enrollment. Your function code is executed and returns the IoT hub information used to provisioning the device.
 
-1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **iot-az220-training-_{your-id}_** IoT hub that you created.
+1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **iot-az220-training-{your-id}** IoT hub that you created.
 
    This field is used to specify the IoT Hub(s) that your device can be assigned to.
 
@@ -250,7 +250,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Locate the **Initial device twin State**, and notice the JSON for the device twin Desired State contains the `telemetryDelay` property set to the value of `"2"`.
 
-1. Close the **sensor-thl-1000** view to return to the **dps-az220-training-_{your-id}_** blade.
+1. Close the **sensor-thl-1000** view to return to the **dps-az220-training-{your-id}** blade.
 
 ### Exercise 3: Configure Simulated Device
 
@@ -262,7 +262,7 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 #### Task 1: Create the Simulated Device
 
-1. On the **dps-az220-training-_{your-id}_** blade, navigate to the **Overview** pane.
+1. On the **dps-az220-training-{your-id}** blade, navigate to the **Overview** pane.
 
 1. In the top-right area of the blade, hover the mouse pointer over value assigned to **ID Scope**, and then click **Copy to clipboard**.
 
@@ -547,7 +547,7 @@ In this unit you will perform the necessary tasks to deprovision the device from
 
     You should see both your IoT Hub and DPS resources listed.
 
-1. On your Resource group tile, to navigate to your Device Provisioning Service, click **dps-az220-training-_{your-id}_**.
+1. On your Resource group tile, to navigate to your Device Provisioning Service, click **dps-az220-training-{your-id}**.
 
 1. On the Device Provisioning Service blade, on the left side menu, click **Manage enrollments**.
 
@@ -569,7 +569,7 @@ In this unit you will perform the necessary tasks to deprovision the device from
 
 1. In the Azure portal, navigate back to your Dashboard.
 
-1. On your resource group tile, click **iot-az220-training-_{your-id}_** to navigate to the Azure IoT Hub.
+1. On your resource group tile, click **iot-az220-training-{your-id}** to navigate to the Azure IoT Hub.
 
 1. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click on **IoT devices**.
 

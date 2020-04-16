@@ -62,7 +62,7 @@ This lab assumes the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{your-id}_ |
+| IoT Hub | iot-az220-training-{your-id} |
 | IoT Device | SimulatedSolutionThermostat |
 
 If these resources are not available, you will need to run the **lab16-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -70,7 +70,7 @@ If these resources are not available, you will need to run the **lab16-setup.azc
 >**Note:** You will need the connection string for the **SimulatedSolutionThermostat** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name iot-az220-training-_{your-id}_ --device-id sensor-th-0050 -o tsv
+> az iot hub device-identity show-connection-string --hub-name iot-az220-training-{your-id} --device-id sensor-th-0050 -o tsv
 > ```
 
 The **lab16-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.

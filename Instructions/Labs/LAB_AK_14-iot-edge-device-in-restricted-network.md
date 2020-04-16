@@ -44,7 +44,7 @@ This lab assumes the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-_{your-id}_ |
+| IoT Hub | iot-az220-training-{your-id} |
 | IoT Device | sensor-th-0050 |
 
 If these resources are not available, you will need to run the **lab14-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
@@ -232,7 +232,7 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
     az iot hub device-identity create --edge-enabled --hub-name iot-az220-training-{your-id} --auth-method shared_private_key --device-id IoTEdgeGateway
     ```
 
-    > **Note**:  Be sure to replace the **iot-az220-training-_{your-id}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **iot-az220-training-{your-id}** IoT Hub name with the name of your Azure IoT Hub.
 
     Notice that the following parameters are included in the `az iot hub device-identity create` command:
 
@@ -284,7 +284,7 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
     az iot hub device-identity show-connection-string --hub-name iot-az220-training-{your-id} --device-id IoTEdgeGateway -o tsv
     ```
 
-    > **Note**:  Be sure to replace the **iot-az220-training-_{your-id}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **iot-az220-training-{your-id}** IoT Hub name with the name of your Azure IoT Hub.
 
     Notice the `az iot hub device-identity show-connection-string` command is called by passing in several parameters:
 
@@ -308,7 +308,7 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
     az iot hub device-identity create -n iot-az220-training-{your-id} --device-id ChildDevice1 --pd IoTEdgeGateway
     ```
 
-    > **Note**:  Be sure to replace the **iot-az220-training-_{your-id}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **iot-az220-training-{your-id}** IoT Hub name with the name of your Azure IoT Hub.
 
     This command is passed the following parameters:
 
@@ -364,7 +364,7 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
     az iot hub device-identity show-connection-string --hub-name iot-az220-training-{your-id} --device-id ChildDevice1 -o tsv
     ```
 
-    > **Note**:  Be sure to replace the **iot-az220-training-_{your-id}_** IoT Hub name with the name of your Azure IoT Hub.
+    > **Note**:  Be sure to replace the **iot-az220-training-{your-id}** IoT Hub name with the name of your Azure IoT Hub.
 
 1. Save a copy of the connection string value for reference later in this lab.
 
