@@ -166,9 +166,9 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
     We will create a new Resource Group for the VM, which will help with clean-up when we're done.
 
-1. In the popup for the new reasouce group, under **Name**, enter **rg-az220vm** and then click **OK**.
+1. In the popup for the new resource group, under **Name**, enter **rg-az220vm** and then click **OK**.
 
-1. In the **Virtual machine name** textbox, enter **vm-az220-edge**
+1. In the **Virtual machine name** textbox, enter **vm-az220-training-edge-0001**
 
 1. In the **Region** dropdown, select the region where your Azure IoT Hub is provisioned.
 
@@ -221,7 +221,7 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 1. At the command prompt, to create an IoT Edge device identity in your IoT hub, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity create --hub-name iot-az220-training-{your-id} --device-id myEdgeDevice --edge-enabled
+    az iot hub device-identity create --hub-name iot-az220-training-{your-id} --device-id sensor-th-0067 --edge-enabled
     ```
 
     Be sure to replace the `{your-id}` placeholder with the YOUR-ID value that you created at the start of this course.
@@ -251,8 +251,8 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
         "cloudToDeviceMessageCount": 0,
         "connectionState": "Disconnected",
         "connectionStateUpdatedTime": "0001-01-01T00:00:00",
-        "deviceId": "myEdgeDevice",
-        "deviceScope": "ms-azure-iot-edge://myEdgeDevice-637093398936580016",
+        "deviceId": "sensor-th-0067",
+        "deviceScope": "ms-azure-iot-edge://sensor-th-0067-637093398936580016",
         "etag": "OTg0MjI1NzE1",
         "generationId": "637093398936580016",
         "lastActivityTime": "0001-01-01T00:00:00",
@@ -265,7 +265,7 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 1. To display the **Connection String** for your IoT Edge device, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --device-id myEdgeDevice --hub-name iot-az220-training-{your-id}
+    az iot hub device-identity show-connection-string --device-id sensor-th-0067 --hub-name iot-az220-training-{your-id}
     ```
 
     Be sure to replace the `{your-id}` placeholder with the YOUR-ID value that you created at the start of this course.
@@ -276,7 +276,7 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 
     ```json
         {
-          "connectionString": "HostName={IoTHubName}.azure-devices.net;DeviceId=myEdgeDevice;SharedAccessKey=jftBfeefPsXgrd87UcotVKJ88kBl5Zjk1oWmMwwxlME="
+          "connectionString": "HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0067;SharedAccessKey=jftBfeefPsXgrd87UcotVKJ88kBl5Zjk1oWmMwwxlME="
         }
     ```
 
@@ -300,7 +300,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
     You can **Edit** your dashboard to rearrange the tiles if that makes it easier to access your resources.
  
-1. On the **rg-az220vm** resource group tile, to open the IoT Edge virtual machine, click **vm-az220-edge**.
+1. On the **rg-az220vm** resource group tile, to open the IoT Edge virtual machine, click **vm-az220-training-edge-0001**.
 
 1. At the top of the **Overview** pane, click **Connect**, and then click **SSH**.
 
@@ -323,7 +323,7 @@ In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 1. Once connected, the terminal command prompt will change to show the name of the Linux VM, similar to the following.
 
     ```cmd/sh
-    username@vm-az220-edge:~$
+    username@vm-az220-training-edge-0001:~$
     ```
 
     This tells you which VM you are connected to.
@@ -364,15 +364,15 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
 1. At the left of the **IoT Hub** blade, under **Automatic Device Management**, click **IoT Edge**.
 
-1. On the list of IoT Edge Devices, click **myEdgeDevice**.
+1. On the list of IoT Edge Devices, click **sensor-th-0067**.
 
-1. On the **myEdgeDevice** blade, notice that the **Modules** tab displays a list of the modules currently configured for the device.
+1. On the **sensor-th-0067** blade, notice that the **Modules** tab displays a list of the modules currently configured for the device.
 
     Currently, the IoT Edge device is configured with only the Edge Agent (`$edgeAgent`) and Edge Hub (`$edgeHub`) modules that are part of the IoT Edge Runtime.
 
-1. At the top of the **myEdgeDevice** blade, click **Set Modules**.
+1. At the top of the **sensor-th-0067** blade, click **Set Modules**.
 
-1. On the **Set modules on device: myEdgeDevice** blade, locate the **IoT Edge Modules** section.
+1. On the **Set modules on device: sensor-th-0067** blade, locate the **IoT Edge Modules** section.
 
 1. Under **IoT Edge Modules**, click **Add**, and then click **IoT Edge Module**.
 
@@ -405,7 +405,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
 1. At the bottom of the blade, click **Add**.
 
-1. On the **Set modules on device: myEdgeDevice** blade, at the bottom of the blade, click **Next: Routes >**.
+1. On the **Set modules on device: sensor-th-0067** blade, at the bottom of the blade, click **Next: Routes >**.
 
 1. Notice that a default route is already configured.
 
@@ -478,11 +478,9 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
 1. At the bottom of the blade, to finish setting the modules for the device, click **Create**.
 
-
 #### Task ?:
 
-
-1. On the **myEdgeDevice** blade, under **Modules**, notice that **tempsensor** is now listed.
+1. On the **sensor-th-0067** blade, under **Modules**, notice that **tempsensor** is now listed.
 
     > **Note**: You may have to click **Refresh** to see the module listed for the first time.
 
@@ -496,7 +494,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
  
 1. Open a Cloud Shell session (if it is not still open).
 
-    If you are no longer connected to the `vm-az220-edge` virtual machine, connect using **SSH** as before.
+    If you are no longer connected to the `vm-az220-training-edge-0001` virtual machine, connect using **SSH** as before.
 
 1. At the Cloud Shell command prompt, to list the modules currently running on the IoT Edge Device, enter the following command:
 
@@ -507,7 +505,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 1. The output of the command look similar to the following. 
 
     ```cmd/sh
-    demouser@vm-az220-edge:~$ iotedge list
+    demouser@vm-az220-training-edge-0001:~$ iotedge list
     NAME             STATUS           DESCRIPTION      CONFIG
     edgeHub          running          Up a minute      mcr.microsoft.com/azureiotedge-hub:1.0
     edgeAgent        running          Up 26 minutes    mcr.microsoft.com/azureiotedge-agent:1.0
@@ -525,7 +523,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
     The output of the command looks similar to the following:
 
     ```cmd/sh
-    demouser@vm-az220-edge:~$ iotedge logs tempsensor
+    demouser@vm-az220-training-edge-0001:~$ iotedge logs tempsensor
     11/14/2019 18:05:02 - Send Json Event : {"machine":{"temperature":41.199999999999925,"pressure":1.0182182583425192},"ambient":{"temperature":21.460937846433808,"humidity":25},"timeCreated":"2019-11-14T18:05:02.8765526Z"}
     11/14/2019 18:05:03 - Send Json Event : {"machine":{"temperature":41.599999999999923,"pressure":1.0185790159334602},"ambient":{"temperature":20.51992724976499,"humidity":26},"timeCreated":"2019-11-14T18:05:03.3789786Z"}
     11/14/2019 18:05:03 - Send Json Event : {"machine":{"temperature":41.999999999999922,"pressure":1.0189397735244012},"ambient":{"temperature":20.715225311096397,"humidity":26},"timeCreated":"2019-11-14T18:05:03.8811372Z"}
@@ -688,11 +686,11 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 1. On the left side navigation menu, under **Automatic Device Management**, click **IoT Edge**.
 
-1. Under **Device ID**, click **myEdgeDevice**.
+1. Under **Device ID**, click **sensor-th-0067**.
 
-1. At the top of the **myEdgeDevice** pane, click **Set Modules**.
+1. At the top of the **sensor-th-0067** pane, click **Set Modules**.
 
-1. On the **Set modules on device: myEdgeDevice** pane, locate the **IoT Edge Modules** section.
+1. On the **Set modules on device: sensor-th-0067** pane, locate the **IoT Edge Modules** section.
 
 1. Under **IoT Edge Modules**, click **Add**, and then click **Azure Stream Analytics Module**.
 
@@ -724,7 +722,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 1. Leave all values as their defaults, and close the **IoT Edge Custom Modules** pane.
 
-1. On the **Set modules on device: myEdgeDevice** pane, click **Next: Routes >**.
+1. On the **Set modules on device: sensor-th-0067** pane, click **Next: Routes >**.
 
     Notice that the existing routing is displayed.
 
@@ -748,7 +746,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     * The **alertsToReset** route sends all alert messages from the Stream Analytics module output to the input of the **tempsensor** module.
     * The **telemetryToAsa** route sends all messages from the `tempsensor` module output to the Stream Analytics module input.
 
-1. At the bottom of the **Set modules on device: myEdgeDevice** blade, click **Review + create**.
+1. At the bottom of the **Set modules on device: sensor-th-0067** blade, click **Review + create**.
 
 1. On the **Review + create** tab, notice that the **Deployment Manifest** JSON is now updated with the Stream Analytics module and the routing definition that was just configured.
 
@@ -802,7 +800,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     It can take a minute for the new Stream Analytics module to be deployed to the IoT Edge Device. Once it's there, you will see it in the list output by this command.
 
     ```cmd/sh
-    demouser@vm-az220-edge:~$ iotedge list
+    demouser@vm-az220-training-edge-0001:~$ iotedge list
     NAME               STATUS           DESCRIPTION      CONFIG
     asa-az220-training-CP1119  running          Up a minute      mcr.microsoft.com/azure-stream-analytics/azureiotedge:1.0.5
     edgeAgent          running          Up 6 hours       mcr.microsoft.com/azureiotedge-agent:1.0
@@ -829,7 +827,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     11/14/2019 22:26:45 - Send Json Event : {"machine":{"temperature":531.999999999999957,"pressure":1.0099208337508767},"ambient":{"temperature":20.569532965342297,"humidity":25},"timeCreated":"2019-11-14T22:26:45.2901801Z"}
     Received message
     Received message Body: [{"command":"reset"}]
-    Received message MetaData: {"MessageId":null,"To":null,"ExpiryTimeUtc":"0001-01-01T00:00:00","CorrelationId":null,"SequenceNumber":0,"LockToken":"e0e778b5-60ff-4e5d-93a4-ba5295b995941","EnqueuedTimeUtc":"0001-01-01T00:00:00","DeliveryCount":0,"UserId":null,"MessageSchema":null,"CreationTimeUtc":"0001-01-01T00:00:00","ContentType":"application/json","InputName":"control","ConnectionDeviceId":"myEdgeDevice","ConnectionModuleId":"asa-az220-training-CP1119","ContentEncoding":"utf-8","Properties":{},"BodyStream":{"CanRead":true,"CanSeek":false,"CanWrite":false,"CanTimeout":false}}
+    Received message MetaData: {"MessageId":null,"To":null,"ExpiryTimeUtc":"0001-01-01T00:00:00","CorrelationId":null,"SequenceNumber":0,"LockToken":"e0e778b5-60ff-4e5d-93a4-ba5295b995941","EnqueuedTimeUtc":"0001-01-01T00:00:00","DeliveryCount":0,"UserId":null,"MessageSchema":null,"CreationTimeUtc":"0001-01-01T00:00:00","ContentType":"application/json","InputName":"control","ConnectionDeviceId":"sensor-th-0067","ConnectionModuleId":"asa-az220-training-CP1119","ContentEncoding":"utf-8","Properties":{},"BodyStream":{"CanRead":true,"CanSeek":false,"CanWrite":false,"CanTimeout":false}}
     Resetting temperature sensor..
     11/14/2019 22:26:45 - Send Json Event : {"machine":{"temperature":320.4,"pressure":0.99945886361358849},"ambient":{"temperature":20.940019742324957,"humidity":26},"timeCreated":"2019-11-14T22:26:45.7931201Z"}
     ```
