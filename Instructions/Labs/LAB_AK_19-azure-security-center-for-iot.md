@@ -850,8 +850,7 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
     ![Devices with the most alerts tile](media/LAB_AK_19-devices-with-most-alerts-tile.png)
 
-    > [!NOTE]
-    > It can take between 10 and 15 minutes for alerts to be displayed on the dashboard.
+    > **Note**: It can take between 10 and 15 minutes for alerts to be displayed on the dashboard.
 
 1. Under **Threat detection**, click the **Devices with the most alerts** tile.
 
