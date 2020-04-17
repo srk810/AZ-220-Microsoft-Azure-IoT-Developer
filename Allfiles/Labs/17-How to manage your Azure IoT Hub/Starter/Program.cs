@@ -39,7 +39,6 @@ namespace X509CertificateSimulatedDevice
             "sensor-thl-2007.cert.pfx",
             "sensor-thl-2008.cert.pfx",
             "sensor-thl-2009.cert.pfx",
-            "sensor-thl-2010.cert.pfx",
         };
 
         // Certificate (PFX) Password

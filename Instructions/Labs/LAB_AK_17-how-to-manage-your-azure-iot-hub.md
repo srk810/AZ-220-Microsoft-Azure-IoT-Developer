@@ -14,7 +14,7 @@ To help manage device utilization and other characteristics of the solution, the
 
 You agree to begin by implementing some simple metrics that can be reviewed with the IT folks before you commit to any additional workload.
 
-In this lab, you will implement monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. In addition, you will create an alert that will be triggered based upon the average number of devices connected. To test the system, you will configure 10 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
+In this lab, you will implement monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. In addition, you will create an alert that will be triggered based upon the average number of devices connected. To test the system, you will configure 9 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
 
 The following resources will be created:
 
@@ -451,7 +451,7 @@ It is now time to configure the environment needed to trigger the alert.
 
 To simulate Contoso's asset tracking system, you need to simulate the IoT devices that are placed inside in shipping containers. As each device is activated, it should use automatic device provisioning to connect to the Iot solution and start sending telemetry. In order to automatically connect, each device will need its own X.509 certificate that is part of a chain to the root certificate used to create a group enrollment.
 
-In this exercise, you will verify the existing environment, perform any necessary setup, generate 10 device certificates, and configure a console application that will simulate the 10 devices.
+In this exercise, you will verify the existing environment, perform any necessary setup, generate 9 device certificates, and configure a console application that will simulate the 9 devices.
 
 > **Note**: In lab 6 of this course (**Lab 6-Automatic Enrollment of Devices in DPS**) you configured DPS to use X.509 resources. If you still have that configuration available, you may be able to skip over one or more of the tasks below.
 
@@ -659,11 +659,11 @@ Now that the environment is setup, it's time to generate our device certificates
 
 ### Exercise 5: Simulate Devices
 
-In this exercise, you will be generating X.509 certificates from the root certificate. You will then use these certificates in a console application that will simulate 10 devices connecting to DPS and sending telemetry to an IoT Hub.
+In this exercise, you will be generating X.509 certificates from the root certificate. You will then use these certificates in a console application that will simulate 9 devices connecting to DPS and sending telemetry to an IoT Hub.
 
 #### Task 1: Generate Device Certificates
 
-You will now generate and download 10 device certificates.
+You will now generate and download 9 device certificates.
 
 1. Open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
@@ -694,11 +694,11 @@ You will now generate and download 10 device certificates.
     ```bash
     #!/bin/bash
 
-    # Generate 10 device certificates
+    # Generate 9 device certificates
     # Rename for each device
     # download from the Cloud CLI
     pushd ~/certificates
-    for i in {1..10}
+    for i in {1..9}
     do
         chmod +w ./certs/new-device.cert.pem
         ./certGen.sh create_device_certificate asset-track$i
@@ -709,7 +709,7 @@ You will now generate and download 10 device certificates.
     popd
     ```
 
-    This script will create and download 10 device certificates.
+    This script will create and download 9 device certificates.
 
 1. To save the edited **gen-dev-certs.sh** file, press **CTRL-Q**. 
 
@@ -726,7 +726,7 @@ You will now generate and download 10 device certificates.
     > **Note**: If your browsers asks what you want to do with the files, click **Save** for each file.
 
 
-    Once it completes, you will have 10 certificates available in your browser download location:
+    Once it completes, you will have 9 certificates available in your browser download location:
 
     * sensor-thl-2001.cert.pfx
     * sensor-thl-2002.cert.pfx
@@ -737,7 +737,6 @@ You will now generate and download 10 device certificates.
     * sensor-thl-2007.cert.pfx
     * sensor-thl-2008.cert.pfx
     * sensor-thl-2009.cert.pfx
-    * sensor-thl-2010.cert.pfx
 
 With these certificates available, you are ready to configure the device simulator.
 
@@ -766,7 +765,6 @@ With these certificates available, you are ready to configure the device simulat
     /Starter/sensor-thl-2007.cert.pfx
     /Starter/sensor-thl-2008.cert.pfx
     /Starter/sensor-thl-2009.cert.pfx
-    /Starter/sensor-thl-2010.cert.pfx
     ```
 
 1. Open Visual Studio Code.
@@ -817,7 +815,7 @@ With these certificates available, you are ready to configure the device simulat
    private static string dpsIdScope = "0ne000A6D9B";
    ```
 
-This app is very similar to the app used in the earlier lab **L06-Automatic Enrollment of Devices in DPS**. The primary difference is that instead of just enrolling a single device simulator and then sending telemetry, it instead enrolls 10 devices, one every 30 seconds. Each simulated device will then send telemetry. This should then cause our alert to be raised and log monitoring data to storage.
+This app is very similar to the app used in the earlier lab **L06-Automatic Enrollment of Devices in DPS**. The primary difference is that instead of just enrolling a single device simulator and then sending telemetry, it instead enrolls 9 devices, one every 30 seconds. Each simulated device will then send telemetry. This should then cause our alert to be raised and log monitoring data to storage.
 
 #### Task 3: Run the Simulator
 
@@ -829,7 +827,7 @@ This app is very similar to the app used in the earlier lab **L06-Automatic Enro
     dotnet run
     ```
 
-    You should see output that shows the first device being connected via DPS and then telemetry being sent. Every 30 seconds thereafter, and additional device will be connected and commence sending telemetry until all 10 devices are connected and sending telemetry.
+    You should see output that shows the first device being connected via DPS and then telemetry being sent. Every 30 seconds thereafter, and additional device will be connected and commence sending telemetry until all 9 devices are connected and sending telemetry.
 
 1. Return to the DPS group enrollment in the Azure Portal.
 
@@ -967,16 +965,7 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
         "operationName": "deviceConnect",
         "category": "Connections",
         "level": "Information",
-        "properties": "{\"deviceId\":\"asset-track9\",\"protocol\":\"Amqp\",\"authType\":\"{\\\"scope\\\":\\\"device\\\",\\\"type\\\":\\\"x509Certificate\\\",\\\"issuer\\\":\\\"external\\\",\\\"acceptingIpFilterRule\\\":null}\",\"maskedIpAddress\":\"67.176.115.XXX\",\"statusCode\":null}",
-        "location": "westus"
-    }
-    {
-        "time": "2019-12-26T14:33:12Z",
-        "resourceId": "/SUBSCRIPTIONS/AE82FF3B-4BD0-462B-8449-D713DD18E11E/RESOURCEGROUPS/AZ-220/PROVIDERS/MICROSOFT.DEVICES/IOTHUBS/iot-az220-training-cah191216",
-        "operationName": "deviceConnect",
-        "category": "Connections",
-        "level": "Information",
-        "properties": "{\"deviceId\":\"asset-track10\",\"protocol\":\"Amqp\",\"authType\":\"{\\\"scope\\\":\\\"device\\\",\\\"type\\\":\\\"x509Certificate\\\",\\\"issuer\\\":\\\"external\\\",\\\"acceptingIpFilterRule\\\":null}\",\"maskedIpAddress\":\"67.176.115.XXX\",\"statusCode\":null}",
+        "properties": "{\"deviceId\":\"sensor-thl-2009\",\"protocol\":\"Amqp\",\"authType\":\"{\\\"scope\\\":\\\"device\\\",\\\"type\\\":\\\"x509Certificate\\\",\\\"issuer\\\":\\\"external\\\",\\\"acceptingIpFilterRule\\\":null}\",\"maskedIpAddress\":\"67.176.115.XXX\",\"statusCode\":null}",
         "location": "westus"
     }
     {
@@ -985,7 +974,7 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
         "operationName": "deviceDisconnect",
         "category": "Connections",
         "level": "Information",
-        "properties": "{\"deviceId\":\"asset-track8\",\"protocol\":\"Amqp\",\"authType\":null,\"maskedIpAddress\":\"67.176.115.XXX\",\"statusCode\":null}",
+        "properties": "{\"deviceId\":\"sensor-thl-2008\",\"protocol\":\"Amqp\",\"authType\":null,\"maskedIpAddress\":\"67.176.115.XXX\",\"statusCode\":null}",
         "location": "westus"
     }
     {
@@ -994,7 +983,7 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
         "operationName": "deviceDisconnect",
         "category": "Connections",
         "level": "Information",
-        "properties": "{\"deviceId\":\"asset-track4\",\"protocol\":\"Amqp\",\"authType\":null,\"maskedIpAddress\":\"67.176.115.XXX\",\"statusCode\":null}",
+        "properties": "{\"deviceId\":\"sensor-thl-2004\",\"protocol\":\"Amqp\",\"authType\":null,\"maskedIpAddress\":\"67.176.115.XXX\",\"statusCode\":null}",
         "location": "westus"
     }
     ```

@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Generate 10 device certificates 
+# Generate 9 device certificates 
 # Rename for each device
 # download from the Cloud CLI
 pushd ~/certificates
-for i in {1..10}
+for i in {1..9}
 do
     chmod +w ./certs/new-device.cert.pem
     ./certGen.sh create_device_certificate asset-track$i
