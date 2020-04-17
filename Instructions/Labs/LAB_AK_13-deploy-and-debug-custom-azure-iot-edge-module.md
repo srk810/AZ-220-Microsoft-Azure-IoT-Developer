@@ -216,9 +216,9 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. On the **Create container registry** blade, under **Registry name**, enter a globally unique name.
 
-    To provide a globally unique name, enter **AZ220ACR{your-id}**.
+    To provide a globally unique name, enter **acraz220training{your-id}**.
 
-    For example: **AZ220ACRCAH191204**
+    For example: **acraz220trainingcah191204**
 
     The name of your Azure Container Registry must be globally unique because it is a publicly accessible resource that you must be able to access from any IP connected device.
 
@@ -255,7 +255,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 
 
-1. On your dashboard, refresh your Resources tile, and then click **AZ220ACR{your-id}**.
+1. On your dashboard, refresh your Resources tile, and then click **acraz220training{your-id}**.
 
 1. On the left side navigation menu, under **Settings**, click **Access keys**.
 
@@ -267,7 +267,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
     * **Username**
     * **password**
 
-    By default, the admin Username will match the ACR name - **AZ220ACR{your-id}**
+    By default, the admin Username will match the ACR name - **acraz220training{your-id}**
 
     This information will enable you to authenticate to the new registry, which is required to perform Docker operations in the upcoming steps.  
 
@@ -280,7 +280,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
     Replace the placeholders with the information you recorded, and enter the password you recorded when prompted.  For example:
 
     ```cmd/sh
-    docker login --username az220acrcah191204 --password-stdin  az220acrcah191204.azurecr.io
+    docker login --username acraz220trainingcah191204 --password-stdin  acraz220trainingcah191204.azurecr.io
     ```
 
     This command will record your credentials in the local Docker client configuration file (`$HOME/.docker/config.json`) or your operating system's secure credential storage mechanism (depending on the Docker configuration) for future use by the Docker toolset.
@@ -315,7 +315,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
 1. When prompted for name of the Docker image repository for the module, update the placeholder value as follows:
 
-    Replace the `localhost:5000` part of the default `localhost:5000/objectcountingmodule` repository location with the name of the Azure Container Registry server - similar to `az220acr{your-id}.azurecr.io`
+    Replace the `localhost:5000` part of the default `localhost:5000/objectcountingmodule` repository location with the name of the Azure Container Registry server - similar to `acraz220training{your-id}.azurecr.io`
 
     This will be the Docker repository where the IoT Edge Module docker image will be published. 
 
@@ -636,8 +636,8 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     The resulting `.env` file contents will look similar to the following:
 
     ```text
-    CONTAINER_REGISTRY_USERNAME_az220acrcah191204=AZ220ACRCAH191204
-    CONTAINER_REGISTRY_PASSWORD_az220acrcah191204=Q8YErJFCtqSe9C7BWdHOKEXk+C6uKSuK
+    CONTAINER_REGISTRY_USERNAME_acraz220trainingcah191204=acraz220trainingcah191204
+    CONTAINER_REGISTRY_PASSWORD_acraz220trainingcah191204=Q8YErJFCtqSe9C7BWdHOKEXk+C6uKSuK
     ```
 
 1. In the **Explorer** view, right-click **deployment.template.json**, and then click **Build and Push IoT Edge Solution**.
@@ -650,7 +650,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, to open your Azure Container Registry (ACR) service, click **AZ220ACR{your-id}**.
+1. On your Resource group tile, to open your Azure Container Registry (ACR) service, click **acraz220training{your-id}**.
 
 1. On the left side navigation menu, under **Services**, click **Repositories**.
 
@@ -708,8 +708,8 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
 1. On the **Set modules on device: objectcountingdevice** blade, under **Container Registry Settings**, enter the following values:
 
-    * **Name**: Enter the **Registry name** of the Azure Container Registry (e.g. `az220acrcah191204`)
-    * **Address**: Enter the **Login server** (or DNS name) of the Azure Container Registry service (ex: `az220acrcah191204.azurecr.io`)
+    * **Name**: Enter the **Registry name** of the Azure Container Registry (e.g. `acraz220trainingcah191204`)
+    * **Address**: Enter the **Login server** (or DNS name) of the Azure Container Registry service (ex: `acraz220trainingcah191204.azurecr.io`)
     * **User Name**: Enter the **Username** for the Azure Container Registry service
     * **Password**: Enter the **password** for the Azure Container Registry service
 
@@ -734,7 +734,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     The resulting **Image URI** to be entered into the field will be similar to the following:
 
     ```text
-    az220acrcah191204.azurecr.io/objectcountingmodule:0.0.1-amd64
+    acraz220trainingcah191204.azurecr.io/objectcountingmodule:0.0.1-amd64
     ```
 
 1. Leave the rest of the settings at their defaults, and then click **Add**.
