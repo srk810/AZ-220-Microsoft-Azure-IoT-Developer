@@ -222,7 +222,7 @@ In this task, you will create the VM that will represent your IoT device.
 
     > **Note**: Best practice is to create a resource group for your VMs. This helps you to keep track of any addition resources that you add/create for the VM. For the simple use case in this course, the primary benefit could be ease of clean-up, but you will do a bit more with this resource group later in the lab.
 
-1. In the **Virtual machine name** textbox, enter **vm-device01**
+1. In the **Virtual machine name** textbox, enter **vm-az220-training-edge0002-{your-id}**
 
 1. In the **Region** dropdown, select the Azure Region closest to you, or the region where your Azure IoT Hub is provisioned.
 
@@ -269,7 +269,7 @@ As a device must be registered with your IoT hub before it can connect, let's cr
 
 1. At the top of **IoT devices** pane, click **+ New**
 
-1. Under **Device ID**, enter **vm-device01**
+1. Under **Device ID**, enter **vm-az220-training-edge0002-{your-id}**
 
     Yes, you are using the Name that you assigned to the VM as the Device ID.
 
@@ -294,9 +294,9 @@ In this task, you will be creating a security module twin manually.
 
     To open the **IoT devices** pane from your IoT Hub blade, in the left side navigation menu, under **Explorers**, click **IoT devices**.
 
-1. Under **DEVICE ID**, click **vm-device01**.
+1. Under **DEVICE ID**, click **vm-az220-training-edge0002-{your-id}**.
 
-1. On the **vm-device01** blade, near the top of the blade, click **+ Add Module Identity**.
+1. On the **vm-az220-training-edge0002-{your-id}** blade, near the top of the blade, click **+ Add Module Identity**.
 
 1. On the **Add Module Identity** pane, under **Module Identity Name**, enter **azureiotsecurity**
 
@@ -310,7 +310,7 @@ In this task, you will be creating a security module twin manually.
 
     ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-module-identity.png)
 
-1. On the **vm-device01** blade, to the right of **Primary Key**, click **Copy**.
+1. On the **vm-az220-training-edge0002-{your-id}** blade, to the right of **Primary Key**, click **Copy**.
 
     > **Note**: Make sure to copy the device's **Primary Key** and not the connection string.
 
@@ -347,11 +347,11 @@ In this exercise, you will be adding a security agent for C# that you will deplo
 
     Be sure to select **All resources**, not **All services**.
 
-1. On the **All resources** blade, in the **Filter by name** textbox, enter **vm-device01**
+1. On the **All resources** blade, in the **Filter by name** textbox, enter **vm-az220-training-edge0002-{your-id}**
 
-1. Under **Name**, click **vm-device01**.
+1. Under **Name**, click **vm-az220-training-edge0002-{your-id}**.
 
-    The Overview pane for your newly created virtual machine (**vm-device01**) should now be open.
+    The Overview pane for your newly created virtual machine (**vm-az220-training-edge0002-{your-id}**) should now be open.
 
 1. At the top of the blade, click **Connect**, and then click **SSH**.
 
@@ -382,7 +382,7 @@ In this exercise, you will be adding a security agent for C# that you will deplo
     Notice that, once connected, the terminal command prompt will change to show the name of the Linux VM, similar to the following.
 
     ```cmd/sh
-    demouser@vm-device01:~$
+    demouser@vm-az220-training-edge0002-{your-id}:~$
     ```
 
     This helps you to keep track of which VM you are connected to and the current user.
@@ -393,16 +393,16 @@ You can connect to your IoT Hub with the C# version of the security agent. To im
 
 In this lab, you will be using the symmetric key as authentication and will need to store it in a temporary text document on the device.
 
-1. Verify that you have the **Primary key** value for your **vm-device01** device available.
+1. Verify that you have the **Primary key** value for your **vm-az220-training-edge0002-{your-id}** device available.
 
     You should have saved the Primary key value earlier in this lab. If not, complete the following:
 
     1. Open a new browser tab, and on that new tab, navigate to the Azure portal.
     1. On the Azure portal menu, click **Dashboard**, and then open your IoT Hub.
     1. On the left side navigation menu, under **Explorers**, click **IoT devices**.
-    1. Under **DEVICE ID**, click **vm-device01**.
+    1. Under **DEVICE ID**, click **vm-az220-training-edge0002-{your-id}**.
     1. From the list of details, copy your **Primary Key**.
-    1. Return the the Azure Cloud Shell browser tab - you should still be connected to your **vm-device01** virtual machine.
+    1. Return the the Azure Cloud Shell browser tab - you should still be connected to your **vm-az220-training-edge0002-{your-id}** virtual machine.
 
 1. At the Cloud Shell command prompt, enter the following command:
 
@@ -410,9 +410,9 @@ In this lab, you will be using the symmetric key as authentication and will need
     echo "<primary_key>" > s.key
     ```
 
-    This command will create a device Authentication type file with your **vm-device01** device's **Primary Key**.
+    This command will create a device Authentication type file with your **vm-az220-training-edge0002-{your-id}** device's **Primary Key**.
 
-    > [!NOTE] To check if you added the correct Primary key into the file, Open your file with `nano s.key` command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
+    > **Note**: To check if you added the correct Primary key into the file, Open your file with `nano s.key` command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
 
 #### Task 4: Installing Security Agent
 
@@ -441,17 +441,17 @@ In this lab, you will be using the symmetric key as authentication and will need
     You will need to replace the values with your authentication parameters.
 
     ```bash
-    sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f <Insert file location of your s.key file> -hn <Insert your full IoT Hub host name> -di vm-device01
+    sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f <Insert file location of your s.key file> -hn <Insert your full IoT Hub host name> -di vm-az220-training-edge0002-{your-id}
     ```
 
     Here is an example of what the command should look like:
 
-    `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn iot-az220-training-AB20200213.azure-devices.net -di vm-device01`
+    `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn iot-az220-training-ab200213.azure-devices.net -di vm-az220-training-edge0002-{your-id}`
 
     > **Note**: Make sure that specify your IoT Hub Hostname instead of the one listed 
     
     > **IMPORTANT**:
-    > Ensure you use the full IoT Hub host name - i.e. **iot-az220-training-AB20200213.azure-devices.net** for the `-hn` switch value.
+    > Ensure you use the full IoT Hub host name - i.e. **iot-az220-training-ab200213.azure-devices.net** for the `-hn` switch value.
 
     This script performs the following function:
 
@@ -495,9 +495,9 @@ In this lab, you will be using the symmetric key as authentication and will need
 
     > **Note**: If your Azure Security Center for IoT Agent isn't running or active, please check out [Deploy Azure Security Center for IoT C# based security agent for Linux Guide Troubleshooting Section](https://docs.microsoft.com/en-us/azure/asc-for-iot/how-to-deploy-linux-cs). Common issues are that might leave the service **Active: activating** are an incorrect key value or not specifying the full IoT Hub hostname.
 
-1. In the Azure portal, navigate back your IoT Hub blade, and then open the **vm-device01** device blade.
+1. In the Azure portal, navigate back your IoT Hub blade, and then open the **vm-az220-training-edge0002-{your-id}** device blade.
 
-    Open your IoT Hub blade, on the navigation menu under **Explorers**, click **IoT devices**, and then click **vm-device01**.
+    Open your IoT Hub blade, on the navigation menu under **Explorers**, click **IoT devices**, and then click **vm-az220-training-edge0002-{your-id}**.
 
 1. Under **Module Identities**, notice that your **azureiotsecurity** module is now in a **Connected** state.
 
