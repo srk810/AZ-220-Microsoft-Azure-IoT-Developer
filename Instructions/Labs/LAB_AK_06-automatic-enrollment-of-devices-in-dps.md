@@ -433,8 +433,6 @@ In this task, you will complete the following:
 
     The root directory of the Lab 6 Starter folder includes the `Program.cs` file. The **simulated device** project will need to access this certificate file when authenticating to the Device Provisioning Service.
 
-
-
 1. Open **Visual Studio Code**.
 
 1. On the **File** menu, click **Open Folder**

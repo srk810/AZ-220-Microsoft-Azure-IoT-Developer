@@ -36,10 +36,10 @@ In this lab, you will complete the following activities:
 
 This lab assumes that the following Azure resources are available:
 
-| Resource Type | Resource Name |
-| :-- | :-- |
-| Resource Group | rg-az220 |
-| IoT Hub | iot-az220-training-{your-id} |
+| Resource Type  | Resource Name                |
+| :------------- | :--------------------------- |
+| Resource Group | rg-az220                     |
+| IoT Hub        | iot-az220-training-{your-id} |
 
 If these resources are not available, you will need to run the **lab04-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -145,97 +145,63 @@ If these resources are not available, you will need to run the **lab04-setup.azc
 
 Once the script has completed, you will be ready to continue with the lab.
 
-### Exercise 2: Create Azure IoT Hub Device ID using Azure CLI
+### Exercise 2: Create Azure IoT Hub Device ID using Azure Portal
 
-The `iot` Azure CLI modules includes several commands for managing IoT Devices within Azure IoT Hub under the `az iot hub device-identity` command group. These commands can be used to manage IoT Devices within scripts or directly from the command-line / terminal.
+IoT Hub's capabilities help you build scalable, full-featured IoT solutions such as managing industrial equipment used in manufacturing, tracking valuable assets in healthcare, monitoring office building usage, and many more scenarios. IoT Hub monitoring helps you maintain the health of your solution by tracking events such as device creation, device failures, and device connections. In this exercise we will use the Device Explorer to create a device and add it to the device registry.
 
-#### Task 1: Managing Subscriptions
+#### Task 1: Create the Device
 
-It is possible to have more than one subscription associated with a single account, so it is important to understand how to list the subscriptions, choose the current active subscription and to change the default subscription.
-
-1. If necessary, log in to your Azure portal using your Azure account credentials.
+1. If necessary, log in to [portal.azure.com](https://portal.azure.com) using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. At the top of the Azure Portal click on the **Cloud Shell** icon to open up the **Azure Cloud Shell** within the Azure Portal.
+1. Verify that your AZ-220 dashboard is being displayed.
 
-1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+1. On the rg-az220 resource group tile, click **iot-az220-training-{your-id}**
 
-1. When the pane opens, choose the option for the **Bash** terminal within the Cloud Shell.
+    When you first open your IoT Hub, it will display the _Overview_ blade. As you can see, the area at the top of this blade provides some essential information about your IoT Hub service, such as datacenter location and subscription. But this blade also includes tiles that provide information about how you are using your hub and recent activities. Let's take a look at these tiles before exploring further.
 
-1. At the command prompt, to list the available subscriptions, enter the following command:
+1. On the left side navigation menu, under **Explorers**, click **IoT devices**.
 
-    ```bash
-    az account list --output table
+1. At the top of the **IoT devices** pane, click **+ New**.
 
-    Name                      CloudName    SubscriptionId                        State    IsDefault
-    ------------------------  -----------  ------------------------------------  -------  -----------
-    Subscription1             AzureCloud   aa1122bb-4bd0-462b-8449-a1002aa2233a  Enabled  True
-    Subscription2             AzureCloud   aa1122bb-4bd0-462b-8449-a1002aa2233b  Enabled  False
-    Azure Pass - Sponsorship  AzureCloud   aa1122bb-4bd0-462b-8449-a1002aa2233c  Enabled  False
-    ```
+1. In the **Device ID** field, enter **sensor-th-0001**
 
-    As you can see, the **Azure Pass - Sponsorship** in use for the course is listed, but is not set to the default subscription.
+1. Under **Authentication type**, ensure **Symmetric key** is selected.
 
-1. To view the currently active subscription, enter the following command:
+    Notice that there are three types of authentication available. In this lab we will leverage the simplest of the three, Symmetric key. X509 Certificates and their use for authentication will be covered in later labs.
 
-    ```bash
-    az account show -o table
+1. Notice that the **Primary key** and **Secondary key** fields are disabled.
 
-    EnvironmentName    IsDefault    Name           State    TenantId
-    -----------------  -----------  -------------  -------  ------------------------------------
-    AzureCloud         True         Subscription1  Enabled  aa1122bb-4bd0-462b-8449-a1002aa2233a
-    ```
+1. Under **Auto-generate keys**, ensure the checkbox is selected.
 
-1. To change the default subscription for the current session to the **Azure Pass - Sponsorship**, enter the following command:
+    With **Auto-generate keys** selected, the **Primary key** and **Secondary key** fields are disabled and will be populated once the record is saved. Un-selecting **Auto-generate keys** will enable those fields, allowing values to be directly entered.
 
-    ```bash
-    az account set --subscription "Azure Pass - Sponsorship"
-    ```
+1. Under **Connect this device to an IoT hub**, ensure **Enable** is selected.
 
-    > **Note**: You can use either the subscription **Name** or the **SubscriptionId** with **--subscription** argument. You **must** use the **SubscriptionId** if you have two subscriptions with the same name.
+    You might choose to disable this option during initial creation if you were creating the device entry ahead of rollout and you may update this value in the future if you wished to retain the device record, but prevent the associated device from connecting to the IoT Hub.
 
-1. To confirm the change, enter the following command:
+1. Under **Parent device**, leave **No parent device** as the value.
 
-    ```bash
-    az account show -o table
+    IoT devices may be parented by other devices such as IoT Edge devices. This feature will be demonstrated in a later lab.
 
-    EnvironmentName    IsDefault    Name                      State    TenantId
-    -----------------  -----------  ------------------------  -------  ------------------------------------
-    AzureCloud         True         Azure Pass - Sponsorship  Enabled  aa1122bb-4bd0-462b-8449-a1002aa2233c
-    ```
+1. To add this device record to the IoT Hub, click **Save**.
 
-This subscription will now be used in the current session whenever you create resources, etc.
+    After a few moments, the **IoT devices** pane will refresh and the new device will be listed.
 
-#### Task 2: Create the IoT Hub Device ID
+#### Task 2: Get the Device Connection String
 
-1. Within the Cloud Shell, to ensure the Cloud Shell has the IoT extension installed, run the following command:
+In order for a device to connect to an IoT Hub, it needs to establish a connection. In this lab, we will use a connection string to connect directly to the IoT Hub. When using Symmetric key authentication, there are two connection strings available - one that utilizes the Primary key, the other that uses the Secondary key. As noted above, the Primary and Secondary keys are only generated once the device record is saved. Therefore, to obtain one of the connection strings, we must first save the record (see the above task) and then re-open the device record.
 
-    ``` sh
-    az extension add --name azure-cli-iot-ext
-    ```
+1. In the list of devices, click **sensor-th-0001**.
 
-1. Still within the Cloud Shell, run the following Azure CLI command to create **Device Identity** in Azure IoT Hub that will be used for a Simulated Device.
+1. Notice that the device detail blade provides access to a number of device related functions as well the device properties. These functions will be explored in later labs.
 
-    ```sh
-    az iot hub device-identity create --hub-name {IoTHubName} --device-id sensor-th-0001
-    ```
+1. Notice that the keys values and connection strings are populated, although obsfucated - click the **eye** icon on the right of each field to toggle showing and hiding the values.
 
-    > **Note**:  Be sure to replace the _{IoTHubName}_ placeholder with the name of your Azure IoT Hub. If you have forgotten your IoT Hub name, you can enter the following command:
-    >
-    >```sh
-    >az iot hub list -o table
-    >```
+1. To copy the **Primary Connection String** to the clipboard, click the **Copy** icon to the right of the field.
 
-#### Task 3: Get the Device Connection String
-
-1. Within the Cloud Shell, run the following Azure CLI command to get _device connection string_ for the Device ID that was just added to the IoT Hub. This connection string will be used to connect the Simulated Device to the Azure IoT Hub.
-
-    ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name {IoTHUbName} --device-id sensor-th-0001 --output table
-    ```
-
-1. Make note of the **Device Connection String** that was output from the previous command. You will need to save this for use later.
+    Make note of the **Primary Connection String** (perhaps by pasting the value into a text editor such as NotePad). You will need to save this for use later.
 
     The connection string will be in the following format:
 
@@ -243,60 +209,393 @@ This subscription will now be used in the current session whenever you create re
     HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0001;SharedAccessKey={SharedAccessKey}
     ```
 
-### Exercise 3: Configure and Test a Simulated Device (C#)
+### Exercise 3: Create and Test a Simulated Device (C#)
 
-In this exercise you will configure a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise. You will then test the device and ensure that IoT Hub is receiving telemetry from the device as expected.
+In this exercise you will create a simulated device written in C# to connect to Azure IoT Hub using the Device ID and Shared Access Key created in the previous exercise. You will then test the device and ensure that IoT Hub is receiving telemetry from the device as expected.
 
-#### Task 1: Open the Lab 4 Starter Code Project
+#### Task 1: Create the initial project
 
-1. Open a new instance of Visual Studio Code.
+1. Open a command prompt and navigate to the location where you wish to create the simulated device application.
 
-1. On the left-side menu, click **Explorer**.
+1. At the command prompt, to create a directory named "CaveDevice" and change the current directory to that directory, enter the following commands:
 
-    The Explorer pane lists the file/folder hierarchy. Your new instance of Visual Studio Code will not have an open folder.
+   ```bash
+   mkdir CaveDevice
+   cd CaveDevice
+   ```
 
-1. On the File menu, click **Open Folder**.
+1. To create a new .NET console application. enter the following command:
 
-1. In the Open Folder dialog, navigate to the Lab 4 folder that contains the starter code project.
+    ```bash
+    dotnet new console
+    ```
 
-    The local path to the Lab 4 Starter project folder should be similar to the following:
+    This command creates a **Program.cs** file in your folder, along with a project file.
 
-    * AZ-220-Microsoft-Azure-IoT-Developer-master
-      * Allfiles
-        * Labs
-          * 04-Connect an IoT Device to Azure
-            * Starter
+1. To install the code libraries required for your device app, enter the following commands:
 
-    > **Note**: You cloned the GitHub project when you set up the dev environment in Lab 3. Check with your course instructor if needed to locate your resource files.
+    ```bash
+    dotnet add package Microsoft.Azure.Devices.Client
+    dotnet add package Newtonsoft.Json
+    ```
 
-1. To open the folder, click **Starter**, and then click **Select Folder**.
+    > **Note**: The **Microsoft.Azure.Devices.Client** package contains the Azure IoT Device SDK for .NET and the **Newtonsoft.Json** package contains APIs that aid in the creation and manipulation of JSON.
+
+    You will build and test your simulated device app in the next task.
+
+1. To ensure all of the application dependencies are downloaded, enter the following command
+
+    ```bash
+    dotnet restore
+    ```
+
+1. Open **Visual Studio Code**.
+
+1. On the **File** menu, click **Open Folder**.
+
+1. In the **Open Folder** dialog, navigate to the location where you created the **CaveDevice** directory.
+
+1. In the list of folders, select **CaveDevice** and click **Select Folder**.
 
     The Explorer pane of Visual Studio Code should now list two C# project files:
 
-    * CaveDevice.cs
     * CaveDevice.csproj
+    * Program.cs
 
-#### Task 2: Update the Device Connection String
+    > **Note**: If you see a message **Required assets to build and debug are missing from `CaveDevice`. Add them?**, you may click **Yes** to proceed.
 
-1. In Visual Studio Code Explorer pane, to open the CaveDevice.cs file, click **CaveDevice.cs**.
+#### Task 2: Explore the application
 
-1. In the Editor view, locate the code line containing the `s_connectionString` variable.
+As noted above, the application currently consists of two files:
 
-    ```C#
-    private readonly static string s_connectionString = "{Your device connection string here}";
+* CaveDevice.csproj
+* Program.cs
+
+In this task, we will briefly explore each file to gain an understanding of the purpose of each.
+
+1. In Visual Studio Code Explorer pane, to open the application project file, click **CaveDevice.csproj**.
+
+1. The **CaveDevice.csproj** file will open in the editor and should be similar to this:
+
+    ```xml
+    <Project Sdk="Microsoft.NET.Sdk">
+
+        <PropertyGroup>
+            <OutputType>Exe</OutputType>
+            <TargetFramework>netcoreapp3.1</TargetFramework>
+        </PropertyGroup>
+
+        <ItemGroup>
+            <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.25.0" />
+            <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+        </ItemGroup>
+
+    </Project>
     ```
 
-1. Replace the value placeholder `{Your device connection string here}` with the Device Connection String that you copied previously.
+    > **Note**: The package version numbers may differ from that show above.
 
-    This will enable the Simulated Device to authenticate, connect, and communicate with the Azure IoT Hub.
+    The project file is an XML document that specifies the type of project. In this instance, the project is an **Sdk** style project.
 
-    Once configured, the variable will look similar to the following (with your specific connection information included):
+    The project definition contains two sections - a **PropertyGroup** and an **ItemGroup**.
+
+    The **PropertyGroup** defines the type of output that building this project will produce - in this case an executable that targets .NET Core 3.1.
+
+    The **ItemGroup** specifies any external libraries that are required for the application. These are particular references are NuGet packages and each package reference specifies the package name and the version. The `dotnet add package` commands we used earlier added these references to the project file and the `dotnet restore` command ensured all the dependencies were downloaded.
+
+    > **Information**: You can learn more about NuGet [here](https://docs.microsoft.com/en-us/nuget/what-is-nuget).
+
+1. In Visual Studio Code Explorer pane, to open the application project file, click **Program.cs**.
+
+1. The **Program.cs** file will open in the editor and should be similar to this:
 
     ```csharp
-    private readonly static string s_connectionString = "HostName={IoTHubName}.azure-devices.net;DeviceId=sensor-th-0001;SharedAccessKey={SharedAccessKey}";
+    using System;
+
+    namespace CaveSensor
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Console.WriteLine("Hello World!");
+            }
+        }
+    }
     ```
 
-1. On the **View** menu, click **Terminal**.
+    This very short program simply writes "Hello World!" to the command line. The key parts to this file are the following:
+
+    * The `using` area - typically the top of the source file lists the namespaces the code is **using**. Here, the code specifies that it is `using System;`. This means that when we are entering code that is contained within the **System** namespace, we can omit **System** from the code. To make sense of that, it helps to know that the `Console` class we are using to write a line is within the **System** namespace - without specifying `using System;` we would have to write the console line as:
+
+        ```csharp
+        System.Console.WriteLine("Hello World!");
+        ```
+
+    * The `namespace` area - this specifies that the classes contained with the `{ }` that follows the namespace are part of that namespace. So, similar how **Console** is part of the **System** namespace, in the example above, the **Program** class is part of the **CaveSensor** namespace and its full name is **CaveSensor.Program**.
+
+    * The `class` area - this defines the contents of the **Program** class. You may have more than one class within a single source file
+
+    > **Note**: It is more typical that you separate the classes into a single class per source file, especially in larger projects. However, in these labs, we have chosen to have multiple classes per file in order to simplify the navigation instructions.
+
+1. To compile and run the application, on the Visual Studio Code **View** menu, click **Terminal**.
+
+    This will open the integrated Terminal at the bottom of the Visual Studio Code window.
+
+1. At the Terminal command prompt, ensure that the current directory path is set to the `CaveDevice` folder.
+
+1. To build and run the **CaveDevice** project, enter the following command:
+
+    ```cmd/sh
+    dotnet run
+    ```
+
+    After a moment, you should see the following:
+
+    ```text
+    ❯ dotnet run
+    Hello World!
+    ```
+
+Although impressive, this is clearly not a simulated device. In the next task you will replace this code with the device code.
+
+#### Task 3: Implement the simulated device code
+
+In this task you will add code that leverages the Azure IoT Device SDK to connect to you IoT Hub resource.
+
+1. In Visual Studio Code Explorer pane, to open the application project file, click **Program.cs**.
+
+1. Select all of the existing code and delete it!
+
+1. To create the basic structure of our simulated device, paste the following code into the editor:
+
+    ```csharp
+    // INSERT using statements below here
+
+    namespace CaveDevice
+    {
+        class Program
+        {
+            // INSERT variables below here
+
+            // INSERT Main method below here
+
+            // INSERT SendDeviceToCloudMessagesAsync method below here
+
+            // INSERT CreateMessageString method below here
+        }
+
+        // INSERT EnvironmentSensor class below here
+    }
+    ```
+
+    >**Note:** As you can see, we have retained the namespace and the class, however, the other items are placeholder comments. In the following steps you will be asked to insert code into the file below specific comments. If at any point you get lost, you may refer to the lab **Final** project. This is referring to the lab resources files that you downloaded when setting up your development environment in lab 3. The folder path is:
+    >
+    > * Allfiles
+    >   * Labs
+    >      * LAB_AK_04-connect-iot-device-to-azure
+    >        * Final
+
+1. To specify the namespaces that the application code will be using, enter the following code beneath the `// INSERT using statements below here` comment:
+
+    ```csharp
+    using System;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.Azure.Devices.Client;
+    using Newtonsoft.Json;
+    ```
+
+    Notice that as well as specifying **System**, we are also declaring other namespaces that the code is using, such as **System.Text** for encoding strings, **System.Threading.Tasks** as we are using asynchronous tasks, and the namespaces for the two packages we added earlier.
+
+    >**Tip**: When inserting code, the code layout may not be ideal. We can ask Visual Studio Code to format the document for us, by opening the **Task** pane (press **F1**) and typing **Format Document**, and then pressing **Enter**. On Windows, the shortcut for this task is **SHIFT+ALT+F**.
+
+1. To specify the variables that the program is using, enter the following code beneath the `// INSERT variables below here` comment:
+
+    ```csharp
+    // Contains methods that a device can use to send messages to and receive from an IoT Hub.
+    private static DeviceClient deviceClient;
+
+    // The device connection string to authenticate the device with your IoT hub.
+    // Note: in real-world applications you would not "hard-code" the connection string
+    // It could be stored within an environment variable, passed in via the command-line or
+    // store securely within a TPM module.
+    private readonly static string connectionString = "{Your device connection string here}";
+    ```
+
+    Notice that the code includes comments describing the purpose of the variables.
+
+    The **deviceClient** variable is used to store an instance of **DeviceClient** - this class comes from the Azure IoT Device SDK and contains methods that a device can use to send messages to and receive from an IoT Hub.
+
+    The **connectionString** variable will contain the connection string for the device we created earlier. This value is used by the **DeviceClient** to connect to the IoT Hub.
+
+    >**Important**: You will see examples in this and other labs throughout this course where connection strings, passwords and other configuration information is hard-coded into the application. This is done solely to simplify the labs and **is not** a recommended practice. As noted in the comments within the code, connection strings and similar configuration values should be supplied via alternative means such as environment variables, command-line parameters or, better still, stored in secured hardware such as Trusted Platform Modules (TPM).
+
+1. Update the value of the **connectionString** variable with the device connection string you copied from the Azure Portal earlier. Once updated, the **connectionString** variable line should be similar to:
+
+    ```csharp
+    private readonly static string connectionString = "HostName=iot-az220-training-dm200420.azure-devices.net;DeviceId=sensor-th-0001;SharedAccessKey=hfavUmFgoCPA9feWjyfTx23SUHr+dqG9X193ctdEd90=";
+    ```
+
+1. To add the implementation of the **Main** method, insert the following code beneath the `// INSERT Main method below here` comment:
+
+    ```csharp
+    private static void Main(string[] args)
+    {
+        Console.WriteLine("IoT Hub C# Simulated Cave Device. Ctrl-C to exit.\n");
+
+        // Connect to the IoT hub using the MQTT protocol
+        deviceClient = DeviceClient.CreateFromConnectionString(connectionString, TransportType.Mqtt);
+        SendDeviceToCloudMessagesAsync();
+        Console.ReadLine();
+    }
+    ```
+
+    The **Main** method is the first part of your application that is run once your app is started.
+
+    Here we can see the basic structure of a simple device app is as follows:
+
+    * Connect to the IoT Hub
+    * Send telemetry to the app (Device to Cloud messages)
+
+    You can see that the **deviceClient** variable is initialized with the result of the **DeviceClient** static method, **CreateFromConnectionString**. This method uses the connection string you specified earlier, as well as selecting the protocol that the device will use to the send telemetry -  in this case MQTT.
+
+    >**Information**: The **DeviceClient** class is documented [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.client.deviceclient?view=azure-dotnet) and the **CreateFromConnectionString** method we use is documented [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.client.deviceclient.createfromconnectionstring?view=azure-dotnet#Microsoft_Azure_Devices_Client_DeviceClient_CreateFromConnectionString_System_String_Microsoft_Azure_Devices_Client_TransportType_).
+    
+    > **Note**: In a real-world application, the **CreateFromConnectionString** method call would be wrapped in exception handling code to gracefully deal with any connection issues. This and other lab code is kept as simple as possible to highlight the key points, so most error-handling is omitted for brevity.
+
+    > **Information**: You can learn more about the supported transport protocols [here](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-protocols).
+
+    Once connected, the **SendDeviceToCloudMessagesAsync** method is called. You may notice that the method name is underlined with "red squiggles" - this is because Visual Studio Code has noticed that **SendDeviceToCloudMessagesAsync** is not yet implemented. We will add the method shortly.
+
+    Finally, the application waits for user input.
+
+1. To add the **SendDeviceToCloudMessagesAsync** method, insert the following code beneath the `// INSERT - SendDeviceToCloudMessagesAsync below here` comment:
+
+    ```csharp
+    private static async void SendDeviceToCloudMessagesAsync()
+    {
+        // Create an instance of our sensor
+        var sensor = new EnvironmentSensor();
+
+        while (true)
+        {
+            // read data from the sensor
+            var currentTemperature = sensor.ReadTemperature();
+            var currentHumidity = sensor.ReadHumidity();
+
+            var messageString = CreateMessageString(currentTemperature, currentHumidity);
+
+            // create a byte array from the message string using ASCII encoding
+            var message = new Message(Encoding.ASCII.GetBytes(messageString));
+
+            // Add a custom application property to the message.
+            // An IoT hub can filter on these properties without access to the message body.
+            message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
+
+            // Send the telemetry message
+            await deviceClient.SendEventAsync(message);
+            Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
+
+            await Task.Delay(1000);
+        }
+    }
+    ```
+
+    Notice that the declaration for the **SendDeviceToCloudMessagesAsync** method includes the keyword `async`. This specifies that the methods contains asynchronous code that uses the `await` keyword and instructs the compiler to handle the callback plumbing for us.
+
+    > **Information**: You can learn more about `async`, `await` and asynchronous programming in C# [here](https://docs.microsoft.com/en-us/dotnet/csharp/async).
+
+    This method implements a typical message loop:
+
+    * Read from one or more sensors
+    * Create a message to send
+    * Send the message
+    * Wait for some time, or for an event to occur, etc.
+    * Repeat the loop
+
+    In this method, we create an instance of the **EnvironmentSensor** - we will add that class shortly.
+
+    We then start an infinite loop - `while(true) {}` will repeat until the user hits **CTRL+C**.
+
+    We then read the temperature and humidity from our sensor and use those values to create a message string - we will add **CreateMessageString** in a moment.
+
+    We then create the actual **message** by creating an instance of the **Message** class from the Azure IoT Device SDK - the data structure that represents the message that is used for interacting with IotHub. The constructor we use for the **Message** class requires that the message string be encoded as a byte array.
+
+    > **Information**: The **Message** class is documented [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.client.message?view=azure-dotnet)
+
+    Next we show that the message can be augmented with additional properties - here, for example, we set the **temperatureAlert** property to true if the **currentTemperature** is greater than 30, otherwise false.
+
+    We then send the telemetry via the `await deviceClient.SendEventAsync(message);` call. Note that the lines contains an `await` keyword. This instructs the compiler that the following code is asynchronous and will complete some time in the future - when it does complete, this method will continue executing on the next line.
+
+    Finally, we write out message showing the sent telemetry and then wait for 1000 milliseconds (1 second) before repeating the loop.
+
+1. To add the **CreateMessageString** method that creates a JSON string from the sensor readings, insert the following code beneath the `// INSERT CreateMessageString method below here` comment:
+
+    ```csharp
+    private static string CreateMessageString(double temperature, double humidity)
+    {
+        // Create an anonymous object that matches the data structure we wish to send
+        var telemetryDataPoint = new
+        {
+            temperature = temperature,
+            humidity = humidity
+        };
+
+        // Create a JSON string from the anonymous object
+        return JsonConvert.SerializeObject(telemetryDataPoint);
+    }
+    ```
+
+    This method creates an anonymous object with the temperature and humidity properties and assignes it to **telemetryDataPoint**.
+
+    The value of **telemetryDataPoint** is then converted to a JSON string via the **JsonConvert** class that is part of the **Newtonsoft.Json** package you added earlier. The JSON string value is then returned to be used as the payload in the message.
+
+1. The final missing piece of the puzzle is the **EnvironmentSensor** class. To add this, insert the code beneath the `// INSERT EnvironmentSensor class below here` comment:
+
+    ```csharp
+    // INSERT EnvironmentSensor class below here
+    /// <summary>
+    /// This class represents a sensor 
+    /// real-world sensors would contain code to initialize
+    /// the device or devices and maintain internal state
+    /// a real-world example can be found here: https://bit.ly/IoT-BME280
+    /// </summary>
+    internal class EnvironmentSensor
+    {
+        // Initial telemetry values
+        double minTemperature = 20;
+        double minHumidity = 60;
+        Random rand = new Random();
+
+        internal EnvironmentSensor()
+        {
+            // device initialization could occur here
+        }
+
+        internal double ReadTemperature()
+        {
+            return minTemperature + rand.NextDouble() * 15;
+        }
+
+        internal double ReadHumidity()
+        {
+            return minHumidity + rand.NextDouble() * 20;
+        }
+    }
+    ```
+
+    This is a very simple class that uses random numbers to return values that represent temperature and humidity. In reality,it is often much more complex to interact with sensors, especially if you have to communicate at a low-level with them.
+
+    > **Information**: You can view a more representative example of the code that interacts with a simple temperature, humidity and pressure sensor [here](https://bit.ly/IoT-BME280).
+
+1. Review the code that you have entered. This represents a very simple simulated device and how to connect the device to an IoT Hub and send Device to Cloud messages.
+
+You are now ready to test the application
+
+#### Task 4: Test the application
+
+1. In Visual Studio Code Explorer pane, on the **View** menu, click **Terminal**.
 
     Verify that the selected terminal shell is the windows command prompt.
 
@@ -308,7 +607,7 @@ In this exercise you will configure a simulated device written in C# to connect 
 
     This command will build and run the Simulated Device application. Be sure the terminal location is set to the directory with the `CaveDevice.cs` file.
 
-    > **Note**:  If the command outputs a `Malformed Token` or other error message, then make sure the **Device Connection String** is configured correctly as the value of the `s_connectionString` variable.
+    > **Note**:  If the command outputs a `Malformed Token` or other error message, then make sure the **Device Connection String** is configured correctly as the value of the `connectionString` variable.
 
 1. Once the Simulated Device application is running, it will be sending event messages to the Azure IoT Hub that include `temperature` and `humidity` values.
 
