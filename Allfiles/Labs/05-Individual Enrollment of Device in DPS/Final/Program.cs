@@ -44,8 +44,11 @@ namespace ContainerDevice
                     await deviceClient.OpenAsync().ConfigureAwait(false);
 
                     // INSERT Setup OnDesiredPropertyChanged Event Handling below here
+                    await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
 
                     // INSERT Load Device Twin Properties below here
+                    var twin = await deviceClient.GetTwinAsync().ConfigureAwait(false);
+                    await OnDesiredPropertyChanged(twin.Properties.Desired, null);
 
                     // Start reading and sending device telemetry
                     Console.WriteLine("Start reading and sending device telemetry...");
@@ -121,6 +124,30 @@ namespace ContainerDevice
         }
 
         // INSERT OnDesiredPropertyChanged method below here
+        private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
+        {
+            Console.WriteLine("Desired Twin Property Changed:");
+            Console.WriteLine($"{desiredProperties.ToJson()}");
+
+            // Read the desired Twin Properties
+            if (desiredProperties.Contains("telemetryDelay"))
+            {
+                string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
+                if (desiredTelemetryDelay != null)
+                {
+                    telemetryDelay = int.Parse(desiredTelemetryDelay);
+                }
+                // if desired telemetryDelay is null or unspecified, don't change it
+            }
+
+
+            // Report Twin Properties
+            var reportedProperties = new TwinCollection();
+            reportedProperties["telemetryDelay"] = telemetryDelay.ToString();
+            await deviceClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
+            Console.WriteLine("Reported Twin Properties:");
+            Console.WriteLine($"{reportedProperties.ToJson()}");
+        }
     }
 
     internal class EnvironmentSensor

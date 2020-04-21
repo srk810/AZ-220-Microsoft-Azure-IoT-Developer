@@ -197,7 +197,7 @@ In order for a device to connect to an IoT Hub, it needs to establish a connecti
 
 1. Notice that the device detail blade provides access to a number of device related functions as well the device properties. These functions will be explored in later labs.
 
-1. Notice that the keys values and connection strings are populated, although obsfucated - click the **eye** icon on the right of each field to toggle showing and hiding the values.
+1. Notice that the keys values and connection strings are populated, although obfuscated - click the **eye** icon on the right of each field to toggle showing and hiding the values.
 
 1. To copy the **Primary Connection String** to the clipboard, click the **Copy** icon to the right of the field.
 
