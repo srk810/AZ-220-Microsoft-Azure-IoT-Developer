@@ -289,17 +289,17 @@ This is different than the earlier lab where a simulated device connected to Azu
     dotnet restore
     ```
 
-1. In the Visual Studio Code Explorer pane, click **ContainerDevice.cs**.
+1. In the Visual Studio Code Explorer pane, click **Program.cs**.
 
-1. In the code editor, near the top of the Program class, locate the `dpsIdScope` variable, and then update the assigned value using the ID Scope value that you copied from the Device Provisioning Service in the Azure portal.
+1. In the code editor, near the top of the Program class, locate the **dpsIdScope** variable, and then update the assigned value using the ID Scope value that you copied from the Device Provisioning Service in the Azure portal.
 
     > **Note**: If you don't have the value of ID Scope available to you, you can find it on the Overview blade of the DPS service (in the Azure portal).
 
-1. Locate the `registrationId` variable, and replace the value with **sensor-thl-1000**
+1. Locate the **registrationId** variable, and replace the value with **sensor-thl-1000**
 
     This variable represents the **Registration ID** value for the individual enrollment that you created in the Device Provisioning Service.
 
-1. Locate the `individualEnrollmentPrimaryKey` and `individualEnrollmentSecondaryKey` variables, and replace their values with the **Primary Key** and **Secondary Key** values that you saved when configuring the individual enrollment for the simulated device.
+1. Locate the **individualEnrollmentPrimaryKey** and **individualEnrollmentSecondaryKey** variables, and replace their values with the **Primary Key** and **Secondary Key** values that you saved when configuring the individual enrollment for the simulated device.
 
     > **Note**: If you don't have these Key values available, you can copy them from the Azure portal as follows -
     >
@@ -307,46 +307,44 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 1. Review the source code for the simulated device, and take notice of the following items:
 
-    * The `ProvisioningDeviceLogic` class contains the logic for reading from the simulated device sensors.
-    * The `ProvisioningDeviceLogic.SendDeviceToCloudMessagesAsync` method contains the logic for generating the simulated sensor readings for Temperature, Humidity, Pressure, Latitude, and Longitude. This method also sends the telemetry as Device-to-Cloud messages to Azure IoT Hub.
+    * The **Program.ProvisionDevice** method contains the logic for registering the device via DPS.
+    * The **Program.SendDeviceToCloudMessagesAsync** method sends the telemetry as Device-to-Cloud messages to Azure IoT Hub.
+    * The **EnvironmentSensor** class contains the logic for generating the simulated sensor readings for Temperature, Humidity, Pressure, Latitude, and Longitude. 
 
-1. At the bottom of the `ProvisioningDeviceLogic.SendDeviceToCloudMessagesAsync` method, notice the call to `Task.Delay`.
+1. At the bottom of the **Program.SendDeviceToCloudMessagesAsync** method, notice the call to `Task.Delay()`.
 
-    `Task.Delay` is used to "pause" the `while` loop for a period of time before creating and sending the next telemetry message. The `_telemetryDelay` variable is used to define how many seconds to wait before sending the next telemetry message.
+    `Task.Delay()` is used to "pause" the `while` loop for a period of time before creating and sending the next telemetry message. The **telemetryDelay** variable is used to define how many seconds to wait before sending the next telemetry message.
 
-1. Near the top of the `ProvisioningDeviceLogic` class, locate the `_telemetryDelay` variable declaration.
+1. Near the top of the **Program** class, locate the **telemetryDelay** variable declaration.
 
-    Notice that the default value for the delay is set to `1` second. Your next step is to integrate the code that uses a device twin value to control the delay time.
+    Notice that the default value for the delay is set to **1** second. Your next step is to integrate the code that uses a device twin value to control the delay time.
 
 #### Task 2: Integrate Device Twin Properties
 
-To use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, we want to update our simulated device code to read a device twin Desired Property, and then assign that value to the `_telemetryDelay` variable. We also want to update the device twin Reported Property to indicate the delay value that is currently implemented on our device.
+To use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, we want to update our simulated device code to read a device twin Desired Property, and then assign that value to the **telemetryDelay** variable. We also want to update the device twin Reported Property to indicate the delay value that is currently implemented on our device.
 
-1. In the Visual Studio Code editor, locate the `RunAsync` method.
+1. In the Visual Studio Code editor, locate the **Main** method.
 
-1. Take a moment to review the code, and then find the `// TODO 1: Setup OnDesiredPropertyChanged Event Handling` comment.
+1. Take a moment to review the code, and then find the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment.
 
     To begin the integration of device twin properties, we need code that enables the simulated device to be notified when a device twin property is updated.
 
-    To achieve this, we can use the `DeviceClient.SetDesiredPropertyUpdateCallbackAsync` method, and set up an event handler by creating an `OnDesiredPropertyChanged` event.
+    To achieve this, we can use the `DeviceClient.SetDesiredPropertyUpdateCallbackAsync` method, and set up an event handler by creating an `OnDesiredPropertyChanged` method.
 
-1. To set up the DeviceClient for an OnDesiredPropertyChanged event, replace the `// TODO 1:` comment with the following code:
+1. To set up the DeviceClient for an OnDesiredPropertyChanged event, insert the following code beneath the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment:
 
     ```csharp
-    Console.WriteLine("Connecting SetDesiredPropertyUpdateCallbackAsync event handler...");
-    await iotClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
+    await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
     ```
 
-    In case you are wondering, we created the `iotClient` instance of DeviceClient at the top of the ProvisioningDeviceLogic class.
+    Next, we need to add our `OnDesiredPropertyChanged` method to the `Program` class.
 
-    Next, we need to add our `OnDesiredPropertyChanged` method to the `ProvisioningDeviceLogic` class.
-
-1. To complete the setup of the event handler, add the following method code to the ProvisioningDeviceLogic class:
+1. To complete the setup of the event handler, enter the following code beneath the `// INSERT OnDesiredPropertyChanged method below here` comment:
 
     > **Note**: You can place this code below the `RunAsync` method (that way it will be near the other code that you're updating).
 
     ```csharp
-    private async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
+    private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
     {
         Console.WriteLine("Desired Twin Property Changed:");
         Console.WriteLine($"{desiredProperties.ToJson()}");
@@ -362,31 +360,29 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
             // if desired telemetryDelay is null or unspecified, don't change it
         }
 
-
         // Report Twin Properties
         var reportedProperties = new TwinCollection();
         reportedProperties["telemetryDelay"] = this._telemetryDelay.ToString();
-        await iotClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
+        await deviceClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
         Console.WriteLine("Reported Twin Properties:");
         Console.WriteLine($"{reportedProperties.ToJson()}");
     }
     ```
 
-    Notice that the `OnDesiredPropertyChanged` method includes the code to read the device twin Desired Properties, configures the `_telemetryDelay` variable, and then reports the Reported Properties back to the device twin to tell Azure IoT Hub what the current state of the simulated device is configured to.
+    Notice that the `OnDesiredPropertyChanged` method includes the code to read the device twin Desired Properties, configures the **telemetryDelay** variable, and then reports the Reported Properties back to the device twin to tell Azure IoT Hub what the current state of the simulated device is configured to.
 
-1. In the `RunAsync` method, locate the `//TODO 2: Load device twin Properties` comment.
+1. In the **Main** method, locate the `// INSERT Load Device Twin Properties below here` comment.
 
-1. To read the device twin desired properties and configure the device to match on device startup, replace the `// TODO 2:` comment with the following code:
+1. To read the device twin desired properties and configure the device to match on device startup, insert the following code beneath the `// INSERT Load Device Twin Properties below here` comment:
 
     ```csharp
-    Console.WriteLine("Loading device twin Properties...");
-    var twin = await iotClient.GetTwinAsync().ConfigureAwait(false);
+    var twin = await deviceClient.GetTwinAsync().ConfigureAwait(false);
     await OnDesiredPropertyChanged(twin.Properties.Desired, null);
     ```
 
-    This code calls the `DeviceTwin.GetTwinAsync` method to retrieve the device twin for the simulated device. It then accesses the `Properties.Desired` property object to retrieve the current Desired State for the device, and passes that to the `OnDesiredPropertyChanged` method that will configure the simulated devices `_telemetryDelay` variable.
+    This code calls the `DeviceTwin.GetTwinAsync` method to retrieve the device twin for the simulated device. It then accesses the `Properties.Desired` property object to retrieve the current Desired State for the device, and passes that to the **OnDesiredPropertyChanged** method that will configure the simulated devices **telemetryDelay** variable.
 
-    Notice, this code reuses the `OnDesiredPropertyChanged` method that was already created for handling _OnDesiredPropertyChanged_ events. This helps keep the code that reads the device twin desired state properties and configures the device at startup in a single place. The resulting code is simpler and easier to maintain.
+    Notice, this code reuses the **OnDesiredPropertyChanged** method that was already created for handling _OnDesiredPropertyChanged_ events. This helps keep the code that reads the device twin desired state properties and configures the device at startup in a single place. The resulting code is simpler and easier to maintain.
 
 1. On the top menu of Visual Studio Code, click **File**, and then click **Save**.
 
@@ -402,7 +398,7 @@ In this exercise, you will run the Simulated Device and verify it's sending sens
 
 1. On the top menu, click **View**, and then click **Terminal**.
 
-1. In the Terminal pane, ensure the command prompt shows the directory path for the `ContainerDevice.cs` file.
+1. In the Terminal pane, ensure the command prompt shows the directory path for the `Program.cs` file.
 
 1. At the command prompt, to build and run the Simulated Device application, enter the following command:
 
@@ -417,18 +413,11 @@ In this exercise, you will run the Simulated Device and verify it's sending sens
     You can scroll up in the terminal pane to review the output. It should be similar to the following:
 
     ```text
-    RegistrationID = sensor-thl-1000
-    ProvisioningClient RegisterAsync . . . Device Registration Status: Assigned
-    ProvisioningClient AssignedHub: iot-az220-training-CP1019.azure-devices.net; DeviceID: sensor-thl-1000
-    Creating Symmetric Key DeviceClient authentication
-    Simulated Device. Ctrl-C to exit.
-    DeviceClient OpenAsync.
-    Connecting SetDesiredPropertyUpdateCallbackAsync event handler...
-    Loading device twin Properties...
+    ProvisioningClient AssignedHub: iot-az220-training-dm200420.azure-devices.net; DeviceID: sensor-thl-1000
     Desired Twin Property Changed:
     {"telemetryDelay":"2","$version":1}
     Reported Twin Properties:
-    {"telemetryDelay":2}
+    {"telemetryDelay":"2"}
     Start reading and sending device telemetry...
     ```
 
@@ -507,10 +496,9 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
     Desired Twin Property Changed:
     {"telemetryDelay":"5","$version":2}
     Reported Twin Properties:
-    {"telemetryDelay":5}
-    11/6/2019 7:29:55 PM > Sending message: {"temperature":33.01780830277959,"humidity":68.52464504936927,"pressure":1023.0929576073974,"latitude":39.97641877038439,"longitude":-98.49544472071804}
-    11/6/2019 7:30:00 PM > Sending message: {"temperature":33.95490410689027,"humidity":71.57070464062072,"pressure":1013.3468084112261,"latitude":40.01604868659767,"longitude":-98.51051877869526}
-    11/6/2019 7:30:05 PM > Sending message: {"temperature":22.055266337494956,"humidity":67.50505594886144,"pressure":1018.1765662249767,"latitude":40.22292566031555,"longitude":-98.4367936214764}
+    {"telemetryDelay":"5"}
+    4/21/2020 1:20:16 PM > Sending message: {"temperature":34.417625961088405,"humidity":74.12403526442313,"pressure":1023.7792049974805,"latitude":40.172799921919186,"longitude":-98.28591913777421}
+    4/21/2020 1:20:22 PM > Sending message: {"temperature":20.963297521678403,"humidity":68.36916032636965,"pressure":1023.7596862048422,"latitude":39.83252821949164,"longitude":-98.31669969393461}
     ```
 
 1. Switch to the browser page where you are running the Azure CLI command in the Azure Cloud Shell.
