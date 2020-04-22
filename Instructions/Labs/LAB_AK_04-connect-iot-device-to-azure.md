@@ -145,7 +145,7 @@ If these resources are not available, you will need to run the **lab04-setup.azc
 
 Once the script has completed, you will be ready to continue with the lab.
 
-### Exercise 2: Create Azure IoT Hub Device ID using Azure Portal
+### Exercise 2: Create an Azure IoT Hub Device ID using Azure Portal
 
 IoT Hub's capabilities help you build scalable, full-featured IoT solutions such as managing industrial equipment used in manufacturing, tracking valuable assets in healthcare, monitoring office building usage, and many more scenarios. IoT Hub monitoring helps you maintain the health of your solution by tracking events such as device creation, device failures, and device connections. In this exercise we will use the Device Explorer to create a device and add it to the device registry.
 

@@ -14,9 +14,9 @@ You have been tasked with exploring Azure and the Azure IoT services that you wi
 
 ## In This Lab
 
-In this lab, you will begin exploring the Azure IoT services that you will use to provision and connect IoT devices for your solution (IoT Hub and IoT Hub Device Provisioning Service). The lab includes the following exercises:
+In this lab, you will create and examine an Azure IoT Hub and an IoT Hub Device Provisioning Service. The lab includes the following exercises:
 
-* Naming Resources with Unique Names
+* Explore Globally Unique Resource Naming Requirements
 * Create an IoT Hub using the Azure portal
 * Examine features of the IoT Hub service
 * Create a Device Provisioning Service and link it to your IoT Hub
@@ -24,7 +24,7 @@ In this lab, you will begin exploring the Azure IoT services that you will use t
 
 ## Lab Instructions
 
-### Exercise 1: Naming Resources with Unique Names
+### Exercise 1: Explore Globally Unique Resource Naming Requirements
 
 In labs 2-20 of this course, you will be creating Azure resources that are used to develop your IoT solution. To ensure consistency across the labs and to help in tidying up resources when you are finished with them, suggested resource names will be provided within the lab instructions. As much as possible, the suggested resource names will follow the naming guidelines recommended here: [Recommended naming and tagging conventions](https://docs.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/naming-and-tagging). However, many of the resources that you will create during this course expose services that can be consumed across the web, which means that they must have globally unique names. To ensure that these resources satisfy the globally unique requirement, you will be adding a unique identifier to the end of the resource names when needed.
 
