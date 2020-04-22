@@ -8,11 +8,9 @@ lab:
 
 ## Lab Scenario
 
-You are an Azure IoT Developer for a leading gourmet cheese company named Contoso.
+You work for a gourmet cheese company named Contoso. The company's Chief Technology Officer has evaluated the business opportunity for implementing IoT and has concluded that Contoso can realize significant benefits by implementing an IoT solution. Contoso has selected the Microsoft Azure IoT tools based on their evaluations.
 
-Contoso's Chief Technology Officer has conducted an evaluation of the business opportunity represented by IoT and has concluded that Contoso can realize significant benefits by implementing an IoT solution. They selected Microsoft Azure IoT based on these evaluations.
-
-To get started, you need to become familiar with the Azure tools.
+As one of the individuals assigned to the project, you need to become familiar with the Azure tools.
 
 ## In This Lab
 
@@ -27,11 +25,11 @@ In this lab, you will become familiar with the Azure portal and you will setup a
 
 Before you begin working with the Azure IoT services, it's good to be familiar with how Azure itself works.
 
-Although we commonly refer to Azure as a 'cloud', it is actually a web portal that is designed to make Azure resources accessible from a single web site. All of Azure is accessible through the Azure portal.
+Although Azure commonly referred to as a 'cloud', it is actually a web portal that is designed to make Azure resources accessible from a single web site. All of Azure is accessible through the Azure portal.
 
 #### Task 1: Examine the Azure portal Home page
 
-1. In your Web browser, to open your Azure portal, navigate to the [portal.azure.com](http://portal.azure.com).
+1. In your Web browser, to open the Azure portal, navigate to [portal.azure.com](http://portal.azure.com).
 
     When you log into Azure you will arrive at the Azure portal. The Azure portal provides you with a customizable UI that you can use to access your Azure resources.
 
@@ -47,17 +45,23 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
     The bottom section of the portal menu is a **FAVORITES** section that can be customized to show your favorite, or most commonly used, resources. Later in this lab, you will learn how to customize this default list of common services to make it a list of your own favorites.
 
-1. On the Azure portal menu, to display the **Home** page, click **Home**.
+1. On the Azure portal menu, click **Home**.
 
-1. On the home page, to display a map of data center regions, under **Azure services**, click **Service Health**.
+    The Home page provides a customized view of recently used resources and services, as well as other helpful links.
 
-    When you subscribe to a resource in Azure you'll pick a region to deploy it to. Azure is supported by a series of regions placed all around the world.
+1. On the home page, under **Tools**, click **Azure Monitor**.
+
+    Azure Monitor is a tool that can help you to manage your Azure resources. You will be using Azure Monitor later in this course when you have implemented the services that comprize your IoT solution.
+
+1. On the left side navigation menu, to display a map of data center regions, click **Service Health**.
+
+    Notice the dropdowns for **Subscription**, **Region**, and **Service**. When you subscribe to a resource in Azure you'll pick a region to deploy it to. Azure is supported by a series of regions placed all around the world.
 
     This map shows the current status of regions associated with your subscription(s). A green circle is used to indicate that services are running normally at that region.
 
     With any cloud vendor (Azure, AWS, Google Cloud, etc.), services will go down from time to time. If you see a blue 'i' next to a region on the Service Health map, it means the region is experiencing a problem with one or more services. Azure mitigates these issues by running multiple copies of your application in different regions (a practice referred to as *Geo-redundancy*). If a region experiences an issue with a particular service, those requests will roll over to another region to fulfill the request. This is one of the big advantages of hosting apps in the Azure cloud. Azure deals with the issues, so you don't have to.
 
-1. In the upper-left corner of your Azure portal, to navigate back to your home page, click **Microsoft Azure**.
+1. In the upper-left corner of your Azure portal, to navigate back to your home page, click **Home**.
 
     You can also use the portal menu to perform some simple navigation. You will have a chance to try out some options for portal navigation shortly.
 
@@ -65,50 +69,50 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
 
 1. Open the Azure portal menu, and then click **All services**.
 
-    The _All services_ page provides you with a few different viewing options and access to all of the services that Azure offers in both PaaS and IaaS. The first time that you open the _All services_ page, you will see the _Overview_ page. This view is accessible from the left side menu.
+    The All services page provides you with a few different viewing options and access to all of the PaaS, IaaS, and SaaS services that Azure offers. The first time that you open the All services page, you will see the Overview page. This view is accessible from the left side menu.
 
-    >**Definitions:** The term **PaaS** is an acronym for **Platform as a Service**, and the term **IaaS** is an acronym for **Infrastructure as a Service**
+    > **Definitions**: The term **PaaS** is an acronym for **Platform as a Service**, the term **IaaS** is an acronym for **Infrastructure as a Service**, and the term **SaaS** is an acronym for **Software as a Service**
 
-1. On the _All services_ page, under _Categories_, click **All**.
+1. On the **All services** page, on the left side menu under **Categories**, click **All**.
 
     This view displays all of the services organized into groups corresponding to each Category. The Search box at the top can be very helpful.
 
-1. On the left side of the _All services_ page, under _Categories_, click **Internet of Things**.
+1. On the left side menu, under **Categories**, click **Internet of Things**.
 
     The list of services is now limited to the services directly related to an IoT solution.
 
     Service/Resource pages on the Azure portal are sometimes referred to as _blades_. When you opened the Service Health page a couple of steps back, you opened a Service Health blade.
 
-    The Azure portal uses blades as a kind of navigation pattern, opening new blades to the right as you drill deeper and deeper into a service. This gives you a form of breadcrumb navigation as you navigate horizontally.
+    The Azure portal uses blades as a kind of navigation pattern, opening new blades to the right as you drill deeper and deeper into a service. This gives you a form of breadcrumb navigation as you navigate horizontally, and Azure provides a File Explorer style path at the top of the blade that is clickable. For example: Home > Monitor > Service Health. But not every page is a blade. You will get used to it pretty quickly.
 
-1. Hover your mouse pointer over **IoT Hub**.
+1. On the **All services** page, hover your mouse pointer over **IoT Hub**.
 
-    A dialog box is displayed. In the top-right corner, notice the "star" shape. When the star shape is filled-in, the service is selected as a favorite. Favorites will appear on the list of your favorite services on the left navigation menu of the portal window. This makes it easier to access the services that you use most often. You can customize your favorites list by selecting the services that you use most.
+    A dialog box should be displayed. In the top-right corner, notice the "star" shape. When the star shape is filled-in, the service is selected as a favorite. Favorites will appear on the list of your favorite services on the left navigation menu of the portal window. This makes it easier to access the services that you use most often. You can customize your favorites list by selecting the services that you use most.
 
-1. In the top-right corner of the _IoT Hub_ dialog, to add IoT Hub to the list of your favorite services, click the star shaped icon.
+1. In the top-right corner of the IoT Hub dialog, to add IoT Hub to the list of your favorite services, click the star shaped icon.
 
     The star should now appear filled. If the star is shown as an outline, click the star icon again.
 
-    >**Tip:** When you add a new item to your list of favorites, it is placed at the bottom of the favorites list on the Azure portal menu. You can rearrange your favorites into the order that you want by using a drag-and-drop operation.
+    > **Tip**: When you add a new item to your list of favorites, it is placed at the bottom of the favorites list on the Azure portal menu. You can rearrange your favorites into the order that you want by using a drag-and-drop operation.
 
-    Use the same process to add the following services to your favorites: **Device Provisioning Services**, **Logic Apps**, **Stream Analytics jobs**, and **Storage Accounts**.
+1. Use the same process to add the following services to your favorites: **Device Provisioning Services**, **Logic Apps**, **Stream Analytics jobs**, and **Storage Accounts**.
 
-    > **Note**:  You can remove a service from the list of your favorite services by clicking the star of a selected service.
+    > **Note**: You can remove a service from the list of your favorite services by clicking the star of a selected service.
 
-1. On the left side of the _All services_ page, under _Categories_, click **General**.
+1. On the left side menu, under **Categories**, click **General**.
 
 1. Ensure that the following services are selected as favorites:
 
     * **Subscriptions**
     * **Resource groups**
 
-    The favorites that you've added are enough to get you started, but you can use the _Internet of Things_ category to add additional favorites to the portal menu if you want.
+    The favorites that you've added are enough to get you started, but you can use the Internet of Things category to add additional favorites to the portal menu if you want.
 
 #### Task 3: Examine the Toolbar menu
 
 1. Notice the toolbar at the top of the portal that runs the full width of the window.
 
-    In addition to the hamburger menu icon on the far left of this toolbar, there several items that you will find helpful.
+    In addition to the hamburger menu icon on the far left of this toolbar, there several tool items that you will find helpful.
 
     First, notice that you have a _Search resources_ tool that can be used to quickly find a particular resource.
 
@@ -117,23 +121,23 @@ Although we commonly refer to Azure as a 'cloud', it is actually a web portal th
     * The _Cloud Shell_ button opens an interactive, authenticated shell right in the portal window that you can use to manage Azure resources. The Azure Cloud Shell supports Bash and PowerShell.
     * The _Directory + Subscriptions_ button opens a pane that you can use to manage your Azure subscriptions and account directory (the Azure Active Directory authentication mechanism).
     * The _Notifications_ button that opens a notifications pane. The notifications pane is useful when working with a long running process. You will be monitoring notifications when you create and configure resources throughout this course.
-    * There are also buttons for *Settings*, *Feedback*, and *Help*. The *Help* button contains links to help documents and a list of useful keyboard shortcuts.
+    * There are also buttons for *Settings*, *Help*, and *Feedback*. The *Help* button contains links to help documents and a list of useful keyboard shortcuts.
 
     On the far right is a button for your account information, providing you with access to things like your account password and billing information.
 
 1. On the toolbar, click **Help**, and then click **Help + support**
 
-1. On the _Help + support_ blade, notice the four Tiles for _Getting started_, _Documentation_, _Learn about billing_, and _Support plans_.
+1. On the **Help + support** blade, notice the four Tiles for _Getting started_, _Documentation_, _Learn about billing_, and _Support plans_.
 
-    The _Help + support_ blade gives you access to lots of great resources. You may want to come back to this later for further exploration.
+    The Help + support blade gives you access to lots of great resources. You may want to come back to this later for further exploration.
 
-1. On the _Help + support_ blade, click **Learn about billing**
+1. On the **Help + support** blade, click **Learn about billing**
 
-1. On the _Azure Documentation_ page, in the _Filter by title_ textbox, type **Prevent unexpected costs**
+    A new browser tab should open to display Azure billing documentation.
 
-1. Just below the filter textbox, click **Prevent unexpected costs**
+1. Take a moment to scan the contents of the **Prevent unexpected charges with Azure billing and cost management** page. 
 
-    If *you* are using a paid Azure subscription and you are responsible for billing (you are the Account Administrator), you can use these instructions to set up billing alerts.
+    If *you* are using a paid Azure subscription and you are responsible for billing (you are the Account Administrator), you can set up cost alerts to help manage your billing.
 
 ### Exercise 2: Create an Azure Dashboard and Resource Group
 
@@ -143,22 +147,22 @@ Each tile that you place on your dashboard exposes one or more of your resources
 
 A resource group is a logical group that contains related resources for a project or application. The resource group can include all the resources for the solution, or only those resources that you want to manage as a group. You decide how you want to allocate resources to resource groups based on what makes the most sense for your organization. Generally, add resources that share the same lifecycle to the same resource group so you can easily deploy, update, and delete them as a group.
 
-In the following tasks, you will:
+In this exercise, you will:
 
 * create a custom dashboard that you can use during this course
 * create a Resource Group and add a Resource Group tile to your dashboard
 
 #### Task 1: Create a Dashboard
 
-1. In a Web browser, navigate to your Azure portal.
+1. If necessary, open your Web browser and navigate to your Azure portal.
 
     You can use the following link to open the Azure portal: [Azure portal](https://portal.azure.com)
 
 1. On the Azure portal menu, click **Dashboard**.
 
-1. On the _Dashboard_ page, click **+ New dashboard**
+1. On the **My Dashboard** page, click **+ New dashboard**
 
-    We are going to create a custom dashboard to organize the resources that we use in this course.
+    You can create a custom dashboard to organize and access your Azure resources for a project. In this case, you will create a custom dashboard for this course.
 
 1. To name your new dashboard, replace **My Dashboard** with **AZ-220**
 
@@ -174,11 +178,11 @@ In the following tasks, you will:
 
     This blade displays all of the resource groups that you have created using your Azure subscription(s). If you are just getting started with Azure, you probably don't have any resource groups yet.
 
-1. On the _Resource groups_ blade, on the top menu, click **+ Add**
+1. On the **Resource groups** blade, in the top-left corner area, click **+ Add**
 
-    This will open a new blade named _Create a resource group_.
+    This will open a new blade named Create a resource group.
 
-1. Take a moment to review the contents of the _Create a resource group_ blade.
+1. Take a moment to review the contents of the **Create a resource group** blade.
 
     Notice that the resource group is associated with a Subscription and a Region. Consider the following:
 
@@ -191,21 +195,21 @@ In the following tasks, you will:
 
     The name of the resource group must be **unique** within your subscription. A green check mark will appear if the name that you enter has not already been used and confirms to resource group naming rules.
 
-    >**Tip:** The Azure documentation describes all Azure [naming rules and restrictions](https://docs.microsoft.com/en-us/azure/architecture/best-practices/resource-naming).
+    > **Tip**: The Azure documentation describes all Azure [naming rules and restrictions](https://docs.microsoft.com/en-us/azure/architecture/best-practices/resource-naming).
 
 1. In the **Region** dropdown, select a region that is near you.  
 
     You should check with your instructor as well, [as not all regions offer all services](https://azure.microsoft.com/en-us/global-infrastructure/services/).
 
-    You need to provide a location for the resource group because the resource group stores metadata about the resources and acts as the default location for where new resources in the resource group will be created. For compliance reasons, you may want to specify where that metadata is stored. In general, we recommend that you specify a location where most of your resources will reside. Using the same location can simplify the template used to manage your resources.
+    You need to provide a location for the resource group because the resource group stores metadata about the resources and acts as the default location for where new resources in the resource group will be created. For compliance reasons, you may want to specify where that metadata is stored. In general, it is recommended that you specify a location where most of your resources will reside. Using the same location can simplify the template used to manage your resources.
 
-1. At the bottom of the _Create a resource group_ blade, click **Review + create**.
+1. At the bottom of the **Create a resource group** blade, click **Review + create**.
 
     You should see a message informing you that the settings for your resource group have been validated successfully.
 
 1. To create your resource group, click **Create**.
 
-1. On the top menu of the _Resource groups_ blade, to see your new resource group, click **Refresh**
+1. On the top menu of the **Resource groups** blade, to see your new resource group, click **Refresh**
 
     You will learn more about managing your resources as you continue through this course.
 
@@ -215,6 +219,6 @@ In the following tasks, you will:
 
 1. On the right side of the screen, click the ellipsis (...) corresponding to your resource group, and then click **Pin to dashboard**
 
-1. Close your _Resource groups_ blade.
+1. Close your **Resource groups** blade.
 
-    Your dashboard should now contain an empty Resources tile, but don't worry, we fill it up soon enough.
+    Your dashboard should now contain an empty Resources tile, but don't worry, you will fill it up soon enough.
