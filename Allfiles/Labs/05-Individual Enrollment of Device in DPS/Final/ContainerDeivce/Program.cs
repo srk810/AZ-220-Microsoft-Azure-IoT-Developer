@@ -44,19 +44,22 @@ namespace ContainerDevice
                     await deviceClient.OpenAsync().ConfigureAwait(false);
 
                     // INSERT Setup OnDesiredPropertyChanged Event Handling below here
+                    await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
 
                     // INSERT Load Device Twin Properties below here
+                    var twin = await deviceClient.GetTwinAsync().ConfigureAwait(false);
+                    await OnDesiredPropertyChanged(twin.Properties.Desired, null);
 
                     // Start reading and sending device telemetry
                     Console.WriteLine("Start reading and sending device telemetry...");
-                    await SendDeviceToCloudMessagesAsync(deviceClient);
+                    await SendDeviceToCloudMessagesAsync();
 
                     await deviceClient.CloseAsync().ConfigureAwait(false);
                 }
             }
         }
 
-        private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProvider security)
+        private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderSymmetricKey security)
         {
             var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
             Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
@@ -67,12 +70,12 @@ namespace ContainerDevice
 
             var auth = new DeviceAuthenticationWithRegistrySymmetricKey(
                 result.DeviceId,
-                (security as SecurityProviderSymmetricKey).GetPrimaryKey());
+                security.GetPrimaryKey());
 
             return DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp);
         }
 
-        private static async Task SendDeviceToCloudMessagesAsync(DeviceClient deviceClient)
+        private static async Task SendDeviceToCloudMessagesAsync()
         {
             var sensor = new EnvironmentSensor();
 
@@ -121,6 +124,30 @@ namespace ContainerDevice
         }
 
         // INSERT OnDesiredPropertyChanged method below here
+        private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
+        {
+            Console.WriteLine("Desired Twin Property Changed:");
+            Console.WriteLine($"{desiredProperties.ToJson()}");
+
+            // Read the desired Twin Properties
+            if (desiredProperties.Contains("telemetryDelay"))
+            {
+                string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
+                if (desiredTelemetryDelay != null)
+                {
+                    telemetryDelay = int.Parse(desiredTelemetryDelay);
+                }
+                // if desired telemetryDelay is null or unspecified, don't change it
+            }
+
+
+            // Report Twin Properties
+            var reportedProperties = new TwinCollection();
+            reportedProperties["telemetryDelay"] = telemetryDelay.ToString();
+            await deviceClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
+            Console.WriteLine("Reported Twin Properties:");
+            Console.WriteLine($"{reportedProperties.ToJson()}");
+        }
     }
 
     internal class EnvironmentSensor
