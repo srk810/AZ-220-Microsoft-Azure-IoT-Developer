@@ -290,6 +290,28 @@ This is different than the earlier lab where a simulated device connected to Azu
     dotnet restore
     ```
 
+1. In the Visual Studio Code Explorer pane, click **ContainerDevice.csproj**.
+
+1. Examine the contents of the file. It will look similar to this:
+
+    ```xml
+    <Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.*" />
+    </ItemGroup>
+    </Project>
+    ```
+
+    As in the earlier lab
+
 1. In the Visual Studio Code Explorer pane, click **Program.cs**.
 
 1. In the code editor, near the top of the Program class, locate the **dpsIdScope** variable, and then update the assigned value using the ID Scope value that you copied from the Device Provisioning Service in the Azure portal.
