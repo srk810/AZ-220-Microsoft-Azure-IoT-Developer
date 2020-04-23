@@ -310,7 +310,7 @@ This is different than the earlier lab where a simulated device connected to Azu
     </Project>
     ```
 
-    As in the earlier lab
+    As in the earlier lab, the is a reference to the **Microsoft.Azure.Devices.Client** package. In addition, there are references added for the **Microsoft.Azure.Devices.Provisioning.Transport.Mqtt** and other variants. In reality, you would only need to add the package relevant to the protocol you would be using.
 
 1. In the Visual Studio Code Explorer pane, click **Program.cs**.
 
@@ -373,18 +373,18 @@ In this task you will review the code that provisions the device via DPS and cre
     }
     ```
 
-    Although the **Main** method serves a similar purpose to that in the earlier **CaveDevice** app, it is a little more complex. Whereas we previously used a device connection string to directly connect to an IoT Hub, this time we need to first provision the device (or, for subsequent connections, confirm the device is still provisioned), then retrieve the appropriate IoT Hub connection details.
+    Although the **Main** method serves a similar purpose to that in the earlier **CaveDevice** app, it is a little more complex. Whereas you previously used a device connection string to directly connect to an IoT Hub, this time you need to first provision the device (or, for subsequent connections, confirm the device is still provisioned), then retrieve the appropriate IoT Hub connection details.
 
-    To connect to DPS, we not only require the **dpsScopeId** and the **GlobalDeviceEndpoint** (defined in the variables), we also need to specify the following:
+    To connect to DPS, you not only require the **dpsScopeId** and the **GlobalDeviceEndpoint** (defined in the variables), you also need to specify the following:
 
-    * **security** - the method used for authenticating the enrollment. Earlier we configured the individual enrollment to use symmetric keys, therefore the **SecurityProviderSymmetricKey** is the logical choice. As you might expect, there are variants of the providers that support X509 and TPM as well.
+    * **security** - the method used for authenticating the enrollment. Earlier you configured the individual enrollment to use symmetric keys, therefore the **SecurityProviderSymmetricKey** is the logical choice. As you might expect, there are variants of the providers that support X509 and TPM as well.
     * **transport** - the transport protocol used by the provisioned device. In this instance, the AMQP handler was chosen (**ProvisioningTransportHandlerAmqp**). Of course, HTTP and MQTT handlers are also available.
 
-    Once the **security** and **transport** variables are populated, we create an instance of the **ProvisioningDeviceClient**. We will use this instance to register our device and create a **DeviceClient** in the **ProvisionDevice** method, which we will add shortly.
+    Once the **security** and **transport** variables are populated, you create an instance of the **ProvisioningDeviceClient**. You will use this instance to register the device and create a **DeviceClient** in the **ProvisionDevice** method, which you will add shortly.
 
-    The remainder of the **Main** method uses the device client a little differently than we did in the **CaveDevice** - this time we explicitly open the device connection so that the app can use device twins (more on this in the next exercise), and then calls the **SendDeviceToCloudMessagesAsync** method to start sending telemetry.
+    The remainder of the **Main** method uses the device client a little differently than you did in the **CaveDevice** - this time you explicitly open the device connection so that the app can use device twins (more on this in the next exercise), and then calls the **SendDeviceToCloudMessagesAsync** method to start sending telemetry.
 
-    The **SendDeviceToCloudMessagesAsync** method is very similar to that you created in the **CaveDevice** application. It creates an instance of **EnvironmentSensor** class (this one also returns pressure and location data), builds a message and sends it. We won't explicitly review the code here, however notice that instead of a fixed delay within the method loop, we are instaed calculating the delay by using the **telemetryDelay** variable: `await Task.Delay(telemetryDelay * 1000);`. Do feel free to take a look yourself and compare it to the class used in the earlier lab.
+    The **SendDeviceToCloudMessagesAsync** method is very similar to that you created in the **CaveDevice** application. It creates an instance of **EnvironmentSensor** class (this one also returns pressure and location data), builds a message and sends it. Notice that instead of a fixed delay within the method loop, the delay is calculated by using the **telemetryDelay** variable: `await Task.Delay(telemetryDelay * 1000);`. Do take a deeper look yourself and compare this to the class used in the earlier lab.
 
     Finally, back in the **Main** method, the device client is closed.
 
@@ -410,17 +410,17 @@ In this task you will review the code that provisions the device via DPS and cre
     }
     ```
 
-    As you can see, this method receives the the provisioning device client and security instances we created earlier. The `provisioningDeviceClient.RegisterAsync()` is called, which returns a **DeviceRegistrationResult** instance. This result contains a number of properties including the **DeviceId**, **AssignedHub** and the **Status**.
+    As you can see, this method receives the the provisioning device client and security instances you created earlier. The `provisioningDeviceClient.RegisterAsync()` is called, which returns a **DeviceRegistrationResult** instance. This result contains a number of properties including the **DeviceId**, **AssignedHub** and the **Status**.
 
     > **Information**: Full details of the **DeviceRegistrationResult** properties can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.provisioning.client.deviceregistrationresult?view=azure-dotnet).
 
     The method then checks to ensure that the provisioning status and throws an exception if the device is not *Assigned*  - other possible results here include *Unassigned*, *Assigning*, *Failed* and *Disabled*.
 
-    At this point, the device has been provisioned and assigned to an IoT Hub. The device has also been created within the IoT Hub device registry and can be viewed in the IoT Devices explorer in the portal. We will then use the details we have to create a device client instance.
+    At this point, the device has been provisioned and assigned to an IoT Hub. The device has also been created within the IoT Hub device registry and can be viewed in the IoT Devices explorer in the portal. You will then use the details you have  from the earlier results to create a device client instance.
 
-    First, in lieu of the connection string that was used in the earlier lab, we must construct an authentication object that represents the authentication method we will use for the device.  We use the device ID that was returned from DPS and get the primary symmetric key value from the security provider and create an instance of **DeviceAuthenticationWithRegistrySymmetricKey**.
+    First, in lieu of the connection string that was used in the earlier lab, you must construct an authentication object that represents the authentication method used for the device. You use the device ID that was returned from DPS and get the primary symmetric key value from the security provider and create an instance of **DeviceAuthenticationWithRegistrySymmetricKey**.
 
-    Finally, we use an overload of the device client **Create** method that accepts the **AssignedHub** value from DPS, as the **auth** object we just created, as well as the protocol to use for communication. The device client is then returned, where it is used for sending telemetry etc.
+    Finally, you use an overload of the device client **Create** method that accepts the **AssignedHub** value from DPS, as the **auth** object you just created, as well as the protocol to use for communication. The device client is then returned, where it is used for sending telemetry etc.
 
 1. Near the top of the **Program** class, locate the **telemetryDelay** variable declaration.
 
@@ -428,15 +428,15 @@ In this task you will review the code that provisions the device via DPS and cre
 
 #### Task 3: Integrate Device Twin Properties
 
-To use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, we want to update our simulated device code to read a device twin Desired Property, and then assign that value to the **telemetryDelay** variable. We also want to update the device twin Reported Property to indicate the delay value that is currently implemented on our device.
+To use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, you wish to update the simulated device code to read a device twin Desired Property, and then assign that value to the **telemetryDelay** variable. You also want to update the device twin Reported Property to indicate the delay value that is currently implemented on the device.
 
 1. In the Visual Studio Code editor, locate the **Main** method.
 
 1. Take a moment to review the code, and then find the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment.
 
-    To begin the integration of device twin properties, we need code that enables the simulated device to be notified when a device twin property is updated.
+    To begin the integration of device twin properties, you need code that enables the simulated device to be notified when a device twin property is updated.
 
-    To achieve this, we can use the **DeviceClient.SetDesiredPropertyUpdateCallbackAsync** method, and set up an event handler by creating an **OnDesiredPropertyChanged** method.
+    To achieve this, you can use the **DeviceClient.SetDesiredPropertyUpdateCallbackAsync** method, and set up an event handler by creating an **OnDesiredPropertyChanged** method.
 
 1. To set up the DeviceClient for an OnDesiredPropertyChanged event, insert the following code beneath the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment:
 
@@ -444,7 +444,7 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
     await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
     ```
 
-    Next, we need to add our **OnDesiredPropertyChanged** method to the **Program** class.
+    Next, you need to add the **OnDesiredPropertyChanged** method to the **Program** class.
 
 1. To complete the setup of the event handler, enter the following code beneath the `// INSERT OnDesiredPropertyChanged method below here` comment:
 
