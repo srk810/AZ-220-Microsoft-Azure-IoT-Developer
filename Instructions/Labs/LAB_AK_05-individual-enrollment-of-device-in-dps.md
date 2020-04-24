@@ -306,7 +306,93 @@ This is different than the earlier lab where a simulated device connected to Azu
     >
     > Open the **Manage enrollments** blade, click **Individual Enrollments**, click **sensor-thl-1000**. Copy the values and then paste as noted above.
 
-1. Review the source code for the simulated device, and take notice of the following items:
+#### Task 2: Add the provisioning code
+
+In this task you will review the code that provisions the device via DPS and creates a DeviceClient instance that can be used to connect to the IoT Hub.
+
+1. In the Visual Studio Code Explorer pane, to open that application code for review, click **Program.cs**.
+
+1. Take a look at the overall layout of the application and notice that it is similar to the **CaveDevice** application created in an earlier lab in that there are:
+
+    * Using statements
+    * Namespace definition
+      * Program class - responsible for connecting to Azure IoT and sending telemetry
+      * EnvironmentSensor class - responsible for generating sensor data
+
+1. To add the implementation of the **Main** method, insert the following code beneath the `// INSERT Main method below here` comment:
+
+    ```csharp
+    public static async Task Main(string[] args)
+    {
+
+        using (var security = new SecurityProviderSymmetricKey(registrationId,
+                                                                individualEnrollmentPrimaryKey,
+                                                                individualEnrollmentSecondaryKey))
+        using (var transport = new ProvisioningTransportHandlerAmqp(TransportFallbackType.TcpOnly))
+        {
+            ProvisioningDeviceClient provClient =
+                ProvisioningDeviceClient.Create(GlobalDeviceEndpoint, dpsIdScope, security, transport);
+
+            using (deviceClient = await ProvisionDevice(provClient, security))
+            {
+                await deviceClient.OpenAsync().ConfigureAwait(false);
+
+                // INSERT Setup OnDesiredPropertyChanged Event Handling below here
+
+                // INSERT Load Device Twin Properties below here
+
+                // Start reading and sending device telemetry
+                Console.WriteLine("Start reading and sending device telemetry...");
+                await SendDeviceToCloudMessagesAsync();
+
+                await deviceClient.CloseAsync().ConfigureAwait(false);
+            }
+        }
+    }
+    ```
+
+    Although the **Main** method serves a similar purpose to that in the earlier **CaveDevice** app, it is a little more complex. Whereas you previously used a device connection string to directly connect to an IoT Hub, this time you need to first provision the device (or, for subsequent connections, confirm the device is still provisioned), then retrieve the appropriate IoT Hub connection details.
+
+    To connect to DPS, you not only require the **dpsScopeId** and the **GlobalDeviceEndpoint** (defined in the variables), you also need to specify the following:
+
+    * **security** - the method used for authenticating the enrollment. Earlier you configured the individual enrollment to use symmetric keys, therefore the **SecurityProviderSymmetricKey** is the logical choice. As you might expect, there are variants of the providers that support X509 and TPM as well.
+    * **transport** - the transport protocol used by the provisioned device. In this instance, the AMQP handler was chosen (**ProvisioningTransportHandlerAmqp**). Of course, HTTP and MQTT handlers are also available.
+
+    Once the **security** and **transport** variables are populated, you create an instance of the **ProvisioningDeviceClient**. You will use this instance to register the device and create a **DeviceClient** in the **ProvisionDevice** method, which you will add shortly.
+
+    The remainder of the **Main** method uses the device client a little differently than you did in the **CaveDevice** - this time you explicitly open the device connection so that the app can use device twins (more on this in the next exercise), and then calls the **SendDeviceToCloudMessagesAsync** method to start sending telemetry.
+
+    The **SendDeviceToCloudMessagesAsync** method is very similar to that you created in the **CaveDevice** application. It creates an instance of **EnvironmentSensor** class (this one also returns pressure and location data), builds a message and sends it. Notice that instead of a fixed delay within the method loop, the delay is calculated by using the **telemetryDelay** variable: `await Task.Delay(telemetryDelay * 1000);`. Do take a deeper look yourself and compare this to the class used in the earlier lab.
+
+    Finally, back in the **Main** method, the device client is closed.
+
+    > **Information**: You can find the documentation for the **ProvisioningDeviceClient** [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.provisioning.client.provisioningdeviceclient?view=azure-dotnet) - from there you can easily navigate to the other related classes.
+
+1. To add the **ProvisionDevice** method, insert the following code beneath the `// INSERT ProvisionDevice method below here` comment:
+
+    ```csharp
+    private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderSymmetricKey security)
+    {
+        var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
+        Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
+        if (result.Status != ProvisioningRegistrationStatusType.Assigned)
+        {
+            throw new Exception($"DeviceRegistrationResult.Status is NOT 'Assigned'");
+        }
+
+        var auth = new DeviceAuthenticationWithRegistrySymmetricKey(
+            result.DeviceId,
+            security.GetPrimaryKey());
+
+        return DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp);
+    }
+    ```
+
+    As you can see, this method receives the the provisioning device client and security instances you created earlier. The `provisioningDeviceClient.RegisterAsync()` is called, which returns a **DeviceRegistrationResult** instance. This result contains a number of properties including the **DeviceId**, **AssignedHub** and the **Status**.
+
+    > **Information**: Full details of the **DeviceRegistrationResult** properties can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.provisioning.client.deviceregistrationresult?view=azure-dotnet).
+
+    The method then checks to ensure that the provisioning status and throws an exception if the device is not *Assigned*  - other possible results here include *Unassigned*, *Assigning*, *Failed* and *Disabled*.
 
     * The **Program.ProvisionDevice** method contains the logic for registering the device via DPS.
     * The **Program.SendDeviceToCloudMessagesAsync** method sends the telemetry as Device-to-Cloud messages to Azure IoT Hub.

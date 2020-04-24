@@ -428,10 +428,11 @@ In this task, you will complete the following:
       * Labs
           * 06-Automatic Enrollment of Devices in DPS
             * Starter
+              * ContainerDevice
 
-1. Paste the `new-device.cert.pfx` file into the Starter folder.
+1. Paste the `new-device.cert.pfx` file into the ContainerDevice folder.
 
-    The root directory of the Lab 6 Starter folder includes the `Program.cs` file. The **simulated device** project will need to access this certificate file when authenticating to the Device Provisioning Service.
+    The root directory of the Lab 6 ContainerDevice folder includes the `Program.cs` file. The **simulated device** project will need to access this certificate file when authenticating to the Device Provisioning Service.
 
 1. Open **Visual Studio Code**.
 
@@ -439,7 +440,7 @@ In this task, you will complete the following:
 
 1. In the Open Folder dialog, navigate to the **06-Automatic Enrollment of Devices in DPS** folder.
 
-1. Click **Starter**, and then click **Select Folder**.
+1. Click **ContainerDevice**, and then click **Select Folder**.
 
     You should see the following files listed in the EXPLORER pane of Visual Studio Code:
 
@@ -470,21 +471,21 @@ In this task, you will complete the following:
 
     This configuration ensures that the `new-device.cert.pfx` certificate file is copied to the build folder when the C# code is compiled, and made available for the program to access when it executes.
 
-    > **Note**: The exact `PackageReference` entries may be a bit different, depending on the exact version of the lab code you are using.
-
 1. On the Visual Studio Code **File** menu, click **Save**.
 
-1. Open the `Program.cs` file.
+1. Open the **Program.cs** file.
 
-1. Locate the `GlobalDeviceEndpoint` variable, and notice that its value is set to the Global Device Endpoint for the Azure Device Provisioning Service (`global.azure-devices-provisioning.net`). 
+    A cursory glance will reveal that this version of the **ContainerDevice** application is virtually identical to the version used in the preceding lab. The only changes will be those that relate specifically to the use of X509 certificates as an attestation mechanism. From the application perspective, it matters little that this device will be connecting via a Group Enrollment vs an Individual Enrollment.
 
-    Within the Public Azure Cloud, `global.azure-devices-provisioning.net` is the Global Device Endpoint for the Device Provisioning Service (DPS). All devices connecting to Azure DPS will be configured with this Global Device Endpoint DNS name. You should see code that is similar to the following:
+1. Locate the **GlobalDeviceEndpoint** variable, and notice that its value is set to the Global Device Endpoint for the Azure Device Provisioning Service (`global.azure-devices-provisioning.net`).
+
+    Within the Public Azure Cloud, **global.azure-devices-provisioning.net** is the Global Device Endpoint for the Device Provisioning Service (DPS). All devices connecting to Azure DPS will be configured with this Global Device Endpoint DNS name. You should see code that is similar to the following:
 
     ```csharp
     private const string GlobalDeviceEndpoint = "global.azure-devices-provisioning.net";
     ```
 
-1. Locate the `dpsIdScope` variable, and replace the assigned value with the **ID Scope** that you copied from the Overview pane of the Device Provisioning Service.
+1. Locate the **dpsIdScope** variable, and replace the assigned value with the **ID Scope** that you copied from the Overview pane of the Device Provisioning Service.
 
     When you have updated your code, it should look similar to the following:
 
@@ -492,133 +493,190 @@ In this task, you will complete the following:
     private static string dpsIdScope = "0ne000CBD6C";
     ```
 
-1. Locate the `s_certificateFileName` variable, and notice that its value is set to the device certificate file that you generated (`new-device.cert.pfx`).
+1. Locate the **certificateFileName** variable, and notice that its value is set to the device certificate file that you generated (**new-device.cert.pfx**).
 
-    The `new-device.cert.pfx` file is the X.509 device certificate file that you generated using the `certGen.sh` helper script within the Cloud Shell. This variable tells the device code which file contains the X.509 device certificate that it will use when authenticating with the Device Provisioning Service.
+    Rather than using symmetric keys as in the earlier lab, this time the application is using an X509 certificate. The **new-device.cert.pfx** file is the X.509 device certificate file that you generated using the **certGen.sh** helper script within the Cloud Shell. This variable tells the device code which file contains the X.509 device certificate that it will use when authenticating with the Device Provisioning Service.
 
-1. Locate the `s_certificatePassword` variable, and notice that its value is set to the default password for the `certGen.sh` script.
+1. Locate the **certificatePassword** variable, and notice that its value is set to the default password for the **certGen.sh** script.
 
-    The `s_certificatePassword` variable contains the password for the X.509 device certificate. It's set to `1234`, as this is the default password used by the `certGen.sh` helper script when generating the X.509 certificates.
+    The **certificatePassword** variable contains the password for the X.509 device certificate. It's set to `1234`, as this is the default password used by the **certGen.sh** helper script when generating the X.509 certificates.
 
     > **Note**: For the purpose of this lab, the password is hard coded. In a _production_ scenario, the password will need to be stored in a more secure manner, such as in an Azure Key Vault. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).
     >
     > An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with all attestation mechanisms the provisioning service supports.
 
-1. Locate the `public static int Main` method, and then take a minute to review the code. 
+#### Task 3: Add the provisioning code
 
-    The Main method is the entry point for the simulated device app. Notice that the first thing it does is to call the `LoadProvisioningCertificate` method, which returns an `X509Certificate2` object.
-
-1. Scroll down to locate the `LoadProvisioningCertificate` method, and then take a minute to review the code used to generate the `X509Certificate2` object.
-
-    Notice that `LoadProvisioningCertificate` uses `s_certificateFileName` to load the X.509 device certificate (from the `new-device.cert.pfx` file).
-
-1. Scroll back up to the `public static int Main` method, and then take a minute to review the code inside the nested `using` statements.
-
-    Notice that this code initiates a `security` `SecurityProviderX509Certificate` object for the X.509 Device Certificate, and that it creates a `transport` `ProvisioningTransportHandlerAmqp` object which defines that the simulated device will be using AMQP as the communications protocol when connecting to Azure IoT Hub.
-
-    Notice that the `security` and `transport` objects, along with the DPS ID scope and DPS global device endpoint, are passed to `ProvisioningDeviceClient.Create` method. The ProvisioningDeviceClient object, `provClient`, will be used to register the device with the Device Provisioning Service.
-
-    Notice that `ProvisioningDeviceLogic` is instantiated by passing it the `provClient` and `security` objects. The `ProvisioningDeviceLogic` class is used to define the logic for the device (simulated device). It contains the code for simulating a running device by reading from the simulated device sensors and sending device-to-cloud messages to Azure IoT Hub. It will also be modified later to include code that updates the device according to changes to device twin desired properties that are sent to the device from the cloud.
-
-1. Scroll down to the `ProvisioningDeviceLogic` class, and then locate the `RunAsync` method.
-
-    We will take a minute to review the `RunAsync` method, pointing out some of the key points.
-
-1. Within the `RunAsync` method, notice the code containing ProvisioningDeviceClient.RegisterAsync method (shown below).
+1. To add the implementation of the **Main** method, insert the following code beneath the `// INSERT Main method below here` comment:
 
     ```csharp
-    DeviceRegistrationResult result = await _provClient.RegisterAsync().ConfigureAwait(false);
-    ```
-
-    The RegisterAsync method is used to register the device using the Device Provisioning Service and assign it to an Azure IoT Hub.
-
-1. Notice the code that instantiates a new `DeviceAuthenticationWithX509Certificate` object (shown below). 
-
-    ```csharp
-    var auth = new DeviceAuthenticationWithX509Certificate(result.DeviceId, (_security as SecurityProviderX509).GetAuthenticationCertificate());
-    ```
-
-    This is a Device Authentication object that will be used to authenticate the simulated device to Azure IoT Hub using the X.509 Device Certificate. The constructor is being passed the device ID for the device that was registered in DPS, as well as the X.509 device certificate to authenticate the device.
-
-1. Notice the code that calls the `DeviceClient.Create` method.
-
-    ```csharp
-    using (iotClient = DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp))
+    public static async Task Main(string[] args)
     {
-    ```
+        X509Certificate2 certificate = LoadProvisioningCertificate();
 
-    The `DeviceClient.Create` method is used to create a new IoT `DeviceClient` object, which will be used to communicate with the Azure IoT Hub service. Notice that this code passes the value of `TransportType.Amqp`, telling the `DeviceClient` to communicate with the Azure IoT Hub using the AMQP protocol. Alternatively, Azure IoT Hub can be connected to and communicated with using the MQTT or HTTP protocols, depending on network architecture, device requirements, etc.
-
-1. Notice the call to the `SendDeviceToCloudMessagesAsync` method. 
-
-    ```csharp
-    await SendDeviceToCloudMessagesAsync(iotClient);
-    ```
-
-    The `SendDeviceToCloudMessagesAsync` method is a separate method that is defined further done in the code. This method contains the code that is used to read from simulated sensors and to send device-to-cloud messages to Azure IoT Hub. This method also contains a loop that continues to execute while the simulated device is running.
-
-1. Still within the RunAsync method, notice the call to the `DeviceClient.CloseAsync` method.
-
-    ```csharp
-    await iotClient.CloseAsync().ConfigureAwait(false);
-    ```
-
-    This method closes the `DeviceClient` object, thus closing the connection with Azure IoT Hub. This is the last line of code executed when the simulated device shuts down.
-
-1. Scroll down to locate the `SendDeviceToCloudMessagesAsync` method.
-
-    Again, we will point out a few key details.
-
-1. Notice the code that generates simulated sensor readings (shown below).
-
-    ```csharp
-    double currentTemperature = minTemperature + rand.NextDouble() * 15;
-    double currentHumidity = minHumidity + rand.NextDouble() * 20;
-    double currentPressure = minPressure + rand.NextDouble() * 12;
-    double currentLatitude = minLatitude + rand.NextDouble() * 0.5;
-    double currentLongitude = minLongitude + rand.NextDouble() * 0.5;
-    ```
-
-    For each sensor type, a random value is added to a min sensor value within the while loop. The min value is initialized outside the loop. This creates a range of sensor value readings that can be reported to your IoT hub.
-
-1. Notice the code used to combined sensor readings into a JSON object:
-
-    ```csharp
-        var telemetryDataPoint = new
+        using (var security = new SecurityProviderX509Certificate(certificate))
+        using (var transport = new ProvisioningTransportHandlerAmqp(TransportFallbackType.TcpOnly))
         {
-            temperature = currentTemperature,
-            humidity = currentHumidity,
-            pressure = currentPressure,
-            latitude = currentLatitude,
-            longitude = currentLongitude
-        };
-        var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
-        var message = new Message(Encoding.ASCII.GetBytes(messageString));
+            ProvisioningDeviceClient provClient =
+                ProvisioningDeviceClient.Create(GlobalDeviceEndpoint, dpsIdScope, security, transport);
+
+            using (deviceClient = await ProvisionDevice(provClient, security))
+            {
+                await deviceClient.OpenAsync().ConfigureAwait(false);
+
+                // INSERT Setup OnDesiredPropertyChanged Event Handling below here
+
+                // INSERT Load Device Twin Properties below here
+
+                // Start reading and sending device telemetry
+                Console.WriteLine("Start reading and sending device telemetry...");
+                await SendDeviceToCloudMessagesAsync();
+
+                await deviceClient.CloseAsync().ConfigureAwait(false);
+            }
+        }
+    }
     ```
 
-    IoT hub requires a properly formatted message.
+    This Main method is very similar to that used in the earlier lab. The two significant changes are the need to load the X509 certificate and then the change to using **SecurityProviderX509Certificate** as the security provider. The remaining code is identical - you should note that the device twin property change code is also present.
 
-1. Notice the line of code that adds a `temperatureAlert` property to the device-to-cloud `Message`.
+1. To add the implementation of the **LoadProvisioningCertificate** method, insert the following code beneath the `// INSERT LoadProvisioningCertificate method below here` comment:
 
     ```csharp
-    message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
+    private static X509Certificate2 LoadProvisioningCertificate()
+    {
+        var certificateCollection = new X509Certificate2Collection();
+        certificateCollection.Import(certificateFileName, certificatePassword, X509KeyStorageFlags.UserKeySet);
+
+        X509Certificate2 certificate = null;
+
+        foreach (X509Certificate2 element in certificateCollection)
+        {
+            Console.WriteLine($"Found certificate: {element?.Thumbprint} {element?.Subject}; PrivateKey: {element?.HasPrivateKey}");
+            if (certificate == null && element.HasPrivateKey)
+            {
+                certificate = element;
+            }
+            else
+            {
+                element.Dispose();
+            }
+        }
+
+        if (certificate == null)
+        {
+            throw new FileNotFoundException($"{certificateFileName} did not contain any certificate with a private key.");
+        }
+
+        Console.WriteLine($"Using certificate {certificate.Thumbprint} {certificate.Subject}");
+        return certificate;
+    }
     ```
 
-    The value of the `temperatureAlert` property is being set to a `boolean` value representing whether the _temperature_ sensor reading is greater than 30. Since we are generating temperature readings that range from 20 to 35, temperatureAlert should be "true" about one-third of the time. 
+    As you might expect from the name, the purpose of this method is to load the X509 certificate from disk. Should the load succeed, the method returns an instance of the **X509Certificate2** class.
 
-    This code is a simple example of how to add properties to the `Message` object before sending it to the Azure IoT Hub. This can be used to add additional metadata to the messages that are being sent, in addition to the message body content.
+    > **Information**: You may be curious as to why the result is an **X509Certificate2** type rather than an **X509Certificate**. The **X509Certificate** is an earlier implementation and is limited in its functionality. The **X509Certificate2** is a subclass of **X509Certificate** with additional functionality that supports both V2 and V3 of the X509 standard.
 
-1. Notice the call to the `DeviceClient.SendEventAsync` method.
+    The method creates an instance of the **X509Certificate2Collection** class and then attempts to import the **new-device.cert.pfx** from disk, using the the hard-coded password. The **X509KeyStorageFlags.UserKeySet** values specifies that private keys are stored in the current user store rather than the local computer store. This occurs even if the certificate specifies that the keys should go in the local computer store.
+
+    Next, the method iterates through the imported certificates (in this case, there should only be one) and verifies that the certificate has a private key. Should the imported certificate not match this criteria, an exception is thrown, otherwise the method returns the imported certificate.
+
+1. To insert the final missing method, **ProvisionDevice**, insert the following code beneath the `// INSERT ProvisionDevice method below here` comment:
 
     ```csharp
-    await deviceClient.SendEventAsync(message);
+    private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderX509Certificate security)
+    {
+        var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
+        Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
+        if (result.Status != ProvisioningRegistrationStatusType.Assigned)
+        {
+            throw new Exception($"DeviceRegistrationResult.Status is NOT 'Assigned'");
+        }
+
+        var auth = new DeviceAuthenticationWithX509Certificate(
+            result.DeviceId,
+            security.GetAuthenticationCertificate());
+
+        return DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp);
+    }
     ```
 
-    The `SendEventAsync` method accepts our generated `message` to send as a parameter, then does the work of sending the device-to-cloud message to Azure IoT Hub.
+    This version of **ProvisionDevice** is very similar to that you used in an earlier lab. The primary change is that the **security** parameter is now of type **SecurityProviderX509Certificate**. This means that the **auth** variable used to create a **DeviceClient** must now be of type **DeviceAuthenticationWithX509Certificate** and uses the `security.GetAuthenticationCertificate()` value. The actual device registration is the same as before.
 
-1. Notice the call to the `Delay` method that is used to set the time between Device-to-Cloud telemetry messages.
+#### Task 4: Review Device Twin Integration Code
 
-    This simple delay uses the `_telemetryDelay` variable to define how many seconds to wait until sending the next simulated sensor reading. In the next exercise we will use a device twin property to control the delay time.
+To use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, you wish to update the simulated device code to read a device twin Desired Property, and then assign that value to the **telemetryDelay** variable. You also want to update the device twin Reported Property to indicate the delay value that is currently implemented on the device.
+
+1. In the Visual Studio Code editor, locate the **Main** method.
+
+1. Take a moment to review the code, and then find the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment.
+
+    To begin the integration of device twin properties, you need code that enables the simulated device to be notified when a device twin property is updated.
+
+    To achieve this, you can use the **DeviceClient.SetDesiredPropertyUpdateCallbackAsync** method, and set up an event handler by creating an **OnDesiredPropertyChanged** method.
+
+1. To set up the DeviceClient for an OnDesiredPropertyChanged event, insert the following code beneath the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment:
+
+    ```csharp
+    await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
+    ```
+
+    The **SetDesiredPropertyUpdateCallbackAsync** method is used to set up the **DesiredPropertyUpdateCallback** event handler to receive device twin desired property changes. This code configures **deviceClient** to call a method named **OnDesiredPropertyChanged** when a device twin property change event is received.
+
+    Now that the **SetDesiredPropertyUpdateCallbackAsync** method is in place to set up the event handler, we need to create the **OnDesiredPropertyChanged** method that it calls.
+
+1. To complete the setup of the event handler, enter the following code beneath the `// INSERT OnDesiredPropertyChanged method below here` comment:
+
+    ```csharp
+    private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
+    {
+        Console.WriteLine("Desired Twin Property Changed:");
+        Console.WriteLine($"{desiredProperties.ToJson()}");
+
+        // Read the desired Twin Properties
+        if (desiredProperties.Contains("telemetryDelay"))
+        {
+            string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
+            if (desiredTelemetryDelay != null)
+            {
+                telemetryDelay = int.Parse(desiredTelemetryDelay);
+            }
+            // if desired telemetryDelay is null or unspecified, don't change it
+        }
+
+        // Report Twin Properties
+        var reportedProperties = new TwinCollection();
+        reportedProperties["telemetryDelay"] = this._telemetryDelay.ToString();
+        await deviceClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
+        Console.WriteLine("Reported Twin Properties:");
+        Console.WriteLine($"{reportedProperties.ToJson()}");
+    }
+    ```
+
+    Notice that the **OnDesiredPropertyChanged** event handler accepts a **desiredProperties** parameter of type **TwinCollection**.
+
+    Notice that if the value of the **desiredProperties** parameter contains **telemetryDelay** (a device twin desired property), the code will assign the value of the device twin property to the **telemetryDelay** variable. You may recall that the **SendDeviceToCloudMessagesAsync** method include a **Task.Delay** call that uses the **telemetryDelay** variable to set the delay time between messages sent to IoT hub.
+
+    Notice the next block of code is used to report the current state of the device back up to Azure IoT Hub. This code calls the **DeviceClient.UpdateReportedPropertiesAsync** method and passes it a **TwinCollection** that contains the current state of the device properties. This is how the device reports back to IoT Hub that it received the device twin desired properties changed event, and has now updated its configuration accordingly. Note that it reports what the properties are now set to, not an echo of the desired properties. In the case where the reported properties sent from the device are different than the desired state that the device received, IoT Hub will maintain an accurate Device Twin that reflects the state of the device.
+
+    Now that the device can receive updates to the device twin desired properties from Azure IoT Hub, it also needs to be coded to configure its initial setup when the device starts up. To do this the device will need to load the current device twin desired properties from Azure IoT Hub, and configure itself accordingly.
+
+1. In the **Main** method, locate the `// INSERT Load Device Twin Properties below here` comment.
+
+1. To read the device twin desired properties and configure the device to match on device startup, insert the following code beneath the `// INSERT Load Device Twin Properties below here` comment:
+
+    ```csharp
+    var twin = await deviceClient.GetTwinAsync().ConfigureAwait(false);
+    await OnDesiredPropertyChanged(twin.Properties.Desired, null);
+    ```
+
+    This code calls the **DeviceTwin.GetTwinAsync** method to retrieve the device twin for the simulated device. It then accesses the **Properties.Desired** property object to retrieve the current Desired State for the device, and passes that to the **OnDesiredPropertyChanged** method that will configure the simulated devices **telemetryDelay** variable.
+
+    Notice, this code reuses the **OnDesiredPropertyChanged** method that was already created for handling _OnDesiredPropertyChanged_ events. This helps keep the code that reads the device twin desired state properties and configures the device at startup in a single place. The resulting code is simpler and easier to maintain.
+
+1. On the top menu of Visual Studio Code, click **File**, and then click **Save**.
+
+    Your simulated device will now use the device twin properties from Azure IoT Hub to set the delay between telemetry messages.
 
 ### Exercise 5: Handle device twin desired property Changes
 
@@ -685,13 +743,13 @@ In this exercise, you will modify the simulated device source code to include an
         }
     ```
 
-    Notice that the `OnDesiredPropertyChanged` event handler accepts a `desiredProperties` parameter of type `TwinCollection`. 
+    Notice that the **OnDesiredPropertyChanged** event handler accepts a **desiredProperties** parameter of type **TwinCollection**.
 
-    Notice that `if` the value of the `desiredProperties` parameter contains `telemetryDelay` (a device twin desired property), the code will assign the value of the device twin property to the `this._telemetryDelay` variable. You may recall that the `SendDeviceToCloudMessagesAsync` method include a `Task.Delay` call that uses the `this._telemetryDelay` variable to set the delay time between messages sent to IoT hub.
+    Notice that if the value of the **desiredProperties** parameter contains **telemetryDelay** (a device twin desired property), the code will assign the value of the device twin property to the **this._telemetryDelay** variable. You may recall that the **SendDeviceToCloudMessagesAsync** method include a **Task.Delay** call that uses the **this._telemetryDelay** variable to set the delay time between messages sent to IoT hub.
 
-    Notice the next block of code is used to report the current state of the device back up to Azure IoT Hub. This code calls the `DeviceClient.UpdateReportedPropertiesAsync` method and passes it a **TwinCollection** that contains the current state of the device properties. This is how the device reports back to IoT Hub that it received the device twin desired properties changed event, and has now updated its configuration accordingly. Note that it reports what the properties are now set to, not an echo of the desired properties. In the case where the reported properties sent from the device are different than the desired state that the device received, IoT Hub will maintain an accurate Device Twin that reflects the state of the device.
+    Notice the next block of code is used to report the current state of the device back up to Azure IoT Hub. This code calls the **DeviceClient.UpdateReportedPropertiesAsync** method and passes it a **TwinCollection** that contains the current state of the device properties. This is how the device reports back to IoT Hub that it received the device twin desired properties changed event, and has now updated its configuration accordingly. Note that it reports what the properties are now set to, not an echo of the desired properties. In the case where the reported properties sent from the device are different than the desired state that the device received, IoT Hub will maintain an accurate Device Twin that reflects the state of the device.
 
-    Now that the device can receive updates to the device twin desired properties from Azure IoT Hub, it also needs to be coded to configure its initial setup when the device starts up. To do this the device will need to load the current device twin desired properties from Azure IoT Hub, and configure itself accordingly. 
+    Now that the device can receive updates to the device twin desired properties from Azure IoT Hub, it also needs to be coded to configure its initial setup when the device starts up. To do this the device will need to load the current device twin desired properties from Azure IoT Hub, and configure itself accordingly.
 
 1. Locate the `// TODO 2` comment within the `RunAsync` method.
 
