@@ -6,9 +6,11 @@ using Microsoft.Azure.Devices.Provisioning.Client;
 using Microsoft.Azure.Devices.Provisioning.Client.Transport;
 using Microsoft.Azure.Devices.Shared;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ContainerDevice
 {
@@ -16,12 +18,16 @@ namespace ContainerDevice
     {
         // Azure Device Provisioning Service (DPS) ID Scope
         private static string dpsIdScope = "";
-        // Registration ID
-        private static string registrationId = "";
-        // Individual Enrollment Primary Key
-        private const string individualEnrollmentPrimaryKey = "";
-        // Individual Enrollment Secondary Key
-        private const string individualEnrollmentSecondaryKey = "";
+
+        // Certificate (PFX) File Name
+        private static string certificateFileName = "new-device.cert.pfx";
+
+        // Certificate (PFX) Password
+        private static string certificatePassword = "1234";
+        // NOTE: For the purposes of this example, the certificatePassword is
+        // hard coded. In a production device, the password will need to be stored
+        // in a more secure manner. Additionally, the certificate file (PFX) should
+        // be stored securely on a production device using a Hardware Security Module.
 
         private const string GlobalDeviceEndpoint = "global.azure-devices-provisioning.net";
 
@@ -30,38 +36,11 @@ namespace ContainerDevice
         private static DeviceClient deviceClient;
 
         // INSERT Main method below here
-        public static async Task Main(string[] args)
-        {
-            using (var security = new SecurityProviderSymmetricKey(registrationId,
-                                                                    individualEnrollmentPrimaryKey,
-                                                                    individualEnrollmentSecondaryKey))
-            using (var transport = new ProvisioningTransportHandlerAmqp(TransportFallbackType.TcpOnly))
-            {
-                ProvisioningDeviceClient provClient =
-                    ProvisioningDeviceClient.Create(GlobalDeviceEndpoint, dpsIdScope, security, transport);
 
-                using (deviceClient = await ProvisionDevice(provClient, security))
-                {
-                    await deviceClient.OpenAsync().ConfigureAwait(false);
-
-                    // INSERT Setup OnDesiredPropertyChanged Event Handling below here
-                    await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
-
-                    // INSERT Load Device Twin Properties below here
-                    var twin = await deviceClient.GetTwinAsync().ConfigureAwait(false);
-                    await OnDesiredPropertyChanged(twin.Properties.Desired, null);
-
-                    // Start reading and sending device telemetry
-                    Console.WriteLine("Start reading and sending device telemetry...");
-                    await SendDeviceToCloudMessagesAsync();
-
-                    await deviceClient.CloseAsync().ConfigureAwait(false);
-                }
-            }
-        }
+        // INSERT LoadProvisioningCertificate method below here
 
         // INSERT ProvisionDevice method below here
-        private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderSymmetricKey security)
+        private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderX509Certificate security)
         {
             var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
             Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
@@ -70,9 +49,9 @@ namespace ContainerDevice
                 throw new Exception($"DeviceRegistrationResult.Status is NOT 'Assigned'");
             }
 
-            var auth = new DeviceAuthenticationWithRegistrySymmetricKey(
+            var auth = new DeviceAuthenticationWithX509Certificate(
                 result.DeviceId,
-                security.GetPrimaryKey());
+                security.GetAuthenticationCertificate());
 
             return DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp);
         }
@@ -126,31 +105,6 @@ namespace ContainerDevice
         }
 
         // INSERT OnDesiredPropertyChanged method below here
-        private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
-        {
-            Console.WriteLine("Desired Twin Property Changed:");
-            Console.WriteLine($"{desiredProperties.ToJson()}");
-
-            // Read the desired Twin Properties
-            if (desiredProperties.Contains("telemetryDelay"))
-            {
-                string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
-                if (desiredTelemetryDelay != null)
-                {
-                    telemetryDelay = int.Parse(desiredTelemetryDelay);
-                }
-                // if desired telemetryDelay is null or unspecified, don't change it
-            }
-
-
-            // Report Twin Properties
-            var reportedProperties = new TwinCollection();
-            reportedProperties["telemetryDelay"] = telemetryDelay.ToString();
-            await deviceClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
-            Console.WriteLine("Reported Twin Properties:");
-            Console.WriteLine($"{reportedProperties.ToJson()}");
-        }
-    }
 
     internal class EnvironmentSensor
     {

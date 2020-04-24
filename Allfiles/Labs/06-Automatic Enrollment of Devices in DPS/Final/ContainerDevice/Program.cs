@@ -6,9 +6,11 @@ using Microsoft.Azure.Devices.Provisioning.Client;
 using Microsoft.Azure.Devices.Provisioning.Client.Transport;
 using Microsoft.Azure.Devices.Shared;
 using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ContainerDevice
 {
@@ -16,12 +18,16 @@ namespace ContainerDevice
     {
         // Azure Device Provisioning Service (DPS) ID Scope
         private static string dpsIdScope = "";
-        // Registration ID
-        private static string registrationId = "";
-        // Individual Enrollment Primary Key
-        private const string individualEnrollmentPrimaryKey = "";
-        // Individual Enrollment Secondary Key
-        private const string individualEnrollmentSecondaryKey = "";
+
+        // Certificate (PFX) File Name
+        private static string certificateFileName = "new-device.cert.pfx";
+
+        // Certificate (PFX) Password
+        private static string certificatePassword = "1234";
+        // NOTE: For the purposes of this example, the certificatePassword is
+        // hard coded. In a production device, the password will need to be stored
+        // in a more secure manner. Additionally, the certificate file (PFX) should
+        // be stored securely on a production device using a Hardware Security Module.
 
         private const string GlobalDeviceEndpoint = "global.azure-devices-provisioning.net";
 
@@ -32,9 +38,9 @@ namespace ContainerDevice
         // INSERT Main method below here
         public static async Task Main(string[] args)
         {
-            using (var security = new SecurityProviderSymmetricKey(registrationId,
-                                                                    individualEnrollmentPrimaryKey,
-                                                                    individualEnrollmentSecondaryKey))
+            X509Certificate2 certificate = LoadProvisioningCertificate();
+
+            using (var security = new SecurityProviderX509Certificate(certificate))
             using (var transport = new ProvisioningTransportHandlerAmqp(TransportFallbackType.TcpOnly))
             {
                 ProvisioningDeviceClient provClient =
@@ -60,8 +66,38 @@ namespace ContainerDevice
             }
         }
 
+        // INSERT LoadProvisioningCertificate method below here
+        private static X509Certificate2 LoadProvisioningCertificate()
+        {
+            var certificateCollection = new X509Certificate2Collection();
+            certificateCollection.Import(certificateFileName, certificatePassword, X509KeyStorageFlags.UserKeySet);
+
+            X509Certificate2 certificate = null;
+
+            foreach (X509Certificate2 element in certificateCollection)
+            {
+                Console.WriteLine($"Found certificate: {element?.Thumbprint} {element?.Subject}; PrivateKey: {element?.HasPrivateKey}");
+                if (certificate == null && element.HasPrivateKey)
+                {
+                    certificate = element;
+                }
+                else
+                {
+                    element.Dispose();
+                }
+            }
+
+            if (certificate == null)
+            {
+                throw new FileNotFoundException($"{certificateFileName} did not contain any certificate with a private key.");
+            }
+
+            Console.WriteLine($"Using certificate {certificate.Thumbprint} {certificate.Subject}");
+            return certificate;
+        }
+
         // INSERT ProvisionDevice method below here
-        private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderSymmetricKey security)
+        private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderX509Certificate security)
         {
             var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
             Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
@@ -70,9 +106,9 @@ namespace ContainerDevice
                 throw new Exception($"DeviceRegistrationResult.Status is NOT 'Assigned'");
             }
 
-            var auth = new DeviceAuthenticationWithRegistrySymmetricKey(
+            var auth = new DeviceAuthenticationWithX509Certificate(
                 result.DeviceId,
-                security.GetPrimaryKey());
+                security.GetAuthenticationCertificate());
 
             return DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp);
         }
