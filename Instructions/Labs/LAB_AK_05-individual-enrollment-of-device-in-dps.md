@@ -328,7 +328,7 @@ This is different than the earlier lab where a simulated device connected to Azu
     >
     > Open the **Manage enrollments** blade, click **Individual Enrollments**, click **sensor-thl-1000**. Copy the values and then paste as noted above.
 
-#### Task 2 - Add the provisioning code
+#### Task 2: Add the provisioning code
 
 In this task you will review the code that provisions the device via DPS and creates a DeviceClient instance that can be used to connect to the IoT Hub.
 
