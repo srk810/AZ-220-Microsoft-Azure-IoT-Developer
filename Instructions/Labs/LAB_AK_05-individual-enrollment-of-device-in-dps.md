@@ -444,11 +444,11 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
     await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
     ```
 
-    Next, you need to add the **OnDesiredPropertyChanged** method to the **Program** class.
+    The **SetDesiredPropertyUpdateCallbackAsync** method is used to set up the **DesiredPropertyUpdateCallback** event handler to receive device twin desired property changes. This code configures **deviceClient** to call a method named **OnDesiredPropertyChanged** when a device twin property change event is received.
+
+    Now that the **SetDesiredPropertyUpdateCallbackAsync** method is in place to set up the event handler, we need to create the **OnDesiredPropertyChanged** method that it calls.
 
 1. To complete the setup of the event handler, enter the following code beneath the `// INSERT OnDesiredPropertyChanged method below here` comment:
-
-    > **Note**: You can place this code below the `RunAsync` method (that way it will be near the other code that you're updating).
 
     ```csharp
     private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
@@ -462,7 +462,7 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
             string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
             if (desiredTelemetryDelay != null)
             {
-                this._telemetryDelay = int.Parse(desiredTelemetryDelay);
+                telemetryDelay = int.Parse(desiredTelemetryDelay);
             }
             // if desired telemetryDelay is null or unspecified, don't change it
         }
@@ -476,7 +476,13 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
     }
     ```
 
-    Notice that the **OnDesiredPropertyChanged** method includes the code to read the device twin Desired Properties, configures the **telemetryDelay** variable, and then reports the Reported Properties back to the device twin to tell Azure IoT Hub what the current state of the simulated device is configured to.
+    Notice that the **OnDesiredPropertyChanged** event handler accepts a **desiredProperties** parameter of type **TwinCollection**.
+
+    Notice that if the value of the **desiredProperties** parameter contains **telemetryDelay** (a device twin desired property), the code will assign the value of the device twin property to the **telemetryDelay** variable. You may recall that the **SendDeviceToCloudMessagesAsync** method include a **Task.Delay** call that uses the **telemetryDelay** variable to set the delay time between messages sent to IoT hub.
+
+    Notice the next block of code is used to report the current state of the device back up to Azure IoT Hub. This code calls the **DeviceClient.UpdateReportedPropertiesAsync** method and passes it a **TwinCollection** that contains the current state of the device properties. This is how the device reports back to IoT Hub that it received the device twin desired properties changed event, and has now updated its configuration accordingly. Note that it reports what the properties are now set to, not an echo of the desired properties. In the case where the reported properties sent from the device are different than the desired state that the device received, IoT Hub will maintain an accurate Device Twin that reflects the state of the device.
+
+    Now that the device can receive updates to the device twin desired properties from Azure IoT Hub, it also needs to be coded to configure its initial setup when the device starts up. To do this the device will need to load the current device twin desired properties from Azure IoT Hub, and configure itself accordingly.
 
 1. In the **Main** method, locate the `// INSERT Load Device Twin Properties below here` comment.
 
