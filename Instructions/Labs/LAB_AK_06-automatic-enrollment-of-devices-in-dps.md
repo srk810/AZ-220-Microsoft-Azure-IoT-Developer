@@ -461,10 +461,10 @@ In this task, you will complete the following:
     ```xml
             <ItemGroup>
                 <None Update="new-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-                <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.*" />
-                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.*" />
-                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.*" />
-                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.*" />
+                <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.21.1" />
+                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.1.8" />
+                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.1.9" />
+                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.1.6" />
             </ItemGroup>
         </Project>
     ```
