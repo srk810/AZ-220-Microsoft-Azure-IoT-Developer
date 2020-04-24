@@ -183,7 +183,7 @@ The Visual Studio Code and Azure CLI tools both support an Azure IoT extension t
 1. At the command prompt, to install the Azure CLI extension for IoT, enter the following command:
 
     ```bash
-    az extension add --name azure-cli-iot-ext
+    az extension add --name azure-iot
     ```
 
 #### Task 3: Verify Development Environment Setup
@@ -209,7 +209,7 @@ You should verify that the development environment has been set up successfully.
     telemetry                           1.0.4
 
     Extensions:
-    azure-cli-iot-ext                   0.8.9
+    azure-iot                           0.9.1
     ```
 
 1. Validate the **.NET Core 3.x SDK** installation by running the following command that will output the version number for the currently installed version of the .NET Core SDK.
