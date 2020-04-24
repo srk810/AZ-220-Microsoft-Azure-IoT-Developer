@@ -165,7 +165,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. On the left-side menu under **Settings**, click **Manage enrollments**.
 
-1. At the top of the pane, click **+ Add individual enrollment**.
+1. At the top of the **Manage enrollments** pane, click **+ Add individual enrollment**.
 
 1. On the **Add Enrollment** blade, in the **Mechanism** dropdown, click **Symmetric Key**.
 
@@ -179,7 +179,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. In the **Registration ID** field, to specify the Registration ID to use for the device enrollment within DPS, enter **sensor-thl-1000**
 
-    By default, the Registration ID will be used as the IoT Hub Device ID when the device is provisioned from the enrollment. If these values need to be different, then enter the required IoT Hub Device ID in that field.
+    By default, the Registration ID will be used as the IoT Hub Device ID when the device is provisioned from the enrollment. When these values need to be different, you can enter the required IoT Hub Device ID in that field.
 
 1. Leave the **IoT Hub Device ID** field blank.
 
@@ -187,11 +187,11 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Leave the **IoT Edge device** field set to **False**.
 
-   The new device will not be an edge device. Working with IoT Edge devices will be discussed later in the course.
+    The new device will not be an edge device. Working with IoT Edge devices will be discussed later in the course.
 
 1. Leave the **Select how you want to assign devices to hubs** field set to **Evenly weighted distribution**.
 
-   As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. There are four supported allocation policies:
+    As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. There are four supported allocation policies:
 
     * **Lowest latency**: Devices are provisioned to an IoT hub based on the hub with the lowest latency to the device.
     * **Evenly weighted distribution (default)**: Linked IoT hubs are equally likely to have devices provisioned to them. This is the default setting. If you are provisioning devices to only one IoT hub, you can keep this setting. 
@@ -200,7 +200,7 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **iot-az220-training-{your-id}** IoT hub that you created.
 
-   This field is used to specify the IoT Hub(s) that your device can be assigned to.
+    This field is used to specify the IoT Hub(s) that your device can be assigned to.
 
 1. Leave the **Select how you want device data to be handled on re-provisioning** field set to the default value of **Re-provision and migrate data**.
 
@@ -208,9 +208,9 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     * **Re-provision and migrate data**: This policy is the default for new enrollment entries. This policy takes action when devices associated with the enrollment entry submit a new provisioning request. Depending on the enrollment entry configuration, the device may be reassigned to another IoT hub. If the device is changing IoT hubs, the device registration with the initial IoT hub will be removed. All device state information from that initial IoT hub will be migrated over to the new IoT hub.
     * **Re-provision and reset to initial config**: This policy is often used for a factory reset without changing IoT hubs. This policy takes action when devices associated with the enrollment entry submit a new provisioning request. Depending on the enrollment entry configuration, the device may be reassigned to another IoT hub. If the device is changing IoT hubs, the device registration with the initial IoT hub will be removed. The initial configuration data that the provisioning service instance received when the device was provisioned is provided to the new IoT hub.
-    * **Never reprovision**: The device is never reassigned to a different hub. This policy is provided for managing backwards compatibility.
+    * **Never re-provision**: The device is never reassigned to a different hub. This policy is provided for managing backwards compatibility.
 
-1. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to specify a property named `telemetryDelay` with the value of `"2"`.
+1. In the **Initial Device Twin State** field, to specify a property named `telemetryDelay` with the value of `"2"`, update the JSON object as follows:
 
     The final JSON will be like the following:
 
@@ -235,19 +235,19 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 #### Task 2: Review Enrollment and Obtain Authentication Keys
 
-1. On the **Manage enrollments** blade, to view the list of individual device enrollments, click **individual enrollments**.
+1. On the **Manage enrollments** pane, to view the list of individual device enrollments, click **individual enrollments**.
 
     As you may recall, you will be using the enrollment record to obtain the Authentication keys.
 
-1. Under Individual Enrollments, click **sensor-thl-1000**.
+1. Under **REGISTRATION ID**, click **sensor-thl-1000**.
 
-    This enables you to view the enrollment details for the individual enrollment that you just created.
+    This blade enables you to view the enrollment details for the individual enrollment that you just created.
 
 1. Locate the **Authentication Type** section, and notice that **Mechanism** is set to **Symmetric Key**.
 
-1. Copy the **Primary Key** and **Secondary Key** values for this device enrollment (there is a button to the right of each textbox for this purpose), and save them for reference later.
+1. Copy the **Primary Key** and **Secondary Key** values for this device enrollment (there is a button to the right of each textbox for this purpose), and then save them for reference later.
 
-    These are the authentication keys for the device to authenticate with the service.
+    These are the authentication keys for the device to authenticate with the IoT Hub service.
 
 1. Locate the **Initial device twin State**, and notice the JSON for the device twin Desired State contains the `telemetryDelay` property set to the value of `"2"`.
 
@@ -255,11 +255,11 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 ### Exercise 3: Configure Simulated Device
 
-In this exercise, you will configure a Simulated Device written in C# to connect to Azure IoT using the individual enrollment created in the previous unit. You will also add code to the Simulated Device that will read and update device configuration based on the device twin within Azure IoT Hub.
+In this exercise, you will configure a Simulated Device written in C# to connect to Azure IoT using the individual enrollment created in the previous exercise. You will also add code to the Simulated Device that will read and update device configuration based on the device twin within Azure IoT Hub.
 
-The simulated device that you create in this exercise represents an IoT Device that will be located within a shipping container/box, and will be used to monitor Contoso products while they are in transit. The sensor telemetry from the device that will be sent to Azure IoT Hub includes Temperature, Humidity, Pressure, and Latitude/Longitude coordinates of the container. The device is part of the overall asset tracking solution.
+The simulated device that you create in this exercise represents an IoT device that will be located within a shipping container/box, and will be used to monitor Contoso products while they are in transit. The sensor telemetry from the device that will be sent to Azure IoT Hub includes Temperature, Humidity, Pressure, and Latitude/Longitude coordinates of the container. The device is part of the overall asset tracking solution.
 
-This is different than the earlier lab where a simulated device connected to Azure because in that lab, you used a shared access key to authenticate, which does not require device provisioning, but also does not give the provisioning management benefits (such as device twins), and requires fairly large distribution and management of a shared key.  In this lab, you are provisioning a unique device through the Device Provisioning Service.
+> **Note**: You may have the impression that creating this simulated device is a bit redundant with what you created in the previous lab, but the attestation mechanism in that you implement in this lab is quite different from what you did previously. In the previous lab, you used a shared access key to authenticate, which does not require device provisioning, but also does not give the provisioning management benefits (such as leveraging device twins), and it requires fairly large distribution and management of a shared key. In this lab, you are provisioning a unique device through the Device Provisioning Service.
 
 #### Task 1: Create the Simulated Device
 
@@ -284,23 +284,25 @@ This is different than the earlier lab where a simulated device connected to Azu
 
     Verify that the selected terminal shell is the windows command prompt.
 
-1. To restore all the application NuGet packages via the command-line, in the Terminal view, at the command prompt, enter the following command:
+1. At the Terminal command prompt, to restore all the application NuGet packages, enter the following command:
 
     ```cmd/sh
     dotnet restore
     ```
 
-1. In the Visual Studio Code Explorer pane, click **Program.cs**.
+1. In the Visual Studio Code **EXPLORER** pane, click **Program.cs**.
 
-1. In the code editor, near the top of the Program class, locate the **dpsIdScope** variable, and then update the assigned value using the ID Scope value that you copied from the Device Provisioning Service in the Azure portal.
+1. In the code editor, near the top of the Program class, locate the **dpsIdScope** variable.
+
+1. Update the assigned value using the ID Scope that you copied from the Device Provisioning Service.
 
     > **Note**: If you don't have the value of ID Scope available to you, you can find it on the Overview blade of the DPS service (in the Azure portal).
 
-1. Locate the **registrationId** variable, and replace the value with **sensor-thl-1000**
+1. Locate the **registrationId** variable, and update the assigned value using **sensor-thl-1000**
 
     This variable represents the **Registration ID** value for the individual enrollment that you created in the Device Provisioning Service.
 
-1. Locate the **individualEnrollmentPrimaryKey** and **individualEnrollmentSecondaryKey** variables, and replace their values with the **Primary Key** and **Secondary Key** values that you saved when configuring the individual enrollment for the simulated device.
+1. Update the **individualEnrollmentPrimaryKey** and **individualEnrollmentSecondaryKey** variables using the **Primary Key** and **Secondary Key** values that you saved.
 
     > **Note**: If you don't have these Key values available, you can copy them from the Azure portal as follows -
     >
@@ -308,11 +310,11 @@ This is different than the earlier lab where a simulated device connected to Azu
 
 #### Task 2: Add the provisioning code
 
-In this task you will review the code that provisions the device via DPS and creates a DeviceClient instance that can be used to connect to the IoT Hub.
+In this task, you will implement the code that provisions the device via DPS and creates a DeviceClient instance that can be used to connect to the IoT Hub.
 
-1. In the Visual Studio Code Explorer pane, to open that application code for review, click **Program.cs**.
+1. Take a minute to scan through the code in the **Program.cs** file. 
 
-1. Take a look at the overall layout of the application and notice that it is similar to the **CaveDevice** application created in an earlier lab in that there are:
+    The overall layout of the **ContainerDevice** application is similar to the **CaveDevice** application that you created in Lab 4. Notice that both applications include the following:
 
     * Using statements
     * Namespace definition
