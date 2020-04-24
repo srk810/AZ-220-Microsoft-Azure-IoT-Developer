@@ -254,14 +254,23 @@ In this exercise, you will create a simulated device application using Visual St
 
     This command creates a **Program.cs** file in your folder, along with a project file.
 
+<<<<<<< HEAD
 1. To install the Azure IoT Device SDK and code libraries required for your simulated device app, enter the following commands:
+=======
+1. To install the code libraries required for your device app, enter the following command:
+>>>>>>> 2c22db2dae2d5e0381d12a78c459317ebeb120f8
 
     ```bash
     dotnet add package Microsoft.Azure.Devices.Client
-    dotnet add package Newtonsoft.Json
     ```
 
+<<<<<<< HEAD
     > **Note**: The **Microsoft.Azure.Devices.Client** package contains the Azure IoT Device SDK for .NET. The **Newtonsoft.Json** package contains APIs that aid in the creation and manipulation of Javascript Object Notation (JSON) data. JSON is often used in device messaging.
+=======
+    > **Note**: The **Microsoft.Azure.Devices.Client** package contains the Azure IoT Device SDK for .NET and has the **Newtonsoft.Json** package as a dependency. The **Newtonsoft.Json** package contains APIs that aid in the creation and manipulation of JSON.
+
+    You will build and test your simulated device app in the next task.
+>>>>>>> 2c22db2dae2d5e0381d12a78c459317ebeb120f8
 
 1. To ensure all of the application dependencies are downloaded, enter the following command
 
@@ -310,7 +319,7 @@ In this task, you will use Visual Studio Code to review the contents and purpose
         </PropertyGroup>
 
         <ItemGroup>
-            <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.25.0" />
+            <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.*" />
             <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
         </ItemGroup>
 
