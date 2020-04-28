@@ -322,7 +322,7 @@ In this task, you will be creating a security module twin manually.
 
 1. In the Essentials area near the top of the blade, to the right of **Hostname**, click **Copy to clipboard**, and then save the value for later.
 
-    > **Note**: The IoT Hub Hostname looks similar to: iot-az220-training-CAH102119.azure-devices.net
+    > **Note**: The IoT Hub Hostname looks similar to: iot-az220-training-cah102119.azure-devices.net
 
 ### Exercise 5: Deploy Azure Security Center for IoT C# Security Agent
 

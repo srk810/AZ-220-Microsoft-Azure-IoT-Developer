@@ -126,20 +126,20 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
 > **Note**: If you have not completed lab 7 of this course, do that now.
 
-#### Task 1: Start the "sensor-v-3000" app in Visual Studio Code
+#### Task 1: Start the "VibrationSensor" app in Visual Studio Code
 
 1. Open Visual Studio Code.
 
 1. On the **File** menu, click **Open Folder**.
 
-1. In the Open Folder dialog, navigate to the **sensor-v-3000** folder, and then click **Select Folder**.
+1. In the Open Folder dialog, navigate to the **VibrationSensor** folder, and then click **Select Folder**.
 
-    You should see the Program.cs and sensor-v-3000.csproj files listed in the EXPLORER pane.
+    You should see the Program.cs and VibrationSensor.csproj files listed in the EXPLORER pane.
 
-    You may want to verify that the connection string for your device is assigned to the `s_deviceConnectionString` variable in the Program.cs file. If you completed Lab 7, you should see a variable assignment in your code that is similar to the following:
+    You may want to verify that the connection string for your device is assigned to the `deviceConnectionString` variable in the Program.cs file. If you completed Lab 7, you should see a variable assignment in your code that is similar to the following:
 
     ```csharp
-    s_deviceConnectionString = "HostName=iot-az220-training-CAH200509.azure-devices.net;DeviceId=VibrationSensorId;SharedAccessKey=nSUbphUKsS1jEd7INrEtmVWZesMBDIxzjVe4jn01KJI=";
+    deviceConnectionString = "HostName=iot-az220-training-cah200509.azure-devices.net;DeviceId=sensor-v-3000;SharedAccessKey=nSUbphUKsS1jEd7INrEtmVWZesMBDIxzjVe4jn01KJI=";
     ```
 
 1. On the **View** menu, click **Terminal**.
@@ -188,7 +188,7 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
 1. On the **Create Namespace** blade, under **Name**, enter **vibrationNamespace** plus a unique identifier
 
-    You can use your initials and today's date to make the Name unique - i.e. **vibrationNamespaceCAH191212**
+    You can use your initials and today's date to make the Name unique - i.e. **vibrationNamespacecah191212**
 
     This name must be globally unique.
 
@@ -274,7 +274,7 @@ In this task we will add a message route to our IoT hub that will send telemetry
 
 1. Under **Event hub namespace**, select the namespace you created earlier.
 
-    It should be similar to the following: **vibrationNamespaceCAH191212**
+    It should be similar to the following: **vibrationnamespacecah191212**
 
 1. Under **Event hub instance**, click **vibrationeventhubinstance**.
 
