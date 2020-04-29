@@ -32,21 +32,6 @@ namespace ContainerDevice
         // INSERT Main method below here
 
         // INSERT ProvisionDevice method below here
-        private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProvider security)
-        {
-            var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
-            Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
-            if (result.Status != ProvisioningRegistrationStatusType.Assigned)
-            {
-                throw new Exception($"DeviceRegistrationResult.Status is NOT 'Assigned'");
-            }
-
-            var auth = new DeviceAuthenticationWithRegistrySymmetricKey(
-                result.DeviceId,
-                (security as SecurityProviderSymmetricKey).GetPrimaryKey());
-
-            return DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp);
-        }
 
         private static async Task SendDeviceToCloudMessagesAsync(DeviceClient deviceClient)
         {
@@ -97,6 +82,7 @@ namespace ContainerDevice
         }
 
         // INSERT OnDesiredPropertyChanged method below here
+        
     }
 
     internal class EnvironmentSensor
