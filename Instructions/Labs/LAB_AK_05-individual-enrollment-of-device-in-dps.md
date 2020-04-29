@@ -271,15 +271,22 @@ The simulated device that you create in this exercise represents an IoT device t
 
     The **ID Scope** will be similar to this value: `0ne0004E52G`
 
-1. Using **Visual Studio Code**, open the Starter folder for Lab 5.
+1. Open **Visual Studio Code**.
 
-    Again, this is referring to the lab resources files that you downloaded when setting up your development environment in lab 3. The folder path is:
+1. On the **View** menu, click **Open Folder** and then navigate to the Starter folder for Lab 5.
+
+    The Lab 5 Starter folder is part of the lab resources files that you downloaded when setting up your development environment in lab 3. The folder path is:
 
     * Allfiles
       * Labs
           * 05-Individual Enrollment of a Device in DPS
             * Starter
 
+1. In the **Open Folder** dialog, click **ContainerDevice**, and then click **Select Folder**.
+
+    > **Note**: If you are prompted to 
+    The ContainerDevice folder is a sub-folder of the Lab 5 Starter folder. It contains a Program.cs file and a ContainerDevice.csproj file.
+ 
 1. On the **View** menu, click **Terminal**.
 
     Verify that the selected terminal shell is the windows command prompt.
@@ -294,7 +301,7 @@ The simulated device that you create in this exercise represents an IoT device t
 
 1. In the code editor, near the top of the Program class, locate the **dpsIdScope** variable.
 
-1. Update the assigned value using the ID Scope that you copied from the Device Provisioning Service.
+1. Update the value assigned to **dpsIdScope** using the ID Scope that you copied from the Device Provisioning Service.
 
     > **Note**: If you don't have the value of ID Scope available to you, you can find it on the Overview blade of the DPS service (in the Azure portal).
 
@@ -321,7 +328,9 @@ In this task, you will implement the code that provisions the device via DPS and
       * Program class - responsible for connecting to Azure IoT and sending telemetry
       * EnvironmentSensor class - responsible for generating sensor data
 
-1. To add the implementation of the **Main** method, insert the following code beneath the `// INSERT Main method below here` comment:
+1. In the code editor, locate the `// INSERT Main method below here` comment.
+
+1. To create the **Main** method for your simulated device application, enter the following code:
 
     ```csharp
     public static async Task Main(string[] args)
@@ -353,11 +362,12 @@ In this task, you will implement the code that provisions the device via DPS and
     }
     ```
 
-    Although the **Main** method serves a similar purpose to that in the earlier **CaveDevice** app, it is a little more complex. Whereas you previously used a device connection string to directly connect to an IoT Hub, this time you need to first provision the device (or, for subsequent connections, confirm the device is still provisioned), then retrieve the appropriate IoT Hub connection details.
+    Although the Main method in this application serves a similar purpose to the Main method of the CaveDevice application that you created in a previous lab, it is a little more complex. In the CaveDevice app, you used a device connection string to directly connect to an IoT Hub, this time you need to first provision the device (or, for subsequent connections, confirm the device is still provisioned), then retrieve the appropriate IoT Hub connection details.
 
     To connect to DPS, you not only require the **dpsScopeId** and the **GlobalDeviceEndpoint** (defined in the variables), you also need to specify the following:
 
     * **security** - the method used for authenticating the enrollment. Earlier you configured the individual enrollment to use symmetric keys, therefore the **SecurityProviderSymmetricKey** is the logical choice. As you might expect, there are variants of the providers that support X509 and TPM as well.
+
     * **transport** - the transport protocol used by the provisioned device. In this instance, the AMQP handler was chosen (**ProvisioningTransportHandlerAmqp**). Of course, HTTP and MQTT handlers are also available.
 
     Once the **security** and **transport** variables are populated, you create an instance of the **ProvisioningDeviceClient**. You will use this instance to register the device and create a **DeviceClient** in the **ProvisionDevice** method, which you will add shortly.
