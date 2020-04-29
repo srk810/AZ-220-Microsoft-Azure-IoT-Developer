@@ -185,359 +185,204 @@ In this exercise, you will:
 * build the conveyor belt simulator
 * send telemetry messages to the IoT Hub created in the previous unit
 
-#### Task 1: Create a simulated device that generates telemetry
+#### Task 1: Open a simulated device that generates telemetry
 
-1. Open Visual Studio Code, and then verify that the C# Extension is installed.
+1. In File Explorer, navigate to the Starter folder for lab 7 (Device Message Routing).
 
-    You set up the development environment in lab 3 of this course, but it's worth quickly double-checking before you start building your device app. 
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
 
-    To use C# in Visual Studio Code, both [.NET Core](https://dotnet.microsoft.com/download) and the [C# extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp) must be installed. You can open the Visual Studio Code Extensions pane using the left-side toolbar by clicking the 5th button from the top.
+    * Allfiles
+      * Labs
+          * 07-Device Message Routing
+            * Starter
+              * VibrationDevice
+
+1. Open **Visual Studio Code**.
+
+1. On the **File** menu, click **Open Folder**
+
+1. In the Open Folder dialog, navigate to the **07-Device Message Routing** folder.
+
+1. Navigate to the **Starter** folder.
+
+1. Click **VibrationDevice**, and then click **Select Folder**.
+
+    You should see the following files listed in the EXPLORER pane of Visual Studio Code:
+
+    * Program.cs
+    * VibrationDevice.csproj
+
+1. Open the **Program.cs** file.
+
+    A cursory glance will reveal that the **VibrationDevice** application is very similar to those used in the preceding labs. This version of the application uses symmetric Key authentication, sends both telemetry and logging messages to the IoT Hub, and has a more complex sensor implementation.
 
 1. On the **Terminal** menu, click **New Terminal**.
 
     Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
   
-1. At the terminal command prompt, to create a directory named "VibrationDevice" and change the current directory to that directory, enter the following commands:
+1. At the terminal command prompt, to verify the application builds, enter the following command:
 
    ```bash
-   mkdir VibrationDevice
-   cd VibrationDevice
+   dotnet build
    ```
 
-1. To create a new .NET console application. enter the following command:
+    The output will be similar to:
 
-    ```bash
-    dotnet new console
+    ```text
+    ❯ dotnet build
+    Microsoft (R) Build Engine version 16.5.0+d4cbfca49 for .NET Core
+    Copyright (C) Microsoft Corporation. All rights reserved.
+
+    Restore completed in 39.27 ms for D:\Az220-Code\AllFiles\Labs\07-Device Message Routing\Starter\VibrationDevice\VibrationDevice.csproj.
+    VibrationDevice -> D:\Az220-Code\AllFiles\Labs\07-Device Message Routing\Starter\VibrationDevice\bin\Debug\netcoreapp3.1\VibrationDevice.dll
+
+    Build succeeded.
+        0 Warning(s)
+        0 Error(s)
+
+    Time Elapsed 00:00:01.16
     ```
 
-    This command creates a **Program.cs** file in your folder, along with a project file.
+In the next task, you will configure the connection string and review the application.
 
-1. To install the code libraries required for your device app, enter the following commands:
-
-    ```bash
-    dotnet add package Microsoft.Azure.Devices.Client
-    dotnet add package Newtonsoft.Json
-    ```
-
-    You will build and test your simulated device app in the next task.
-
-#### Task 2: Add Code to Send Telemetry
+#### Task 2: Configure connection and review code
 
 The simulated device app that you build in this task simulates an IoT device that is monitoring the conveyor belt. The app will simulate sensor readings and report vibration sensor data every two seconds.
 
-1. On the Visual Studio Code **File** menu, click **Open Folder**.
+1. Return to **Visual Studio Code**, and ensure the **Program.cs** file is open.
 
-    You will use the folder path listed within the Terminal command prompt to locate your project folder.
-  
-1. In the Open Folder dialog, navigate to the directory path displayed within the Terminal command prompt, click **sensor-v-3000**, and then click **Select Folder**.
-
-    If you are prompted to load required assetts, click **Yes**.
-
-    The Visual Studio Code EXPLORER pane should now be open. If it is not, use the left-side toolbar to open the EXPLORER pane. You can hover your mouse pointer over the toolbar buttons to display the button names.
-
-1. In the EXPLORER pane, click **Program.cs**.
-
-1. In the code editor view, delete the default contents of the Program.cs file.
-
-    The default contents were created when you ran the `dotnet new console` command in the previous task.
-
-1. To create the code for your simulated device, paste the following code into the empty Program.cs file:
+1. Find the following line of code:
 
     ```csharp
-    // Copyright (c) Microsoft. All rights reserved.
-    // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-    using System;
-    using Microsoft.Azure.Devices.Client;
-    using Newtonsoft.Json;
-    using System.Text;
-    using System.Threading.Tasks;
-
-    namespace VibrationDevice
-    {
-        class Program
-        {
-            // Telemetry globals.
-            private const int intervalInMilliseconds = 2000;                                // Time interval required by wait function.
-            private static readonly int intervalInSeconds = intervalInMilliseconds / 1000;  // Time interval in seconds.
-
-            // Conveyor belt globals.
-            enum SpeedEnum
-            {
-                stopped,
-                slow,
-                fast
-            }
-            private static int packageCount = 0;                                        // Count of packages leaving the conveyor belt.
-            private static SpeedEnum beltSpeed = SpeedEnum.stopped;                     // Initial state of the conveyor belt.
-            private static readonly double slowPackagesPerSecond = 1;                   // Packages completed at slow speed/ per second
-            private static readonly double fastPackagesPerSecond = 2;                   // Packages completed at fast speed/ per second
-            private static double beltStoppedSeconds = 0;                               // Time the belt has been stopped.
-            private static double temperature = 60;                                     // Ambient temperature of the facility.
-            private static double seconds = 0;                                          // Time conveyor belt is running.
-
-            // Vibration globals.
-            private static double forcedSeconds = 0;                                    // Time since forced vibration started.
-            private static double increasingSeconds = 0;                                // Time since increasing vibration started.
-            private static double naturalConstant;                                      // Constant identifying the severity of natural vibration.
-            private static double forcedConstant = 0;                                   // Constant identifying the severity of forced vibration.
-            private static double increasingConstant = 0;                               // Constant identifying the severity of increasing vibration.
-
-            // IoT Hub global variables.
-            private static DeviceClient s_deviceClient;
-
-            // The device connection string to authenticate the device with your IoT hub.
-            private readonly static string s_deviceConnectionString = "<your device connection string>";
-
-            private static void colorMessage(string text, ConsoleColor clr)
-            {
-                Console.ForegroundColor = clr;
-                Console.WriteLine(text);
-                Console.ResetColor();
-            }
-            private static void greenMessage(string text)
-            {
-                colorMessage(text, ConsoleColor.Green);
-            }
-
-            private static void redMessage(string text)
-            {
-                colorMessage(text, ConsoleColor.Red);
-            }
-
-            // Async method to send simulated telemetry.
-            private static async void SendDeviceToCloudMessagesAsync(Random rand)
-            {
-                // Simulate the vibration telemetry of a conveyor belt.
-                double vibration;
-
-                while (true)
-                {
-                    // Randomly adjust belt speed.
-                    switch (beltSpeed)
-                    {
-                        case SpeedEnum.fast:
-                            if (rand.NextDouble() < 0.01)
-                            {
-                                beltSpeed = SpeedEnum.stopped;
-                            }
-                            if (rand.NextDouble() > 0.95)
-                            {
-                                beltSpeed = SpeedEnum.slow;
-                            }
-                            break;
-
-                        case SpeedEnum.slow:
-                            if (rand.NextDouble() < 0.01)
-                            {
-                                beltSpeed = SpeedEnum.stopped;
-                            }
-                            if (rand.NextDouble() > 0.95)
-                            {
-                                beltSpeed = SpeedEnum.fast;
-                            }
-                            break;
-
-                        case SpeedEnum.stopped:
-                            if (rand.NextDouble() > 0.75)
-                            {
-                                beltSpeed = SpeedEnum.slow;
-                            }
-                            break;
-                    }
-
-                    // Set vibration levels.
-                    if (beltSpeed == SpeedEnum.stopped)
-                    {
-                        // If the belt is stopped, all vibration comes to a halt.
-                        forcedConstant = 0;
-                        increasingConstant = 0;
-                        vibration = 0;
-
-                        // Record how much time the belt is stopped, in case we need to send an alert.
-                        beltStoppedSeconds += intervalInSeconds;
-                    }
-                    else
-                    {
-                        // Conveyor belt is running.
-                        beltStoppedSeconds = 0;
-
-                        // Check for random starts in unwanted vibrations.
-
-                        // Check forced vibration.
-                        if (forcedConstant == 0)
-                        {
-                            if (rand.NextDouble() < 0.1)
-                            {
-                                // Forced vibration starts.
-                                forcedConstant = 1 + 6 * rand.NextDouble();             // A number between 1 and 7.
-                                if (beltSpeed == SpeedEnum.slow)
-                                    forcedConstant /= 2;                                // Lesser vibration if slower speeds.
-                                forcedSeconds = 0;
-                                redMessage($"Forced vibration starting with severity: {Math.Round(forcedConstant, 2)}");
-                            }
-                        }
-                        else
-                        {
-                            if (rand.NextDouble() > 0.99)
-                            {
-                                forcedConstant = 0;
-                                greenMessage("Forced vibration stopped");
-                            }
-                            else
-                            {
-                                redMessage($"Forced vibration: {Math.Round(forcedConstant, 1)} started at: {DateTime.Now.ToShortTimeString()}");
-                            }
-                        }
-
-                        // Check increasing vibration.
-                        if (increasingConstant == 0)
-                        {
-                            if (rand.NextDouble() < 0.05)
-                            {
-                                // Increasing vibration starts.
-                                increasingConstant = 100 + 100 * rand.NextDouble();     // A number between 100 and 200.
-                                if (beltSpeed == SpeedEnum.slow)
-                                    increasingConstant *= 2;                            // Longer period if slower speeds.
-                                increasingSeconds = 0;
-                                redMessage($"Increasing vibration starting with severity: {Math.Round(increasingConstant, 2)}");
-                            }
-                        }
-                        else
-                        {
-                            if (rand.NextDouble() > 0.99)
-                            {
-                                increasingConstant = 0;
-                                greenMessage("Increasing vibration stopped");
-                            }
-                            else
-                            {
-                                redMessage($"Increasing vibration: {Math.Round(increasingConstant, 1)} started at: {DateTime.Now.ToShortTimeString()}");
-                            }
-                        }
-
-                        // Apply the vibrations, starting with natural vibration.
-                        vibration = naturalConstant * Math.Sin(seconds);
-
-                        if (forcedConstant > 0)
-                        {
-                            // Add forced vibration.
-                            vibration += forcedConstant * Math.Sin(0.75 * forcedSeconds) * Math.Sin(10 * forcedSeconds);
-                            forcedSeconds += intervalInSeconds;
-                        }
-
-                        if (increasingConstant > 0)
-                        {
-                            // Add increasing vibration.
-                            vibration += (increasingSeconds / increasingConstant) * Math.Sin(increasingSeconds);
-                            increasingSeconds += intervalInSeconds;
-                        }
-                    }
-
-                    // Increment the time since the conveyor belt app started.
-                    seconds += intervalInSeconds;
-
-                    // Count the packages that have completed their journey.
-                    switch (beltSpeed)
-                    {
-                        case SpeedEnum.fast:
-                            packageCount += (int)(fastPackagesPerSecond * intervalInSeconds);
-                            break;
-
-                        case SpeedEnum.slow:
-                            packageCount += (int)(slowPackagesPerSecond * intervalInSeconds);
-                            break;
-
-                        case SpeedEnum.stopped:
-                            // No packages!
-                            break;
-                    }
-
-                    // Randomly vary ambient temperature.
-                    temperature += rand.NextDouble() - 0.5d;
-
-                    // Create two messages:
-                    // 1. Vibration telemetry only, that is routed to Azure Stream Analytics.
-                    // 2. Logging information, that is routed to an Azure storage account.
-
-                    // Create the telemetry JSON message.
-                    var telemetryDataPoint = new
-                    {
-                        vibration = Math.Round(vibration, 2),
-                    };
-                    var telemetryMessageString = JsonConvert.SerializeObject(telemetryDataPoint);
-                    var telemetryMessage = new Message(Encoding.ASCII.GetBytes(telemetryMessageString));
-
-                    // Add a custom application property to the message. This is used to route the message.
-                    telemetryMessage.Properties.Add("sensorID", "VSTel");
-
-                    // Send an alert if the belt has been stopped for more than five seconds.
-                    telemetryMessage.Properties.Add("beltAlert", (beltStoppedSeconds > 5) ? "true" : "false");
-
-                    Console.WriteLine($"Telemetry data: {telemetryMessageString}");
-
-                    // Send the telemetry message.
-                    await s_deviceClient.SendEventAsync(telemetryMessage);
-                    greenMessage($"Telemetry sent {DateTime.Now.ToShortTimeString()}");
-
-                    // Create the logging JSON message.
-                    var loggingDataPoint = new
-                    {
-                        vibration = Math.Round(vibration, 2),
-                        packages = packageCount,
-                        speed = beltSpeed.ToString(),
-                        temp = Math.Round(temperature, 2),
-                    };
-                    var loggingMessageString = JsonConvert.SerializeObject(loggingDataPoint);
-                    var loggingMessage = new Message(Encoding.ASCII.GetBytes(loggingMessageString));
-
-                    // Add a custom application property to the message. This is used to route the message.
-                    loggingMessage.Properties.Add("sensorID", "VSLog");
-
-                    // Send an alert if the belt has been stopped for more than five seconds.
-                    loggingMessage.Properties.Add("beltAlert", (beltStoppedSeconds > 5) ? "true" : "false");
-
-                    Console.WriteLine($"Log data: {loggingMessageString}");
-
-                    // Send the logging message.
-                    await s_deviceClient.SendEventAsync(loggingMessage);
-                    greenMessage("Log data sent\n");
-
-                    await Task.Delay(intervalInMilliseconds);
-                }
-            }
-
-            private static void Main(string[] args)
-            {
-                Random rand = new Random();
-                colorMessage("Vibration sensor device app.\n", ConsoleColor.Yellow);
-
-                // Connect to the IoT hub using the MQTT protocol.
-                s_deviceClient = DeviceClient.CreateFromConnectionString(s_deviceConnectionString, TransportType.Mqtt);
-
-                // Create a number between 2 and 4, as a constant for normal vibration levels.
-                naturalConstant = 2 + 2 * rand.NextDouble();
-
-                SendDeviceToCloudMessagesAsync(rand);
-                Console.ReadLine();
-            }
-        }
-    }
+    private readonly static string deviceConnectionString = "<your device connection string>";
     ```
 
-1. Take a few minutes to review the code.
-
-    > **Important:** Take a few minutes to read through the comments in the code. The most important section of code for learning about IoT messages starts with the "Create two messages:" comment. You may also be interested in seeing how the math that is used to define the conveyor belt vibration levels (described within the scenario description at the beginning of this lab) has worked its way into the code.
-
-1. Replace the `<your device connection string>` (line 44) with the device connection string you saved during the previous exercise.
+1. Replace the `<your device connection string>` (line 21) with the device connection string you saved earlier.
 
     > **Note**: This is the only change that you are required to make to this code.
 
 1. Save the **Program.cs** file.
 
-    > **Note**:  The code is also available in the `/Starter` folder for lab 7. If you choose to use the code in the Starter folder, remember to replace the `<your device connection string>`.
+1. Take a few minutes to review the code.
 
-#### Task 3: Test your Code to Send Telemetry
+1. Notice that the application structure is similar to that used in earlier units:
+
+    * Using statements
+    * Namespace definition
+      * Program class - responsible for connecting to Azure IoT and sending telemetry
+      * ConveyorBeltSimulator class - (replaces EnvironmentSensor) rather than just generating telemetry, this class also simulates a running conveyor belt
+      * ConsoleHelper - a new class that encapsulates writing different colored text to the console
+
+1. Review the the **Main** method:
+
+    ```csharp
+    private static void Main(string[] args)
+    {
+        ConsoleHelper.WriteColorMessage("Vibration sensor device app.\n", ConsoleColor.Yellow);
+
+        // Connect to the IoT hub using the MQTT protocol.
+        deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
+
+        SendDeviceToCloudMessagesAsync();
+        Console.ReadLine();
+    }
+    ```
+
+    Notice how straightforward it is using the **deviceConnectionString** to obtain a **DeviceClient** instance.
+
+1. Review the **SendDeviceToCloudMessagesAsync** method.
+
+    ```csharp
+    private static async void SendDeviceToCloudMessagesAsync()
+    {
+        var conveyor = new ConveyorBeltSimulator(intervalInMilliseconds);
+
+        // Simulate the vibration telemetry of a conveyor belt.
+        while (true)
+        {
+            var vibration = conveyor.ReadVibration();
+
+            await CreateTelemetryMessage(conveyor, vibration);
+
+            await CreateLoggingMessage(conveyor, vibration);
+
+            await Task.Delay(intervalInMilliseconds);
+        }
+    }
+    ```
+
+    Notice how the **ConveyorBeltSimulator** class is used to read vibration data and then passed to the two create message methods. Once again, this loop repeats based upon a specified delay.
+
+1. Review the **CreateTelemetryMessage** method:
+
+    ```csharp
+    private static async Task CreateTelemetryMessage(ConveyorBeltSimulator conveyor, double vibration)
+    {
+        var telemetryDataPoint = new
+        {
+            vibration = vibration,
+        };
+        var telemetryMessageString = JsonConvert.SerializeObject(telemetryDataPoint);
+        var telemetryMessage = new Message(Encoding.ASCII.GetBytes(telemetryMessageString));
+
+        // Add a custom application property to the message. This is used to route the message.
+        telemetryMessage.Properties.Add("sensorID", "VSTel");
+
+        // Send an alert if the belt has been stopped for more than five seconds.
+        telemetryMessage.Properties.Add("beltAlert", (conveyor.BeltStoppedSeconds > 5) ? "true" : "false");
+
+        Console.WriteLine($"Telemetry data: {telemetryMessageString}");
+
+        // Send the telemetry message.
+        await deviceClient.SendEventAsync(telemetryMessage);
+        ConsoleHelper.WriteGreenMessage($"Telemetry sent {DateTime.Now.ToShortTimeString()}");
+    }
+    ```
+
+    As in earlier labs, this method creates a JSON message string and uses the **Message** class to send the message, along with additional properties. Notice the **sensorID** property - this will be used to route the **VSTel** values appropriately at the IoT Hub. Also notice the **beltAlert** property - this is set to true if the conveyor belt haas stopped for more than 5 seconds.
+
+    As usual, the message is sent via the **SendEventAsync** method of the device client.
+
+1. Review the **CreateLoggingMessage** method:
+
+    ```csharp
+    private static async Task CreateLoggingMessage(ConveyorBeltSimulator conveyor, double vibration)
+    {
+        // Create the logging JSON message.
+        var loggingDataPoint = new
+        {
+            vibration = Math.Round(vibration, 2),
+            packages = conveyor.PackageCount,
+            speed = conveyor.BeltSpeed.ToString(),
+            temp = Math.Round(conveyor.Temperature, 2),
+        };
+        var loggingMessageString = JsonConvert.SerializeObject(loggingDataPoint);
+        var loggingMessage = new Message(Encoding.ASCII.GetBytes(loggingMessageString));
+
+        // Add a custom application property to the message. This is used to route the message.
+        loggingMessage.Properties.Add("sensorID", "VSLog");
+
+        // Send an alert if the belt has been stopped for more than five seconds.
+        loggingMessage.Properties.Add("beltAlert", (conveyor.BeltStoppedSeconds > 5) ? "true" : "false");
+
+        Console.WriteLine($"Log data: {loggingMessageString}");
+
+        // Send the logging message.
+        await deviceClient.SendEventAsync(loggingMessage);
+        ConsoleHelper.WriteGreenMessage("Log data sent\n");
+    }
+    ```
+
+    Notice that this method is very similar to the **CreateTelemetryMessage** method. Here are the key items to note:
+
+    * The **loggingDataPoint** contains more information than the telemetry object. It is common to include as much information as possible for logging purposes to assist in any fault diagnosis activities or more detail analytics in the future.
+    * The logging message includes the **sensorID** property, this time set to **VSLog**. Again, as noted above, his will be used to route the **VSLog** values appropriately at the IoT Hub.
+
+1. Take a moment to review the **ConveyorBeltSimulator** class. This class simulates the operation of a conveyor belt, modelling a number of speeds and related states to generate vibration data. You don't need to understand how this class functions to complete the lab.
+
+1. The final part of the application is the **ConsoleHelper** class. This is used to write different colored text to the console to highlight different data and values.
+
+#### Task 3: Test your code to send telemetry
 
 1. To run the app in the terminal, enter the following command:
 
@@ -549,7 +394,7 @@ The simulated device app that you build in this task simulates an IoT device tha
 
 1. Console output should be displayed that is similar to the following:
 
-    ```
+    ```text
     Vibration sensor device app.
 
     Telemetry data: {"vibration":0.0}

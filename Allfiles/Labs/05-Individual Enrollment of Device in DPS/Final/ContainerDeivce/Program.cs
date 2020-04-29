@@ -29,6 +29,7 @@ namespace ContainerDevice
 
         private static DeviceClient deviceClient;
 
+        // INSERT Main method below here
         public static async Task Main(string[] args)
         {
             using (var security = new SecurityProviderSymmetricKey(registrationId,
@@ -59,6 +60,7 @@ namespace ContainerDevice
             }
         }
 
+        // INSERT ProvisionDevice method below here
         private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderSymmetricKey security)
         {
             var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
