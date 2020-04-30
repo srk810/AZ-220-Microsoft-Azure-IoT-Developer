@@ -762,11 +762,13 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
 1. In the **Open Folder** dialog, navigate to the Starter folder for lab 12, click **DownstreamDevice**, and then click **Select Folder**.
 
-    You should see the azure-iot-test-only.root.ca.cert.pem file listed in the EXPLORER pane along with the SimulatedDevice.cs file.
+    You should see the azure-iot-test-only.root.ca.cert.pem file listed in the EXPLORER pane along with the Program.cs file.
 
     > **Note**: If you see messages to restore dotnet and/or load the C# extension, complete the installs.
 
-1. In the EXPLORER pane, click **SimulatedDevice.cs**.
+1. In the EXPLORER pane, click **Program.cs**.
+
+    A cursory review will reveal that this app is a variant of the **CaveDevice** application that has been frequently throughout these labs.
 
 1. Locate the declaration for the **connectionString** variable, and then replace the placeholder value with the IoT Hub Connection String for the **sensor-th-0072** IoT Device.
 
@@ -780,9 +782,9 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
     Be sure to replace the placeholders shown above with the appropriate values:
 
-    * **<IoT-Hub-Name>**: The Name of the Azure IoT Hub.
-    * **<IoT-Device-Primary-Key>**: The Primary Key for the **sensor-th-0072** IoT Device in Azure IoT Hub.
-    * **<IoT-Edge-DNS-Name>**: The DNS name set for the **vm-az220-training-gw0001-{your-id}**.
+    * **\<IoT-Hub-Name\>**: The Name of the Azure IoT Hub.
+    * **\<IoT-Device-Primary-Key\>**: The Primary Key for the **sensor-th-0072** IoT Device in Azure IoT Hub.
+    * **\<IoT-Edge-DNS-Name\>**: The DNS name set for the **vm-az220-training-gw0001-{your-id}**.
 
     The **connectionString** variable with the Connection String value will look similar to the following:
 
@@ -797,13 +799,11 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
     This method contains the code that instantiates the **DeviceClient** using the configured Connection String, and specifies `MQTT` as the transport protocol to use for communicating with the Azure IoT Edge Gateway.
 
     ```csharp
-    s_deviceClient = DeviceClient.CreateFromConnectionString(connectionString, TransportType.Mqtt);
-    SendDeviceToCloudMessagesAsync().GetAwaiter().GetResult();;
+    deviceClient = DeviceClient.CreateFromConnectionString(connectionString, TransportType.Mqtt);
+    SendDeviceToCloudMessagesAsync();
     ```
 
     This method also executes the **InstallCACert** method which has some code to automatically install the root CA X.509 certificate to the local machine. And, it executes the **SendDeviceToCloudMessagesAsync** method that sends event telemetry from the simulated device.
-
-    > **Note**: Do not be concerned with the `GetAwaiter().GetResult()` call - it's an artifact of how C# handles asynchronous calls from the `Main` method before C# 7.1.  As the lab doesn't assume that level of support, it uses a bit of a workaround.
 
 1. Locate the **SendDeviceToCloudMessagesAsync** method, and then take a minute to review the code.
 
@@ -811,7 +811,15 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
 1. Locate the **InstallCACert** and browse the code that installs the root CA X.509 certificate to the local machine certificate store.
 
-1. In Visual Studio Code, with the **SimulatedDevice.cs** file still open, on the **Terminal** menu, select **New Terminal**.
+    > **Note**: Remember that this certificate is used to secure the communication from the device to the Edge Gateway. The device uses the symmetric key within the connection string for authentication with the IoT Hub.
+
+    The initial code within this method is responsible for ensuring the **azure-iot-test-only.root.ca.cert.pem** file is available. Of course, in production applications you might consider using an alternative mechanism to specify the path to the x509 certificate, such as an environment variable, or using TPM.
+
+    Once the presence of the x59 certificate has been verified, the **X509Store** class is used to load the certificate into the current user's certificate store. The certificate will then be available on-demand to secure communication to the gateway - this occurs automatically within the device client, so there is no additional code.
+
+    > **Information**: You can learn more about the **X509Store** class [here](https://docs.microsoft.com/en-us/dotnet/api/system.security.cryptography.x509certificates.x509store?view=netcore-3.1).
+
+1. In Visual Studio Code, with the **Program.cs** file still open, on the **Terminal** menu, select **New Terminal**.
 
 1. At the bottom of Visual Studio Code, in the **TERMINAL** window, run the following command:
 
@@ -821,7 +829,7 @@ In this exercise, you will configure a pre-built Downstream Device to connect to
 
     This command will build and run the code for the **sensor-th-0072** simulated device, which will start sending device telemetry.
 
-    > **note**: When the app attempts to install the X.509 certificate on the local machine (so that it can use it to authenticate with the IoT Edge Gateway), you may see a Security Warning asking about installing the certificate. You will need to click **Yes** to allow the app to continue.
+    > **Note**: When the app attempts to install the X.509 certificate on the local machine (so that it can use it to authenticate with the IoT Edge Gateway), you may see a Security Warning asking about installing the certificate. You will need to click **Yes** to allow the app to continue.
 
 1. If you are asked if you want to install the certificate, click **Yes**.
 
