@@ -817,9 +817,9 @@ In this exercise, you will configure the downstream IoT Devices (child or leaf d
 
     You should now see the project files listed in the Explorer pane.
 
-1. In the Visual Studio Code **EXPLORER** pane, click **ChildIoTDevice.cs**.
+1. In the Visual Studio Code **EXPLORER** pane, click **Program.cs**.
 
-1. In the **ChildIoTDevice.cs** file, locate the declaration for the `s_connectionString` variable.
+1. In the **Program.cs** file, locate the declaration for the `connectionString` variable.
 
 1. Replace the placeholder value with the Primary Connection String for the **sensor-th-0084** IoT Device.
 
@@ -860,7 +860,7 @@ In this exercise, you will configure the downstream IoT Devices (child or leaf d
     The terminal output will look similar to the following:
 
     ```cmd/sh
-    IoT Hub Quickstarts #1 - Simulated device. Ctrl-C to exit.
+    IoT Hub C# Simulated Cave Device. Ctrl-C to exit.
 
     User configured CA certificate path: azure-iot-test-only.root.ca.cert.pem
     Attempting to install CA certificate: azure-iot-test-only.root.ca.cert.pem
