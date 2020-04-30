@@ -8,9 +8,9 @@ lab:
 
 ## Lab Scenario
 
-Your work to-date on Contoso's Asset Monitoring and Tracking Solution has enabled you to validate the device provisioning and de-provisioning process using an Individual Enrollment. The management team has now asked you to begin testing the process for a larger scale rollout.
+Your work to-date on Contoso's Asset Monitoring and Tracking Solution has enabled you to validate the device provisioning and deprovisioning process using an Individual Enrollment approach. The management team has now asked that you begin testing the process for a larger scale rollout.
 
-To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication. You will be setting up a group enrollment to verify that your requirements are met.
+To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication. You will be setting up a group enrollment to verify that Contoso's requirements are met.
 
 The following resources will be created:
 
@@ -18,7 +18,7 @@ The following resources will be created:
 
 ## In This Lab
 
-In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then generate an X.509 root CA Certificate using OpenSSL within the Azure Cloud Shell, and use the root certificate to configure the Group Enrollment within the Device Provisioning Service (DPS). After that, you will use the root certificate to generate a device certificate, which you will use within a simulated device to connect to IoT hub. With your device securely connected to IoT hub, you will update your device code to access device twin properties that will be used to configure your device, and then test your simulated device. To finish up this lab, you will deprovision the entire group enrollment. The lab includes the following exercises:
+In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then generate an X.509 root CA Certificate using OpenSSL within the Azure Cloud Shell, and use the root certificate to configure the Group Enrollment within the Device Provisioning Service (DPS). After that, you will use the root certificate to generate a device certificate, which you will use within a simulated device to connect to IoT hub. With your device securely connected to IoT hub, you will update your device code to access the device twin properties used to perform initial configuration of the device, and then test your simulated device. To finish up this lab, you will deprovision the entire group enrollment. The lab includes the following exercises:
 
 * Verify Lab Prerequisites
 * Generate and Configure X.509 CA Certificates using OpenSSL
@@ -26,8 +26,6 @@ In this lab, you will begin by reviewing the lab prerequisites and you will run 
 * Handle device twin desired property changes
 * Test the Simulated Device
 * Deprovision a Group Enrollment
-
-
 
 ## Lab Instructions
 
@@ -94,7 +92,7 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab06-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab06-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab06-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
 1. In the **Files** list, to expand the lab6 folder and open the script file, click **lab6**, and then click **lab06-setup.azcli**.
 

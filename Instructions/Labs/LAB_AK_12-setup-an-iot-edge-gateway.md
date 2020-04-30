@@ -103,9 +103,9 @@ If these resources are not available, you will need to run the **lab12-setup.azc
     chmod +x lab12-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the **lab12-setup.azcli** file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab12-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **Files** list, to expand the lab4 folder, click **lab12**, and then click **lab12-setup.azcli**.
+1. In the **Files** list, to expand the lab12 folder and open the script file, click **lab12**, and then click **lab12-setup.azcli**.
 
     The editor will now show the contents of the **lab12-setup.azcli** file.
 

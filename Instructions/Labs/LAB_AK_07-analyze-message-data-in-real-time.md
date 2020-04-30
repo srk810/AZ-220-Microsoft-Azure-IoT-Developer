@@ -106,7 +106,7 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab07-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab07-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab07-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
 1. In the **FILES** list, to expand the lab7 folder and open the script file, click **lab7**, and then click **lab07-setup.azcli**.
 

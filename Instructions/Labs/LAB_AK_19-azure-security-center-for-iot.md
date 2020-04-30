@@ -101,9 +101,9 @@ If these resources are not available, you will need to run the **lab19-setup.azc
     chmod +x lab19-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the **lab19-setup.azcli** file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab19-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **Files** list, to expand the lab19 folder, click **lab19**, and then click **lab19-setup.azcli**.
+1. In the **Files** list, to expand the lab19 folder and open the script file, click **lab19**, and then click **lab19-setup.azcli**.
 
     The editor will now show the contents of the **lab19-setup.azcli** file.
 

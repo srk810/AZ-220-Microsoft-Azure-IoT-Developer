@@ -96,7 +96,7 @@ The **lab17-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab17-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab17-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab17-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
 1. In the **Files** list, to expand the lab17 folder and open the script file, click **lab17**, and then click **lab17-setup.azcli**.
 
