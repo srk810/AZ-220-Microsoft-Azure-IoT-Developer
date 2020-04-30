@@ -198,7 +198,7 @@ In previous labs you have created the VM using the Azure Portal. In this lab, yo
 
     The first command above accepts the terms and conditions of use for VM image.
 
-    The second command actually creates the VM within the resource group specified above. Remember to update `vm-az220-training-gw0002-{your-id}` with your unique id and replace `{YOUR-PASSWORD-HERE}` with a suitably secure password.
+    The second command actually creates the VM within the resource group specified above. Remember to update **vm-az220-training-gw0002-{your-id}** with your unique id and replace `{YOUR-PASSWORD-HERE}` with a suitably secure password.
 
     > **Note**: In production, you may elect to generate SSH keys rather than use the username/password approach. You can learn more about Linux VMs and SSH here: [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed).
     >
@@ -819,13 +819,13 @@ In this exercise, you will configure the downstream IoT Devices (child or leaf d
 
 1. In the Visual Studio Code **EXPLORER** pane, click **Program.cs**.
 
-1. In the **Program.cs** file, locate the declaration for the `connectionString` variable.
+1. In the **Program.cs** file, locate the declaration for the **connectionString** variable.
 
 1. Replace the placeholder value with the Primary Connection String for the **sensor-th-0084** IoT Device.
 
-1. Modify the Connection String value to include the `GatewayHostName` property as follows:
+1. Modify the Connection String value to include the **GatewayHostName** property as follows:
 
-    The `GatewayHostName` property should be set to the value of the **Public IP Address** for the IoT Edge Gateway (`vm-az220-training-gw0002-{your-id}`) virtual machine.
+    The **GatewayHostName** property should be set to the value of the **Public IP Address** for the IoT Edge Gateway (**vm-az220-training-gw0002-{your-id}**) virtual machine.
 
     The updated Connection String will match the following format:
 
@@ -833,11 +833,17 @@ In this exercise, you will configure the downstream IoT Devices (child or leaf d
     HostName=<iot-hub-name>.azure-devices.net;DeviceId=DownstreamDevice1;SharedAccessKey=<iot-device-key>;GatewayHostName=<iot-edge-gateway-hostname>
     ```
 
-    Be sure to replace the placeholders in the format above with the appropriate values:
+    Be sure to replace the placeholders shown above with the appropriate values:
 
-    * `<iot-hub-name>`: The **Name** of the **Azure IoT Hub**.
-    * `<iot-device-key>`: The Primary or Secondary **Key** for the **sensor-th-0084** IoT Device in IoT Hub.
-    * `<iot-edge-gateway-hostname>`: Enter the **IP Address** for the **vm-az220-training-gw0002-{your-id}** virtual machine.
+    * **\<IoT-Hub-Name\>**: The Name of the Azure IoT Hub.
+    * **\<IoT-Device-Primary-Key\>**: The Primary Key for the **sensor-th-0084** IoT Device in Azure IoT Hub.
+    * **\<IoT-Edge-DNS-Name\>**: The DNS name set for the **vm-az220-training-gw0002-{your-id}**.
+
+    The **connectionString** variable with the Connection String value will look similar to the following:
+
+    ```csharp
+    private readonly static string connectionString = "HostName=iot-az220-training-1119.azure-devices.net;DeviceId=sensor-th-0084;SharedAccessKey=ygNT/WqWs2d8AbVD9NAlxcoSS2rr628fI7YLPzmBdgE=;GatewayHostName=vm-az220-training-gw0002-{your-id}.eastus.cloudapp.azure.com";
+    ```
 
 1. On the **File** menu, click **Save**.
 
