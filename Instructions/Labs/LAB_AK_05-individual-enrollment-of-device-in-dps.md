@@ -8,11 +8,11 @@ lab:
 
 ## Lab Scenario
 
-Contoso management is pushing for an an update to their existing Asset Monitoring and Tracking Solution. The update will use IoT devices to reduce the manual data entry work that is required under the current system and provide more advanced monitoring during the shipping process. The solution relies on the ability to provision IoT devices when shipping containers are loaded and deprovision the devices when the container arrives at the destination. The best option for managing the provisioning requirements appears to be the IoT Hub Device Provisioning Service (DPS).
+Contoso management is pushing for an update to their existing Asset Monitoring and Tracking Solution. The update will use IoT devices to reduce the manual data entry work that is required under the current system and provide more advanced monitoring during the shipping process. The solution relies on the ability to provision IoT devices when shipping containers are loaded and deprovision the devices when the container arrives at the destination. The best option for managing the provisioning requirements appears to be the IoT Hub Device Provisioning Service (DPS).
 
-The proposed system will use IoT devices with integrated sensors for tracking the location, temperature, and pressure of shipping containers during transit. The devices will be placed within the existing shipping containers that Contoso uses to transport their cheese, and will connect to Azure IoT Hub using vehicle provided WiFi. The new system will provide continuous monitoring of the product environment and enable a variety of notification scenarios when issues are detected. The rate at which telemetry is sent to IoT hub must be configurable.
+The proposed system will use IoT devices with integrated sensors for tracking the location, temperature, and pressure of shipping containers during transit. The IoT devices will be placed within the existing shipping containers that Contoso uses to transport their cheese, and will connect to Azure IoT Hub using vehicle-provided WiFi. The new system will provide continuous monitoring of the product environment and enable a variety of notification scenarios when issues are detected. The rate at which telemetry is sent to IoT hub must be configurable.
 
-In Contoso's cheese packaging facility, when an empty container enters the system it will be equipped with the new IoT device and then loaded with packaged cheese products. The IoT device needs to be auto-provisioned to IoT hub using DPS. When the container arrives at the destination, the IoT device will be retrieved and must be fully deprovisioned (disenrolled and deregistered). The recovered devices will be recycled and re-used for future shipments following the same auto-provisioning process.
+In Contoso's cheese packaging facility, when an empty container enters the system it will be equipped with the new IoT device and then loaded with packaged cheese products. The IoT device will be auto-provisioned to IoT hub using DPS. When the container arrives at the destination, the IoT device will be retrieved and must be fully deprovisioned (disenrolled and deregistered). The recovered devices will be recycled and re-used for future shipments following the same auto-provisioning process.
 
 You have been tasked with validating the device provisioning and deprovisioning process using DPS. For the initial testing phase you will use an Individual Enrollment approach.
 
@@ -22,7 +22,7 @@ The following resources will be created:
 
 ## In This Lab
 
-In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a new individual enrollment in DPS that uses Symmetric Key attestation and specifies an initial Device Twin State (telemetry rate) for the device. With the device enrollment saved, you will go back into the enrollment and get the auto-generated Primary and Secondary keys needed for device attestation. Next, you create a simulated device and verify that device connects successfully and that the initial device twin properties are applied as expected. To finish up, you complete a deprovisioning process that securely removes the device from your solution by both disenrolling and deregistering the device (from DPS and IoT hub respectively). The lab includes the following exercises:
+In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a new individual enrollment in DPS that uses Symmetric Key attestation and specifies an initial Device Twin State (telemetry rate) for the device. With the device enrollment saved, you will go back into the enrollment and get the auto-generated Primary and Secondary keys needed for device attestation. Next, you create a simulated device and verify that device connects successfully with IoT hub and that the initial device twin properties are applied by the device as expected. To finish up, you will complete a deprovisioning process that securely removes the device from your solution by both disenrolling and deregistering the device (from DPS and IoT hub respectively). The lab includes the following exercises:
 
 * Verify Lab Prerequisites
 * Create new individual enrollment (Symmetric keys) in DPS
@@ -153,11 +153,11 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 #### Task 1: Create the enrollment
 
-1. If necessary, log in to your Azure portal using your Azure account credentials.
+1. If necessary, log in to [portal.azure.com](https://portal.azure.com) using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Notice that the **AZ-220** dashboard that you created in the previous task has been loaded.
+1. Notice that the **AZ-220** dashboard has been loaded and your Resources tile is displayed.
 
     You should see both your IoT Hub and DPS resources listed.
 
@@ -243,15 +243,17 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     This blade enables you to view the enrollment details for the individual enrollment that you just created.
 
-1. Locate the **Authentication Type** section, and notice that **Mechanism** is set to **Symmetric Key**.
+1. Locate the **Authentication Type** section.
 
-1. Copy the **Primary Key** and **Secondary Key** values for this device enrollment (there is a button to the right of each textbox for this purpose), and then save them for reference later.
+    Since you specified the Authentication Type as Symmetric Key when you created the enrollment, the Primary and Secondary key values have been created for you. Notice that there is a button to the right of each textbox that you can use to copy the values.
+
+1. Copy the **Primary Key** and **Secondary Key** values for this device enrollment, and then save them to a file for later reference.
 
     These are the authentication keys for the device to authenticate with the IoT Hub service.
 
 1. Locate the **Initial device twin State**, and notice the JSON for the device twin Desired State contains the `telemetryDelay` property set to the value of `"2"`.
 
-1. Close the **sensor-thl-1000** view to return to the **dps-az220-training-{your-id}** blade.
+1. Close the **sensor-thl-1000** individual enrollment blade.
 
 ### Exercise 3: Configure Simulated Device
 
@@ -263,7 +265,7 @@ The simulated device that you create in this exercise represents an IoT device t
 
 #### Task 1: Create the Simulated Device
 
-1. On the **dps-az220-training-{your-id}** blade, navigate to the **Overview** pane.
+1. On the left-side menu of the **dps-az220-training-{your-id}** blade, click **Overview**.
 
 1. In the top-right area of the blade, hover the mouse pointer over value assigned to **ID Scope**, and then click **Copy to clipboard**.
 
@@ -273,7 +275,7 @@ The simulated device that you create in this exercise represents an IoT device t
 
 1. Open **Visual Studio Code**.
 
-1. On the **View** menu, click **Open Folder** and then navigate to the Starter folder for Lab 5.
+1. On the **File** menu, click **Open Folder** and then navigate to the Starter folder for Lab 5.
 
     The Lab 5 Starter folder is part of the lab resources files that you downloaded when setting up your development environment in lab 3. The folder path is:
 
@@ -286,7 +288,7 @@ The simulated device that you create in this exercise represents an IoT device t
  
     The ContainerDevice folder is a sub-folder of the Lab 5 Starter folder. It contains a Program.cs file and a ContainerDevice.csproj file.
 
-    > **Note**: If Visual Studio Code prompts you to load C# Extensions it is fine to do so.
+    > **Note**: If Visual Studio Code prompts you to load required assets, you can click **Yes** to load them.
  
 1. On the **View** menu, click **Terminal**.
 
@@ -367,7 +369,7 @@ In this task, you will implement the code that provisions the device via DPS and
 
     To connect to DPS, you not only require the **dpsScopeId** and the **GlobalDeviceEndpoint** (defined in the variables), you also need to specify the following:
 
-    * **security** - the method used for authenticating the enrollment. Earlier you configured the individual enrollment to use symmetric keys, therefore the **SecurityProviderSymmetricKey** is the logical choice. As you might expect, there are variants of the providers that support X509 and TPM as well.
+    * **security** - the method used for authenticating the enrollment. Earlier you configured the individual enrollment to use symmetric keys, therefore the **SecurityProviderSymmetricKey** is the logical choice. As you might expect, there are variants of the providers that support X.509 and TPM as well.
 
     * **transport** - the transport protocol used by the provisioned device. In this instance, the AMQP handler was chosen (**ProvisioningTransportHandlerAmqp**). Of course, HTTP and MQTT handlers are also available.
 
@@ -417,7 +419,7 @@ In this task, you will implement the code that provisions the device via DPS and
 
 1. At the bottom of the **SendDeviceToCloudMessagesAsync** method, notice the call to `Task.Delay()`.
 
-    `Task.Delay()` is used to "pause" the `while` loop for a period of time before creating and sending the next telemetry message. The **telemetryDelay** variable is used to define how many seconds to wait before sending the next telemetry message.
+    `Task.Delay()` is used to "pause" the `while` loop for a period of time before creating and sending the next telemetry message. The **telemetryDelay** variable is used to define how many seconds to wait before sending the next telemetry message. Contoso is requiring that the delay time be configurable.  
 
 1. Near the top of the **Program** class, locate the **telemetryDelay** variable declaration.
 
@@ -425,7 +427,7 @@ In this task, you will implement the code that provisions the device via DPS and
 
 #### Task 2: Integrate Device Twin Properties
 
-In order to use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, you want to update your simulated device code to read a device twin Desired Property, and then assign that value to the **telemetryDelay** variable. You also want to update the device twin Reported Property to indicate the delay value that is currently implemented on our device.
+In order to use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, you want to update your simulated device code to read the telemetryDelay device twin Desired Property, and then assign that value to the corresponding **telemetryDelay** variable in your code. You also want to update the device twin Reported Property (maintained by IoT Hub) to have a record of the delay time that is currently implemented on our device.
 
 1. In the Visual Studio Code editor, locate the **Main** method.
 
@@ -637,9 +639,9 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 ### Exercise 5: Deprovision the Device
 
-In this exercise, you will perform the tasks necessary to deprovision the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully deprovision an IoT device from an Azure IoT solution it must be removed from both of these services. 
+In your Contoso scenario, when the shipping container arrives at it's final destination, the IoT device will be removed from the container and returned to a Contoso location. Contoso will need to deprovision the device before it can be tested and placed in inventory. In the future the device could be provisioned to the same IoT hub or an IoT hub in a different region. Complete device deprovisioning is an important step in the life cycle of IoT devices within an IoT solution.
 
-In the Contoso scenario, when the shipping container arrives at it's final destination, the IoT device will be removed from the container, and needs to be deprovisioned before it can be re-used. Complete device deprovisioning is an important step in the life cycle of IoT devices within an IoT solution.
+In this exercise, you will perform the tasks necessary to deprovision the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully deprovision an IoT device from an Azure IoT solution it must be removed from both of these services. 
 
 #### Task 1: Disenroll the device from the DPS
 
@@ -647,15 +649,12 @@ In the Contoso scenario, when the shipping container arrives at it's final desti
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Notice that the **AZ-220** dashboard that you created in the previous task has been loaded.
 
-    You should see both your IoT Hub and DPS resources listed.
+1. On your Resource group tile, to open your Device Provisioning Service, click **dps-az220-training-{your-id}**.
 
-1. On your Resource group tile, to navigate to your Device Provisioning Service, click **dps-az220-training-{your-id}**.
+1. On the left-side menu under **Settings**, click **Manage enrollments**.
 
-1. On the Device Provisioning Service blade, on the left side menu, click **Manage enrollments**.
-
-1. On the Manage enrollments blade, to view the list of individual device enrollments, click **Individual Enrollments**.
+1. On the **Manage enrollments** pane, to view the list of individual device enrollments, click **Individual Enrollments**.
 
 1. To the left of **sensor-thl-1000**, click the checkbox.
 
@@ -667,7 +666,7 @@ In the Contoso scenario, when the shipping container arrives at it's final desti
 
 1. On the **Remove enrollment** prompt, click **Yes**.
 
-    The individual enrollment is now removed from the Device Provisioning Service (DPS). To complete the device retirement, the **Device ID** for the Simulated Device also must be removed from the **Azure IoT Hub** service.
+    The individual enrollment is now removed from the Device Provisioning Service (DPS). To complete the deprovisioning process, the **Device ID** for the Simulated Device also must be removed from the **Azure IoT Hub** service.
 
 #### Task 2: Deregister the device from the IoT Hub
 
@@ -675,7 +674,7 @@ In the Contoso scenario, when the shipping container arrives at it's final desti
 
 1. On your Resource group tile, to open your Azure IoT Hub blade, click **iot-az220-training-{your-id}**.
 
-1. On the IoT Hub blade, on the left-side menu under **Explorers**, click **IoT devices**.
+1. On the left-side menu under **Explorers**, click **IoT devices**.
 
 1. To the left of **sensor-thl-1000**, click the checkbox.
 
