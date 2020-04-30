@@ -8,9 +8,9 @@ lab:
 
 ## Lab Scenario
 
-Your work to-date on Contoso's Asset Monitoring and Tracking Solution has enabled you to validate the device provisioning and de-provisioning process using an Individual Enrollment. The management team has now asked you to begin rolling out the process on a larger scale.
+Your work to-date on Contoso's Asset Monitoring and Tracking Solution has enabled you to validate the device provisioning and de-provisioning process using an Individual Enrollment. The management team has now asked you to begin testing the process for a larger scale rollout.
 
-To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication.
+To keep the project moving forward you need to demonstrate that the Device Provisioning Service can be used to enroll larger numbers of devices automatically and securely using X.509 certificate authentication. You will be setting up a group enrollment to verify that your requirements are met.
 
 The following resources will be created:
 
@@ -18,15 +18,16 @@ The following resources will be created:
 
 ## In This Lab
 
-In this lab, you will complete the following activities:
+In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then generate an X.509 root CA Certificate using OpenSSL within the Azure Cloud Shell, and use the root certificate to configure the Group Enrollment within the Device Provisioning Service (DPS). After that, you will use the root certificate to generate a device certificate, which you will use within a simulated device to connect to IoT hub. With your device securely connected to IoT hub, you will update your device code to access device twin properties that will be used to configure your device, and then test your simulated device. To finish up this lab, you will deprovision the entire group enrollment. The lab includes the following exercises:
 
-* Verify that the lab prerequisites are met (that you have the required Azure resources)
+* Verify Lab Prerequisites
 * Generate and Configure X.509 CA Certificates using OpenSSL
-* Create Group Enrollment in DPS
-* Configure simulated device with X.509 Certificate
-* Handle device twin desired property Changes
-* Automatic Enrollment of simulated device
-* Deprovision the Group Enrollment of simulated device
+* Configure simulated device with X.509 certificate
+* Handle device twin desired property changes
+* Test the Simulated Device
+* Deprovision a Group Enrollment
+
+
 
 ## Lab Instructions
 
@@ -179,7 +180,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
     chmod 700 certGen.sh
     ```
 
-    The helper script and supporting files are being downloaded from the `Azure/azure-iot-sdk-c` open source project hosted on Github. This is an open source project that's a part of the Azure IoT SDK. The `certGen.sh` helper script will help demonstrate the purpose of CA Certificates without diving into the specifics of OpenSSL configuration that's outside the scope of this lab.
+    The helper script and supporting files are being downloaded from the `Azure/azure-iot-sdk-c` open source project hosted on Github, a component of the Azure IoT Device SDK. The `certGen.sh` helper script will provide you with a chance to see how CA Certificates are used without diving too deeply into the specifics of OpenSSL configuration (which is outside the scope of this lab).
 
     For additional instructions on using this helper script, and for instructions on how to use PowerShell instead of Bash, please see this link: [https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md](https://github.com/Azure/azure-iot-sdk-c/blob/master/tools/CACertificates/CACertificateOverview.md)
 
@@ -355,7 +356,7 @@ In this task, you will create a new enrollment group within the Device Provision
 
 1. At the top of the **Add Enrollment** blade, click **Save**.
 
-### Exercise 4: Configure simulated device with X.509 certificate
+### Exercise 3: Configure simulated device with X.509 certificate
 
 In this exercise, you will complete the following:
 
@@ -678,7 +679,7 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
     Your simulated device will now use the device twin properties from Azure IoT Hub to set the delay between telemetry messages.
 
-### Exercise 5: Handle device twin desired property Changes
+### Exercise 4: Handle device twin desired property Changes
 
 Device twins are JSON documents that store device state information including metadata, configurations, and conditions. Azure IoT Hub maintains a device twin for each device that you connect to IoT Hub.
 
@@ -733,7 +734,6 @@ In this exercise, you will modify the simulated device source code to include an
                 // if desired telemetryDelay is null or unspecified, don't change it
             }
 
-
             // Report Twin Properties
             var reportedProperties = new TwinCollection();
             reportedProperties["telemetryDelay"] = this._telemetryDelay;
@@ -769,7 +769,7 @@ In this exercise, you will modify the simulated device source code to include an
 
 1. On the Visual Studio Code **File** menu, click **Save**.
 
-### Exercise 6: Test the Simulated Device
+### Exercise 5: Test the Simulated Device
 
 In this exercise, you will run the simulated device. When the device is started for the first time, it will connect to the Device Provisioning Service (DPS) and automatically be enrolled using the configured group enrollment. Once enrolled into the DPS group enrollment, the device will be automatically registered within the Azure IoT Hub device registry. Once enrolled and registered, the device will begin communicating with Azure IoT Hub securely using the configured X.509 certificate authentication.
 
@@ -929,7 +929,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Close the sensor-thl-2000 blade, and then navigate back to your Azure portal Dashboard.
 
-### Exercise 7: Deprovision Group Enrollment
+### Exercise 6: Deprovision a Group Enrollment
 
 In this exercise, you will deprovision the enrollment group and its devices from both the Device Provisioning Service and Azure IoT Hub.
 
