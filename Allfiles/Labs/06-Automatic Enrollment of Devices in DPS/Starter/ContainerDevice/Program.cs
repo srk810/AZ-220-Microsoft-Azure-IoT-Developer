@@ -40,21 +40,6 @@ namespace ContainerDevice
         // INSERT LoadProvisioningCertificate method below here
 
         // INSERT ProvisionDevice method below here
-        private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderX509Certificate security)
-        {
-            var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
-            Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
-            if (result.Status != ProvisioningRegistrationStatusType.Assigned)
-            {
-                throw new Exception($"DeviceRegistrationResult.Status is NOT 'Assigned'");
-            }
-
-            var auth = new DeviceAuthenticationWithX509Certificate(
-                result.DeviceId,
-                security.GetAuthenticationCertificate());
-
-            return DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp);
-        }
 
         private static async Task SendDeviceToCloudMessagesAsync()
         {
@@ -105,6 +90,8 @@ namespace ContainerDevice
         }
 
         // INSERT OnDesiredPropertyChanged method below here
+        
+    }
 
     internal class EnvironmentSensor
     {

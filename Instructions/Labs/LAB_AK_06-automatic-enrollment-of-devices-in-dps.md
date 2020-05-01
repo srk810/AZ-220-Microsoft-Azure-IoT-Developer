@@ -472,44 +472,37 @@ In this task, you will complete the following:
 
 1. On the **File** menu, click **Open Folder**
 
-1. In the Open Folder dialog, navigate to the **06-Automatic Enrollment of Devices in DPS** folder.
+1. In the **Open Folder** dialog, navigate to the **06-Automatic Enrollment of Devices in DPS** folder.
 
 1. Click **ContainerDevice**, and then click **Select Folder**.
 
     You should see the following files listed in the EXPLORER pane of Visual Studio Code:
 
-    * sensor-thl-2000-device.cert.pfx
-    * Program.cs
     * ContainerDevice.csproj
+    * Program.cs
+    * sensor-thl-2000-device.cert.pfx
 
-1. Open the `ContainerDevice.csproj` file.
+1. In the **EXPLORER** pane, to open the ContainerDevice.csproj file, click **ContainerDevice.csproj**.
 
-1. In the `ContainerDevice.csproj` file, ensure that the `<ItemGroup>` tag includes the following: 
+1. In the code editor pane, within the `<ItemGroup>` tag, update the certificate file name as follows: 
 
     ```xml
+    <ItemGroup>
         <None Update="sensor-thl-2000-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-    ```
-
-    If it's not there, add it. When you are done, the `<ItemGroup>` tag should look similar to the following:
-
-    ```xml
-            <ItemGroup>
-                <None Update="sensor-thl-2000-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
-                <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.21.1" />
-                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.1.8" />
-                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.1.9" />
-                <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.1.6" />
-            </ItemGroup>
-        </Project>
+        <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.*" />
+    </ItemGroup>
     ```
 
     This configuration ensures that the `sensor-thl-2000-device.cert.pfx` certificate file is copied to the build folder when the C# code is compiled, and made available for the program to access when it executes.
 
 1. On the Visual Studio Code **File** menu, click **Save**.
 
-1. Open the **Program.cs** file.
+1. In the **EXPLORER** pane, click **Program.cs**.
 
-    A cursory glance will reveal that this version of the **ContainerDevice** application is virtually identical to the version used in the preceding lab. The only changes will be those that relate specifically to the use of X509 certificates as an attestation mechanism. From the application perspective, it matters little that this device will be connecting via a Group Enrollment vs an Individual Enrollment.
+    A cursory glance will reveal that this version of the **ContainerDevice** application is virtually identical to the version used in the preceding lab. The only changes will be those that relate specifically to the use of X.509 certificates as an attestation mechanism. From the application perspective, it matters little that this device will be connecting via a Group Enrollment vs an Individual Enrollment.
 
 1. Locate the **GlobalDeviceEndpoint** variable, and notice that its value is set to the Global Device Endpoint for the Azure Device Provisioning Service (`global.azure-devices-provisioning.net`).
 
@@ -527,21 +520,31 @@ In this task, you will complete the following:
     private static string dpsIdScope = "0ne000CBD6C";
     ```
 
-1. Locate the **certificateFileName** variable, and notice that its value is set to the device certificate file that you generated (**new-device.cert.pfx**).
+1. Locate the **certificateFileName** variable, and notice that its value is set to the default name of the device certificate file that you generated (**new-device.cert.pfx**).
 
-    Rather than using symmetric keys as in the earlier lab, this time the application is using an X509 certificate. The **new-device.cert.pfx** file is the X.509 device certificate file that you generated using the **certGen.sh** helper script within the Cloud Shell. This variable tells the device code which file contains the X.509 device certificate that it will use when authenticating with the Device Provisioning Service.
+    Rather than using symmetric keys as in the earlier lab, this time the application is using an X.509 certificate. The **new-device.cert.pfx** file is the X.509 device certificate file that you generated using the **certGen.sh** helper script within the Cloud Shell. This variable tells the device code which file contains the X.509 device certificate that it will use when authenticating with the Device Provisioning Service.
 
-1. Locate the **certificatePassword** variable, and notice that its value is set to the default password for the **certGen.sh** script.
+1. Update the value assigned to the **certificateFileName** variable as follows:
+
+    ```csharp
+    private static string certificateFileName = "sensor-thl-2000-device.cert.pfx";
+    ```
+
+1. Locate the **certificatePassword** variable, and notice that its value is set to the default password defined by the **certGen.sh** script.
 
     The **certificatePassword** variable contains the password for the X.509 device certificate. It's set to `1234`, as this is the default password used by the **certGen.sh** helper script when generating the X.509 certificates.
 
     > **Note**: For the purpose of this lab, the password is hard coded. In a _production_ scenario, the password will need to be stored in a more secure manner, such as in an Azure Key Vault. Additionally, the certificate file (PFX) should be stored securely on a production device using a Hardware Security Module (HSM).
     >
-    > An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with all attestation mechanisms the provisioning service supports.
+    > An HSM (Hardware Security Module), is used for secure, hardware-based storage of device secrets, and is the most secure form of secret storage. Both X.509 certificates and SAS tokens can be stored in the HSM. HSMs can be used with all attestation mechanisms the provisioning service supports. HMS will be discussed in more detail later in this course.
 
 #### Task 3: Add the provisioning code
 
-1. To add the implementation of the **Main** method, insert the following code beneath the `// INSERT Main method below here` comment:
+In this task, you will implement code for the Main method, device provisioning, device twin properties.
+
+1. In the code editor pane for the Program.cs file, locate the `// INSERT Main method below here` comment.
+
+1. To implement the Main method, enter the following code:
 
     ```csharp
     public static async Task Main(string[] args)
@@ -572,9 +575,11 @@ In this task, you will complete the following:
     }
     ```
 
-    This Main method is very similar to that used in the earlier lab. The two significant changes are the need to load the X509 certificate and then the change to using **SecurityProviderX509Certificate** as the security provider. The remaining code is identical - you should note that the device twin property change code is also present.
+    This Main method is very similar to that used in the earlier lab. The two significant changes are the need to load the X.509 certificate and then the change to using **SecurityProviderX509Certificate** as the security provider. The remaining code is identical - you should note that the device twin property change code is also present.
 
-1. To add the implementation of the **LoadProvisioningCertificate** method, insert the following code beneath the `// INSERT LoadProvisioningCertificate method below here` comment:
+1. Locate the `// INSERT LoadProvisioningCertificate method below here` comment.
+
+1. To implement the LoadProvisioningCertificate method, insert the following code:
 
     ```csharp
     private static X509Certificate2 LoadProvisioningCertificate()
@@ -607,15 +612,17 @@ In this task, you will complete the following:
     }
     ```
 
-    As you might expect from the name, the purpose of this method is to load the X509 certificate from disk. Should the load succeed, the method returns an instance of the **X509Certificate2** class.
+    As you might expect from the name, the purpose of this method is to load the X.509 certificate from disk. Should the load succeed, the method returns an instance of the **X509Certificate2** class.
 
     > **Information**: You may be curious as to why the result is an **X509Certificate2** type rather than an **X509Certificate**. The **X509Certificate** is an earlier implementation and is limited in its functionality. The **X509Certificate2** is a subclass of **X509Certificate** with additional functionality that supports both V2 and V3 of the X509 standard.
 
-    The method creates an instance of the **X509Certificate2Collection** class and then attempts to import the **new-device.cert.pfx** from disk, using the the hard-coded password. The **X509KeyStorageFlags.UserKeySet** values specifies that private keys are stored in the current user store rather than the local computer store. This occurs even if the certificate specifies that the keys should go in the local computer store.
+    The method creates an instance of the **X509Certificate2Collection** class and then attempts to import the certificate file from disk, using the the hard-coded password. The **X509KeyStorageFlags.UserKeySet** values specifies that private keys are stored in the current user store rather than the local computer store. This occurs even if the certificate specifies that the keys should go in the local computer store.
 
     Next, the method iterates through the imported certificates (in this case, there should only be one) and verifies that the certificate has a private key. Should the imported certificate not match this criteria, an exception is thrown, otherwise the method returns the imported certificate.
 
-1. To insert the final missing method, **ProvisionDevice**, insert the following code beneath the `// INSERT ProvisionDevice method below here` comment:
+1. Locate the `// INSERT ProvisionDevice method below here` comment.
+
+1. To implement the ProvisionDevice method, enter the following code:
 
     ```csharp
     private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderX509Certificate security)
@@ -643,13 +650,13 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
 1. In the Visual Studio Code editor, locate the **Main** method.
 
-1. Take a moment to review the code, and then find the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment.
+1. Take a moment to review the code, and then locate the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment.
 
     To begin the integration of device twin properties, you need code that enables the simulated device to be notified when a device twin property is updated.
 
     To achieve this, you can use the **DeviceClient.SetDesiredPropertyUpdateCallbackAsync** method, and set up an event handler by creating an **OnDesiredPropertyChanged** method.
 
-1. To set up the DeviceClient for an OnDesiredPropertyChanged event, insert the following code beneath the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment:
+1. To set up the DeviceClient for an OnDesiredPropertyChanged event, enter the following code:
 
     ```csharp
     await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
@@ -657,9 +664,11 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
     The **SetDesiredPropertyUpdateCallbackAsync** method is used to set up the **DesiredPropertyUpdateCallback** event handler to receive device twin desired property changes. This code configures **deviceClient** to call a method named **OnDesiredPropertyChanged** when a device twin property change event is received.
 
-    Now that the **SetDesiredPropertyUpdateCallbackAsync** method is in place to set up the event handler, we need to create the **OnDesiredPropertyChanged** method that it calls.
+    Now that the **SetDesiredPropertyUpdateCallbackAsync** method is in place to set up the event handler, you need to create the **OnDesiredPropertyChanged** method that it calls.
 
-1. To complete the setup of the event handler, enter the following code beneath the `// INSERT OnDesiredPropertyChanged method below here` comment:
+1. Locate the `// INSERT OnDesiredPropertyChanged method below here` comment.
+
+1. To complete the setup of the event handler, enter the following code:
 
     ```csharp
     private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
@@ -697,7 +706,7 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
 1. In the **Main** method, locate the `// INSERT Load Device Twin Properties below here` comment.
 
-1. To read the device twin desired properties and configure the device to match on device startup, insert the following code beneath the `// INSERT Load Device Twin Properties below here` comment:
+1. To read the device twin desired properties and configure the device to match on device startup, enter the following code:
 
     ```csharp
     var twin = await deviceClient.GetTwinAsync().ConfigureAwait(false);
@@ -708,9 +717,26 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
     Notice, this code reuses the **OnDesiredPropertyChanged** method that was already created for handling _OnDesiredPropertyChanged_ events. This helps keep the code that reads the device twin desired state properties and configures the device at startup in a single place. The resulting code is simpler and easier to maintain.
 
-1. On the top menu of Visual Studio Code, click **File**, and then click **Save**.
+1. On Visual Studio Code **File** menu, click **Save**.
 
     Your simulated device will now use the device twin properties from Azure IoT Hub to set the delay between telemetry messages.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+**DELETE Exercise 4**
+
+
 
 ### Exercise 4: Handle device twin desired property Changes
 
@@ -769,7 +795,7 @@ In this exercise, you will modify the simulated device source code to include an
 
         // Report Twin Properties
         var reportedProperties = new TwinCollection();
-        reportedProperties["telemetryDelay"] = this._telemetryDelay;
+        reportedProperties["telemetryDelay"] = telemetryDelay;
         await iotClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
         Console.WriteLine("Reported Twin Properties:");
         Console.WriteLine($"{reportedProperties.ToJson()}");
@@ -802,25 +828,45 @@ In this exercise, you will modify the simulated device source code to include an
 
 1. On the Visual Studio Code **File** menu, click **Save**.
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ### Exercise 5: Test the Simulated Device
 
 In this exercise, you will run the simulated device. When the device is started for the first time, it will connect to the Device Provisioning Service (DPS) and automatically be enrolled using the configured group enrollment. Once enrolled into the DPS group enrollment, the device will be automatically registered within the Azure IoT Hub device registry. Once enrolled and registered, the device will begin communicating with Azure IoT Hub securely using the configured X.509 certificate authentication.
 
 #### Task 1: Build and run the device
 
-1. Using **Visual Studio Code**, open the **Starter** folder for lab 6.
+1. Ensure that you have the Lab 6 ContainerDevice code project open in Visual Studio Code.
 
     If you have the code project open from the previous exercise, continue working in the same code files.
 
-1. On the Visual Studio Code **View** menu, click **Terminal**.
+1. On the **View** menu, click **Terminal**.
 
     This will open the integrated Terminal at the bottom of the Visual Studio Code window.
 
-1. At the Terminal command prompt, ensure that the current directory path is set to the `/Starter` folder.
+1. At the Terminal command prompt, ensure that the current directory path is set to the `\ContainerDevice` folder.
 
     You should see something similar to the following:
 
-    `Allfiles\Labs\06-Automatic Enrollment of Devices in DPS\Starter>`
+    `Allfiles\Labs\06-Automatic Enrollment of Devices in DPS\Starter\ContainerDevice>`
 
 1. To build and run the **ContainerDevice** project, enter the following command:
 
