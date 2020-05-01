@@ -124,7 +124,7 @@ The **lab16-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab16-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab16-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab16-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
 1. In the **FILES** list, to expand the lab16 folder and open the script file, click **lab16**, and then click **lab16-setup.azcli**.
 

@@ -97,7 +97,7 @@ The **lab05-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab05-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab05-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab05-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
 1. In the **Files** list, to expand the lab5 folder and open the script file, click **lab5**, and then click **lab05-setup.azcli**.
 

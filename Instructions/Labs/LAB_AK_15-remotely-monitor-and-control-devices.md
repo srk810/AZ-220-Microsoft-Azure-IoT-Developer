@@ -128,7 +128,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab15-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab15-setup.azcli file, click **Open editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab15-setup.azcli file, click **Open editor** (second button from the right - **{ }**).
 
 1. In the **FILES** list, to expand the lab15 folder and open the script file, click **lab15**, and then click **lab15-setup.azcli**.
 

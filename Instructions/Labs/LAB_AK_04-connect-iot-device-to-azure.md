@@ -49,11 +49,11 @@ If these resources are not available, you will need to run the **lab04-setup.azc
 
 1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. Verify that the Azure Shell is using **Bash**.
+1. Verify that the Cloud Shell is using **Bash**.
 
     The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
@@ -96,9 +96,9 @@ If these resources are not available, you will need to run the **lab04-setup.azc
     chmod +x lab04-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the **lab04-setup.azcli** file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab04-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **Files** list, to expand the lab4 folder, click **lab4**, and then click **lab04-setup.azcli**.
+1. In the **Files** list, to expand the lab4 folder and open the script file, click **lab4**, and then click **lab04-setup.azcli**.
 
     The editor will now show the contents of the **lab04-setup.azcli** file.
 
