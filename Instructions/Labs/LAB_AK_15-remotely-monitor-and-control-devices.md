@@ -218,11 +218,11 @@ In this exercise, you will be creating the simulated device app (for the sensor-
 
 1. On the **Terminal** menu, click **New Terminal**.
 
-1. At the Terminal command prompt, to create a directory called "cheesecavedevice" and change the current directory to that directory, enter the following commands:
+1. At the Terminal command prompt, to create a directory called "CheeseCaveDevice" and change the current directory to that directory, enter the following commands:
 
     ```bash
-    mkdir cheesecavedevice
-    cd cheesecavedevice
+    mkdir CheeseCaveDevice
+    cd CheeseCaveDevice
     ```
 
 1. To create a new .NET console application, enter the following command:
@@ -243,9 +243,9 @@ In this exercise, you will be creating the simulated device app (for the sensor-
 
 1. On the **File** menu, click **Open Folder**.
 
-1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **cheesecavedevice**, and then click **Select Folder**
+1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **CheeseCaveDevice**, and then click **Select Folder**
 
-    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `cheesecavedevice.csproj` files listed.
+    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `CheeseCaveDevice.csproj` files listed.
 
 1. In the **EXPLORER** pane, click **Program.cs**.
 
@@ -468,11 +468,11 @@ Now that you have your (simulated) sensor-th-0055 device sending telemetry to yo
 
 1. On the **Terminal** menu, click **New Terminal**.
 
-1. At the Terminal command prompt, to create a directory named "cheesecaveoperator" and change the current directory to that directory, enter the following commands:
+1. At the Terminal command prompt, to create a directory named "CheeseCaveOperator" and change the current directory to that directory, enter the following commands:
 
    ```bash
-   mkdir cheesecaveoperator
-   cd cheesecaveoperator
+   mkdir CheeseCaveOperator
+   cd CheeseCaveOperator
    ```
 
 1. To create a new .NET console application, enter the following command:
@@ -493,9 +493,9 @@ Now that you have your (simulated) sensor-th-0055 device sending telemetry to yo
 
 1. On the **File** menu, click **Open Folder**
 
-1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **cheesecaveoperator**, and then click **Select Folder**
+1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **CheeseCaveOperator**, and then click **Select Folder**
 
-    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `cheesecaveoperator.csproj` files listed.
+    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `CheeseCaveOperator.csproj` files listed.
 
 1. In the **EXPLORER** pane, click **Program.cs**.
 
@@ -654,7 +654,7 @@ In this task, you will add code to your back-end app that will be used to receiv
 
 This test is important, checking whether your back-end app is picking up the telemetry being sent out by your simulated device. Remember your device app is still running, and sending telemetry.
 
-1. To run the `cheesecaveoperator` back-end app in the terminal, open a Terminal pane, and then enter the following command:
+1. To run the `CheeseCaveOperator` back-end app in the terminal, open a Terminal pane, and then enter the following command:
 
     ```bash
     dotnet run
@@ -705,7 +705,7 @@ The device app contains the functional code for the direct method. The function 
 
 #### Task 1: Add Code to Define a Direct Method in the Device App
 
-1. Return to the Visual Studio Code instance that is running the **cheesecavedevice** app.
+1. Return to the Visual Studio Code instance that is running the **CheeseCaveDevice** app.
 
     > **Note**: If the app is still running, place input focus in the Terminal pane and press **CTRL+C** to exit the app.
 
@@ -791,7 +791,7 @@ You have now completed the coding that is required on the device side. Next, you
 
 #### Task 2: Add Code to Call Your Direct Method
 
-1. Return to the Visual Studio Code instance that is running the **cheesecaveoperator** app.
+1. Return to the Visual Studio Code instance that is running the **CheeseCaveOperator** app.
 
     > **Note**: If the app is still running, place input focus in the Terminal pane and press **CTRL+C** to exit the app.
 
@@ -859,21 +859,21 @@ You have now completed the code changes to support the **SetFanState** direct me
 
 To test the direct method, you will need to start the apps in the correct order. You can't invoke a direct method that hasn't been registered!
 
-1. Start the **cheesecavedevice** device app.
+1. Start the **CheeseCaveDevice** device app.
 
     It will begin writing to the terminal, and telemetry will appear.
 
-1. Start the **cheesecaveoperator** back-end app.
+1. Start the **CheeseCaveOperator** back-end app.
 
-    > **Note**:  If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **cheesecavedevice** and started the app.
+    > **Note**:  If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **CheeseCaveDevice** and started the app.
 
-    The cheesecaveoperator back-end app will immediately call the direct method.
+    The CheeseCaveOperator back-end app will immediately call the direct method.
 
     Notice the output similar to the following:
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-sent.png)
 
-1. Now check the console output for the **cheesecavedevice** device app, you should see that the fan has been turned on.
+1. Now check the console output for the **CheeseCaveDevice** device app, you should see that the fan has been turned on.
 
    ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-received.png)
 
@@ -898,7 +898,7 @@ There is some overlap between the functionality of device twins and direct metho
 
 #### Task 1: Add Code To Use Device Twins To Synchronize Device Properties
 
-1. Return to the Visual Studio Code instance that is running the **cheesecaveoperator** back-end app.
+1. Return to the Visual Studio Code instance that is running the **CheeseCaveOperator** back-end app.
 
 1. If the app is still running, place input focus on the terminal and press **CTRL+C** to exit the app.
 
@@ -919,7 +919,7 @@ There is some overlap between the functionality of device twins and direct metho
             @"{
                 tags: {
                     customerID: 'Customer1',
-                    cellar: 'Cellar1'
+                    cheeseCave: 'CheeseCave1'
                 },
                 properties: {
                     desired: {
@@ -932,15 +932,15 @@ There is some overlap between the functionality of device twins and direct metho
         await registryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
 
         var query = registryManager.CreateQuery(
-          "SELECT * FROM devices WHERE tags.cellar = 'Cellar1'", 100);
-        var twinsInCellar1 = await query.GetNextAsTwinAsync();
-        Console.WriteLine("Devices in Cellar1: {0}",
-          string.Join(", ", twinsInCellar1.Select(t => t.DeviceId)));
+          "SELECT * FROM devices WHERE tags.cheeseCave = 'CheeseCave1'", 100);
+        var twinsInCheeseCave1 = await query.GetNextAsTwinAsync();
+        Console.WriteLine("Devices in CheeseCave1: {0}",
+          string.Join(", ", twinsInCheeseCave1.Select(t => t.DeviceId)));
 
     }
     ```
 
-    > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates the twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cellar** tag is set to "Cellar1". This query requires that the connection has the **Registry read** permission.
+    > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates the twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cheeseCave** tag is set to "CheeseCave1". This query requires that the connection has the **Registry read** permission.
 
 1. In the Code Editor pane, scroll up to find the **Main** method.
 
@@ -960,7 +960,7 @@ There is some overlap between the functionality of device twins and direct metho
 
 #### Task 2: Add Code to Synchronize Device Twin Settings for the Device
 
-1. Return to the Visual Studio Code instance that is running the **cheesecavedevice** app.
+1. Return to the Visual Studio Code instance that is running the **CheeseCaveDevice** app.
 
 1. If the app is still running, place input focus on the terminal and press **CTRL+C** to exit the app.
 
@@ -1023,11 +1023,11 @@ There is some overlap between the functionality of device twins and direct metho
 
 To test the method, start the apps in the correct order.
 
-1. Start the **cheesecavedevice** device app. It will begin writing to the terminal, and telemetry will appear.
+1. Start the **CheeseCaveDevice** device app. It will begin writing to the terminal, and telemetry will appear.
 
-1. Start the **cheesecaveoperator** back-end app.
+1. Start the **CheeseCaveOperator** back-end app.
 
-1. Check the console output for the **cheesecavedevice** device app and confirm that the device twin synchronized correctly.
+1. Check the console output for the **CheeseCaveDevice** device app and confirm that the device twin synchronized correctly.
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-received.png)
 
