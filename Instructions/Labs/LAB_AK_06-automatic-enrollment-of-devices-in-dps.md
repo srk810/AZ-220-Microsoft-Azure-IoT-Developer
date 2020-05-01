@@ -442,17 +442,17 @@ In this task, you will complete the following:
 * Copy the downloaded device certificate into the root folder of the application
 * Configure the application in Visual Studio Code 
 
-1. Within the Azure portal, navigate to the **Device Provisioning Service** blade, and the **Overview** pane.
+1. In the Azure portal, open your Device Provisioning Service blade and ensure that the **Overview** pane is selected.
 
-1. On the **Overview** pane, copy the **ID Scope** for the Device Provisioning Service, and save it for reference later.
+1. On the **Overview** pane, copy the **ID Scope** for the Device Provisioning Service, and save it for later reference.
 
     There is a copy button to the right of the value that will appear when you hover over the value.
 
     The **ID Scope** will be similar to this value: `0ne0004E52G`
 
-1. Open Windows File Explorer, and then navigate to the folder where `new-device.cert.pfx` was downloaded.
+1. Open Windows File Explorer, and then navigate to the folder where the `sensor-thl-2000-device.cert.pfx` certificate file was downloaded.
 
-1. Use File Explorer to create a copy of the `new-device.cert.pfx` file.
+1. Use File Explorer to create a copy of the `sensor-thl-2000-device.cert.pfx` file.
 
 1. In File Explorer, navigate to the Starter folder for lab 6 (Automatic Enrollment of Devices in DPS).
 
@@ -464,9 +464,9 @@ In this task, you will complete the following:
             * Starter
               * ContainerDevice
 
-1. Paste the `new-device.cert.pfx` file into the ContainerDevice folder.
+1. Paste the `sensor-thl-2000-device.cert.pfx` file into the ContainerDevice folder.
 
-    The root directory of the Lab 6 ContainerDevice folder includes the `Program.cs` file. The **simulated device** project will need to access this certificate file when authenticating to the Device Provisioning Service.
+    The root directory of the Lab 6 ContainerDevice folder includes the `Program.cs` file. The simulated device app will need to access this certificate file when authenticating to the Device Provisioning Service.
 
 1. Open **Visual Studio Code**.
 
@@ -478,7 +478,7 @@ In this task, you will complete the following:
 
     You should see the following files listed in the EXPLORER pane of Visual Studio Code:
 
-    * new-device.cert.pfx
+    * sensor-thl-2000-device.cert.pfx
     * Program.cs
     * ContainerDevice.csproj
 
@@ -487,14 +487,14 @@ In this task, you will complete the following:
 1. In the `ContainerDevice.csproj` file, ensure that the `<ItemGroup>` tag includes the following: 
 
     ```xml
-        <None Update="new-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+        <None Update="sensor-thl-2000-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
     ```
 
     If it's not there, add it. When you are done, the `<ItemGroup>` tag should look similar to the following:
 
     ```xml
             <ItemGroup>
-                <None Update="new-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+                <None Update="sensor-thl-2000-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
                 <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.21.1" />
                 <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.1.8" />
                 <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.1.9" />
@@ -503,7 +503,7 @@ In this task, you will complete the following:
         </Project>
     ```
 
-    This configuration ensures that the `new-device.cert.pfx` certificate file is copied to the build folder when the C# code is compiled, and made available for the program to access when it executes.
+    This configuration ensures that the `sensor-thl-2000-device.cert.pfx` certificate file is copied to the build folder when the C# code is compiled, and made available for the program to access when it executes.
 
 1. On the Visual Studio Code **File** menu, click **Save**.
 
@@ -751,29 +751,29 @@ In this exercise, you will modify the simulated device source code to include an
 1. To define the `OnDesiredPropertyChanged` method, paste in the following code:
 
     ```csharp
-        private async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
+    private async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
+    {
+        Console.WriteLine("Desired Twin Property Changed:");
+        Console.WriteLine($"{desiredProperties.ToJson()}");
+
+        // Read the desired Twin Properties
+        if (desiredProperties.Contains("telemetryDelay"))
         {
-            Console.WriteLine("Desired Twin Property Changed:");
-            Console.WriteLine($"{desiredProperties.ToJson()}");
-
-            // Read the desired Twin Properties
-            if (desiredProperties.Contains("telemetryDelay"))
+            string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
+            if (desiredTelemetryDelay != null)
             {
-                string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
-                if (desiredTelemetryDelay != null)
-                {
-                    this._telemetryDelay = int.Parse(desiredTelemetryDelay);
-                }
-                // if desired telemetryDelay is null or unspecified, don't change it
+                this._telemetryDelay = int.Parse(desiredTelemetryDelay);
             }
-
-            // Report Twin Properties
-            var reportedProperties = new TwinCollection();
-            reportedProperties["telemetryDelay"] = this._telemetryDelay;
-            await iotClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
-            Console.WriteLine("Reported Twin Properties:");
-            Console.WriteLine($"{reportedProperties.ToJson()}");
+            // if desired telemetryDelay is null or unspecified, don't change it
         }
+
+        // Report Twin Properties
+        var reportedProperties = new TwinCollection();
+        reportedProperties["telemetryDelay"] = this._telemetryDelay;
+        await iotClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
+        Console.WriteLine("Reported Twin Properties:");
+        Console.WriteLine($"{reportedProperties.ToJson()}");
+    }
     ```
 
     Notice that the **OnDesiredPropertyChanged** event handler accepts a **desiredProperties** parameter of type **TwinCollection**.
