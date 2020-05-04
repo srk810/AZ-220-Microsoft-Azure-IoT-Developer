@@ -10,19 +10,24 @@ lab:
 
 Contoso Management is impressed with your implementation of automatic device enrollment using DPS. They are now asking you to begin exploring an IoT solution for a business-specific issue associated with product packaging and shipping.
 
-A key component of the Contoso cheese-making business is the packaging and shipping of cheese to customers. To maximize cost efficiency, Contoso operates an on-premises packaging facility. The workflow is straightforward - packages are assembled for shipping, then placed on a conveyor belt system that takes the packages and drops them off at mailing bins. The metric for success is the number of packages leaving the conveyor belt system during a given time period (typically a work shift).
+A significant cost consideration within Contoso's cheese business is the packaging and shipping of cheese to customers. To maximize cost efficiency, Contoso operates an on-premises packaging facility. The workflow is straightforward - cheese is cut and packaged, packages are assembled into shipping containers, containers are delivered to specific bins associated with their destination. A conveyor belt system is used to move the product through this process. The metric for success is the number of packages leaving the conveyor belt system during a given time period (typically a work shift).
 
-The conveyor belt system is a critical link in this process, and is visually monitored to ensure that packages are delivered correctly. The system has three operator controlled speeds: stopped, slow, and fast. Naturally, the number of packages being delivered at the slow speed is less than at the faster speed. However, the vibration level of the conveyor belt system is also less at the slower speed. In addition, high vibration levels are know to accelerate wear-and-tear of the system and can cause packages to fall from the conveyor. If vibration becomes excessive, the conveyor belt must be stopped to allow for inspection so that more serious failures are avoided.
+The conveyor belt system is a critical link in this process, and is visually monitored to ensure that the workflow is progressing at maximum efficiency. The system has three operator controlled speeds: stopped, slow, and fast. Naturally, the number of packages being delivered at the low speed is less than at the higher speed. However, there are a number of other factors to consider:
 
-The primary goal for your solution will be to implement a form of preventive maintenance based on vibration levels, which can be used to detect that something is wrong before serious system damage occurs. 
+* the vibration level of the conveyor belt system is much lower at the slow speed
+* high vibration levels can cause packages to fall from the conveyor
+* high vibration levels are know to accelerate wear-and-tear of the system
+* when vibration levels exceed a threshold limit, the conveyor belt must be stopped to allow for inspection (to avoid more serious failures)
+
+In addition to maximizing throughput, your automated IoT solution will implement a form of preventive maintenance based on vibration levels, which will be used to detect early warning signs before serious system damage occurs. 
 
 > **Note**: **Preventive maintenance** (sometimes called preventative maintenance or predictive maintenance) is an equipment maintenance program that schedules maintenance activities to be performed while the equipment is operating normally. The intent of this approach is to avoid unexpected breakdowns that often incur costly disruptions.
 
-It's not always easy to detect abnormal vibration levels. For this reason, you are looking into an Azure IoT solution that will help to measure vibration levels and data anomalies. Vibration sensors will be attached to the conveyor belt at various locations, and you will use IoT devices to send telemetry to an IoT hub. The IoT hub will use Azure Stream Analytics, and a built-in Machine Learning (ML) model, to alert you to vibration anomalies in real time. You also plan to archive all of the telemetry data so that it can be further analyzed in the future.
+It's not always easy for an operator to visually detect abnormal vibration levels. For this reason, you are looking into an Azure IoT solution that will help to measure vibration levels and data anomalies. Vibration sensors will be attached to the conveyor belt at various locations, and you will use IoT devices to send telemetry to an IoT hub. The IoT hub will use Azure Stream Analytics, and a built-in Machine Learning (ML) model, to alert you to vibration anomalies in real time. You also plan to archive all of the telemetry data so that it can be further analyzed in the future.
 
 You decide to prototype the solution using simulated telemetry from a single IoT device.
 
-To simulate the vibration data in a realistic manner, you work with one of the engineers to understand a little bit about what causes the vibrations. It turns out that there are a number of different types of vibration that contribute to the overall vibration level. For example, a "force vibration" could be introduced by a broken guide wheel or an especially heavy load placed improperly on the conveyor belt. There's also an "increasing vibration", that can be introduced when a system design limit (such as speed or weight) is exceeded. With a little help, you able to develop the code for a simulated IoT device that produces an acceptable representation of vibration data and will generate anomalies.
+To simulate the vibration data in a realistic manner, you work with one of the engineers to understand a little bit about what causes the vibrations. It turns out there are a number of different types of vibration that contribute to the overall vibration level. For example, a "force vibration" could be introduced by a broken guide wheel or an especially heavy load placed improperly on the conveyor belt. There's also an "increasing vibration", that can be introduced when a system design limit (such as speed or weight) is exceeded. With a little help, you able to develop the code for a simulated IoT device that produces an acceptable representation of vibration data and will generate anomalies during testing.
 
 The following resources will be created:
 
@@ -30,12 +35,12 @@ The following resources will be created:
 
 ## In This Lab
 
-In this lab, you will complete the following activities:
+In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a simulated device that sends vibration telemetry to your IoT hub. With your simulated data arriving at IoT hub, you will implement tow message routes, one that archives data for future analysis and one that supports data analysis in real time (outputs to Azure Blob storage and Azure Stream Analytics respectively). The lab includes the following exercises:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 
     * The script will create an Azure IoT Hub if you don't have one.
-    * The script will also create a new device (sensor-v-3000) for this lab
+    * The script will create a new device identity (sensor-v-3000) for this lab
 
 * Create a simulated device that sends device telemetry to the IoT Hub
 * Create an IoT Hub message route that outputs to blob storage

@@ -25,7 +25,7 @@ In this lab, you will complete the following activities:
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 
     * The script will create an IoT Hub if needed.
-    * The script will create a device identity needed for this lab.
+    * The script will create a new device identity needed for this lab.
 
 * Deploy Azure IoT Edge Enabled Linux VM
 * Setup an IoT Edge Parent device with a Child IoT device
