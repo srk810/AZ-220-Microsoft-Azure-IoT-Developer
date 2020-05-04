@@ -35,16 +35,16 @@ The following resources will be created:
 
 ## In This Lab
 
-In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a simulated device that sends vibration telemetry to your IoT hub. With your simulated data arriving at IoT hub, you will implement tow message routes, one that archives data for future analysis and one that supports data analysis in real time (outputs to Azure Blob storage and Azure Stream Analytics respectively). The lab includes the following exercises:
+In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a simulated device that sends vibration telemetry to your IoT hub. With your simulated data arriving at IoT hub, you will implement two message routes, one that archives data for future analysis and one that supports data analysis in real time (outputs to Azure Blob storage and Azure Stream Analytics respectively). The lab includes the following exercises:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 
-    * The script will create an Azure IoT Hub if you don't have one.
+    * The script will create an Azure IoT Hub if you don't have one
     * The script will create a new device identity (sensor-v-3000) for this lab
 
 * Create a simulated device that sends device telemetry to the IoT Hub
 * Create an IoT Hub message route that outputs to blob storage
-* Create a second message route that outputs to an Azure Stream Analytics job.
+* Create a second message route that outputs to an Azure Stream Analytics job
 
 ## Lab Instructions
 
@@ -171,24 +171,16 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
 
 ### Exercise 2: Write Code to generate Vibration Telemetry
 
-The key to monitoring our conveyor belt is the output of vibration telemetry. Vibration is usually measured as an acceleration (m/s&#x00B2;), although sometimes it's measured in g-forces, where 1 g = 9.81 m/s&#x00B2;. There are three types of vibration.
+Both long term and real-time data analysis are required to automate the monitoring of Contoso's conveyor belt system and enable predictive maintenance. Since no historical data exists, your first step will be to generate simulated data that mimics vibration data and data anomalies in a realistic manner. Contoso engineers have developed an algorithm to simulate vibration over time and embedded the algorithm within a code class that you will implement. The engineers have agreed to support any future updates required to adjust the algorithms.
 
-* Natural vibration, which is just the frequency a structure tends to oscillate.
-* Free vibration, which occurs when the structure is impacted, but then left to oscillate without interference.
-* Forced vibration, which occurs when the structure is under some stress.
-
-Forced vibration is the dangerous one for our conveyor belt. Even if it starts at a low level this vibration can build so that the structure fails prematurely. There's less of a case for free vibration in conveyor belt operation. Most machines, as we all know, have a natural vibration.
-
-The code sample that you will build simulates a conveyor belt running at a range of speeds (stopped, slow, fast). The faster the belt is running, the more packages are delivered, but the greater the effects of vibration. We'll add natural vibration, based on a sine wave with some randomization. It's possible our anomaly detection system will falsely identify a spike or dip in this sine wave as an anomaly. We'll then add two forms of forced vibration. The first has the effect of a cyclic increase in vibration (see the images below). And secondly, an increasing vibration, where an additional sine wave is added, starting small but growing.
-
-During this prototype phase we assume that our conveyor belt has just one sensor device (our simulated IoT Device). In addition to communicating vibration data, the sensor also pumps out some other data (packages delivered, ambient temperature, and similar metrics). For this lab, the additional values will be sent to a storage archive.
-
-Almost all the coding in this lab will be completed during this exercise. You will be using Visual Studio Code to build the simulator code in C#. You will complete a small amount of SQL coding later in the lab.
+During your initial prototype phase, you will implement a single IoT device that generates telemetry data. In addition to the vibration data, your device will create some additional values (packages delivered, ambient temperature, and similar metrics) that will be sent to Blob storage. This additional data simulates the data that will be used to develop machine learning modules for predictive maintenance.
 
 In this exercise, you will:
 
-* build the conveyor belt simulator
-* send telemetry messages to the IoT Hub created in the previous unit
+* load the simulated device project
+* update the connection string for your simulated device and review the project code
+* test your simulated device connection and telemetry communications
+* ensure that telemetry is arriving at your IoT hub
 
 #### Task 1: Open a simulated device that generates telemetry
 
@@ -383,9 +375,13 @@ The simulated device app that you build in this task simulates an IoT device tha
     * The **loggingDataPoint** contains more information than the telemetry object. It is common to include as much information as possible for logging purposes to assist in any fault diagnosis activities or more detail analytics in the future.
     * The logging message includes the **sensorID** property, this time set to **VSLog**. Again, as noted above, his will be used to route the **VSLog** values appropriately at the IoT Hub.
 
-1. Take a moment to review the **ConveyorBeltSimulator** class. This class simulates the operation of a conveyor belt, modelling a number of speeds and related states to generate vibration data. You don't need to understand how this class functions to complete the lab.
+1. Take a moment to review the **ConveyorBeltSimulator** class.
 
-1. The final part of the application is the **ConsoleHelper** class. This is used to write different colored text to the console to highlight different data and values.
+    This class simulates the operation of a conveyor belt, modelling a number of speeds and related states to generate vibration data. You don't need to understand how this class functions to complete the lab.
+
+1. Take a moment to review the **ConsoleHelper** class. 
+
+    This final portion of the application is used to write different colored text to the console to highlight different data and values.
 
 #### Task 3: Test your code to send telemetry
 
