@@ -29,7 +29,7 @@ In this lab, you will complete the following activities:
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 
     * The script will create an IoT Hub if needed.
-    * The script will create the three devices needed for this lab.
+    * The script will create three new device identities for this lab.
 
 * Create an Azure Time Series Insights (TSI) environment
 * Connect to IoT Hub with Time Series Insights (TSI)

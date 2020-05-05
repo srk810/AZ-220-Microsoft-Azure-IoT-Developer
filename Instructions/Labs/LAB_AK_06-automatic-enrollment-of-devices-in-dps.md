@@ -720,9 +720,40 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
     Your simulated device will now use the device twin properties from Azure IoT Hub to set the delay between telemetry messages.
 
+
+
+
+
+
+
+**TODO**: Insert an Exercise that has the student create copies of the ContainerDevice project folder for 4 additional simulated devices and then update the device certificate for each device (maybe cut this back to 2 additional devices here and above where creating the certificates). 
+
+
+
+
+
+
+
+
+
 ### Exercise 4: Test the Simulated Device
 
 In this exercise, you will run the simulated device. When the device is started for the first time, it will connect to the Device Provisioning Service (DPS) and automatically be enrolled using the configured group enrollment. Once enrolled into the DPS group enrollment, the device will be automatically registered within the Azure IoT Hub device registry. Once enrolled and registered, the device will begin communicating with Azure IoT Hub securely using the configured X.509 certificate authentication.
+
+
+
+
+
+
+
+**TODO**: Update this Exercise to test group enrollment of multiple simulated devices. 
+
+
+
+
+
+
+
 
 #### Task 1: Build and run the device
 
@@ -887,6 +918,21 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 ### Exercise 5: Deprovision a Group Enrollment
 
 In this exercise, you will deprovision the enrollment group. Deprovisioning includes disenrolling the devices from Device Provisioning Service and deregistering the devices from IoT Hub.
+
+
+
+
+
+
+
+**TODO**: Update this Exercise with a task that has the students test the removal of a single device from the group enrollment before they go on to delete the entire group enrollment. 
+
+
+
+
+
+
+
 
 #### Task 1: Disenroll the enrollment group from the DPS
 
