@@ -159,7 +159,7 @@ The **lab07-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-v-3000** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-v-3000** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, the connection string for the device is displayed.
 
@@ -182,25 +182,23 @@ In this exercise, you will:
 * test your simulated device connection and telemetry communications
 * ensure that telemetry is arriving at your IoT hub
 
-#### Task 1: Open a simulated device that generates telemetry
+#### Task 1: Open your simulated device project
 
-1. In File Explorer, navigate to the Starter folder for lab 7 (Device Message Routing).
+1. Open **Visual Studio Code**.
+
+1. On the **File** menu, click **Open Folder**.
+
+1. In the **Open Folder** dialog, navigate to the **07-Device Message Routing** folder.
 
     In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
 
     * Allfiles
-      * Labs
-          * 07-Device Message Routing
-            * Starter
-              * VibrationDevice
+        * Labs
+            * 07-Device Message Routing
+                * Starter
+                    * VibrationDevice
 
-1. Open **Visual Studio Code**.
-
-1. On the **File** menu, click **Open Folder**
-
-1. In the Open Folder dialog, navigate to the **07-Device Message Routing** folder.
-
-1. Navigate to the **Starter** folder.
+1. Navigate to the **Starter** folder for Lab 7.
 
 1. Click **VibrationDevice**, and then click **Select Folder**.
 
@@ -209,19 +207,21 @@ In this exercise, you will:
     * Program.cs
     * VibrationDevice.csproj
 
-1. Open the **Program.cs** file.
+    > **Note**: If you are prompted to load required assets, you can do that now.
+ 
+1. In the **EXPLORER** pane, click **Program.cs**.
 
     A cursory glance will reveal that the **VibrationDevice** application is very similar to those used in the preceding labs. This version of the application uses symmetric Key authentication, sends both telemetry and logging messages to the IoT Hub, and has a more complex sensor implementation.
 
 1. On the **Terminal** menu, click **New Terminal**.
 
-    Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
+    Examine the directory path indicated as part of the command prompt to ensure that you are in the correct location. You do not want to start building this project within the folder structure of a previous lab project.
   
-1. At the terminal command prompt, to verify the application builds, enter the following command:
+1. At the terminal command prompt, to verify that the application builds without errors, enter the following command:
 
-   ```bash
-   dotnet build
-   ```
+    ```cmd
+    dotnet build
+    ```
 
     The output will be similar to:
 
@@ -244,25 +244,25 @@ In the next task, you will configure the connection string and review the applic
 
 #### Task 2: Configure connection and review code
 
-The simulated device app that you build in this task simulates an IoT device that is monitoring the conveyor belt. The app will simulate sensor readings and report vibration sensor data every two seconds.
+The simulated device app that you will build in this task simulates an IoT device that is monitoring the conveyor belt. The app will simulate sensor readings and report vibration sensor data every two seconds.
 
-1. Return to **Visual Studio Code**, and ensure the **Program.cs** file is open.
+1. Ensure that you have the **Program.cs** file opened in Visual Studio Code.
 
-1. Find the following line of code:
+1. Near the top of the **Program** class, locate the declaration of the `deviceConnectionString` variable:
 
     ```csharp
     private readonly static string deviceConnectionString = "<your device connection string>";
     ```
 
-1. Replace the `<your device connection string>` (line 21) with the device connection string you saved earlier.
+1. Replace `<your device connection string>` with the device connection string that you saved earlier.
 
     > **Note**: This is the only change that you are required to make to this code.
 
-1. Save the **Program.cs** file.
+1. On the **File** menu, click **Save**.
 
-1. Take a few minutes to review the code.
+1. Take a minute to review the structure of the project.
 
-1. Notice that the application structure is similar to that used in earlier units:
+    Notice that the application structure is similar to that of your previous simulated device projects.
 
     * Using statements
     * Namespace definition
@@ -270,7 +270,7 @@ The simulated device app that you build in this task simulates an IoT device tha
       * ConveyorBeltSimulator class - (replaces EnvironmentSensor) rather than just generating telemetry, this class also simulates a running conveyor belt
       * ConsoleHelper - a new class that encapsulates writing different colored text to the console
 
-1. Review the the **Main** method:
+1. Take a minute to review the **Main** method.
 
     ```csharp
     private static void Main(string[] args)
@@ -285,9 +285,9 @@ The simulated device app that you build in this task simulates an IoT device tha
     }
     ```
 
-    Notice how straightforward it is using the **deviceConnectionString** to obtain a **DeviceClient** instance.
+    Notice how straightforward it is to create an instance of **DeviceClient** using the **deviceConnectionString** variable. Since the `deviceClient` object is declared outside of **Main** (at the Program level in the code above), it is global and therefor available inside the methods that communicate with IoT hub.
 
-1. Review the **SendDeviceToCloudMessagesAsync** method.
+1. Take a minute to review the **SendDeviceToCloudMessagesAsync** method.
 
     ```csharp
     private static async void SendDeviceToCloudMessagesAsync()
@@ -308,9 +308,11 @@ The simulated device app that you build in this task simulates an IoT device tha
     }
     ```
 
-    Notice how the **ConveyorBeltSimulator** class is used to read vibration data and then passed to the two create message methods. Once again, this loop repeats based upon a specified delay.
+    First off, notice that this method is being used to establish the infinite program loop, first taking a vibration reading and then sending messages at a defined time interval. 
 
-1. Review the **CreateTelemetryMessage** method:
+    A closer look reveals that the ConveyorBeltSimulator class is used to create a ConveyorBeltSimulator instance named `conveyor`. The `conveyor` object is first used to capture a vibration reading which is placed into a local `vibration` variable, and is then passed to the two create message methods along with the `vibration` value that was captured at the start of the interval. 
+
+1. Take a minute to review the **CreateTelemetryMessage** method.
 
     ```csharp
     private static async Task CreateTelemetryMessage(ConveyorBeltSimulator conveyor, double vibration)
@@ -340,7 +342,7 @@ The simulated device app that you build in this task simulates an IoT device tha
 
     As usual, the message is sent via the **SendEventAsync** method of the device client.
 
-1. Review the **CreateLoggingMessage** method:
+1. Take a minute to review the **CreateLoggingMessage** method.
 
     ```csharp
     private static async Task CreateLoggingMessage(ConveyorBeltSimulator conveyor, double vibration)
@@ -372,20 +374,16 @@ The simulated device app that you build in this task simulates an IoT device tha
 
     Notice that this method is very similar to the **CreateTelemetryMessage** method. Here are the key items to note:
 
-    * The **loggingDataPoint** contains more information than the telemetry object. It is common to include as much information as possible for logging purposes to assist in any fault diagnosis activities or more detail analytics in the future.
+    * The **loggingDataPoint** contains more information than the telemetry object. It is common to include as much information as possible for logging purposes to assist in any fault diagnosis activities or more detailed analytics in the future.
     * The logging message includes the **sensorID** property, this time set to **VSLog**. Again, as noted above, his will be used to route the **VSLog** values appropriately at the IoT Hub.
 
-1. Take a moment to review the **ConveyorBeltSimulator** class.
+1. Optionally, take a moment to review the **ConveyorBeltSimulator** class and the **ConsoleHelper** class.
 
-    This class simulates the operation of a conveyor belt, modelling a number of speeds and related states to generate vibration data. You don't need to understand how this class functions to complete the lab.
-
-1. Take a moment to review the **ConsoleHelper** class. 
-
-    This final portion of the application is used to write different colored text to the console to highlight different data and values.
+    You don't actually need to understand how either of these classes work to achieve the full value of this lab, but they both support the outcome in their own way. The **ConveyorBeltSimulator** class simulates the operation of a conveyor belt, modeling a number of speeds and related states to generate vibration data. The **ConsoleHelper** class is used to write different colored text to the console to highlight different data and values.
 
 #### Task 3: Test your code to send telemetry
 
-1. To run the app in the terminal, enter the following command:
+1. At the Terminal command prompt, to run the app, enter the following command:
 
     ```bash
     dotnet run
@@ -411,8 +409,6 @@ The simulated device app that you build in this task simulates an IoT device tha
 
     > **Note**:  In the Terminal window, green text is used to show things are working as they should and red text when bad stuff is happening. If you receive error messages, start by checking your device connection string.
 
-1. Watch the telemetry for a short while, checking that it is giving vibrations in the expected ranges.
-
 1. Leave this app running for the next task.
 
     If you won't be continuing to the next task, you can enter **Ctrl-C** in the Terminal window to stop the app. You can start it again later by using the `dotnet run` command.
@@ -423,7 +419,7 @@ In this task, you will use the Azure portal to verify that your IoT Hub is recei
 
 1. Open the [Azure Portal](https://portal.azure.com).
 
-1. On your Dashboard, in the **rg-az220** resource group tile, click **iot-az220-training-_{YourID}_**.
+1. On your Resources tile, click **iot-az220-training-{your-id}**.
 
 1. On the **Overview** pane, scroll down to view the metrics tiles.
 
@@ -435,16 +431,18 @@ In this task, you will use the Azure portal to verify that your IoT Hub is recei
 
 ### Exercise 3: Create a Message Route to Azure Blob Storage
 
-The architecture of our vibration monitoring system requires data be sent to two destinations: a storage location for archiving data, and a location for more immediate analysis. Azure IoT provides a great method of directing data to the right service, through *message routing*.
+IoT solutions often require that incoming message data be sent to multiple endpoint locations, either dependent upon the type of data or for business reasons. Azure IoT hub provides the _message routing_ feature to enable you to direct incoming data to locations required by your solution.
 
-In our scenario, we need to create two routes:
+The architecture of our system requires data be sent to two destinations: a storage location for archiving data, and a location for more immediate analysis. 
 
-* the first route will be to storage for archiving data
-* the second route will be to an Azure Stream Analytics job
+Contoso's vibration monitoring scenario requires you to create two message routes:
 
-Since message routes are best built and tested one at a time, this exercise will focus on the storage route. We'll call this route the "logging" route, and it involves digging a few levels deep into the creation of Azure resources. All the features required to build this route are available in the Azure portal.
+* the first route will be to an Azure Blob storage location for data archiving
+* the second route will be to an Azure Stream Analytics job for real-time analysis
 
-We will keep the storage route simple, and use Azure Blob storage (though Data Lake storage is also available). The key feature of message routing is the filtering of incoming data. The filter, written in SQL, streams output down the route only when certain conditions are met.
+Since message routes are best built and tested one at a time, this exercise will focus on the storage route. This route will be called the "logging" route, and it involves digging a few levels deep into the creation of Azure resources. All the features required to build this route are available in the Azure portal.
+
+You will keep the storage route simple, and use Azure Blob storage (though Data Lake storage is also available). The key feature of message routing is the filtering of incoming data. The filter, written in SQL, streams output down the route only when certain conditions are met.
 
 One of the easiest ways to filter data is on a message property, which is why we added these two lines to our code:
 
