@@ -444,7 +444,7 @@ Since message routes are best built and tested one at a time, this exercise will
 
 You will keep the storage route simple, and use Azure Blob storage (though Data Lake storage is also available). The key feature of message routing is the filtering of incoming data. The filter, written in SQL, streams output down the route only when certain conditions are met.
 
-One of the easiest ways to filter data is on a message property, which is why we added these two lines to our code:
+One of the easiest ways to filter data is on a message property, which is why you added these two lines to your code:
 
 ```csharp
 ...
