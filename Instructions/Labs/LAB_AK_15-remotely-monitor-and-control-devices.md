@@ -212,225 +212,193 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
 In this exercise, you will be creating the simulated device app (for the sensor-th-0055 device) that sends telemetry to your IoT Hub.
 
-#### Task 1: Create a Console App in Visual Studio Code
+#### Task 1: Open a simulated device that generates telemetry
 
-1. Open Visual Studio Code.
+1. In File Explorer, navigate to the Starter folder for lab 7 (Device Message Routing).
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 15-Remotely monitor and control devices with Azure IoT Hub
+            * Starter
+              * CheeseCaveDevice
+
+1. Open **Visual Studio Code**.
+
+1. On the **File** menu, click **Open Folder**
+
+1. In the Open Folder dialog, navigate to the **15-Remotely monitor and control devices with Azure IoT Hub** folder.
+
+1. Navigate to the **Starter** folder.
+
+1. Click **CheeseCaveDevice**, and then click **Select Folder**.
+
+    You should see the following files listed in the EXPLORER pane of Visual Studio Code:
+
+    * Program.cs
+    * CheeseCaveDevice.csproj
+
+1. Open the **Program.cs** file.
+
+    A cursory glance will reveal that the **CheeseCaveDevice** application is very similar to those used in the preceding labs. This version of the application uses symmetric Key authentication, sends both telemetry and logging messages to the IoT Hub, and has a more complex sensor implementation.
 
 1. On the **Terminal** menu, click **New Terminal**.
 
-1. At the Terminal command prompt, to create a directory called "CheeseCaveDevice" and change the current directory to that directory, enter the following commands:
+    Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
+  
+1. At the terminal command prompt, to verify the application builds, enter the following command:
 
-    ```bash
-    mkdir CheeseCaveDevice
-    cd CheeseCaveDevice
+   ```bash
+   dotnet build
+   ```
+
+    The output will be similar to:
+
+    ```text
+    ❯ dotnet build
+    Microsoft (R) Build Engine version 16.5.0+d4cbfca49 for .NET Core
+    Copyright (C) Microsoft Corporation. All rights reserved.
+
+    Restore completed in 39.27 ms for D:\Az220-Code\AllFiles\Labs\15-Remotely monitor and control devices with Azure IoT Hub\Starter\CheeseCaveDevice\CheeseCaveDevice.csproj.
+    CheeseCaveDevice -> D:\Az220-Code\AllFiles\Labs\15-Remotely monitor and control devices with Azure IoT Hub\Starter\CheeseCaveDevice\bin\Debug\netcoreapp3.1\CheeseCaveDevice.dll
+
+    Build succeeded.
+        0 Warning(s)
+        0 Error(s)
+
+    Time Elapsed 00:00:01.16
     ```
 
-1. To create a new .NET console application, enter the following command:
+In the next task, you will configure the connection string and review the application.
 
-    ```bash
-    dotnet new console
-    ```
+#### Task 2: Configure connection and review code
 
-    This command creates a **Program.cs** file in your folder, along with a project file.
+The simulated device app that you build in this task simulates an IoT device that is monitoring the conveyor belt. The app will simulate sensor readings and report vibration sensor data every two seconds.
 
-1. To install the required libraries, enter the following commands:
+1. Return to **Visual Studio Code**, and ensure the **Program.cs** file is open.
 
-    ```bash
-    dotnet add package Microsoft.Azure.Devices.Client
-    dotnet add package Microsoft.Azure.Devices.Shared
-    dotnet add package Newtonsoft.Json
-    ```
-
-1. On the **File** menu, click **Open Folder**.
-
-1. In the **Open Folder** dialog, navigate to the folder location specified in the Terminal pane, click **CheeseCaveDevice**, and then click **Select Folder**
-
-    The EXPLORER pane should open in Visual Studio Code and you should see the `Program.cs` and `CheeseCaveDevice.csproj` files listed.
-
-1. In the **EXPLORER** pane, click **Program.cs**.
-
-1. In the Code Editor pane, delete the contents of the Program.cs file.
-
-#### Task 2: Add Code to Simulate Your sensor-th-0055 IoT Device
-
-In this task, you will add the code to send telemetry from a simulated device. The device sends temperature (in degrees Fahrenheit) and humidity (in percentages), regardless of whether any back-end app is listening or not.
-
-1. Ensure that you have the **Program.cs** file open in Visual Studio Code.
-
-    The Code Editor pane should display an empty code file.
-
-1. Copy-and-Paste the following code into the Code Editor pane:
+1. Find the following line of code:
 
     ```csharp
-    // Copyright (c) Microsoft. All rights reserved.
-    // Licensed under the MIT license. See LICENSE file in the project root for full license information.
+    private readonly static string deviceConnectionString = "<your device connection string>";
+    ```
 
-    using System;
-    using Microsoft.Azure.Devices.Client;
-    using Microsoft.Azure.Devices.Shared;
-    using Newtonsoft.Json;
-    using System.Text;
-    using System.Threading.Tasks;
-    using Newtonsoft.Json.Linq;
+1. Replace the `<your device connection string>` (line 21) with the device connection string you saved earlier.
 
-    namespace simulated_device
+    > **Note**: This is the only change that you are required to make to this code.
+
+1. Save the **Program.cs** file.
+
+1. Notice that the application structure is similar to that used in earlier units:
+
+    * Using statements
+    * Namespace definition
+      * Program class - responsible for connecting to Azure IoT and sending telemetry
+      * CheeseCaveSimulator class - (replaces EnvironmentSensor) rather than just generating telemetry, this class also simulates a running cheese cave environment that is impacted by the operation of a cooling fan.
+      * ConsoleHelper - a class that encapsulates writing different colored text to the console
+
+1. Review the the **Main** method:
+
+    ```csharp
+    private static void Main(string[] args)
     {
-        class SimulatedDevice
+        ConsoleHelper.WriteColorMessage("Cheese Cave device app.\n", ConsoleColor.Yellow);
+
+        // Connect to the IoT hub using the MQTT protocol.
+        deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
+
+        // Create an instance of the Cheese Cave Simulator
+        cheeseCave = new CheeseCaveSimulator();
+
+        // Create a handler for the direct method call
+        deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
+
+        // Get the device twin to report the initial desired properties.
+        Twin deviceTwin = deviceClient.GetTwinAsync().GetAwaiter().GetResult();
+        ConsoleHelper.WriteGreenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
+
+        // Set the device twin update callback.
+        deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).Wait();
+
+        SendDeviceToCloudMessagesAsync();
+        Console.ReadLine();
+    }
+    ```
+
+    As in earlier labs, the **Main** method establishes a connection to the IoT hub, reads the device twin and configures the device twin property change callback. Additionally, the **SetFanState** direct method handler is setup. Note that the device client **SetMethodHandlerAsync** method takes the string remote method `"SetFanState"` name as an argument, along with the actual local method to call, and a user context object (in this case null). You will examine  the implementation of the **SetFanState** method shortly.
+
+1. Take a brief look at the **SendDeviceToCloudMessagesAsync** method - you will notice that it is very similar to previous versions you have created in previous labs.
+
+1. Now review the **SetFanState** method. This is the method that is executed on the device when the associated remote method, also called **SetFanState**, is invoked via an IoT Hub.
+
+    ```csharp
+    private static Task<MethodResponse> SetFanState(MethodRequest methodRequest, object userContext)
+    {
+        if (cheeseCave.FanState == StateEnum.Failed)
         {
-        // Global constants.
-            const float ambientTemperature = 70;                    // Ambient temperature of a southern cave, in degrees F.
-            const double ambientHumidity = 99;                      // Ambient humidity in relative percentage of air saturation.
-            const double desiredTempLimit = 5;                      // Acceptable range above or below the desired temp, in degrees F.
-            const double desiredHumidityLimit = 10;                 // Acceptable range above or below the desired humidity, in percentages.
-            const int intervalInMilliseconds = 5000;                // Interval at which telemetry is sent to the cloud.
-
-            // Global variables.
-            private static DeviceClient s_deviceClient;
-            private static stateEnum fanState = stateEnum.off;                      // Initial setting of the fan.
-            private static double desiredTemperature = ambientTemperature - 10;     // Initial desired temperature, in degrees F.
-            private static double desiredHumidity = ambientHumidity - 20;           // Initial desired humidity in relative percentage of air saturation.
-
-            // Enum for the state of the fan for cooling/heating, and humidifying/de-humidifying.
-            enum stateEnum
+            // Acknowledge the direct method call with a 400 error message.
+            string result = "{\"result\":\"Fan failed\"}";
+            ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
+            return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
+        }
+        else
+        {
+            try
             {
-                off,
-                on,
-                failed
+                var data = Encoding.UTF8.GetString(methodRequest.Data);
+
+                // Remove quotes from data.
+                data = data.Replace("\"", "");
+
+                // Parse the payload, and trigger an exception if it's not valid.
+                cheeseCave.UpdateFan((StateEnum)Enum.Parse(typeof(StateEnum), data));
+                ConsoleHelper.WriteGreenMessage("Fan set to: " + data);
+
+                // Acknowledge the direct method call with a 200 success message.
+                string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
+                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 200));
             }
-
-            // The device connection string to authenticate the device with your IoT hub.
-            private readonly static string s_deviceConnectionString = "<your device connection string>";
-
-            private static void colorMessage(string text, ConsoleColor clr)
+            catch
             {
-                Console.ForegroundColor = clr;
-                Console.WriteLine(text);
-                Console.ResetColor();
-            }
-            private static void greenMessage(string text)
-            {
-                colorMessage(text, ConsoleColor.Green);
-            }
-
-            private static void redMessage(string text)
-            {
-                colorMessage(text, ConsoleColor.Red);
-            }
-
-            // Async method to send simulated telemetry.
-            private static async void SendDeviceToCloudMessagesAsync()
-            {
-                double currentTemperature = ambientTemperature;         // Initial setting of temperature.
-                double currentHumidity = ambientHumidity;               // Initial setting of humidity.
-
-                Random rand = new Random();
-
-                while (true)
-                {
-                    // Simulate telemetry.
-                    double deltaTemperature = Math.Sign(desiredTemperature - currentTemperature);
-                    double deltaHumidity = Math.Sign(desiredHumidity - currentHumidity);
-
-                    if (fanState == stateEnum.on)
-                    {
-                        // If the fan is on the temperature and humidity will be nudged towards the desired values most of the time.
-                        currentTemperature += (deltaTemperature * rand.NextDouble()) + rand.NextDouble() - 0.5;
-                        currentHumidity += (deltaHumidity * rand.NextDouble()) + rand.NextDouble() - 0.5;
-
-                        // Randomly fail the fan.
-                        if (rand.NextDouble() < 0.01)
-                        {
-                            fanState = stateEnum.failed;
-                            redMessage("Fan has failed");
-                        }
-                    }
-                    else
-                    {
-                        // If the fan is off, or has failed, the temperature and humidity will creep up until they reaches ambient values, thereafter fluctuate randomly.
-                        if (currentTemperature < ambientTemperature - 1)
-                        {
-                            currentTemperature += rand.NextDouble() / 10;
-                        }
-                        else
-                        {
-                            currentTemperature += rand.NextDouble() - 0.5;
-                        }
-                        if (currentHumidity < ambientHumidity - 1)
-                        {
-                            currentHumidity += rand.NextDouble() / 10;
-                        }
-                        else
-                        {
-                            currentHumidity += rand.NextDouble() - 0.5;
-                        }
-                    }
-
-                    // Check: humidity can never exceed 100%.
-                    currentHumidity = Math.Min(100, currentHumidity);
-
-                    // Create JSON message.
-                    var telemetryDataPoint = new
-                    {
-                        temperature = Math.Round(currentTemperature, 2),
-                        humidity = Math.Round(currentHumidity, 2)
-                    };
-                    var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
-                    var message = new Message(Encoding.ASCII.GetBytes(messageString));
-
-                    // Add custom application properties to the message.
-                    message.Properties.Add("sensorID", "S1");
-                    message.Properties.Add("fanAlert", (fanState == stateEnum.failed) ? "true" : "false");
-
-                    // Send temperature or humidity alerts, only if they occur.
-                    if ((currentTemperature > desiredTemperature + desiredTempLimit) || (currentTemperature < desiredTemperature - desiredTempLimit))
-                    {
-                        message.Properties.Add("temperatureAlert", "true");
-                    }
-                    if ((currentHumidity > desiredHumidity + desiredHumidityLimit) || (currentHumidity < desiredHumidity - desiredHumidityLimit))
-                    {
-                        message.Properties.Add("humidityAlert", "true");
-                    }
-
-                    Console.WriteLine("Message data: {0}", messageString);
-
-                    // Send the telemetry message.
-                    await s_deviceClient.SendEventAsync(message);
-                    greenMessage("Message sent\n");
-
-                    await Task.Delay(intervalInMilliseconds);
-                }
-            }
-            private static void Main(string[] args)
-            {
-                colorMessage("Cheese Cave device app.\n", ConsoleColor.Yellow);
-
-                // Connect to the IoT hub using the MQTT protocol.
-                s_deviceClient = DeviceClient.CreateFromConnectionString(s_deviceConnectionString, TransportType.Mqtt);
-
-                SendDeviceToCloudMessagesAsync();
-                Console.ReadLine();
+                // Acknowledge the direct method call with a 400 error message.
+                string result = "{\"result\":\"Invalid parameter\"}";
+                ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
+                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
             }
         }
     }
     ```
 
-1. Take a few minutes to review the code.
+    The first line of this method determines whether the cheese cave fan is currently in a failed state - the assumption made by the cheese cave simulator is that once the fan has failed, any subsequent command will automatically fail. Therefore, a JSON string is created with the **result** property set to **Fan Failed**. A new **MethodResponse** object is then constructed, with the result string encoded into a byte array and an HTTP status code - in this instance, **400** is used which, in the context of a REST API means a generic client-side error has occurred. As direct method callbacks are required to return a **Task\<MethodResponse\>**, a new task is created and returned.
 
-    > **Important:** Read through the comments in the code, noting how the temperature and humidity settings for our cheese cave scenario have worked their way into the code.
+    > **Information**: You can learn more about how HTTP Status Codes are used within REST APIs [here](https://restfulapi.net/http-status-codes/).
 
-1. Locate the code line used to assign the device connection string
+    If the fan state is not **Failed**, the code then proceeds to process the data sent as part of the method request. The **methodRequest.Data** property contains the data in the form of a byte array, so it is first converted to a string. In this scenario, the following two values are expected (including the quotes):
+
+    * "On"
+    * "Off"
+
+    It is assumed that received data maps to members of the **StateEnum** :
 
     ```csharp
-    private readonly static string s_deviceConnectionString = "<your device connection string>";
+    internal enum StateEnum
+    {
+        Off,
+        On,
+        Failed
+    }
     ```
 
-1. Replace `<your device connection string>` with the sensor-th-0055 device connection string that you save earlier in this lab.
+    In order to parse the data, the quotes must first be removed and then the **Enum.Parse** method is used to find a matching enum value. Should this fail (the data needs to match exactly), an exception is thrown, which is caught below. Notice that the exception handler creates and returns a similar error method response to the one created for the fan failed state.
 
-    You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1.
+    If a matching value is found in the **StateEnum**, the cheese cave simulator **UpdateFan** method is called. In this case, the method merely sets the **FanState** property to the supplied value - a real-world implementation would interact with the fan to change the state and determine if the state change was successful. However, in this scenario, success is assumed and the appropriate **result** and **MethodResponse** are created and returned - this time using the HTTP Status code **200** to indicate success.
 
-    No other lines of code need to be changed.
+1. Briefly review the **OnDesiredPropertyChanged** method - you will notice that it is very similar to previous versions you have created in previous labs.
 
-1. On the **File** menu, to save your changes to the Program.cs file, click **Save**.
+1. Take a look at the **CheeseCaveSimulator** class. 
+
+   This is an evolution of the **EnvironmentSensor** class used in earlier labs. The primary difference is the introduction of a fan -  if the fan is **On**, the temperature and humidity will gradually move towards the desired values, whereas is the fan is **Off** (or **Failed**), then the temperature and humidity values will move towards the ambient values. Of interest is the fact that there is a 1% chance that fan will be set to the **Failed** state when the temperature is read.
 
 #### Task 3: Test your Code to Send Telemetry
 

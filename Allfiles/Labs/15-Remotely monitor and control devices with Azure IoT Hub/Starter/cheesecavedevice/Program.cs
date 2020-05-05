@@ -224,13 +224,6 @@ namespace CheeseCaveDevice
             {
                 // If the fan is on the temperature and humidity will be nudged towards the desired values most of the time.
                 currentHumidity += (deltaHumidity * rand.NextDouble()) + rand.NextDouble() - 0.5;
-
-                // Randomly fail the fan.
-                if (rand.NextDouble() < 0.01)
-                {
-                    FanState = StateEnum.Failed;
-                    ConsoleHelper.WriteRedMessage("Fan has failed");
-                }
             }
             else
             {
