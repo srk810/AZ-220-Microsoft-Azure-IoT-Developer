@@ -258,11 +258,13 @@ Now that we have an Event Hubs Namespace and an Event Hubs service, we need to p
 
 In this task we will add a message route to our IoT hub that will send telemetry messages to the Event Hubs instance we just created.
 
-1. Navigate to your Azure Portal dashboard, and select your IoT Hub **iot-az220-training-*{YOURID}***) from the resource group tile.
+1. Navigate to your Azure portal dashboard.
+
+1. On the Resources tile, to open your IoT hub, click **iot-az220-training-{your-id}**.
 
     The **Overview** pane for the IoT Hub will be displayed.
 
-1. On the **Overview** pane, in the left hand navigation menu, under **Messaging**, select **Message routing**.
+1. On the **Overview** pane, in the left-side menu, under **Messaging**, click **Message routing**.
 
 1. On the **Message routing** pane, to add a new message route, click **+ Add**.
 

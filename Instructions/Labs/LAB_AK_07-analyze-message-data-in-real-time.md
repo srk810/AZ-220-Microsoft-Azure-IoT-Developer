@@ -440,11 +440,11 @@ Contoso's vibration monitoring scenario requires you to create two message route
 * the first route will be to an Azure Blob storage location for data archiving
 * the second route will be to an Azure Stream Analytics job for real-time analysis
 
-Since message routes are best built and tested one at a time, this exercise will focus on the storage route. This route will be called the "logging" route, and it involves digging a few levels deep into the creation of Azure resources. All the features required to build this route are available in the Azure portal.
+Message routes should be built and tested one at a time, so this exercise will focus on the storage route. This route will be referred to as the "logging" route, and it involves digging a few levels deep into the creation of Azure resources.
 
-You will keep the storage route simple, and use Azure Blob storage (though Data Lake storage is also available). The key feature of message routing is the filtering of incoming data. The filter, written in SQL, streams output down the route only when certain conditions are met.
+One important feature of message routing is the ability to filter incoming data before routing to an endpoint. The filter, written as a SQL query, directs output through a route only when certain conditions are met.
 
-One of the easiest ways to filter data is on a message property, which is why you added these two lines to your code:
+One of the easiest ways to filter data is to evaluate a message property. You may recall adding message properties to your device messages in the previous exercise. The code that you added looked like the following:
 
 ```csharp
 ...
@@ -453,43 +453,45 @@ telemetryMessage.Properties.Add("sensorID", "VSTel");
 loggingMessage.Properties.Add("sensorID", "VSLog");
 ```
 
-An SQL query embedded into our message route can test the `sensorID` value.
+You can now embed a SQL query within your message route that uses `sensorID` as a criteria for the route. In this case, when the value assigned to `sensorID` is `VSLog` (vibration sensor log), the message is intended for the storage archive.
 
 In this exercise, you will create and test the logging route.
 
-#### Task 1: Route the logging message to Azure storage
+#### Task 1: Define the message routing endpoint
 
-1. In the [Azure Portal](https://portal.azure.com/), ensure that the **Overview** pane of your IoT hub is open.
+1. In the [Azure Portal](https://portal.azure.com/), ensure that your IoT hub blade is open.
 
 1. On the left-hand menu, under **Messaging**, click **Message routing**.
 
 1. On the **Message routing** pane, ensure that the **Routes** tab is selected.
 
-1. To add the first route, click **+ Add**.
+1. To add a new route, click **+ Add**.
 
     The **Add a route** blade should now be displayed.
 
-1. On the **Add a route** blade, under **Name**, enter `vibrationLoggingRoute`.
+1. On the **Add a route** blade, under **Name**, enter **vibrationLoggingRoute**
 
 1. To the right of **Endpoint**, click **+ Add endpoint**, and then, in the drop-down list, click **Storage**.
 
-    The **Add a storage endpoint** blade is displayed.
+    The **Add a storage endpoint** blade should now be displayed.
 
-1. Under **Endpoint name**, enter `vibrationLogEndpoint`.
+1. On the **Add a storage endpoint** blade, under **Endpoint name**, enter **vibrationLogEndpoint**
 
-1. To create storage and select a container, click **Pick a container**.
+1. To display a list of Storage accounts associated with your subscription, click **Pick a container**.
 
-    A list of the storage accounts already present in the Azure Subscription is listed. At this point you could select an existing storage account and container, however for this lab we will create new ones.
+    A list of the storage accounts already present in the Azure Subscription is listed. At this point you could select an existing storage account and container, however, for this lab you will create a new one.
 
-1. To create a new storage account, click **+ Storage account**.
+1. To begin creating a storage account, click **+ Storage account**.
 
-    The **Create storage** pane is displayed.
+    The **Create storage account** blade should now be displayed.
 
-1. On the **Create Storage** pane, under **Name**, enter **vibrationstore** and then it append with your initials and today's date - **vibrationstorecah191211**.
+1. On the **Create storage account** blade, under **Name**, enter **vibrationstore{your-id}**
+
+    For example: **vibrationstorecah191211**
 
     > **Note**:  This field can only contain lower-case letters and numbers, must be between 3 and 24 characters, and must be unique.
 
-1. Under **Account kind**, select **StorageV2 (general purpose V2)**.
+1. In the **Account kind** dropdown, click **StorageV2 (general purpose v2)**.
 
 1. Under **Performance**, ensure that **Standard** is selected.
 
@@ -501,49 +503,53 @@ In this exercise, you will create and test the logging route.
 
 1. Under **Location**, select the region that you are using for the labs in this course.
 
-1. To create the storage account, click **OK**.
+1. To create the storage account endpoint, click **OK**.
 
-1. Wait until the request is validated, and the storage account deployment has completed.
+1. Wait until the request is validated and the storage account deployment has completed.
 
     Validation and creation can take a minute or two.
 
-    Once complete, the **Create storage account** pane will close and the **Storage accounts** blade will be displayed. The Storage accounts blade should have updated to show the storage account that was just created.
+    Once completed, the **Create storage account** blade will close and the **Storage accounts** blade will be displayed. The Storage accounts blade should have auto-updated to show the storage account that was just created.
 
-1. Search for **vibrationstore**, and then select the storage account that you just created.
+#### Task 2: Define the storage account container
 
-   The **Containers** blade should appear. As this is a new storage account, there are no containers to list.
+1. On the **Storage accounts** blade, click **vibrationstore{your-id}**.
+
+    The **Containers** blade should appear. Since this is a new storage account, there are no containers listed.
 
 1. To create a container, click **+ Container**.
 
-    The **New container** popup is displayed.
+    The **New container** dialog should now be displayed.
 
-1. In the **New container** popup, under **Name**, enter **vibrationcontainer**
+1. On the **New container** dialog, under **Name**, enter **vibrationcontainer**
 
    Again, only lower-case letters and numbers are accepted.
 
-1. Under **Public access level**, ensure **Private (no anonymous access)** is selected.
+1. Under **Public access level**, ensure that **Private (no anonymous access)** is selected.
 
-1. To create the container, click **OK**.
+1. To create the container, click **Create**.
 
-    After a moment the **Lease state** for your container will display **Available**.
+    After a moment the **Lease state** for your container will update to display **Available**.
 
-1. To choose the container for the solution, click **vibrationcontainer**, and then click **Select**.
+1. To choose this container for your solution, click **vibrationcontainer**, and then click **Select**.
 
-    You should be returned to the **Add a storage endpoint** pane. Notice that the **Azure Storage container** has been set to the URL for the storage account and container you just created.
+    You should be returned to the **Add a storage endpoint** blade. Notice that the **Azure Storage container** has been set to the URL for the storage account and container you just created.
 
-1. Leave the **Batch frequency** and **Chunk size window** to the default values of **100**.
+1. Leave the **Batch frequency** and **Chunk size window** fields set to their default values of **100**.
 
 1. Under **Encoding**, notice that there are two options and that **AVRO** is selected.
 
     > **Note**:  By default IoT Hub writes the content in Avro format, which has both a message body property and a message property. The Avro format is not used for any other endpoints. Although the Avro format is great for data and message preservation, it's a challenge to use it to query data. In comparison, JSON or CSV format is much easier for querying data. IoT Hub now supports writing data to Blob storage in JSON as well as AVRO.
 
-1. Examine the value specified in **File name format** field.
+1. Take a moment to examine the value specified in **File name format** field.
 
     The **File name format** field specifies the pattern used to write the data to files in storage. The various tokens are replace with values as the file is created.
 
-1. At the bottom of the pane, to create the endpoint, click **Create**.
+1. At the bottom of the blade, to create your storage endpoint, click **Create**.
 
-    Validation and creation will take a few moments. Once complete, you should be back on the **Add a route** blade.
+    Validation and subsequent creation will take a few moments. Once complete, you should be located back on the **Add a route** blade.
+
+#### Task 3: Define the routing query
 
 1. On the **Add a route** blade, under **Data source**, ensure that **Device Telemetry Messages** is selected.
 
@@ -555,19 +561,61 @@ In this exercise, you will create and test the logging route.
     sensorID = "VSLog"
     ```
 
-    This ensures that messages will only follow this route if the `sensorID = "VSLog"`.
+    This query ensures that only messages with the `sensorID` message property set to `VSLog` will be routed to the storage endpoint.
 
 1. To save this route, click **Save**.
 
-    Wait for the success message. Once completed, the route should be listed on the **Message routing** blade.
+    Wait for the success message. Once completed, the route should be listed on the **Message routing** pane.
 
 1. Navigate back to your Azure portal Dashboard.
 
-The next step will be to verify that the logging route is working.
+#### Task 4: Verify Data Archival
+
+1. Ensure that the device app you created in Visual Studio Code is still running. 
+
+    If not, run it in the Visual Studio Code terminal using `dotnet run`.
+
+1. On your Resources tile, to open you Storage account blade, click **vibrationstore{your-id}**.
+
+    If your Resources tile does not list your Storage account, click the **Refresh** button at the top of the resource group tile, and then follow the instruction above to open your storage account.
+
+1. On the left-side menu of your **vibrationstore{your-id}** blade, click **Storage Explorer (preview)**.
+
+    You can use the Storage Explorer to verify that your data is being added to the storage account. 
+
+    > **Note**:  The Storage Explorer is currently in preview mode, so its exact mode of operation may change.
+
+1. In **Storage Explorer (preview)** pane, expand **BLOB CONTAINERS**, and then click **vibrationcontainer**.
+
+    To view the data, you will need to navigate down a hierarchy of folders. The first folder will be named for the IoT Hub. 
+
+1. In the right-hand pane, under **NAME**, double-click **iot-az220-training-{your-id}**, and then use double-clicks to navigate down into the hierarchy.
+
+    Under your IoT hub folder, you will see folders for the Partition, then numeric values for the Year, Month, and Day. The final folder represents the Hour, listed in UTC time. The Hour folder will contain a number of Block Blobs that contain your logging message data. 
+
+1. Double-click the Block Blob for the data with the earliest time stamp.
+
+    The URL link will open in a new browser tab. Although the data is not formatted in a way that is easy to read, you should be able to recognize it as your vibration messages. 
+
+1. Close browser tab containing your data, and then navigate back to your Azure portal Dashboard.
+
+
+
+
+
+
+
+
+**TODO - Work with Daren to define a new Exercise for an ASA job that actually makes sense. Consider what message data is available, including conveyor stopped. Maybe we could output to Service Bus Queue or trigger an Azure Function. We wouldn't even need to do anything with the Service Bus Queue output in this lab, just explain the purpose, and we could provide the code for the Azure Function that sends a text (or just have it do nothing)**
+
+
+
+
+
 
 ### Exercise 4: Logging Route Azure Stream Analytics Job
 
-To verify that the logging route is working as expected, we will create a Stream Analytics job that routes logging messages to Blob storage, which can then be validated using Storage Explorer in the Azure Portal.
+In this exercise, you will create a Stream Analytics job that outputs logging messages to Blob storage. You will then use Storage Explorer in the Azure Portal.
 
 This will enable us to verify that our route includes the following settings:
 
@@ -577,7 +625,7 @@ This will enable us to verify that our route includes the following settings:
 * **Endpoint** - vibrationLogEndpoint
 * **Enabled** - true
 
-> **Note**: It may seem odd that in this lab we are routing data to storage, and then also sending our data to storage through Azure Stream Analytics. In a production scenario, you wouldn't have both paths long-term. Instead, it is likely that the second path that we're creating here would not exist. We're using it here, in a lab environment, as a way to validate that our routing is working as expected and to show a simple implementation of Azure Stream Analytics.
+> **Note**: It may seem odd that in this lab you are routing data to storage, and then also sending your data to storage through Azure Stream Analytics. In a production scenario, you wouldn't have both paths long-term. Instead, it is likely that the second path that we're creating here would not exist. You will use it here, in a lab environment, as a way to validate that your routing is working as expected and to show a simple implementation of Azure Stream Analytics.
 
 #### Task 1: Create the Stream Analytics Job
 
