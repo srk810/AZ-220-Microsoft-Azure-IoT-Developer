@@ -284,7 +284,7 @@ The simulated device app that you build in this task simulates an IoT device tha
     private readonly static string deviceConnectionString = "<your device connection string>";
     ```
 
-1. Replace the `<your device connection string>` (line 21) with the device connection string you saved earlier.
+1. Replace the **\<your device connection string\>** (line 21) with the device connection string you saved earlier.
 
     > **Note**: This is the only change that you are required to make to this code.
 
@@ -311,8 +311,7 @@ The simulated device app that you build in this task simulates an IoT device tha
         // Create an instance of the Cheese Cave Simulator
         cheeseCave = new CheeseCaveSimulator();
 
-        // Create a handler for the direct method call
-        deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
+        // INSERT register direct method code below here
 
         // Get the device twin to report the initial desired properties.
         Twin deviceTwin = deviceClient.GetTwinAsync().GetAwaiter().GetResult();
@@ -326,77 +325,17 @@ The simulated device app that you build in this task simulates an IoT device tha
     }
     ```
 
-    As in earlier labs, the **Main** method establishes a connection to the IoT hub, reads the device twin and configures the device twin property change callback. Additionally, the **SetFanState** direct method handler is setup. Note that the device client **SetMethodHandlerAsync** method takes the string remote method `"SetFanState"` name as an argument, along with the actual local method to call, and a user context object (in this case null). You will examine  the implementation of the **SetFanState** method shortly.
+    As in earlier labs, the **Main** method establishes a connection to the IoT hub, reads the device twin and configures the device twin property change callback.
 
-1. Take a brief look at the **SendDeviceToCloudMessagesAsync** method - you will notice that it is very similar to previous versions you have created in previous labs.
+1. Take a brief look at the **SendDeviceToCloudMessagesAsync** method.
 
-1. Now review the **SetFanState** method. This is the method that is executed on the device when the associated remote method, also called **SetFanState**, is invoked via an IoT Hub.
+    Notice that it is very similar to previous versions you have created in earlier labs.
 
-    ```csharp
-    private static Task<MethodResponse> SetFanState(MethodRequest methodRequest, object userContext)
-    {
-        if (cheeseCave.FanState == StateEnum.Failed)
-        {
-            // Acknowledge the direct method call with a 400 error message.
-            string result = "{\"result\":\"Fan failed\"}";
-            ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
-            return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
-        }
-        else
-        {
-            try
-            {
-                var data = Encoding.UTF8.GetString(methodRequest.Data);
+1. Briefly review the **OnDesiredPropertyChanged** method.
 
-                // Remove quotes from data.
-                data = data.Replace("\"", "");
+   Notice that it is very similar to previous versions you have created in earlier labs.
 
-                // Parse the payload, and trigger an exception if it's not valid.
-                cheeseCave.UpdateFan((StateEnum)Enum.Parse(typeof(StateEnum), data));
-                ConsoleHelper.WriteGreenMessage("Fan set to: " + data);
-
-                // Acknowledge the direct method call with a 200 success message.
-                string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
-                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 200));
-            }
-            catch
-            {
-                // Acknowledge the direct method call with a 400 error message.
-                string result = "{\"result\":\"Invalid parameter\"}";
-                ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
-                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
-            }
-        }
-    }
-    ```
-
-    The first line of this method determines whether the cheese cave fan is currently in a failed state - the assumption made by the cheese cave simulator is that once the fan has failed, any subsequent command will automatically fail. Therefore, a JSON string is created with the **result** property set to **Fan Failed**. A new **MethodResponse** object is then constructed, with the result string encoded into a byte array and an HTTP status code - in this instance, **400** is used which, in the context of a REST API means a generic client-side error has occurred. As direct method callbacks are required to return a **Task\<MethodResponse\>**, a new task is created and returned.
-
-    > **Information**: You can learn more about how HTTP Status Codes are used within REST APIs [here](https://restfulapi.net/http-status-codes/).
-
-    If the fan state is not **Failed**, the code then proceeds to process the data sent as part of the method request. The **methodRequest.Data** property contains the data in the form of a byte array, so it is first converted to a string. In this scenario, the following two values are expected (including the quotes):
-
-    * "On"
-    * "Off"
-
-    It is assumed that received data maps to members of the **StateEnum** :
-
-    ```csharp
-    internal enum StateEnum
-    {
-        Off,
-        On,
-        Failed
-    }
-    ```
-
-    In order to parse the data, the quotes must first be removed and then the **Enum.Parse** method is used to find a matching enum value. Should this fail (the data needs to match exactly), an exception is thrown, which is caught below. Notice that the exception handler creates and returns a similar error method response to the one created for the fan failed state.
-
-    If a matching value is found in the **StateEnum**, the cheese cave simulator **UpdateFan** method is called. In this case, the method merely sets the **FanState** property to the supplied value - a real-world implementation would interact with the fan to change the state and determine if the state change was successful. However, in this scenario, success is assumed and the appropriate **result** and **MethodResponse** are created and returned - this time using the HTTP Status code **200** to indicate success.
-
-1. Briefly review the **OnDesiredPropertyChanged** method - you will notice that it is very similar to previous versions you have created in previous labs.
-
-1. Take a look at the **CheeseCaveSimulator** class. 
+1. Take a look at the **CheeseCaveSimulator** class.
 
    This is an evolution of the **EnvironmentSensor** class used in earlier labs. The primary difference is the introduction of a fan -  if the fan is **On**, the temperature and humidity will gradually move towards the desired values, whereas is the fan is **Off** (or **Failed**), then the temperature and humidity values will move towards the ambient values. Of interest is the fact that there is a 1% chance that fan will be set to the **Failed** state when the temperature is read.
 
@@ -456,7 +395,6 @@ Now that you have your (simulated) sensor-th-0055 device sending telemetry to yo
     ```bash
     dotnet add package Microsoft.Azure.EventHubs
     dotnet add package Microsoft.Azure.Devices
-    dotnet add package Newtonsoft.Json
     ```
 
 1. On the **File** menu, click **Open Folder**
@@ -469,11 +407,51 @@ Now that you have your (simulated) sensor-th-0055 device sending telemetry to yo
 
 1. In the Code Editor pane, delete the contents of the Program.cs file.
 
-#### Task 2: Add Code to Receive Telemetry
+#### Task 2: Review the CheeseCaveOperator project file
 
 In this task, you will add code to your back-end app that will be used to receive telemetry from the IoT Hub Event Hub endpoint.
 
-1. Ensure that you have the **Program.cs** file open in Visual Studio Code.
+1. In the **EXPLORER** pane, to open the application project file, click **CheeseCaveOperator.csproj**.
+
+    The **CheeseCaveOperator.csproj** file should now be opened in the code editor pane.
+
+1. Take a minute to review the contents of the **CaveDevice.csproj** file.
+
+    Your file contents should be similar to the following:
+
+    ```xml
+    <Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Azure.Devices" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.EventHubs" Version="4.*" />
+    </ItemGroup>
+
+    </Project>
+    ```
+
+    > **Note**: The package version numbers in your file may differ from those show above, that's okay.
+
+    The project file (.csproj) is an XML document that specifies the type of project that you are working on. In this case, the project is an **Sdk** style project.
+
+    As you can see, the project definition contains two sections - a **PropertyGroup** and an **ItemGroup**.
+
+    The **PropertyGroup** defines the type of output that building this project will produce. In this case you will be building an executable file that targets .NET Core 3.1.
+
+    The **ItemGroup** specifies any external libraries that are required for the application. These particular references are for NuGet packages, and each package reference specifies the package name and the version. The `dotnet add package` commands (that you entered in the steps above) added these references to the project file and the `dotnet restore` command ensured that all of the dependencies were downloaded.
+
+    > **Information**: You can learn more about NuGet [here](https://docs.microsoft.com/en-us/nuget/what-is-nuget).
+
+#### Task 3: Add the telemetry receiver code
+
+1. In the **EXPLORER** pane, click **Program.cs**.
+
+    The **Program.cs** file should now be opened in the code editor pane.
 
     The Code Editor pane should display an empty code file.
 
@@ -483,6 +461,51 @@ In this task, you will add code to your back-end app that will be used to receiv
     // Copyright (c) Microsoft. All rights reserved.
     // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+    // INSERT using statements below here
+
+    namespace CheeseCaveOperator
+    {
+        class Program
+        {
+            // INSERT variables below here
+
+            // INSERT Main method below here
+
+            // INSERT ReceiveMessagesFromDeviceAsync method below here
+
+            // INSERT InvokeMethod method below here
+
+            // INSERT Device twins section below here
+        }
+
+        internal static class ConsoleHelper
+        {
+            internal static void WriteColorMessage(string text, ConsoleColor clr)
+            {
+                Console.ForegroundColor = clr;
+                Console.WriteLine(text);
+                Console.ResetColor();
+            }
+            internal static void WriteGreenMessage(string text)
+            {
+                WriteColorMessage(text, ConsoleColor.Green);
+            }
+
+            internal static void WriteRedMessage(string text)
+            {
+                WriteColorMessage(text, ConsoleColor.Red);
+            }
+        }
+    }
+    ```
+
+    This code outlines the structure of the operator app.
+
+1. Locate the `// INSERT using statements below here` comment.
+
+1. To specify the namespaces that the application code will be using, enter the following code:
+
+    ```csharp
     using System;
     using System.Threading.Tasks;
     using System.Text;
@@ -492,110 +515,59 @@ In this task, you will add code to your back-end app that will be used to receiv
     using Microsoft.Azure.EventHubs;
     using Microsoft.Azure.Devices;
     using Newtonsoft.Json;
-
-    namespace cheesecave_operator
-    {
-        class ReadDeviceToCloudMessages
-        {
-            // Global variables.
-            // The Event Hub-compatible endpoint.
-            private readonly static string s_eventHubsCompatibleEndpoint = "<your event hub endpoint>";
-
-            // The Event Hub-compatible name.
-            private readonly static string s_eventHubsCompatiblePath = "<your event hub path>";
-            private readonly static string s_iotHubSasKey = "<your event hub Sas key>";
-            private readonly static string s_iotHubSasKeyName = "service";
-            private static EventHubClient s_eventHubClient;
-
-            // Connection string for your IoT Hub.
-            private readonly static string s_serviceConnectionString = "<your service connection string>";
-
-            // Asynchronously create a PartitionReceiver for a partition and then start reading any messages sent from the simulated client.
-            private static async Task ReceiveMessagesFromDeviceAsync(string partition)
-            {
-                // Create the receiver using the default consumer group.
-                var eventHubReceiver = s_eventHubClient.CreateReceiver("$Default", partition, EventPosition.FromEnqueuedTime(DateTime.Now));
-                Console.WriteLine("Created receiver on partition: " + partition);
-
-                while (true)
-                {
-                    // Check for EventData - this methods times out if there is nothing to retrieve.
-                    var events = await eventHubReceiver.ReceiveAsync(100);
-
-                    // If there is data in the batch, process it.
-                    if (events == null) continue;
-
-                    foreach (EventData eventData in events)
-                    {
-                        string data = Encoding.UTF8.GetString(eventData.Body.Array);
-
-                        greenMessage("Telemetry received: " + data);
-
-                        foreach (var prop in eventData.Properties)
-                        {
-                            if (prop.Value.ToString() == "true")
-                            {
-                                redMessage(prop.Key);
-                            }
-                        }
-                        Console.WriteLine();
-                    }
-                }
-            }
-
-            public static void Main(string[] args)
-            {
-                colorMessage("Cheese Cave Operator\n", ConsoleColor.Yellow);
-
-                // Create an EventHubClient instance to connect to the IoT Hub Event Hubs-compatible endpoint.
-                var connectionString = new EventHubsConnectionStringBuilder(new Uri(s_eventHubsCompatibleEndpoint), s_eventHubsCompatiblePath, s_iotHubSasKeyName, s_iotHubSasKey);
-                s_eventHubClient = EventHubClient.CreateFromConnectionString(connectionString.ToString());
-
-                // Create a PartitionReceiver for each partition on the hub.
-                var runtimeInfo = s_eventHubClient.GetRuntimeInformationAsync().GetAwaiter().GetResult();
-                var d2cPartitions = runtimeInfo.PartitionIds;
-
-                // Create receivers to listen for messages.
-                var tasks = new List<Task>();
-                foreach (string partition in d2cPartitions)
-                {
-                    tasks.Add(ReceiveMessagesFromDeviceAsync(partition));
-                }
-
-                // Wait for all the PartitionReceivers to finish.
-                Task.WaitAll(tasks.ToArray());
-            }
-
-            private static void colorMessage(string text, ConsoleColor clr)
-            {
-                Console.ForegroundColor = clr;
-                Console.WriteLine(text);
-                Console.ResetColor();
-            }
-            private static void greenMessage(string text)
-            {
-                colorMessage(text, ConsoleColor.Green);
-            }
-
-            private static void redMessage(string text)
-            {
-                colorMessage(text, ConsoleColor.Red);
-            }
-        }
-    }
     ```
 
-1. Take a few minutes to review the code.
+    Notice that as well as specifying **System**, you are also declaring other namespaces that the code will be using, such as **System.Text** for encoding strings, **System.Threading.Tasks** for asynchronous tasks, and the namespaces for the two packages you added earlier.
 
-    > **Important:** Read through the comments in the code. Our implementation only reads messages after the back-end app has been started. Any telemetry sent prior to this isn't handled.
+    > **Tip**: When inserting code, the code layout may not be ideal. You can have Visual Studio Code format the document for you by right-clicking in the code editor pane and then clicking **Format Document**. You can achieve the same result by opening the **Task** pane (press **F1**) and typing **Format Document** and then pressing **Enter**. And on Windows, the shortcut for this task is **SHIFT+ALT+F**.
+
+1. Locate the `// INSERT variables below here` comment.
+
+1. To specify the variables that the program is using, enter the following code:
+
+    ```csharp
+    // Global variables.
+    // The Event Hub-compatible endpoint.
+    private readonly static string eventHubsCompatibleEndpoint = "<your event hub endpoint>";
+
+    // The Event Hub-compatible name.
+    private readonly static string eventHubsCompatiblePath = "<your event hub path>";
+    private readonly static string iotHubSasKey = "<your event hub Sas key>";
+    private readonly static string iotHubSasKeyName = "service";
+    private static EventHubClient eventHubClient;
+    private static ServiceClient serviceClient;
+
+    // Connection string for your IoT Hub.
+    private readonly static string serviceConnectionString = "<your service connection string>";
+
+    private readonly static string deviceId = "sensor-th-0055";
+    ```
+
+1. Take a moment to review the code (and code comments) that you just entered.
+
+    The **eventHubsCompatibleEndpoint** variable is used to store the URI for the IoT Hub built-in service-facing endpoint (messages/events) that is compatible with Event Hubs.
+
+    The **eventHubsCompatiblePath** variable will contain the path to the Event Hub entity.
+
+    The **iotHubSasKey** variable will contain the key name to the corresponding shared access policy rule for the namespace, or entity.
+
+    The **iotHubSasKeyName** variable will contain the key for the corresponding shared access policy rule of the namespace or entity.
+
+    The **eventHubClient** variable will contain the event hub client instance, which will be used to receive messages from the IoT Hub.
+
+    The **serviceClient** variable will contain the service client instance that will be sued to send message from the app to the IoT Hub (and from there, on to targeted devices, etc.).
+
+    The **serviceConnectionString** variable will contain the connection string that will enable the operator app to connect to the IoT Hub.
+
+    The **deviceId** variable contains the device ID used by the **CheeseCaveDevice** application.
 
 1. Locate the code line used to assign the service connection string
 
     ```csharp
-    private readonly static string s_serviceConnectionString = "<your service connection string>";
+    private readonly static string serviceConnectionString = "<your service connection string>";
     ```
 
-1. Replace `<your service connection string>` with the IoT Hub **iothubowner** shared access policy primary connection string that you save earlier in this lab.
+1. Replace **\<your service connection string\>** with the IoT Hub **iothubowner** shared access policy primary connection string that you save earlier in this lab.
 
     You should have saved the output generated by the lab15-setup.azcli setup script during Exercise 1.
 
@@ -606,7 +578,7 @@ In this task, you will add code to your back-end app that will be used to receiv
     > * Grants permission to retrieve delivery acknowledgments for file uploads.
     > * Grants permission to access twins to update tags and desired properties, retrieve reported properties, and run queries.
     >
-    > For the first part of the lab, where the **serviceoperator** application calls a direct method to toggle the fan state, the **service** policy has sufficient rights. However, during the latter part of the lab, the device registry is queried. This is achieved via the `RegistryManager` class. In order to use the `RegistryManager` class to query the device registry, the shared access policy used to connect to the IoT Hub must have the **Registry read** permission, which confers the following right:
+    > For the first part of the lab, where the **serviceoperator** application calls a direct method to toggle the fan state, the **service** policy has sufficient rights. However, during the latter part of the lab, the device registry is queried. This is achieved via the **RegistryManager** class. In order to use the **RegistryManager** class to query the device registry, the shared access policy used to connect to the IoT Hub must have the **Registry read** permission, which confers the following right:
     >
     > * Grants read access to the identity registry.
     >
@@ -614,7 +586,108 @@ In this task, you will add code to your back-end app that will be used to receiv
     >
     > In a production scenario, you might consider adding a new shared access policy that has just the **Service connect** and **Registry read** permissions.
 
-1. Replace the `<your event hub endpoint>`, `<your event hub path>`, and the `<your event hub SaS key>` with the values that you save earlier in this lab.
+1. Replace the **\<your event hub endpoint\>**, **\<your event hub path\>**, and the **\<your event hub SaS key\>** with the values that you saved earlier in this lab.
+
+1. Locate the `// INSERT Main method below here` comment.
+
+1. To implement the **Main** method, enter the following code:
+
+    ```csharp
+    public static void Main(string[] args)
+    {
+        ConsoleHelper.WriteColorMessage("Cheese Cave Operator\n", ConsoleColor.Yellow);
+
+        // Create an EventHubClient instance to connect to the IoT Hub Event Hubs-compatible endpoint.
+        var connectionString = new EventHubsConnectionStringBuilder(new Uri(eventHubsCompatibleEndpoint), eventHubsCompatiblePath, iotHubSasKeyName, iotHubSasKey);
+        eventHubClient = EventHubClient.CreateFromConnectionString(connectionString.ToString());
+
+        // Create a PartitionReceiver for each partition on the hub.
+        var runtimeInfo = eventHubClient.GetRuntimeInformationAsync().GetAwaiter().GetResult();
+        var d2cPartitions = runtimeInfo.PartitionIds;
+
+        // INSERT create registry manager instance below here
+
+        // INSERT create service client instance below here
+
+        // Create receivers to listen for messages.
+        var tasks = new List<Task>();
+        foreach (string partition in d2cPartitions)
+        {
+            tasks.Add(ReceiveMessagesFromDeviceAsync(partition));
+        }
+
+        // Wait for all the PartitionReceivers to finish.
+        Task.WaitAll(tasks.ToArray());
+    }
+    ```
+
+1. Take a moment to review the code (and code comments) that you just entered.
+
+    Notice the use of the **EventHubsConnectionStringBuilder** class to construct the **EventHubClient** connection string - this is effectively a helper class that concatenates the various values into the correct format. This is then used to connect to the event hub endpoint and populate the **eventHubClient** variable.
+
+    The **eventHubClient** is then used to retrieve the run time information for the event hub. This information contains:
+
+    * **CreatedAt** - the Date/Time the Event Hub was created
+    * **PartitionCount** - the number of partitions (most IoT Hubs are configured with 4 partitions)
+    * **PartitionIds** - a string array containing the partition IDs
+    * **Path** - the event hub entity path
+
+    The array of partition IDs is stored in **d2cPartitions** variable, where it will be shortly used to create a list of tasks that will receive messages from each partition.
+
+    > **Information**: You can learn more about the purpose of partitions [here](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling#partitions).
+
+    As messages sent from devices to an IoT Hub may be handled by any of the partitions, the app has to retrieve messages from each. The next section of code creates a list of asynchronous tasks - each task will receive messages from a specific partition. The final line will wait for all tasks to complete - as each task is going to be in an infinite loop, this line prevents the application from exiting.
+
+1. Locate the `INSERT ReceiveMessagesFromDeviceAsync method below here` comment.
+
+1. To implement the **ReceiveMessagesFromDeviceAsync** method, enter the following code:
+
+    ```csharp
+    // Asynchronously create a PartitionReceiver for a partition and then start reading any messages sent from the simulated client.
+    private static async Task ReceiveMessagesFromDeviceAsync(string partition)
+    {
+        // Create the receiver using the default consumer group.
+        var eventHubReceiver = eventHubClient.CreateReceiver("$Default", partition, EventPosition.FromEnqueuedTime(DateTime.Now));
+        Console.WriteLine("Created receiver on partition: " + partition);
+
+        while (true)
+        {
+            // Check for EventData - this methods times out if there is nothing to retrieve.
+            var events = await eventHubReceiver.ReceiveAsync(100);
+
+            // If there is data in the batch, process it.
+            if (events == null) continue;
+
+            foreach (EventData eventData in events)
+            {
+                string data = Encoding.UTF8.GetString(eventData.Body.Array);
+
+                ConsoleHelper.WriteGreenMessage("Telemetry received: " + data);
+
+                foreach (var prop in eventData.Properties)
+                {
+                    if (prop.Value.ToString() == "true")
+                    {
+                        ConsoleHelper.WriteRedMessage(prop.Key);
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+    }
+    ```
+
+    As you can see, this method is with the target partition supplied as an argument. Recall that for the default configuration where 4 partitions are specified, this method is called 4 times, each running asynchronously and in parallel, one for each partition.
+
+    The first part of this method creates an event hub receiver. The code specifies that the **$Default** consumer group is used, (although it is common to create a custom consumer group), the partition, and finally at what position in the event partition's data to start receiving from. In this case, the receiver will only be interested in messages enqueued from the current time onwards - there are other options that allow the start of the data stream, the end of the data stream, or a specific offset to be provided.
+
+    > **Information**: You can learn more about consumer groups [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-features#consumer-groups)
+
+    Once the receiver is created, the app enters an infinite loop and waits to receive events.
+
+    > **Note**: The `eventHubReceiver.ReceiveAsync(100)` code specifies the maximum number of events that can be received in one go, however, it does not wait for that many - it will return as soon as at least one is available. If no events are returned (due to a timeout), then the loop continues and the code waits for more events.
+
+    If one or more events are received, then each event data body is converted from a byte array to a string and written to the console. The event data properties are then iterated and, in this case, checked to see if a value is true - in the current scenario, this represents an alert. Should an alert be found, it is written to the console.
 
 1. On the **File** menu, to save your changes to the Program.cs file, click **Save**.
 
@@ -622,7 +695,7 @@ In this task, you will add code to your back-end app that will be used to receiv
 
 This test is important, checking whether your back-end app is picking up the telemetry being sent out by your simulated device. Remember your device app is still running, and sending telemetry.
 
-1. To run the `CheeseCaveOperator` back-end app in the terminal, open a Terminal pane, and then enter the following command:
+1. To run the **CheeseCaveOperator** back-end app in the terminal, open a Terminal pane, and then enter the following command:
 
     ```bash
     dotnet run
@@ -630,7 +703,7 @@ This test is important, checking whether your back-end app is picking up the tel
 
    This command will run the **Program.cs** file in the current folder.
 
-   > **Note**:  You can ignore the warning about the unused variable `s_serviceConnectionString` - we will be using that variable shortly.
+   > **Note**:  You can ignore the warning about the unused variable **serviceConnectionString** - we will be using that variable shortly.
 
 1. Take a minute to observe the output to the Terminal.
 
@@ -679,19 +752,30 @@ The device app contains the functional code for the direct method. The function 
 
 1. Ensure that **Program.cs** is open in the code editor.
 
-1. In the Code Editor pane, locate the bottom of the **SimulatedDevice** class.
+1. Locate the `INSERT register direct method code below here` comment.
 
-1. To define the direct method, add the following code inside the closing squiggly brace (`}`) of the **SimulatedDevice** class:
+1. To register the direct method, add the following code:
+
+    ```csharp
+    // Create a handler for the direct method call
+    deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
+    ```
+
+    Additionally, the **SetFanState** direct method handler is setup. Note that the device client **SetMethodHandlerAsync** method takes the remote method `"SetFanState"` name as an argument, along with the actual local method to call, and a user context object (in this case null).
+
+1. Locate the `INSERT SetFanState method below here` comment.
+
+1. To implement the **SetFanState** direct method, enter the following code:
 
     ```csharp
     // Handle the direct method call
     private static Task<MethodResponse> SetFanState(MethodRequest methodRequest, object userContext)
     {
-        if (fanState == stateEnum.failed)
+        if (cheeseCave.FanState == StateEnum.Failed)
         {
             // Acknowledge the direct method call with a 400 error message.
             string result = "{\"result\":\"Fan failed\"}";
-            redMessage("Direct method failed: " + result);
+            ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
             return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
         }
         else
@@ -704,8 +788,8 @@ The device app contains the functional code for the direct method. The function 
                 data = data.Replace("\"", "");
 
                 // Parse the payload, and trigger an exception if it's not valid.
-                fanState = (stateEnum)Enum.Parse(typeof(stateEnum), data);
-                greenMessage("Fan set to: " + data);
+                cheeseCave.UpdateFan((StateEnum)Enum.Parse(typeof(StateEnum), data));
+                ConsoleHelper.WriteGreenMessage("Fan set to: " + data);
 
                 // Acknowledge the direct method call with a 200 success message.
                 string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
@@ -715,43 +799,38 @@ The device app contains the functional code for the direct method. The function 
             {
                 // Acknowledge the direct method call with a 400 error message.
                 string result = "{\"result\":\"Invalid parameter\"}";
-                redMessage("Direct method failed: " + result);
+                ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
                 return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
             }
         }
     }
     ```
 
-    > **Note**:  This code defines the implementation of the direct method and is executed when the direct method is invoked. The fan has three states: *on*, *off*, and *failed*. The method above sets the fan to either *on* or *off*. If the payload text doesn't match one of these two settings, or the fan is in a failed state, an error is returned.
+    This is the method that is executed on the device when the associated remote method, also called **SetFanState**, is invoked via an IoT Hub. Notice that as well as receiving a **MethodRequest** instance, it also receives the **userContext** object that was defined when the direct message callback was register (in this case it will be null). 
 
-1. In the Code Editor pane, scroll up slightly to locate the **Main** method.
+    The first line of this method determines whether the cheese cave fan is currently in a **Failed** state - the assumption made by the cheese cave simulator is that once the fan has failed, any subsequent command will automatically fail. Therefore, a JSON string is created with the **result** property set to **Fan Failed**. A new **MethodResponse** object is then constructed, with the result string encoded into a byte array and an HTTP status code - in this instance, **400** is used which, in the context of a REST API means a generic client-side error has occurred. As direct method callbacks are required to return a **Task\<MethodResponse\>**, a new task is created and returned.
 
-1. Within the **Main** method, position the cursor on the blank code line just after creating the device client.
+    > **Information**: You can learn more about how HTTP Status Codes are used within REST APIs [here](https://restfulapi.net/http-status-codes/).
 
-1. To register the direct method, add the following code:
+    If the fan state is not **Failed**, the code then proceeds to process the data sent as part of the method request. The **methodRequest.Data** property contains the data in the form of a byte array, so it is first converted to a string. In this scenario, the following two values are expected (including the quotes):
 
-    ```csharp
-    // Create a handler for the direct method call
-    s_deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
-    ```
+    * "On"
+    * "Off"
 
-    After adding the code, the **Main** method should look like the following:
+    It is assumed that the received data maps to members of the **StateEnum** :
 
     ```csharp
-    private static void Main(string[] args)
+    internal enum StateEnum
     {
-        colorMessage("Cheese Cave device app.\n", ConsoleColor.Yellow);
-
-        // Connect to the IoT hub using the MQTT protocol.
-        s_deviceClient = DeviceClient.CreateFromConnectionString(s_deviceConnectionString, TransportType.Mqtt);
-
-        // Create a handler for the direct method call
-        s_deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
-
-        SendDeviceToCloudMessagesAsync();
-        Console.ReadLine();
+        Off,
+        On,
+        Failed
     }
     ```
+
+    In order to parse the data, the quotes must first be removed and then the **Enum.Parse** method is used to find a matching enum value. Should this fail (the data needs to match exactly), an exception is thrown, which is caught below. Notice that the exception handler creates and returns a similar error method response to the one created for the fan failed state.
+
+    If a matching value is found in the **StateEnum**, the cheese cave simulator **UpdateFan** method is called. In this case, the method merely sets the **FanState** property to the supplied value - a real-world implementation would interact with the fan to change the state and determine if the state change was successful. However, in this scenario, success is assumed and the appropriate **result** and **MethodResponse** are created and returned - this time using the HTTP Status code **200** to indicate success.
 
 1. On the **File** menu, to save the Program.cs file, click **Save**.
 
@@ -765,15 +844,27 @@ You have now completed the coding that is required on the device side. Next, you
 
 1. Ensure that **Program.cs** is open in the code editor.
 
-1. At the top of the **ReadDeviceToCloudMessages** class, add the following coe to the list of global variables:
+1. Locate the `INSERT ServiceClient variable below here` comment.
+
+1. To add a global variable to hold the service client instance, enter the following code:
 
     ```csharp
-    private static ServiceClient s_serviceClient;
+    private static ServiceClient serviceClient;
     ```
 
-1. Scroll down to locate the **Main** method.
+1. Locate the `INSERT create service client instance below here` comment.
 
-1. On the blank code line below the **Main** method, add the following task:
+1. To add the code that creates a service client instance and invokes the direct method, enter the following code:
+
+    ```csharp
+    // Create a ServiceClient to communicate with service-facing endpoint on your hub.
+    serviceClient = ServiceClient.CreateFromConnectionString(serviceConnectionString);
+    InvokeMethod().GetAwaiter().GetResult();
+    ```
+
+1. Locate the `INSERT InvokeMethod method below here` comment.
+
+1. To add the code that invokes the direct method, enter the following code:
 
     ```csharp
     // Handle invoking a direct method.
@@ -787,37 +878,25 @@ You have now completed the coding that is required on the device side. Next, you
             methodInvocation.SetPayloadJson(payload);
 
             // Invoke the direct method asynchronously and get the response from the simulated device.
-            var response = await s_serviceClient.InvokeDeviceMethodAsync("sensor-th-0055", methodInvocation);
+            var response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
 
             if (response.Status == 200)
             {
-                greenMessage("Direct method invoked: " + response.GetPayloadAsJson());
+                ConsoleHelper.WriteGreenMessage("Direct method invoked: " + response.GetPayloadAsJson());
             }
             else
             {
-                redMessage("Direct method failed: " + response.GetPayloadAsJson());
+                ConsoleHelper.WriteRedMessage("Direct method failed: " + response.GetPayloadAsJson());
             }
         }
         catch
         {
-            redMessage("Direct method failed: timed-out");
+            ConsoleHelper.WriteRedMessage("Direct method failed: timed-out");
         }
     }
     ```
 
     > **Note**: This code is used to invoke the **SetFanState** direct method on the device app.
-
-1. Within the **Main** method, position the cursor on the blank code line just above the `Create receivers to listen for messages` comment.
-
-1. Before the code for creating the receivers to listen for messages, add the following code:
-
-    ```csharp
-    // Create a ServiceClient to communicate with service-facing endpoint on your hub.
-    s_serviceClient = ServiceClient.CreateFromConnectionString(s_serviceConnectionString);
-    InvokeMethod().GetAwaiter().GetResult();
-    ```
-
-    > **Note**: This code creates the ServiceClient object that we use to connect to the IoT Hub. The connection to IoT Hub enables us to invoke the direct method on the device.
 
 1. On the **File** menu, to save the Program.cs file, click **Save**.
 
@@ -934,9 +1013,9 @@ There is some overlap between the functionality of device twins and direct metho
 
 1. Ensure that the **Program.cs** file is open in the Code Editor pane.
 
-1. In the Code Editor pane, scroll down to locate the end of the **SimulatedDevice** class.
+1. In the Code Editor pane, scroll down to locate the end of the **Program** class.
 
-1. Inside the closing squiggly brace of the **SimulatedDevice** class, add the following code:
+1. Inside the closing squiggly brace of the **Program** class, add the following code:
 
     ```csharp
     private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)

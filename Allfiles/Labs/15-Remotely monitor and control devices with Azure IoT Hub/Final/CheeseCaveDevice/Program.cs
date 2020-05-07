@@ -18,6 +18,7 @@ namespace CheeseCaveDevice
 
         // Global variables.
         private static DeviceClient deviceClient;
+
         private static CheeseCaveSimulator cheeseCave;
 
         // The device connection string to authenticate the device with your IoT hub.
@@ -33,7 +34,8 @@ namespace CheeseCaveDevice
             // Create an instance of the Cheese Cave Simulator
             cheeseCave = new CheeseCaveSimulator();
 
-            // INSERT register direct method code below here
+            // Create a handler for the direct method call
+            deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
 
             // Get the device twin to report the initial desired properties.
             Twin deviceTwin = deviceClient.GetTwinAsync().GetAwaiter().GetResult();
@@ -87,8 +89,42 @@ namespace CheeseCaveDevice
             }
         }
 
-        // INSERT SetFanState method below here
+        // Handle the direct method call
+        private static Task<MethodResponse> SetFanState(MethodRequest methodRequest, object userContext)
+        {
+            if (cheeseCave.FanState == StateEnum.Failed)
+            {
+                // Acknowledge the direct method call with a 400 error message.
+                string result = "{\"result\":\"Fan failed\"}";
+                ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
+                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
+            }
+            else
+            {
+                try
+                {
+                    var data = Encoding.UTF8.GetString(methodRequest.Data);
 
+                    // Remove quotes from data.
+                    data = data.Replace("\"", "");
+
+                    // Parse the payload, and trigger an exception if it's not valid.
+                    cheeseCave.UpdateFan((StateEnum)Enum.Parse(typeof(StateEnum), data));
+                    ConsoleHelper.WriteGreenMessage("Fan set to: " + data);
+
+                    // Acknowledge the direct method call with a 200 success message.
+                    string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
+                    return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 200));
+                }
+                catch
+                {
+                    // Acknowledge the direct method call with a 400 error message.
+                    string result = "{\"result\":\"Invalid parameter\"}";
+                    ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
+                    return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
+                }
+            }
+        }
         private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
         {
             try
