@@ -18,6 +18,7 @@ namespace CheeseCaveDevice
 
         // Global variables.
         private static DeviceClient deviceClient;
+
         private static CheeseCaveSimulator cheeseCave;
 
         // The device connection string to authenticate the device with your IoT hub.
@@ -35,12 +36,7 @@ namespace CheeseCaveDevice
 
             // INSERT register direct method code below here
 
-            // Get the device twin to report the initial desired properties.
-            Twin deviceTwin = deviceClient.GetTwinAsync().GetAwaiter().GetResult();
-            ConsoleHelper.WriteGreenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
-
-            // Set the device twin update callback.
-            deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).Wait();
+            // INSERT register desired property changed handler code below here
 
             SendDeviceToCloudMessagesAsync();
             Console.ReadLine();
@@ -89,30 +85,8 @@ namespace CheeseCaveDevice
 
         // INSERT SetFanState method below here
 
-        private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
-        {
-            try
-            {
-                // Update the Cheese Cave Simulator properties
-                cheeseCave.DesiredHumidity = desiredProperties["humidity"];
-                cheeseCave.DesiredTemperature = desiredProperties["temperature"];
-                ConsoleHelper.WriteGreenMessage("Setting desired humidity to " + desiredProperties["humidity"]);
-                ConsoleHelper.WriteGreenMessage("Setting desired temperature to " + desiredProperties["temperature"]);
+        // INSERT OnDesiredPropertyChanged method below here
 
-                // Report the properties back to the IoT Hub.
-                var reportedProperties = new TwinCollection();
-                reportedProperties["fanstate"] = cheeseCave.FanState.ToString();
-                reportedProperties["humidity"] = cheeseCave.DesiredHumidity;
-                reportedProperties["temperature"] = cheeseCave.DesiredTemperature;
-                await deviceClient.UpdateReportedPropertiesAsync(reportedProperties);
-
-                ConsoleHelper.WriteGreenMessage("\nTwin state reported: " + reportedProperties.ToJson());
-            }
-            catch
-            {
-                ConsoleHelper.WriteRedMessage("Failed to update device twin");
-            }
-        }
     }
 
     internal class CheeseCaveSimulator
@@ -188,6 +162,13 @@ namespace CheeseCaveDevice
             {
                 // If the fan is on the temperature and humidity will be nudged towards the desired values most of the time.
                 currentHumidity += (deltaHumidity * rand.NextDouble()) + rand.NextDouble() - 0.5;
+
+                // Randomly fail the fan.
+                if (rand.NextDouble() < 0.01)
+                {
+                    FanState = StateEnum.Failed;
+                    ConsoleHelper.WriteRedMessage("Fan has failed");
+                }
             }
             else
             {

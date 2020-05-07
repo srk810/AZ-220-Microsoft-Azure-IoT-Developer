@@ -24,11 +24,18 @@ namespace CheeseCaveOperator
         private readonly static string iotHubSasKey = "<your event hub Sas key>";
         private readonly static string iotHubSasKeyName = "service";
         private static EventHubClient eventHubClient;
+        // INSERT service client variable below here
         private static ServiceClient serviceClient;
+
+        // INSERT registry manager variable below here
+        private static RegistryManager registryManager;
 
         // Connection string for your IoT Hub.
         private readonly static string serviceConnectionString = "<your service connection string>";
 
+        private readonly static string deviceId = "sensor-th-0055";
+
+        // INSERT Main method below here
         public static void Main(string[] args)
         {
             ConsoleHelper.WriteColorMessage("Cheese Cave Operator\n", ConsoleColor.Yellow);
@@ -41,13 +48,15 @@ namespace CheeseCaveOperator
             var runtimeInfo = eventHubClient.GetRuntimeInformationAsync().GetAwaiter().GetResult();
             var d2cPartitions = runtimeInfo.PartitionIds;
 
-            // Create a ServiceClient to communicate with service-facing endpoint on your hub.
-            serviceClient = ServiceClient.CreateFromConnectionString(serviceConnectionString);
-            InvokeMethod().GetAwaiter().GetResult();
-
+            // INSERT register desired property changed handler code below here
             // A registry manager is used to access the digital twins.
             registryManager = RegistryManager.CreateFromConnectionString(serviceConnectionString);
             SetTwinProperties().Wait();
+
+            // INSERT create service client instance below here
+            // Create a ServiceClient to communicate with service-facing endpoint on your hub.
+            serviceClient = ServiceClient.CreateFromConnectionString(serviceConnectionString);
+            InvokeMethod().GetAwaiter().GetResult();
 
             // Create receivers to listen for messages.
             var tasks = new List<Task>();
@@ -60,6 +69,7 @@ namespace CheeseCaveOperator
             Task.WaitAll(tasks.ToArray());
         }
 
+        // INSERT ReceiveMessagesFromDeviceAsync method below here
         // Asynchronously create a PartitionReceiver for a partition and then start reading any messages sent from the simulated client.
         private static async Task ReceiveMessagesFromDeviceAsync(string partition)
         {
@@ -93,18 +103,19 @@ namespace CheeseCaveOperator
             }
         }
 
+        // INSERT InvokeMethod method below here
         // Handle invoking a direct method.
         private static async Task InvokeMethod()
         {
             try
             {
                 var methodInvocation = new CloudToDeviceMethod("SetFanState") { ResponseTimeout = TimeSpan.FromSeconds(30) };
-                string payload = JsonConvert.SerializeObject("on");
+                string payload = JsonConvert.SerializeObject("On");
 
                 methodInvocation.SetPayloadJson(payload);
 
                 // Invoke the direct method asynchronously and get the response from the simulated device.
-                var response = await serviceClient.InvokeDeviceMethodAsync("sensor-th-0055", methodInvocation);
+                var response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
 
                 if (response.Status == 200)
                 {
@@ -121,34 +132,31 @@ namespace CheeseCaveOperator
             }
         }
 
-        // Device twins section.
-        private static RegistryManager registryManager;
-
+        // INSERT Device twins section below here
         private static async Task SetTwinProperties()
         {
-            var twin = await registryManager.GetTwinAsync("sensor-th-0055");
+            var twin = await registryManager.GetTwinAsync(deviceId);
             var patch =
                 @"{
-                    tags: {
-                        customerID: 'Customer1',
-                        cheeseCave: 'CheeseCave1'
-                    },
-                    properties: {
-                        desired: {
-                            patchId: 'set values',
-                            temperature: '50',
-                            humidity: '85'
-                        }
+                tags: {
+                    customerID: 'Customer1',
+                    cheeseCave: 'CheeseCave1'
+                },
+                properties: {
+                    desired: {
+                        patchId: 'set values',
+                        temperature: '50',
+                        humidity: '85'
                     }
-                }";
+                }
+            }";
             await registryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
 
             var query = registryManager.CreateQuery(
-              "SELECT * FROM devices WHERE tags.cheeseCave = 'CheeseCave1'", 100);
+                "SELECT * FROM devices WHERE tags.cheeseCave = 'CheeseCave1'", 100);
             var twinsInCheeseCave1 = await query.GetNextAsTwinAsync();
             Console.WriteLine("Devices in CheeseCave1: {0}",
-              string.Join(", ", twinsInCheeseCave1.Select(t => t.DeviceId)));
-
+                string.Join(", ", twinsInCheeseCave1.Select(t => t.DeviceId)));
         }
     }
 

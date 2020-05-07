@@ -313,12 +313,7 @@ The simulated device app that you build in this task simulates an IoT device tha
 
         // INSERT register direct method code below here
 
-        // Get the device twin to report the initial desired properties.
-        Twin deviceTwin = deviceClient.GetTwinAsync().GetAwaiter().GetResult();
-        ConsoleHelper.WriteGreenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
-
-        // Set the device twin update callback.
-        deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).Wait();
+        // INSERT register desired property changed handler code below here
 
         SendDeviceToCloudMessagesAsync();
         Console.ReadLine();
@@ -330,10 +325,6 @@ The simulated device app that you build in this task simulates an IoT device tha
 1. Take a brief look at the **SendDeviceToCloudMessagesAsync** method.
 
     Notice that it is very similar to previous versions you have created in earlier labs.
-
-1. Briefly review the **OnDesiredPropertyChanged** method.
-
-   Notice that it is very similar to previous versions you have created in earlier labs.
 
 1. Take a look at the **CheeseCaveSimulator** class.
 
@@ -365,7 +356,7 @@ The simulated device app that you build in this task simulates an IoT device tha
 
 ### Exercise 3: Create a Second App to Receive Telemetry
 
-Now that you have your (simulated) sensor-th-0055 device sending telemetry to your IoT Hub, you need to create a back-end app that can connect to IoT Hub and "listen" for that telemetry. Eventually, this back-end app will be used to automate the control of the temperature in the cheese cave.
+Now that you have your (simulated) cheese cave device sending telemetry to your IoT Hub, you need to create a back-end app that can connect to IoT Hub and "listen" for that telemetry. Eventually, this back-end app will be used to automate the control of the temperature in the cheese cave.
 
 #### Task 1: Create an app to receive telemetry
 
@@ -535,6 +526,8 @@ In this task, you will add code to your back-end app that will be used to receiv
     private readonly static string iotHubSasKey = "<your event hub Sas key>";
     private readonly static string iotHubSasKeyName = "service";
     private static EventHubClient eventHubClient;
+
+    // INSERT create service client instance below here
     private static ServiceClient serviceClient;
 
     // Connection string for your IoT Hub.
@@ -605,7 +598,7 @@ In this task, you will add code to your back-end app that will be used to receiv
         var runtimeInfo = eventHubClient.GetRuntimeInformationAsync().GetAwaiter().GetResult();
         var d2cPartitions = runtimeInfo.PartitionIds;
 
-        // INSERT create registry manager instance below here
+        // INSERT register desired property changed handler code below here
 
         // INSERT create service client instance below here
 
@@ -844,7 +837,7 @@ You have now completed the coding that is required on the device side. Next, you
 
 1. Ensure that **Program.cs** is open in the code editor.
 
-1. Locate the `INSERT ServiceClient variable below here` comment.
+1. Locate the `INSERT service client variable below here` comment.
 
 1. To add a global variable to hold the service client instance, enter the following code:
 
@@ -873,7 +866,7 @@ You have now completed the coding that is required on the device side. Next, you
         try
         {
             var methodInvocation = new CloudToDeviceMethod("SetFanState") { ResponseTimeout = TimeSpan.FromSeconds(30) };
-            string payload = JsonConvert.SerializeObject("on");
+            string payload = JsonConvert.SerializeObject("On");
 
             methodInvocation.SetPayloadJson(payload);
 
@@ -896,7 +889,7 @@ You have now completed the coding that is required on the device side. Next, you
     }
     ```
 
-    > **Note**: This code is used to invoke the **SetFanState** direct method on the device app.
+    This code is used to invoke the **SetFanState** direct method on the device app.
 
 1. On the **File** menu, to save the Program.cs file, click **Save**.
 
@@ -924,7 +917,7 @@ To test the direct method, you will need to start the apps in the correct order.
 
    ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-received.png)
 
-You are now successfully monitoring and controlling a remote device. You have implemented a direct method on the device that can be invoked from the cloud. In our scenario, the direct method is used to turn on a fan, which will bring the environment in the cave to our desired settings.
+You are now successfully monitoring and controlling a remote device. You have implemented a direct method on the device that can be invoked from the cloud. In our scenario, the direct method is used to turn on a fan, which will bring the environment in the cave to our desired settings. You should notice that the temperature and humidity readings reduce over time, eventually removing the alerts.
 
 What if you might want to remotely specify the desired settings for the cheese cave environment? Perhaps you want to set a particular target temperature for the cheese cave at a certain point in the aging process. You could specify desired settings with a direct method (which is a valid approach), or you could use another feature of IoT Hub, called device twins. In the next Exercise, you will work on implementing device twin properties within your solution.
 
@@ -951,17 +944,34 @@ There is some overlap between the functionality of device twins and direct metho
 
 1. Ensure that the **Program.cs** is open.
 
-1. In the Code Editor pane, locate the bottom of the **ReadDeviceToCloudMessages** class.
+1. Locate the `INSERT registry manager variable below here` comment.
+
+1. To insert the registry manager variable, enter the following code:
+
+    ```csharp
+    private static RegistryManager registryManager;
+    ```
+
+1. Locate the `INSERT create registry manager instance below here` comment.
+
+1. To add the functionality that creates the registry manager instance and sets the twin properties, enter the following code:
+
+    ```csharp
+    // A registry manager is used to access the digital twins.
+    registryManager = RegistryManager.CreateFromConnectionString(serviceConnectionString);
+    SetTwinProperties().Wait();
+    ```
+
+1. Locate the `INSERT Device twins section below here` comment.
 
 1. Just above the closing squiggly brace for the **ReadDeviceToCloudMessages** class, add the following code:
 
     ```csharp
     // Device twins section.
-    private static RegistryManager registryManager;
 
     private static async Task SetTwinProperties()
     {
-        var twin = await registryManager.GetTwinAsync("sensor-th-0055");
+        var twin = await registryManager.GetTwinAsync(deviceId);
         var patch =
             @"{
                 tags: {
@@ -975,33 +985,18 @@ There is some overlap between the functionality of device twins and direct metho
                         humidity: '85'
                     }
                 }
-        }";
+            }";
         await registryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
 
         var query = registryManager.CreateQuery(
-          "SELECT * FROM devices WHERE tags.cheeseCave = 'CheeseCave1'", 100);
+            "SELECT * FROM devices WHERE tags.cheeseCave = 'CheeseCave1'", 100);
         var twinsInCheeseCave1 = await query.GetNextAsTwinAsync();
         Console.WriteLine("Devices in CheeseCave1: {0}",
-          string.Join(", ", twinsInCheeseCave1.Select(t => t.DeviceId)));
-
+            string.Join(", ", twinsInCheeseCave1.Select(t => t.DeviceId)));
     }
     ```
 
     > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates the twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cheeseCave** tag is set to "CheeseCave1". This query requires that the connection has the **Registry read** permission.
-
-1. In the Code Editor pane, scroll up to find the **Main** method.
-
-1. In the **Main** method, locate the code lines creating a service client.
-
-1. Before the code creating the service client, add the following code:
-
-    ```csharp
-    // A registry manager is used to access the digital twins.
-    registryManager = RegistryManager.CreateFromConnectionString(s_serviceConnectionString);
-    SetTwinProperties().Wait();
-    ```
-
-    > **Note**: Read the comments that are included in the Main method.
 
 1. On the **File** menu, to save the Program.cs file, click **Save**.
 
@@ -1013,54 +1008,51 @@ There is some overlap between the functionality of device twins and direct metho
 
 1. Ensure that the **Program.cs** file is open in the Code Editor pane.
 
-1. In the Code Editor pane, scroll down to locate the end of the **Program** class.
+1. Locate the `INSERT register desired property changed handler code below here` comment.
 
-1. Inside the closing squiggly brace of the **Program** class, add the following code:
+1. To register the desired property changed handler, add the following code:
+
+    ```csharp
+    // Get the device twin to report the initial desired properties.
+    Twin deviceTwin = deviceClient.GetTwinAsync().GetAwaiter().GetResult();
+    ConsoleHelper.WriteGreenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
+
+    // Set the device twin update callback.
+    deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).Wait();
+    ```
+
+1. Locate the `INSERT OnDesiredPropertyChanged method below here` comment.
+
+1. To add the code that responds to a device twin property change, enter the following code:
 
     ```csharp
     private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
     {
         try
         {
-            desiredHumidity = desiredProperties["humidity"];
-            desiredTemperature = desiredProperties["temperature"];
-            greenMessage("Setting desired humidity to " + desiredProperties["humidity"]);
-            greenMessage("Setting desired temperature to " + desiredProperties["temperature"]);
+            // Update the Cheese Cave Simulator properties
+            cheeseCave.DesiredHumidity = desiredProperties["humidity"];
+            cheeseCave.DesiredTemperature = desiredProperties["temperature"];
+            ConsoleHelper.WriteGreenMessage("Setting desired humidity to " + desiredProperties["humidity"]);
+            ConsoleHelper.WriteGreenMessage("Setting desired temperature to " + desiredProperties["temperature"]);
 
             // Report the properties back to the IoT Hub.
             var reportedProperties = new TwinCollection();
-            reportedProperties["fanstate"] = fanState.ToString();
-            reportedProperties["humidity"] = desiredHumidity;
-            reportedProperties["temperature"] = desiredTemperature;
-            await s_deviceClient.UpdateReportedPropertiesAsync(reportedProperties);
+            reportedProperties["fanstate"] = cheeseCave.FanState.ToString();
+            reportedProperties["humidity"] = cheeseCave.DesiredHumidity;
+            reportedProperties["temperature"] = cheeseCave.DesiredTemperature;
+            await deviceClient.UpdateReportedPropertiesAsync(reportedProperties);
 
-            greenMessage("\nTwin state reported: " + reportedProperties.ToJson());
+            ConsoleHelper.WriteGreenMessage("\nTwin state reported: " + reportedProperties.ToJson());
         }
         catch
         {
-            redMessage("Failed to update device twin");
+            ConsoleHelper.WriteRedMessage("Failed to update device twin");
         }
     }
     ```
 
-    > **Note**: This code defines the handler that is invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
-
-1. In the Code Editor pane, scroll up to the **Main** method.
-
-1. Within the **Main** method, locate the code that creates a handler for the direct method.
-
-1. Position the cursor on the blank line below the handler for the direct method.
-
-1. To register the desired property changed handler, add the following code:
-
-    ```csharp
-    // Get the device twin to report the initial desired properties.
-    Twin deviceTwin = s_deviceClient.GetTwinAsync().GetAwaiter().GetResult();
-    greenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
-
-    // Set the device twin update callback.
-    s_deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).Wait();
-    ```
+    This code defines the handler that is invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
 
 1. On the **File** menu, to save the Program.cs file, click **Save**.
 

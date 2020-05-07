@@ -34,9 +34,11 @@ namespace CheeseCaveDevice
             // Create an instance of the Cheese Cave Simulator
             cheeseCave = new CheeseCaveSimulator();
 
+            // INSERT register direct method code below here
             // Create a handler for the direct method call
             deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
 
+            // INSERT register desired property changed handler code below here
             // Get the device twin to report the initial desired properties.
             Twin deviceTwin = deviceClient.GetTwinAsync().GetAwaiter().GetResult();
             ConsoleHelper.WriteGreenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
@@ -89,6 +91,7 @@ namespace CheeseCaveDevice
             }
         }
 
+        // INSERT SetFanState method below here
         // Handle the direct method call
         private static Task<MethodResponse> SetFanState(MethodRequest methodRequest, object userContext)
         {
@@ -125,6 +128,8 @@ namespace CheeseCaveDevice
                 }
             }
         }
+
+        // INSERT OnDesiredPropertyChanged method below here
         private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
         {
             try
@@ -149,6 +154,7 @@ namespace CheeseCaveDevice
                 ConsoleHelper.WriteRedMessage("Failed to update device twin");
             }
         }
+
     }
 
     internal class CheeseCaveSimulator
@@ -159,7 +165,7 @@ namespace CheeseCaveDevice
             On,
             Failed
         }
-        
+
         // Global constants.
         private const double ambientTemperature = 70;               // Ambient temperature of a southern cave, in degrees F.
         private const double ambientHumidity = 99;                  // Ambient humidity in relative percentage of air saturation.
@@ -178,9 +184,9 @@ namespace CheeseCaveDevice
 
         internal bool IsHumidityAlert => (currentHumidity > DesiredHumidity + desiredHumidityLimit) || (currentHumidity < DesiredHumidity - desiredHumidityLimit);
 
-        public double DesiredTemperature {get; set;} = ambientTemperature - 10; // Initial desired temperature, in degrees F.
+        public double DesiredTemperature { get; set; } = ambientTemperature - 10; // Initial desired temperature, in degrees F.
 
-        public double DesiredHumidity {get; set;} = ambientHumidity - 20; // Initial desired humidity in relative percentage of air saturation.
+        public double DesiredHumidity { get; set; } = ambientHumidity - 20; // Initial desired humidity in relative percentage of air saturation.
 
         public double ReadTemperature()
         {
@@ -224,6 +230,13 @@ namespace CheeseCaveDevice
             {
                 // If the fan is on the temperature and humidity will be nudged towards the desired values most of the time.
                 currentHumidity += (deltaHumidity * rand.NextDouble()) + rand.NextDouble() - 0.5;
+
+                // Randomly fail the fan.
+                if (rand.NextDouble() < 0.01)
+                {
+                    FanState = StateEnum.Failed;
+                    ConsoleHelper.WriteRedMessage("Fan has failed");
+                }
             }
             else
             {
