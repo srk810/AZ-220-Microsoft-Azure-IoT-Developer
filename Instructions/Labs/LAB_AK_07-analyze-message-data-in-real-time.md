@@ -12,7 +12,7 @@ lab:
 
 
 
-**TODO: This lab scenario needs to be reviewed and adjusted from the ground up. The scenario should focus on the following message processing and real-time analysis technologies: IoT Hub Message Routing; Azure Stream Analytics; Azure Functions (and possibly message enrichments). Lab 7 is the only lab tied to this module, but currently overlaps with Lab 8 in undesirable ways, so Lab 8 should be included in this review. Routing should be demonstrated in a reasonable way, and it would be nice to implement two routes, but routing should actually be less significant (from an exam perspective) than Stream Analytics when considering the hands-on time allocated between the two technologies. If required, we could define Lab 7A and Lab 7B to separate ASA from routing and provide the hands-on with ASA that should be included in this course. Another option would be to provide one or more optional Exercises that dig deeper into ASA at the end of the lab.**
+**TODO: This lab scenario needs to be reviewed and adjusted from the ground up. The scenario should focus on the following message processing and real-time analysis technologies: IoT Hub Message Routing; Azure Stream Analytics; Azure Functions (and possibly message enrichments). Lab 7 is the only lab tied to this module, but currently overlaps with Lab 8 in undesirable ways, so Lab 8 should be included in this review. Routing should be demonstrated in a reasonable way, and it would be nice to implement two routes, but routing should be allocated less time than Stream Analytics when considering the hands-on time in the lab. If required, we could define Lab 7A and Lab 7B to separate ASA from routing and provide the hands-on with ASA that should be included in this course. Another option would be to provide one or more optional Exercises that dig deeper into ASA at the end of the lab.**
 
 
 
@@ -617,7 +617,7 @@ In this exercise, you will create and test the logging route.
 
 
 
-**TODO - Work with Daren to define a new Exercise for an ASA job that actually makes sense. Consider what message data is available, including conveyor stopped. Maybe we could output to Service Bus Queue or trigger an Azure Function. We wouldn't even need to do anything with the Service Bus Queue output in this lab, just explain the purpose, and we could provide the code for the Azure Function that sends a text (or just have it do nothing)**
+**TODO - Work with Daren to define a new Exercise for an ASA job that makes more sense. Consider what message data is available, including conveyor stopped. Maybe we could output to Service Bus Queue or trigger an Azure Function. We wouldn't even need to do anything with the Service Bus Queue output in this lab, just explain the purpose, and we could provide the code for the Azure Function that sends a text (or just have it do nothing)**
 
 
 
