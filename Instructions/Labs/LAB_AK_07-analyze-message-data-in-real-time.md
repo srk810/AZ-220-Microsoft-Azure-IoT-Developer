@@ -8,9 +8,20 @@ lab:
 
 ## Lab Scenario
 
-Contoso Management is impressed with your implementation of automatic device enrollment using DPS. They are now asking you to begin exploring an IoT solution for a business-specific issue associated with product packaging and shipping.
 
-A significant cost consideration within Contoso's cheese business is the packaging and shipping of cheese to customers. To maximize cost efficiency, Contoso operates an on-premises packaging facility. The workflow is straightforward - cheese is cut and packaged, packages are assembled into shipping containers, containers are delivered to specific bins associated with their destination. A conveyor belt system is used to move the product through this process. The metric for success is the number of packages leaving the conveyor belt system during a given time period (typically a work shift).
+
+
+
+**TODO: This lab scenario needs to be reviewed and adjusted from the ground up. The scenario should focus on the following message processing and real-time analysis technologies: IoT Hub Message Routing; Azure Stream Analytics; Azure Functions (and possibly message enrichments). Lab 7 is the only lab tied to this module, but currently overlaps with Lab 8 in undesirable ways, so Lab 8 should be included in this review. Routing should be demonstrated in a reasonable way, and it would be nice to implement two routes, but routing should be allocated less time than Stream Analytics when considering the hands-on time in the lab. If required, we could define Lab 7A and Lab 7B to separate ASA from routing and provide the hands-on with ASA that should be included in this course. Another option would be to provide one or more optional Exercises that dig deeper into ASA at the end of the lab.**
+
+
+
+
+
+
+Contoso Management is impressed with your implementation of automatic device enrollment using DPS. They are now interested in having you develop an IoT-based solution related to product packaging and shipping.
+
+The cost associated with packaging and shipping cheese is significant. To maximize cost efficiency, Contoso operates an on-premises packaging facility. The workflow is straightforward - cheese is cut and packaged, packages are assembled into shipping containers, containers are delivered to specific bins associated with their destination. A conveyor belt system is used to move the product through this process. The metric for success is the number of packages leaving the conveyor belt system during a given time period (typically a work shift).
 
 The conveyor belt system is a critical link in this process, and is visually monitored to ensure that the workflow is progressing at maximum efficiency. The system has three operator controlled speeds: stopped, slow, and fast. Naturally, the number of packages being delivered at the low speed is less than at the higher speed. However, there are a number of other factors to consider:
 
@@ -23,11 +34,11 @@ In addition to maximizing throughput, your automated IoT solution will implement
 
 > **Note**: **Preventive maintenance** (sometimes called preventative maintenance or predictive maintenance) is an equipment maintenance program that schedules maintenance activities to be performed while the equipment is operating normally. The intent of this approach is to avoid unexpected breakdowns that often incur costly disruptions.
 
-It's not always easy for an operator to visually detect abnormal vibration levels. For this reason, you are looking into an Azure IoT solution that will help to measure vibration levels and data anomalies. Vibration sensors will be attached to the conveyor belt at various locations, and you will use IoT devices to send telemetry to an IoT hub. The IoT hub will use Azure Stream Analytics, and a built-in Machine Learning (ML) model, to alert you to vibration anomalies in real time. You also plan to archive all of the telemetry data so that it can be further analyzed in the future.
+It's not always easy for an operator to visually detect abnormal vibration levels. For this reason, you are looking into an Azure IoT solution that will help to measure vibration levels and data anomalies. Vibration sensors will be attached to the conveyor belt at various locations, and you will use IoT devices to send telemetry to IoT hub. The IoT hub will use Azure Stream Analytics, and a built-in Machine Learning (ML) model, to alert you to vibration anomalies in real time. You also plan to archive all of the telemetry data so that in-house machine learning models can be developed in the future.
 
 You decide to prototype the solution using simulated telemetry from a single IoT device.
 
-To simulate the vibration data in a realistic manner, you work with one of the engineers to understand a little bit about what causes the vibrations. It turns out there are a number of different types of vibration that contribute to the overall vibration level. For example, a "force vibration" could be introduced by a broken guide wheel or an especially heavy load placed improperly on the conveyor belt. There's also an "increasing vibration", that can be introduced when a system design limit (such as speed or weight) is exceeded. With a little help, you able to develop the code for a simulated IoT device that produces an acceptable representation of vibration data and will generate anomalies during testing.
+To simulate the vibration data in a realistic manner, you work with an engineer from Operations to understand a little bit about what causes the vibrations. It turns out there are a number of different types of vibration that contribute to the overall vibration level. For example, a "force vibration" could be introduced by a broken guide wheel or an especially heavy load placed improperly on the conveyor belt. There's also an "increasing vibration", that can be introduced when a system design limit (such as speed or weight) is exceeded. The Engineering team agrees to help you develop the code for a simulated IoT device that will produce an acceptable representation of vibration data (including anomalies).
 
 The following resources will be created:
 
@@ -35,16 +46,16 @@ The following resources will be created:
 
 ## In This Lab
 
-In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a simulated device that sends vibration telemetry to your IoT hub. With your simulated data arriving at IoT hub, you will implement two message routes, one that archives data for future analysis and one that supports data analysis in real time (outputs to Azure Blob storage and Azure Stream Analytics respectively). The lab includes the following exercises:
+In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a simulated device that sends vibration telemetry to your IoT hub. With your simulated data arriving at IoT hub, you will implement an IoT Hub Message Route and Azure Stream Analytics job that can be used to archive data. The lab includes the following exercises:
 
-* Verify that the lab prerequisites are met (that you have the required Azure resources)
+* Verify Lab Prerequisites
 
-    * The script will create an Azure IoT Hub if you don't have one
-    * The script will create a new device identity (sensor-v-3000) for this lab
+    * A script can be used to create an Azure IoT Hub if you don't have one
+    * A script will be used to create a new device identity (sensor-v-3000) for this lab
 
-* Create a simulated device that sends device telemetry to the IoT Hub
-* Create an IoT Hub message route that outputs to blob storage
-* Create a second message route that outputs to an Azure Stream Analytics job
+* Write Code to generate Vibration Telemetry
+* Create a Message Route to Azure Blob Storage
+* Logging Route Azure Stream Analytics Job
 
 ## Lab Instructions
 
@@ -606,7 +617,7 @@ In this exercise, you will create and test the logging route.
 
 
 
-**TODO - Work with Daren to define a new Exercise for an ASA job that actually makes sense. Consider what message data is available, including conveyor stopped. Maybe we could output to Service Bus Queue or trigger an Azure Function. We wouldn't even need to do anything with the Service Bus Queue output in this lab, just explain the purpose, and we could provide the code for the Azure Function that sends a text (or just have it do nothing)**
+**TODO - Work with Daren to define a new Exercise for an ASA job that makes more sense. Consider what message data is available, including conveyor stopped. Maybe we could output to Service Bus Queue or trigger an Azure Function. We wouldn't even need to do anything with the Service Bus Queue output in this lab, just explain the purpose, and we could provide the code for the Azure Function that sends a text (or just have it do nothing)**
 
 
 

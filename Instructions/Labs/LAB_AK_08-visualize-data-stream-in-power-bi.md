@@ -20,23 +20,33 @@ lab:
 
 ## Lab Scenario
 
+
+
+
+
+
+**TODO - Consider removing Event Hubs from the scenario since the scenario does not represent a Big Data solution that requires it and the exam OD does not explicitly call out integrating Event Hubs in an IoT Hub based solution. Message Routing was part of the previous module, so there is no motivation/advantage to having students create a route in this lab**
+
+
+
+
+
+
 You have developed a simulated IoT device that generates vibration data and other telemetry outputs that are representative of the conveyor belt system used in Contoso's cheese packaging process. You have built and tested a logging route that sends data to Azure Blob storage. You will now start work on a new route within IoT hub that will send telemetry data to an Azure Event Hubs service.
 
-The primary difference between Azure IoT Hub and Azure Event Hubs is that Event Hubs designed for big data streaming, while IoT hub is optimized for an IoT solution. Both services support ingestion of data with low latency and high reliability. Since Azure Event Hubs provides a input to Stream Analytics in a manner that is similar to IoT hub, your choice of Event Hubs in this case is allows you explore an additional Azure service option within your solution.
+The primary difference between Azure IoT Hub and Azure Event Hubs is that Event Hubs is designed for big data streaming, while IoT hub is optimized for an IoT solution. Both services support ingestion of data with low latency and high reliability. Since Azure Event Hubs provides a input to Stream Analytics in a manner that is similar to IoT hub, your choice of Event Hubs in this case allows you explore an additional Azure service option within your solution.
 
 ### Make a Call to a Built-in Machine Learning Model
 
-The built-in Machine Learning (ML) function we're going to call is `AnomalyDetection_SpikeAndDip`.
+In this lab, you will be calling a built-in Machine Learning (ML) function named `AnomalyDetection_SpikeAndDip`. The `AnomalyDetection_SpikeAndDip` function uses a sliding window to analyze data for anomalies. The sliding window could be, for example, the most recent two minutes of telemetry data. The window advances in near real-time with the flow of telemetry. Generally speaking, if the size of the sliding window is increased to include more data, the accuracy of anomaly detection will increase as well (however, the latency also increases, so a ballance must be found).
 
-The `AnomalyDetection_SpikeAndDip` function takes a sliding window of data, and examines it for anomalies. The sliding window could be, say, the most recent two minutes of telemetry data. This sliding window keeps up with the flow of telemetry in close to real time. If the size of the sliding window is increased, generally the accuracy of anomaly detection will increase too. As will the latency.
-
-As the flow of data continues, the algorithm establishes a normal range of values, then compares new values against those norms. The result is a score for each value, a percentage that determines the confidence level that the given value is anomalous. Low confidence levels are ignored, the question is what percentage confidence value is acceptable? In our query, we're going to set this tipping point at 95%.
+The function establishes a "normal" range for the data and then uses it to identify anomalies and assign a rating. It works like this: as the function continues to monitor the flow of data, the algorithm establishes a normal range of values, then compares new values against those norms. The result is a score for each value, expressed as a percentage that determines the confidence level that the given value is anomalous. As you may expect, low confidence levels can be ignored, but you may wonder what percentage confidence value is acceptable. In your query, you will set this tipping point at 95%.
 
 There are always complications, like when there are gaps in the data (the conveyor belt stops for a while, perhaps). The algorithm handles voids in the data by imputing values.
 
 > **Note**: In statistics, imputation is the process of replacing missing data with substituted values. You can learn more about about imputations [here](https://en.wikipedia.org/wiki/Imputation_%28statistics%29).
 
-Spikes and dips in telemetry data are temporary anomalies. However, as we're dealing with sine waves for vibration, we can expect a short period of "normal" values follow a high or low value that triggers an anomaly alert. The operator is looking for a cluster of anomalies occurring in a short time span. Such a cluster indicates something is wrong.
+Spikes and dips in telemetry data are temporary anomalies. However, since you are simulating vibration data using sine waves, you can expect a period of "normal" values followed by a high or low value that triggers an anomaly alert. An operator may look for a cluster of anomalies occurring in a short time span, which would signal that something is wrong.
 
 There are other built-in ML models, such as a model for detecting trends. We don't include these models as part of this module, but the student is encouraged to investigate further.
 
