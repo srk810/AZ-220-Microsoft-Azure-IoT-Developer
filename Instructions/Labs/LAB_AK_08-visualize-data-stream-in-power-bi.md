@@ -25,7 +25,7 @@ lab:
 
 
 
-**TODO - Consider removing Event Hubs from the scenario since it is not part of the exam OD. Message Routing was part of the previous module, so there is no motivation/advantage to having students create a route in this lab**
+**TODO - Consider removing Event Hubs from the scenario since the scenario does not represent a Big Data solution that requires it and the exam OD does not explicitly call out integrating Event Hubs in an IoT Hub based solution. Message Routing was part of the previous module, so there is no motivation/advantage to having students create a route in this lab**
 
 
 
