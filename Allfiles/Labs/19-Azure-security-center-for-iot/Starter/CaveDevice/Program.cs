@@ -64,6 +64,7 @@ namespace CaveDevice
                 await deviceClient.SendEventAsync(message);
                 Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
 
+                // Increased delay for custom alert
                 await Task.Delay(10000);
             }
         }
