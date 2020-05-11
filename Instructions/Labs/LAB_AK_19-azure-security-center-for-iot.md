@@ -68,7 +68,7 @@ If these resources are not available, you will need to run the **lab19-setup.azc
 
     * Allfiles
       * Labs
-          * 19-Detect if your IoT Device was Tampered with Azure Security Center for IoT
+          * 19-Azure-security-center-for-iot
             * Setup
 
     The lab19-setup.azcli script file is located in the Setup folder for lab 19.
@@ -640,7 +640,7 @@ In this task, you will create a custom alert.
 
 ### Exercise 8: Configure the Device App
 
-In this exercise, you will create an IoT Hub device and a .Net Core console application (C#) that will leverage the **Microsoft.Azure.Devices.Client** nuget package to connect to an IoT Hub. The console application will send telemetry every 10 seconds and is designed to exceed the Device to Cloud message threshold configured in the Custom Alert (that you created in the previous exercise).
+In this exercise, you will configure an IoT Hub device and a .Net Core console application (C#) that will leverage the **Microsoft.Azure.Devices.Client** nuget package to connect to an IoT Hub. The console application will send telemetry every 10 seconds and is designed to exceed the Device to Cloud message threshold configured in the Custom Alert (that you created in the previous exercise).
 
 #### Task 1: Register New IoT Device
 
@@ -666,147 +666,69 @@ A device must be registered with your IoT hub before it can connect.
 
     Be sure to note that it is the connection string for the sensor-th-0070 device. You will need the connection string value for the device app.
 
-#### Task 2: Create a Console App
+#### Task 2: Configure a Cave Device App
 
-1. Open Visual Studio Code.
+1. In File Explorer, navigate to the Starter folder for lab 7 (Device Message Routing).
 
-1. On the **File** menu, click **Open Folder**.
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
 
-1. At the top of the **Open Folder** dialog, click **New folder**, type **ThermostatDevice** and then press **Enter**.
+    * Allfiles
+      * Labs
+          * 19-Azure-security-center-for-iot
+            * Starter
+              * CheeseCaveDevice
 
-    You can create the ThermostatDevice folder under the Lab 19 folder, or another location of your choice.
+1. Open **Visual Studio Code**.
 
-1. Click **ThermostatDevice**, and then click **Select Folder**.
+1. On the **File** menu, click **Open Folder**
 
-1. On the **File** menu, to ensure that file auto-save is enabled, click **Auto Save**.
+1. In the Open Folder dialog, navigate to the **19-Azure-security-center-for-iot** folder.
 
-    You will be copying in several blocks of code, and this will ensure you are always operating against the latest edits of your files.
+1. Navigate to the **Starter** folder.
 
-1. On the **View** menu, to open the integrated terminal, click **Terminal**.
+1. Click **CheeseCaveDevice**, and then click **Select Folder**.
 
-1. At the Terminal command prompt, to create a new console app, enter the following command:
+    You should see the following files listed in the EXPLORER pane of Visual Studio Code:
 
-    ```bash
-    dotnet new console
+    * Program.cs
+    * CheeseCaveDevice.csproj
+
+1. Open the **Program.cs** file.
+
+    A cursory glance will reveal that the **CaveDevice** application is very similar to those used in the preceding labs. This version has an increased delay so that messages are sent every 10 seconds: `await Task.Delay(1000);`
+
+1. On the **Terminal** menu, click **New Terminal**.
+
+    Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
+  
+1. At the terminal command prompt, to verify the application builds, enter the following command:
+
+   ```bash
+   dotnet build
+   ```
+
+    The output will be similar to:
+
+    ```text
+    ❯ dotnet build
+    Microsoft (R) Build Engine version 16.5.0+d4cbfca49 for .NET Core
+    Copyright (C) Microsoft Corporation. All rights reserved.
+
+    Restore completed in 39.27 ms for D:\Az220-Code\AllFiles\Labs\15-Remotely monitor and control devices with Azure IoT Hub\Starter\CheeseCaveDevice\CheeseCaveDevice.csproj.
+    CheeseCaveDevice -> D:\Az220-Code\AllFiles\Labs\15-Remotely monitor and control devices with Azure IoT Hub\Starter\CheeseCaveDevice\bin\Debug\netcoreapp3.1\CheeseCaveDevice.dll
+
+    Build succeeded.
+        0 Warning(s)
+        0 Error(s)
+
+    Time Elapsed 00:00:01.16
     ```
 
-#### Task 3: Connect the App to IoT Hub
-
-1. At the Terminal command prompt, to install the required NuGet package, enter the following command:
-
-    ```bash
-    dotnet add package Microsoft.Azure.Devices.Client
-    ```
-
-1. In the EXPLORER pane, click **Program.cs**.
-
-1. In the Code Editor, delete all of the existing code.
-
-1. In the Code Editor, to add the `using` statements that the app will require, enter the following code:
+1. Find the following line of code:
 
     ```csharp
-    using System;
-    using Microsoft.Azure.Devices.Client;
-    using Newtonsoft.Json;
-    using System.Text;
-    using System.Threading.Tasks;
+    private readonly static string deviceConnectionString = "<your device connection string>";
     ```
-
-1. Below the `using` statements, to create a namespace for the application, enter the following code:
-
-    ```csharp
-    namespace ThermostatDevice
-    {
-        // add class below here
-    }
-    ```
-
-1. On a blank code line below the `// add class below here` comment, too create the **ThermostatDevice** class, enter the following code:
-
-    ```csharp
-    class ThermostatDevice
-    {
-        // add variables below here
-    }
-    ```
-
-1. On a blank code line below the `// add variables below here` comment, to define a variable for the device connection string, enter the following code:
-
-    ```csharp
-    private static DeviceClient deviceClient;
-    private readonly static string connectionString = "<DEVICE-CONNECTION-STRING>";
-
-    // add SendDeviceToCloudMessagesAsync method below here
-    ```
-
-    The first line provides a reference to the `DeviceClient`
-    The second line provide a variable for the device connection string (which you copied earlier) 
-
-    > **Tip**:
-    > Replace `<DEVICE-CONNECTION-STRING>` with the device primary connection string you copied from the Azure Portal earlier.
-
-1. On a blank code line below the `// add SendDeviceToCloudMessagesAsync method below here` comment, to send device to cloud messages to the IoT Hub, add the following code:
-
-    ```csharp
-    private static async void SendDeviceToCloudMessagesAsync()
-    {
-        // Initial telemetry values
-        double minTemperature = 20;
-        double minHumidity = 60;
-        Random rand = new Random();
-
-        // loop until the user hits CTRL+C
-        while (true)
-        {
-            double currentTemperature = minTemperature + rand.NextDouble() * 15;
-            double currentHumidity = minHumidity + rand.NextDouble() * 20;
-
-            // Create JSON message using an anonymous type
-            var telemetryDataPoint = new
-            {
-                temperature = currentTemperature,
-                humidity = currentHumidity
-            };
-            var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
-            var message = new Message(Encoding.ASCII.GetBytes(messageString));
-
-            // Add a custom application property to the message.
-            // An IoT hub can filter on these properties without access to the message body.
-            message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
-
-            // Send the telemetry message
-            await deviceClient.SendEventAsync(message);
-            Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
-
-            // wait 10 seconds before sending the next message
-            await Task.Delay(10000);
-        }
-    }
-
-    // add main method below here
-    ```
-
-    Notice the `await Task.Delay(10000);` code above. This will cause a time delay so that a message will be sent every 10 seconds, which will exceed the "no more than 5 messages in 5 minutes" threshold for the custom alert.
-
-    > **Tip**:
-    > Read the code comments to understand how the method works.
-
-1. On a blank code line below the `// add main method below here` comment, to provide a Main method (entry point) for the app, enter the following code:
-
-    ```csharp
-    private static void Main(string[] args)
-    {
-        Console.WriteLine("IoT Hub C# Simulated Thermostat Device. CTRL+C to exit.\n");
-
-        // Connect to the IoT hub using the MQTT protocol
-        deviceClient = DeviceClient.CreateFromConnectionString(connectionString, TransportType.Mqtt);
-        SendDeviceToCloudMessagesAsync();
-        Console.ReadLine();
-    }
-    ```
-
-    > **Note**:
-    When the `DeviceClient` instance is created, the **MQTT** protocol is specified with `TransportType.Mqtt` - this ensures that the Device to Cloud messages are sent using the protocol specified in the custom alert created.
 
 1. At the Terminal command prompt, to build and run the application, enter the following command:
 
