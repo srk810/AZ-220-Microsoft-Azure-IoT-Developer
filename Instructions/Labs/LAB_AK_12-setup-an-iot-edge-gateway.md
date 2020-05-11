@@ -210,6 +210,8 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 In this exercise, you will generate test certificates using Linux. You will do this on the **vm-az220-training-gw0001-{your-id}** Virtual Machine using a helper script contained within the "Starter" folder for this lab that you created during lab 3 of this course.
 
+#### Task 1: Connect to the VM
+
 1. Verify that the IoT Edge virtual machine has been deployed successfully.
 
     You can check the Notification pane in the Azure portal.
@@ -253,6 +255,8 @@ In this exercise, you will generate test certificates using Linux. You will do t
     ```
 
     > **Important**: When you connect, you will likely be told there are outstanding OS updates for the Edge VM.  We are ignoring this for our lab purposes, but in production, you always want to be sure to keep your Edge devices up-to-date.
+
+#### Task 2: Generate certificates
 
 1. To download and configure some Azure IoT Edge helper scripts, enter the following command:
 
@@ -326,6 +330,8 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
     > **Note**: Now that the IoT Edge Device CA certificate has been generated, do not re-run the previous command that generates the root CA certificate. Doing so will overwrite the existing certificate with a new one that will no longer match the **MyEdgeDeviceCA** IoT Edge Device CA certificate that was just generated.
 
+#### Task 3: Confirm IoT Edge version and update as required
+
 1. To confirm that the Azure IoT Edge Runtime is installed on the VM, enter the following command:
 
     ```bash
@@ -340,6 +346,44 @@ In this exercise, you will generate test certificates using Linux. You will do t
     username@vm-az220-training-gw0001-{your-id}:~/lab12$ iotedge version
     iotedge 1.0.8 (208b2204fd30e856d00b280112422130c104b9f0)
     ```
+
+    > **Important**: If the displayed version is **1.0.8**, then the runtime must be updated to address a TLS authentication bug.
+
+    If the displayed version is at least **1.0.9**, skip forward to **Task 4: Configure IoT Edge**.
+
+1. To update the Azure IoT Edge version, enter the following commands:
+
+    ```bash
+    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_amd64.deb -o libiothsm-std.deb && sudo dpkg -i ./libiothsm-std.deb
+    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb -o iotedge.deb && sudo dpkg -i ./iotedge.deb
+    ```
+
+    Each command downloads a package and installs it.
+
+1. During the setup of IoT Edge, you may be prompted to update the **Configuration file '/etc/iotedge/config.yaml'** - enter **N** to keep the current version.
+
+1. To restart the IoT Edge service, enter the following command:
+
+    ```bash
+    systemctl restart iotedge
+    ```
+
+1. When prompted, enter the user password.
+
+1. To confirm that the Azure IoT Edge Runtime version, enter the following command:
+
+    ```bash
+    iotedge version
+    ```
+
+    Confirm that the displayed version is 1.0.9:
+
+    ```bash
+    vmadmin@vm-az220-training-gw0001-dm200420:~$ iotedge --version
+    iotedge 1.0.9
+    ```
+
+#### Task 4: Configure IoT Edge
 
 1. To ensure that you are able to configure Azure IoT Edge, enter the following command:
 
@@ -372,9 +416,9 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
     ```yaml
     certificates:
-        device_ca_cert: "/home/<username>/lab12/certs/iot-edge-device-ca-MyEdgeDeviceCA-full-chain.cert.pem"
-        device_ca_pk: "/home/<username>/lab12/private/iot-edge-device-ca-MyEdgeDeviceCA.key.pem"
-        trusted_ca_certs: "/home/<username>/lab12/certs/azure-iot-test-only.root.ca.cert.pem"
+      device_ca_cert: "/home/<username>/lab12/certs/iot-edge-device-ca-MyEdgeDeviceCA-full-chain.cert.pem"
+      device_ca_pk: "/home/<username>/lab12/private/iot-edge-device-ca-MyEdgeDeviceCA.key.pem"
+      trusted_ca_certs: "/home/<username>/lab12/certs/azure-iot-test-only.root.ca.cert.pem"
     ```
 
     > **Note**: Be sure to replace the `<username>` placeholder within the file path specification above. You need to specify the **Username** of the user that is connected to SSH (the Admin user that you specified when creating the VM). 
