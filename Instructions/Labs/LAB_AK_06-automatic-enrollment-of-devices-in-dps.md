@@ -643,7 +643,7 @@ In this task, you will implement code for the Main method, device provisioning, 
 
     This version of **ProvisionDevice** is very similar to that you used in an earlier lab. The primary change is that the **security** parameter is now of type **SecurityProviderX509Certificate**. This means that the **auth** variable used to create a **DeviceClient** must now be of type **DeviceAuthenticationWithX509Certificate** and uses the `security.GetAuthenticationCertificate()` value. The actual device registration is the same as before.
 
-#### Task 4: Review Device Twin Integration Code
+#### Task 4: Add the Device Twin Integration Code
 
 To use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, you wish to update the simulated device code to read a device twin Desired Property, and then assign that value to the **telemetryDelay** variable. You also want to update the device twin Reported Property to indicate the delay value that is currently implemented on the device.
 
@@ -716,50 +716,114 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
     Notice, this code reuses the **OnDesiredPropertyChanged** method that was already created for handling _OnDesiredPropertyChanged_ events. This helps keep the code that reads the device twin desired state properties and configures the device at startup in a single place. The resulting code is simpler and easier to maintain.
 
-1. On Visual Studio Code **File** menu, click **Save**.
+1. On the Visual Studio Code **File** menu, click **Save**.
 
     Your simulated device will now use the device twin properties from Azure IoT Hub to set the delay between telemetry messages.
 
+### Exercise 4: Create Additional Instances of your Simulated Device
+
+In this exercise, you will make copies of your simulated device project, update your code to use the different device certificates that you created, and then copy the device certificate files to the corresponding code projects.
+
+#### Task 1: Moke copies of your code project
+
+1. Open Windows File Explorer.
+
+1. In File Explorer, navigate to the Starter folder for lab 6 (Automatic Enrollment of Devices in DPS).
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 06-Automatic Enrollment of Devices in DPS
+            * Starter
+
+1. Right-click **ContainerDevice**, and then click **Copy**.
+
+    The ContainerDevice folder should be the folder containing your simulated device code.
+
+1. Right-click in the empty space below **ContainerDevice**, and then click **Paste**
+
+1. Right-click **ContainerDevice - Copy**, click **Rename**, and then type **ContainerDevice2001**
+
+1. Repeat steps 3-5 to create folders with the following names:
+
+    * **ContainerDevice2002**
+    * **ContainerDevice2003**
+    * **ContainerDevice2004**
+
+#### Update the certificate file references in your code
+
+1. Open Visual Studio Code.
+
+1. On the **File** menu, click **Open Folder**.
+
+1. Navigate to the ContainerDevice2001 folder.
+
+1. Click **ContainerDevice2001**, and then click **Select Folder**.
+
+1. In the EXPLORER pane, click **Program.cs**.
+
+1. In the code editor, locate the **certificateFileName** variable.
+
+1. Update the value assigned to the **certificateFileName** variable as follows:
+
+    ```csharp
+    private static string certificateFileName = "sensor-thl-2001-device.cert.pfx";
+    ```
+
+1. On the **File** menu, click **Save**.
+
+1. Repeat steps 3-8 to update **Program.cs** files for each of the remaining code projects as follows:
+
+    | Project Folder | certificateFileName variable |
+    |----------------|------------------------------|
+    | ContainerDevice2002 | sensor-thl-2002-device.cert.pfx |
+    | ContainerDevice2003 | sensor-thl-2003-device.cert.pfx |
+    | ContainerDevice2004 | sensor-thl-2004-device.cert.pfx |
+
+    **Note**: Be sure to **Save** the **Program.cs** file each time before continuing to the next folder.
+
+#### Copy the certificate files to the root folder of your code projects
+
+1. Open Windows File Explorer, and then navigate to the folder where the `sensor-thl-2001-device.cert.pfx` certificate file was downloaded.
+
+1. Use File Explorer to create a copy of the `sensor-thl-2001-device.cert.pfx` file.
+
+1. In File Explorer, navigate to the Starter folder for lab 6 (Automatic Enrollment of Devices in DPS).
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 06-Automatic Enrollment of Devices in DPS
+            * Starter
+
+1. Open the ContainerDevice2001 folder
+
+1. Paste the `sensor-thl-2001-device.cert.pfx` file into the ContainerDevice2001 folder.
+
+1. Repeat steps 2-5 above to copy the remaining certificate files into the corresponding folders as follows:
 
 
+    | Project Folder | Certificate File |
+    |----------------|------------------|
+    | ContainerDevice2002 | sensor-thl-2002-device.cert.pfx |
+    | ContainerDevice2003 | sensor-thl-2003-device.cert.pfx |
+    | ContainerDevice2004 | sensor-thl-2004-device.cert.pfx |
 
-
-
-
-**TODO**: Insert an Exercise that has the student create copies of the ContainerDevice project folder for 4 additional simulated devices and then update the device certificate for each device (maybe cut this back to 2 additional devices here and above where creating the certificates). 
-
-
-
-
-
-
-
-
-
-### Exercise 4: Test the Simulated Device
+### Exercise 5: Test the Simulated Device
 
 In this exercise, you will run the simulated device. When the device is started for the first time, it will connect to the Device Provisioning Service (DPS) and automatically be enrolled using the configured group enrollment. Once enrolled into the DPS group enrollment, the device will be automatically registered within the Azure IoT Hub device registry. Once enrolled and registered, the device will begin communicating with Azure IoT Hub securely using the configured X.509 certificate authentication.
 
+#### Task 1: Build and run the simulated device projects
 
+1. Ensure that you have Visual Studio Code open.
 
+1. On the **File** menu, click **Open Folder**.
 
+1. Navigate to the ContainerDevice folder.
 
-
-
-**TODO**: Update this Exercise to test group enrollment of multiple simulated devices. 
-
-
-
-
-
-
-
-
-#### Task 1: Build and run the device
-
-1. Ensure that you have the Lab 6 ContainerDevice code project open in Visual Studio Code.
-
-    If you have the code project open from the previous exercise, continue working in the same code files.
+1. Click **ContainerDevice**, and then click **Select Folder**.
 
 1. On the **View** menu, click **Terminal**.
 
@@ -793,7 +857,7 @@ In this exercise, you will run the simulated device. When the device is started 
     > ...
     > ```
 
-1. Notice the Console outputs from the simulated device app that are displayed in Terminal window.
+1. Notice that the simulated device app sends output to the Terminal window.
 
     When the simulated device application runs, the **Terminal** will display the Console output from the app. 
 
@@ -836,7 +900,43 @@ In this exercise, you will run the simulated device. When the device is started 
 
     Keep the simulated device running for the next task.
 
-#### Task 2: Change the device configuration through its twin
+#### Task 2: Start the other simulated devices
+
+1. Open a new instance of Visual Studio Code.
+
+    You can do this from the Windows 10 Start menu as follows: On the Windows 10 **Start** menu, right-click **Visual Studio Code**, and then click **New Window**.
+
+1. In the new Visual Studio Code window, on the **File** menu, click **Open Folder**.
+
+1. Navigate to the ContainerDevice2001 folder.
+
+1. Click **ContainerDevice2001**, and then click **Select Folder**.
+
+1. On the **View** menu, click **Terminal**.
+
+    This will open the integrated Terminal at the bottom of the Visual Studio Code window.
+
+1. At the Terminal command prompt, ensure that the current directory path is set to the `\ContainerDevice2001` folder.
+
+    You should see something similar to the following:
+
+    `Allfiles\Labs\06-Automatic Enrollment of Devices in DPS\Starter\ContainerDevice2001>`
+
+1. To build and run the **ContainerDevice** project, enter the following command:
+
+    ```cmd/sh
+    dotnet run
+    ```
+
+1. Repeat steps 1-7 above to open and start the other simulated device projects as follows:
+
+    | Project Folder |
+    |----------------|
+    | ContainerDevice2002 |
+    | ContainerDevice2003 |
+    | ContainerDevice2004 |
+
+#### Task 3: Change the device configuration through its twin
 
 With the simulated device running, the `telemetryDelay` configuration can be updated by editing the device twin Desired State within Azure IoT Hub. This can be done by configuring the Device in the Azure IoT Hub within the Azure portal.
 
@@ -878,7 +978,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
     Once saved, the updated device twin desired properties will automatically be sent to the simulated device.
 
-1. Switch back to the **Visual Studio Code** window.
+1. Switch back to the **Visual Studio Code** window for the original **ContainerDevice** project.
 
 1. Notice that the application has been notified of the updated device twin `telemetryDelay` desired property setting.
 
