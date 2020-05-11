@@ -733,8 +733,8 @@ A device must be registered with your IoT hub before it can connect.
 1. On a blank code line below the `// add variables below here` comment, to define a variable for the device connection string, enter the following code:
 
     ```csharp
-    private static DeviceClient s_deviceClient;
-    private readonly static string s_connectionString = "<DEVICE-CONNECTION-STRING>";
+    private static DeviceClient deviceClient;
+    private readonly static string connectionString = "<DEVICE-CONNECTION-STRING>";
 
     // add SendDeviceToCloudMessagesAsync method below here
     ```
@@ -775,7 +775,7 @@ A device must be registered with your IoT hub before it can connect.
             message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
 
             // Send the telemetry message
-            await s_deviceClient.SendEventAsync(message);
+            await deviceClient.SendEventAsync(message);
             Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
 
             // wait 10 seconds before sending the next message
@@ -799,7 +799,7 @@ A device must be registered with your IoT hub before it can connect.
         Console.WriteLine("IoT Hub C# Simulated Thermostat Device. CTRL+C to exit.\n");
 
         // Connect to the IoT hub using the MQTT protocol
-        s_deviceClient = DeviceClient.CreateFromConnectionString(s_connectionString, TransportType.Mqtt);
+        deviceClient = DeviceClient.CreateFromConnectionString(connectionString, TransportType.Mqtt);
         SendDeviceToCloudMessagesAsync();
         Console.ReadLine();
     }
