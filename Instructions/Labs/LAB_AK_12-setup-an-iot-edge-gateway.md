@@ -529,7 +529,7 @@ In this exercise, you will use Azure IoT Hub to create a new IoT Edge Device ide
 
     > **Note**:  To learn more about configuring message routing within Azure IoT Edge, reference the [Learn how to deploy modules and establish routes in IoT Edge](https://docs.microsoft.com/azure/iot-edge/module-composition#declare-routes#declare-routes) documentation article.
 
-1. At the top of the blade, click **Review + create**.
+1. At the bottom of the blade, click **Review + create**.
 
     This tab of the **Set module on device** blade displays the deployment manifest for your Edge device. You should see a message at the top of the blade that indicates "Validation passed"
 
@@ -744,7 +744,7 @@ In this exercise, you will create a new IoT Device identity in Azure IoT Hub for
 
 1. At the top of the pane, to begin configuring a new IoT device, click **+ New**.
 
-1. On the **Create a device** blade, under **Device ID**, enter **sensor-th-0072**.
+1. On the **Create a device** blade, under **Device ID**, enter **sensor-th-0072**
 
     This is the device identity used for authentication and access control.
 
