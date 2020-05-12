@@ -1001,7 +1001,9 @@ With the simulated devices running, the `telemetryDelay` configuration can be up
     12/9/2019 5:48:11 PM > Sending message: {"temperature":34.63600901637041,"humidity":60.95207713588703,"pressure":1013.6262313688063,"latitude":40.25499096898331,"longitude":-98.51199886959347}
     ```
 
-1. Within the **Terminal** window, to exit the simulated device app, press **Ctrl-C**.
+1. Within the **Terminal** pane, to exit the simulated device app, press **Ctrl-C**.
+
+1. Switch to each of your Visual Studio Code windows and use the **Terminal** prompt to close the simulated device apps.
 
 1. Switch the Azure portal window.
 
@@ -1020,40 +1022,6 @@ With the simulated devices running, the `telemetryDelay` configuration can be up
 1. Again close the **Device twin** blade.
 
 1. Close the **sensor-thl-2000** blade, and then navigate back to your Azure portal Dashboard.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ### Exercise 5: Deprovision a single device from the Group Enrollment
 
