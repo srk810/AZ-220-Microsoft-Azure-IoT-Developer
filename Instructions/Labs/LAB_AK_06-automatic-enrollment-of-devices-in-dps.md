@@ -170,7 +170,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
     cd certificates
     ```
 
-1. At the Cloud Shell command prompt, to download the Azure IoT helper scripts that you will be using, enter the following commands:
+1. At the Cloud Shell command prompt, to download and prepare the Azure IoT helper scripts that you will be using, enter the following commands:
 
     ```sh
     # download helper script files
@@ -227,7 +227,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
     Clicking **+ Add** will start the process of uploading the X.509 CA Certificate to the DPS service.
 
-1. On the **Add Certificate** blade, under **Certificate Name**, enter **root-ca-cert**.
+1. On the **Add Certificate** blade, under **Certificate Name**, enter **root-ca-cert**
 
     It is important to provide a name that enables you to differentiate between certificates, such as your root certificate and intermediate certificate, or multiple certificates at the same hierarchy level within the chain.
 
@@ -289,7 +289,7 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 
     This pane of your DPS service should still be open in the Azure portal.
 
-1. At the bottom the **Certificate Details** pane, to the right of **Verification Certificate .pem or .cer file.**, click **Open**.
+1. At the bottom the **Certificate Details** pane, below and to the right of **Verification Certificate .pem or .cer file.**, click **Open**.
 
 1. In the Open file dialog, navigate to your downloads folder, click **verification-code.cert.pem**, and then click **Open**.
 
@@ -394,7 +394,7 @@ In this exercise, you will generate a device certificate using the root certific
 
     > **Note**: This command overwrites any existing device certificate in the `/certs` sub-directory. If you want to create a certificate for multiple devices, ensure that you save a copy of the `new-device.cert.pfx` each time you run the command.
 
-1. To rename the device certificate that you just created, enter the following command:
+1. To rename the device certificate that you just created, enter the following commands:
 
     ```sh
     mv ~/certificates/certs/new-device.cert.pfx ~/certificates/certs/sensor-thl-2000-device.cert.pfx
@@ -431,7 +431,7 @@ In this exercise, you will generate a device certificate using the root certific
     download ~/certificates/certs/sensor-thl-2004-device.cert.pfx
     ```
 
-    In the next task, you will configure simulated devices to use the X.509 device certificates to authenticate with the Device Provisioning Service.
+    In the next task, you will start building the simulated devices that will use the X.509 device certificates to authenticate with the Device Provisioning Service.
 
 #### Task 2: Configure a simulated device
 
@@ -451,7 +451,9 @@ In this task, you will complete the following:
 
 1. Open Windows File Explorer, and then navigate to the folder where the `sensor-thl-2000-device.cert.pfx` certificate file was downloaded.
 
-1. Use File Explorer to create a copy of the `sensor-thl-2000-device.cert.pfx` file.
+1. Use File Explorer to create a copy of the 5 device certificate files.
+
+    It will save some time to copy all five certificate files now, but you only be using the first one, `sensor-thl-2000-device.cert.pfx`, in the code project that you build initially.
 
 1. In File Explorer, navigate to the Starter folder for lab 6 (Automatic Enrollment of Devices in DPS).
 
@@ -463,15 +465,15 @@ In this task, you will complete the following:
             * Starter
               * ContainerDevice
 
-1. Paste the `sensor-thl-2000-device.cert.pfx` file into the ContainerDevice folder.
+1. With the ContainerDevice folder open, paste-in the copied device certificate files.
 
-    The root directory of the Lab 6 ContainerDevice folder includes the `Program.cs` file. The simulated device app will need to access this certificate file when authenticating to the Device Provisioning Service.
+    The root directory of the ContainerDevice folder includes the `Program.cs` file for your simulated device app. The simulated device app will use the device certificate file when authenticating to the Device Provisioning Service.
 
 1. Open **Visual Studio Code**.
 
 1. On the **File** menu, click **Open Folder**
 
-1. In the **Open Folder** dialog, navigate to the **06-Automatic Enrollment of Devices in DPS** folder.
+1. In the **Open Folder** dialog, navigate to the Starter folder for lab 6 (Automatic Enrollment of Devices in DPS).
 
 1. Click **ContainerDevice**, and then click **Select Folder**.
 
@@ -480,6 +482,8 @@ In this task, you will complete the following:
     * ContainerDevice.csproj
     * Program.cs
     * sensor-thl-2000-device.cert.pfx
+
+    **Note**: The other device certificate files that you copied to this folder will be used later in this lab, but for now you will focus on implementing just the first device certificate file.
 
 1. In the **EXPLORER** pane, to open the ContainerDevice.csproj file, click **ContainerDevice.csproj**.
 
@@ -499,6 +503,8 @@ In this task, you will complete the following:
 
 1. On the Visual Studio Code **File** menu, click **Save**.
 
+    **Note**: If you are prompted by Visual Studio Code to Restore, do that now.
+
 1. In the **EXPLORER** pane, click **Program.cs**.
 
     A cursory glance will reveal that this version of the **ContainerDevice** application is virtually identical to the version used in the preceding lab. The only changes will be those that relate specifically to the use of X.509 certificates as an attestation mechanism. From the application perspective, it matters little that this device will be connecting via a Group Enrollment vs an Individual Enrollment.
@@ -511,7 +517,7 @@ In this task, you will complete the following:
     private const string GlobalDeviceEndpoint = "global.azure-devices-provisioning.net";
     ```
 
-1. Locate the **dpsIdScope** variable, and replace the assigned value with the **ID Scope** that you copied from the Overview pane of the Device Provisioning Service.
+1. Locate the **dpsIdScope** variable, and update the assigned value using the **ID Scope** that you copied from the Overview pane of the Device Provisioning Service.
 
     When you have updated your code, it should look similar to the following:
 
@@ -539,7 +545,7 @@ In this task, you will complete the following:
 
 #### Task 3: Add the provisioning code
 
-In this task, you will implement code for the Main method, device provisioning, device twin properties.
+In this task, you will enter code that completes the implementation associated with the Main method, device provisioning, device twin properties.
 
 1. In the code editor pane for the Program.cs file, locate the `// INSERT Main method below here` comment.
 
@@ -688,7 +694,7 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
         // Report Twin Properties
         var reportedProperties = new TwinCollection();
-        reportedProperties["telemetryDelay"] = this._telemetryDelay.ToString();
+        reportedProperties["telemetryDelay"] = telemetryDelay.ToString();
         await deviceClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
         Console.WriteLine("Reported Twin Properties:");
         Console.WriteLine($"{reportedProperties.ToJson()}");
@@ -720,9 +726,15 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
     Your simulated device will now use the device twin properties from Azure IoT Hub to set the delay between telemetry messages.
 
+1. On the **Terminal** menu, click **New Terminal**.
+
+1. At the Terminal command prompt, to verify that you code will build correctly, enter **dotnet build**
+
+    If you see build error listed, fix them now before continuing to the next exercise. Work with your instructor if needed.
+ 
 ### Exercise 4: Create Additional Instances of your Simulated Device
 
-In this exercise, you will make copies of your simulated device project, update your code to use the different device certificates that you created, and then copy the device certificate files to the corresponding code projects.
+In this exercise, you will make copies of your simulated device project, and then update your code to use the different device certificates that you created and added to the project folder.
 
 #### Task 1: Moke copies of your code project
 
@@ -743,6 +755,8 @@ In this exercise, you will make copies of your simulated device project, update 
 
 1. Right-click in the empty space below **ContainerDevice**, and then click **Paste**
 
+    You should see that a folder named "ContainerDevice - Copy" has been created.
+
 1. Right-click **ContainerDevice - Copy**, click **Rename**, and then type **ContainerDevice2001**
 
 1. Repeat steps 3-5 to create folders with the following names:
@@ -751,65 +765,49 @@ In this exercise, you will make copies of your simulated device project, update 
     * **ContainerDevice2003**
     * **ContainerDevice2004**
 
-#### Update the certificate file references in your code
+#### Task 2: Update the certificate file references in your code project
 
-1. Open Visual Studio Code.
+1. If necessary, open Visual Studio Code.
 
 1. On the **File** menu, click **Open Folder**.
 
-1. Navigate to the ContainerDevice2001 folder.
+1. Navigate to the lab 6 Starter folder.
 
 1. Click **ContainerDevice2001**, and then click **Select Folder**.
 
 1. In the EXPLORER pane, click **Program.cs**.
 
-1. In the code editor, locate the **certificateFileName** variable.
-
-1. Update the value assigned to the **certificateFileName** variable as follows:
+1. In the code editor, locate the **certificateFileName** variable, and then update the value assigned to the **certificateFileName** variable as follows:
 
     ```csharp
     private static string certificateFileName = "sensor-thl-2001-device.cert.pfx";
     ```
 
-1. On the **File** menu, click **Save**.
+1. In the **EXPLORER** pane, to open the ContainerDevice.csproj file, click **ContainerDevice.csproj**.
 
-1. Repeat steps 3-8 to update **Program.cs** files for each of the remaining code projects as follows:
+1. In the code editor pane, within the `<ItemGroup>` tag, update the certificate file name as follows: 
 
-    | Project Folder | certificateFileName variable |
+    ```xml
+    <ItemGroup>
+        <None Update="sensor-thl-2001-device.cert.pfx" CopyToOutputDirectory="PreserveNewest" />
+        <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Mqtt" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Amqp" Version="1.*" />
+        <PackageReference Include="Microsoft.Azure.Devices.Provisioning.Transport.Http" Version="1.*" />
+    </ItemGroup>
+    ```
+
+1. On the **File** menu, click **Save All**.
+
+1. Repeat steps 3-9 above to update **Program.cs** and **ContainerDevice.csproj** files for each of the remaining code projects as follows:
+
+    | Project Folder | Certificate Name |
     |----------------|------------------------------|
     | ContainerDevice2002 | sensor-thl-2002-device.cert.pfx |
     | ContainerDevice2003 | sensor-thl-2003-device.cert.pfx |
     | ContainerDevice2004 | sensor-thl-2004-device.cert.pfx |
 
-    **Note**: Be sure to **Save** the **Program.cs** file each time before continuing to the next folder.
-
-#### Copy the certificate files to the root folder of your code projects
-
-1. Open Windows File Explorer, and then navigate to the folder where the `sensor-thl-2001-device.cert.pfx` certificate file was downloaded.
-
-1. Use File Explorer to create a copy of the `sensor-thl-2001-device.cert.pfx` file.
-
-1. In File Explorer, navigate to the Starter folder for lab 6 (Automatic Enrollment of Devices in DPS).
-
-    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
-
-    * Allfiles
-      * Labs
-          * 06-Automatic Enrollment of Devices in DPS
-            * Starter
-
-1. Open the ContainerDevice2001 folder
-
-1. Paste the `sensor-thl-2001-device.cert.pfx` file into the ContainerDevice2001 folder.
-
-1. Repeat steps 2-5 above to copy the remaining certificate files into the corresponding folders as follows:
-
-
-    | Project Folder | Certificate File |
-    |----------------|------------------|
-    | ContainerDevice2002 | sensor-thl-2002-device.cert.pfx |
-    | ContainerDevice2003 | sensor-thl-2003-device.cert.pfx |
-    | ContainerDevice2004 | sensor-thl-2004-device.cert.pfx |
+    **Note**: Be sure to **Save All** each time before continuing to the next folder.
 
 ### Exercise 5: Test the Simulated Device
 
@@ -821,7 +819,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
 1. On the **File** menu, click **Open Folder**.
 
-1. Navigate to the ContainerDevice folder.
+1. Navigate to the lab 6 Starter folder.
 
 1. Click **ContainerDevice**, and then click **Select Folder**.
 
@@ -841,7 +839,7 @@ In this exercise, you will run the simulated device. When the device is started 
     dotnet run
     ```
 
-    > **Note**:  When running `dotnet run` for the simulated device, if a `ProvisioningTransportException` exception is displayed, the most common cause is an _Invalid certificate_ error. If this happens, ensure the CA Certificate in DPS, and the Device Certificate for the simulated device application are configured correctly.
+    > **Note**:  When you run your simulated device for the first time, the most common error is an _Invalid certificate_ error. If a `ProvisioningTransportException` exception is displayed, it is most likely due to this error. If you see a message similar to the one shown below, you will need to ensure that the CA Certificate in DPS, and the Device Certificate for the simulated device application are configured correctly before you can continue.
     >
     > ```text
     > localmachine:LabFiles User$ dotnet run
@@ -859,7 +857,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
 1. Notice that the simulated device app sends output to the Terminal window.
 
-    When the simulated device application runs, the **Terminal** will display the Console output from the app. 
+    When the simulated device application is running correctly, the **Terminal** will display the Console output from the app. 
 
     Scroll up to the top of the information displayed in the Terminal window.
 
@@ -898,7 +896,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
     Notice that the delay, as defined by the `telemetryDelay` Device Twin Property, between each message sent to IoT Hub is currently delaying **1 second** between sending sensor telemetry messages.
 
-    Keep the simulated device running for the next task.
+1. Leave the simulated device running.
 
 #### Task 2: Start the other simulated devices
 
@@ -908,7 +906,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
 1. In the new Visual Studio Code window, on the **File** menu, click **Open Folder**.
 
-1. Navigate to the ContainerDevice2001 folder.
+1. Navigate to the lab 6 Starter folder.
 
 1. Click **ContainerDevice2001**, and then click **Select Folder**.
 
@@ -938,7 +936,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
 #### Task 3: Change the device configuration through its twin
 
-With the simulated device running, the `telemetryDelay` configuration can be updated by editing the device twin Desired State within Azure IoT Hub. This can be done by configuring the Device in the Azure IoT Hub within the Azure portal.
+With the simulated devices running, the `telemetryDelay` configuration can be updated by editing the device twin Desired State within Azure IoT Hub.
 
 1. Open the **Azure portal**, and then navigate to your **Azure IoT Hub** service.
 
@@ -952,7 +950,11 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
     On the **Device twin** blade, there is an editor with the full JSON for the device twin. This enables you to view and/or edit the device twin state directly within the Azure portal.
 
-1. Locate the `properties.desired` node within the Device Twin JSON. Update the `telemetryDelay` property to have the value of `"2"`. Once saved, this will update the `telemetryDelay` of the simulated device to send sensor telemetry every **2 seconds**.
+1. Locate the `properties.desired` node within the Device Twin JSON. 
+
+1. Update the `telemetryDelay` property to have the value of `"2"`. 
+
+    This will update the `telemetryDelay` of the simulated device to send sensor telemetry every **2 seconds**.
 
     The resulting JSON for this section of the device twin desired properties will look similar to the following:
 
@@ -974,11 +976,11 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
     Leave the `$metadata` and `$version` value of the `properties.desired` node within the JSON. You should only update the `telemetryDelay` value to set the new device twin desired property value.
 
-1. At the top of the blade, to set the new device twin desired properties for the device, click **Save**. 
+1. At the top of the blade, to apply the device twin desired properties for the device, click **Save**. 
 
     Once saved, the updated device twin desired properties will automatically be sent to the simulated device.
 
-1. Switch back to the **Visual Studio Code** window for the original **ContainerDevice** project.
+1. Switch back to the **Visual Studio Code** window that contains the original **ContainerDevice** project.
 
 1. Notice that the application has been notified of the updated device twin `telemetryDelay` desired property setting.
 
@@ -994,7 +996,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 1. Notice the simulated device sensor telemetry messages are now being sent to Azure IoT Hub every _2_ seconds.
 
     ```text
-    12/9/2019 5:48:06 PM > Sending message: {"temperature":33.89822140284731,"humidity":78.34939097908763,"pressure":1024.9467544610131,"latitude":40.020042418755764,"longitude":-98.41923808825841}
+    12/9/2019 5:48:07 PM > Sending message: {"temperature":33.89822140284731,"humidity":78.34939097908763,"pressure":1024.9467544610131,"latitude":40.020042418755764,"longitude":-98.41923808825841}
     12/9/2019 5:48:09 PM > Sending message: {"temperature":27.475786026323114,"humidity":64.4175510594703,"pressure":1020.6866468579678,"latitude":40.2089999240047,"longitude":-98.26223221770334}
     12/9/2019 5:48:11 PM > Sending message: {"temperature":34.63600901637041,"humidity":60.95207713588703,"pressure":1013.6262313688063,"latitude":40.25499096898331,"longitude":-98.51199886959347}
     ```
@@ -1009,23 +1011,16 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Scroll down to locate the JSON for the `properties.reported` object.
 
-    This contains the state reported by the device. Notice the `telemetryDelay` property exists here as well, and is also set to `2`.  There is also a `$metadata` value that shows you when the value was reported data was last updated and when the specific reported value was last updated.
+    This contains the state reported by the device. 
+
+1. Notice that the `telemetryDelay` property exists here as well, and that it has also been set to `2`.
+
+    There is also a `$metadata` value that shows you when the `reported` values were last updated.
 
 1. Again close the **Device twin** blade.
 
 1. Close the **sensor-thl-2000** blade, and then navigate back to your Azure portal Dashboard.
 
-### Exercise 5: Deprovision a Group Enrollment
-
-In this exercise, you will deprovision the enrollment group. Deprovisioning includes disenrolling the devices from Device Provisioning Service and deregistering the devices from IoT Hub.
-
-
-
-
-
-
-
-**TODO**: Update this Exercise with a task that has the students test the removal of a single device from the group enrollment before they go on to delete the entire group enrollment. 
 
 
 
@@ -1034,25 +1029,170 @@ In this exercise, you will deprovision the enrollment group. Deprovisioning incl
 
 
 
-#### Task 1: Disenroll the enrollment group from the DPS
 
-In this task, you will delete your Enrollment Group, which will remove the enrolled devices.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Exercise 5: Deprovision a single device from the Group Enrollment
+
+There are many reasons why you might need to deprovision just a portion of the devices that are registered as part of a group enrollment. For example, a device may no longer be needed, a newer version of the device may have become available, or it may have been broken or compromised.
+
+To deprovision a single device from an enrollment group, you must do two things:
+
+* Create a disabled individual enrollment for the device's leaf (device) certificate.
+
+    This revokes access to the provisioning service for that device while still permitting access for other devices that have the enrollment group's signing certificate in their chain. Note that you should not delete the disabled individual enrollment for the device, as doing so would allow the device to re-enroll through the enrollment group.
+
+* Disable or delete the device from the IoT hub's identity registry.
+
+    If your solution includes multiple IoT hubs, you should use the list of provisioned devices for the enrollment group to find the IoT hub that the device was provisioned to (so that you can disable or delete the device). In this case you have a single IoT hub, so you don't need to look up which IoT hub was used.
+
+In this exercise, you will deprovision a single device from an enrollment group. 
+
+#### Task 1: Create a disabled individual enrollment for the device.
+
+In this task, you will use the **sensor-thl-2004** device for the individual enrollment.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
+1. On the Azure portal toolbar, click **Cloud Shell**
+
+    The Azure portal toolbar runs across the top of the portal window. The Cloud Shell button is the 6th in from the right.
+
+1. Verify that the Cloud Shell is using **Bash**.
+
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+
+1. At the Cloud Shell command prompt, to navigate to the `~/certificates` directory, enter the following command:
+
+    ```sh
+    cd ~/certificates
+    ```
+
+1. To download the .pem device certificates from the Cloud Shell to your local machine, enter the following commands:
+
+    ```sh
+    download ~/certificates/certs/sensor-thl-2004-device.cert.pem
+    ```
+
+1. Switch to your Azure Dashboard.
+
 1. On your Resources tile, click **dps-az220-training-{your-id}**.
 
 1. On the left-side menu of your DPS blade, under **Settings**, click **Manage enrollments**.
 
-1. In the list of **Enrollment Groups**, click **eg-test-simulated-devices**.
+1. On the **Manage enrollments** pane, click **Add individual enrollment**.
+
+1. On the **Add Enrollment** blade, under **Mechanism**, ensure that **X.509** is selected.
+
+1. Under **Primary Certificate .pem or .cer file**, click **Open**.
+
+1. In the **Open** dialog, navigate to the downloads folder.
+
+1. In the downloads folder, click **sensor-thl-2004-device.cert.pem**, and then click **Open**.
+
+1. On the **Add Enrollment** blade, under **IoT Hub Device ID**, enter **sensor-thl-2004**
+
+1. Under **Enable entry**, click **Disable**.
+
+1. At the top of the blade, click **Save**.
+
+1. Navigate back to your Azure Dashboard.
+
+#### Task 2: Deregister the device from IoT hub
+
+1. On the Resources tile, click **iot-az220-training-{your-id}**.
+
+1. On the left-side mnu of your IoT hub blade, under **Explorers**, click **IoT devices**.
+
+1. On the **IoT devices** pane, under **DEVICE ID**, locate the **sensor-thl-2004** device.
+
+1. To the loft of **sensor-thl-2004**, click the checkbox.
+
+1. At the top of the **IoT devices** pane, click **Delete**, and then click **Yes**.
+
+#### Task 3: Confirm that the device is deprovisioned
+
+1. Switch to the Visual Studio Code window containing your ContainerDevice2004 code project.
+
+    If you closed Visual Studio Code after the previous exercise, use Visual Studio Code to open the ContainerDevice2004 folder.
+
+1. On the **View** menu, click **Terminal**.
+
+1. Ensure that the command prompt is locate at the **ContainerDevice2004** folder location.
+
+1. To begin running the simulated device app, enter the following command:
+
+    ```cmd/sh
+    dotnet run
+    ```
+
+1. Notice the exceptions listed when the device attempts to provision.
+
+    When a device attempts to connect and authenticate with Device Provisioning Service, the service first looks for an individual enrollment that matches the device's credentials. The service then searches enrollment groups to determine whether the device can be provisioned. If the service finds a disabled individual enrollment for the device, it prevents the device from connecting. The service prevents the connection even if an enabled enrollment group for an intermediate or root CA in the device's certificate chain exists.
+
+    When the application attempts to use the configured X.509 certificate to connect to DPS, DPS reports DeviceRegistrationResult.Status is NOT 'Assigned'.
+
+    ```txt
+    Found certificate: 13F32448E03F451E897B681758BAC593A60BFBFA CN=sensor-thl-2004; PrivateKey: True
+    Using certificate 13F32448E03F451E897B681758BAC593A60BFBFA CN=sensor-thl-2004
+    ProvisioningClient AssignedHub: ; DeviceID:
+    Unhandled exception. System.Exception: DeviceRegistrationResult.Status is NOT 'Assigned'
+    at ContainerDevice.Program.ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderX509Certificate security) in C:\Users\howdc\Allfiles\Labs\06-Automatic Enrollment of Devices 
+    in DPS\Starter\ContainerDevice2004\Program.cs:line 107
+    at ContainerDevice.Program.Main(String[] args) in C:\Users\howdc\Allfiles\Labs\06-Automatic Enrollment of Devices in DPS\Starter\ContainerDevice2004\Program.cs:line 49
+    at ContainerDevice.Program.<Main>(String[] args)
+    ```
+
+    If you were to go back into your Azure portal and either enable the individual enrollment or delete the individual enrollment, the device will once again be able to authenticate with DPS and connect to IoT hub. If the individual enrollment is deleted, the device is automatically added back to the group enrollment.
+
+### Exercise 6: Deprovision the Group Enrollment
+
+In this exercise, you will deprovision the full enrollment group. Again, this includes disenrolling from Device Provisioning Service and deregistering the devices from IoT Hub.
+
+#### Task 1: Disenroll the enrollment group from the DPS
+
+In this task, you will delete your Enrollment Group, which will remove the enrolled devices.
+
+1. Navigate to your Azure Dashboard.
+
+1. On your Resources tile, click **dps-az220-training-{your-id}**.
+
+1. On the left-side menu of your DPS blade, under **Settings**, click **Manage enrollments**.
+
+1. In the list of **Enrollment Groups**, under **GROUP NAME**, click **eg-test-simulated-devices**.
 
 1. On the **Enrollment Group Details** blade, scroll down to locate the **Enable entry** field, and then click **Disable**.
 
     Disabling the Group Enrollment within DPS allows you to temporarily disable devices within this Enrollment Group. This provides a temporary blacklist of the X.509 certificate used by these devices.
 
 1. At the top of the blade, click **Save**.
+
+    If you run one of your simulated devices now, you will see an error message similar to what you saw with the disabled individual enrollment.
 
     To permanently delete the Enrollment Group, you must delete the enrollment group from DPS. 
 
@@ -1070,7 +1210,7 @@ In this task, you will delete your Enrollment Group, which will remove the enrol
 
 1. Navigate back to your Azure portal Dashboard
 
-#### Task 2: Deregister the device from the IoT Hub
+#### Task 2: Deregister the devices from the IoT Hub
 
 Once the enrollment group has been removed from the Device Provisioning Service (DPS), the device registration will still exist within Azure IoT Hub. To fully deprovision the devices, you will need to remove that registration as well.
 
@@ -1078,17 +1218,21 @@ Once the enrollment group has been removed from the Device Provisioning Service 
 
 1. On the left-side menu of your IoT hub blade, under **Explorers**, click **IoT devices**.
 
-1. Notice that the **sensor-thl-2000** device ID still exists within the Azure IoT Hub device registry.
+1. Notice that the device IDs for **sensor-thl-2000** and the other group enrolled devices still exist within the Azure IoT Hub device registry.
 
-1. To remove the device, select the check box to the left of **sensor-thl-2000**, then click **Delete**.
-
-    The **Delete** button located at the top of the blade will be enabled once a device (check box) is selected.
+1. To remove the sensor-thl-2000 device, select the check box to the left of **sensor-thl-2000**, then click **Delete**.
 
 1. When prompted with "_Are you certain you wish to delete selected device(s)_", click **Yes**.
 
-#### Task 3: Confirm device deprovisioned
+1. Repeat the steps 4-5 above to remove the following devices:
 
-With the group enrollment deleted from the Device Provisioning Service, and the device deleted from the Azure IoT Hub device registry, the device(s) have fully been removed from the solution.
+    * sensor-thl-2001
+    * sensor-thl-2002
+    * sensor-thl-2003
+
+#### Task 3: Confirm that your devices have been deprovisioned
+
+With the group enrollment deleted from the Device Provisioning Service, and the device deleted from the Azure IoT Hub device registry, the device(s) have been fully removed from the solution.
 
 1. Switch to the Visual Studio Code window containing your ContainerDevice code project.
 
@@ -1106,7 +1250,7 @@ With the group enrollment deleted from the Device Provisioning Service, and the 
 
 1. Notice the exceptions listed when the device attempts to provision.
 
-    Now that the group enrollment and registered device have been deleted, the simulated device will no longer be able to provision nor connect. When the application attempts to use the configured X.509 certificate to connect to DPS, it will return a `ProvisioningTransportException` error message.
+    Now that the group enrollment and registered device have been deleted, the simulated device will no longer be able to provision or connect. When the application attempts to use the configured X.509 certificate to connect to DPS, it will return a `ProvisioningTransportException` error message.
 
     ```txt
     Found certificate: AFF851ED016CA5AEB71E5749BCBE3415F8CF4F37 CN=sensor-thl-2000; PrivateKey: True
