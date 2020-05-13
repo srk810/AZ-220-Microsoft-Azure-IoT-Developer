@@ -340,6 +340,40 @@ In this exercise, you will generate test certificates using Linux. You will do t
     username@AZ-220-VM-EDGEGW:~/lab12$ iotedge version
     iotedge 1.0.8 (208b2204fd30e856d00b280112422130c104b9f0)
     ```
+   
+    > **Important**: If the displayed version is **1.0.8**, then the runtime must be updated to address a TLS authentication bug.
+    
+1. To update the Azure IoT Edge version, enter the following commands:
+
+    ```bash
+    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_amd64.deb -o libiothsm-std.deb && sudo dpkg -i ./libiothsm-std.deb
+    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb -o iotedge.deb && sudo dpkg -i ./iotedge.deb
+    ```
+
+    Each of the commands above downloads a package and then installs it.
+
+1. During the setup of IoT Edge, you may be prompted to update the **Configuration file '/etc/iotedge/config.yaml'** - enter **N** to keep the current version.
+
+1. To restart the IoT Edge service, enter the following command:
+
+    ```bash
+    systemctl restart iotedge
+    ```
+
+1. When prompted, enter the user password.
+    
+1. To confirm that the Azure IoT Edge Runtime version, enter the following command:
+
+    ```bash
+    iotedge version
+    ```
+
+    Confirm that the displayed version is 1.0.9:
+
+    ```bash
+    vmadmin@vm-az220-training-gw0001-dm200420:~$ iotedge --version
+    iotedge 1.0.9
+    ```
 
 1. To ensure that you are able to configure Azure IoT Edge, enter the following command:
 
