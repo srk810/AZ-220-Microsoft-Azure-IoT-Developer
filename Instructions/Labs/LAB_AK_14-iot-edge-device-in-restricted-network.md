@@ -392,6 +392,8 @@ Recall that the IoT Edge Transparent Gateway is used when the downstream devices
 
 > **Note**: You will use a helper script to configure the IoT Edge Device as a Transparent Gateway. This will enable you to complete the process more quickly.
 
+#### Task 1: Configure helper scripts
+
 1. Open a new instance of Visual Studio Code.
 
 1. In Visual Studio Code, on the **File** menu, click **Open Folder**.
@@ -447,6 +449,8 @@ Recall that the IoT Edge Transparent Gateway is used when the downstream devices
 
 1. On the **File** menu, click **Save**.
 
+#### Task 2: Confirm IoT Edge version and update as required
+
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
@@ -454,6 +458,59 @@ Recall that the IoT Edge Transparent Gateway is used when the downstream devices
 1. On the Azure portal toolbar, click **Cloud Shell**
 
     Ensure that the environment is set to use **Bash**.
+
+1. To confirm that the Azure IoT Edge Runtime is installed on the VM, enter the following command:
+
+    ```bash
+    iotedge version
+    ```
+
+    This command will output the version of the Azure IoT Edge Runtime that is currently installed on the virtual machine.
+
+    The version output will be similar to the following:
+
+    ```bash
+    username@vm-az220-training-gw0001-{your-id}:~/lab12$ iotedge version
+    iotedge 1.0.8 (208b2204fd30e856d00b280112422130c104b9f0)
+    ```
+
+    > **Important**: If the displayed version is **1.0.8**, then the runtime must be updated to address a TLS authentication bug.
+
+    If the displayed version is at least **1.0.9**, skip forward to **Task 3: Execute helper scripts**.
+
+1. To update the Azure IoT Edge version, enter the following commands:
+
+    ```bash
+    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_amd64.deb -o libiothsm-std.deb && sudo dpkg -i ./libiothsm-std.deb
+    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb -o iotedge.deb && sudo dpkg -i ./iotedge.deb
+    ```
+
+    Each command downloads a package and installs it.
+
+1. During the setup of IoT Edge, you may be prompted to update the **Configuration file '/etc/iotedge/config.yaml'** - enter **N** to keep the current version.
+
+1. To restart the IoT Edge service, enter the following command:
+
+    ```bash
+    systemctl restart iotedge
+    ```
+
+1. When prompted, enter the user password.
+
+1. To confirm that the Azure IoT Edge Runtime version, enter the following command:
+
+    ```bash
+    iotedge version
+    ```
+
+    Confirm that the displayed version is 1.0.9:
+
+    ```bash
+    vmadmin@vm-az220-training-gw0001-dm200420:~$ iotedge --version
+    iotedge 1.0.9
+    ```
+
+#### Task 3: Execute helper scripts
 
 1. On the Azure Cloud Shell toolbar, to upload the setup scripts, click **Upload/Download files** (fourth button from the right).
 
