@@ -346,40 +346,6 @@ In this exercise, you will generate test certificates using Linux. You will do t
     username@vm-az220-training-gw0001-{your-id}:~/lab12$ iotedge version
     iotedge 1.0.8 (208b2204fd30e856d00b280112422130c104b9f0)
     ```
-   
-    > **Important**: If the displayed version is **1.0.8**, then the runtime must be updated to address a TLS authentication bug.
-    
-1. To update the Azure IoT Edge version, enter the following commands:
-
-    ```bash
-    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_amd64.deb -o libiothsm-std.deb && sudo dpkg -i ./libiothsm-std.deb
-    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb -o iotedge.deb && sudo dpkg -i ./iotedge.deb
-    ```
-
-    Each of the commands above downloads a package and then installs it.
-
-1. During the setup of IoT Edge, you may be prompted to update the **Configuration file '/etc/iotedge/config.yaml'** - enter **N** to keep the current version.
-
-1. To restart the IoT Edge service, enter the following command:
-
-    ```bash
-    systemctl restart iotedge
-    ```
-
-1. When prompted, enter the user password.
-    
-1. To confirm that the Azure IoT Edge Runtime version, enter the following command:
-
-    ```bash
-    iotedge version
-    ```
-
-    Confirm that the displayed version is 1.0.9:
-
-    ```bash
-    vmadmin@vm-az220-training-gw0001-dm200420:~$ iotedge --version
-    iotedge 1.0.9
-    ```
 
     > **Important**: If the displayed version is **1.0.8**, then the runtime must be updated to address a TLS authentication bug.
 
@@ -491,7 +457,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
     After entering the `scp` command, enter the Admin password for the VM when prompted.
 
     Once the command has executed, it will have downloaded a copy of the **~/lab12** directory with the certificate and key files over SSH to the Cloud Shell storage. 
-    
+
 1. To verify that the files have been downloaded, enter the following commands:
 
     ```bash
@@ -633,7 +599,7 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
 1. At the Cloud Shell command prompt, enter the `ssh` command from above, and then press **Enter**.
 
-    If youy see a warning asking you if you are sure that you want to continue, enter **yes**
+    If you see a warning asking you if you are sure that you want to continue, enter **yes**
 
 1. When prompted to enter the password, enter the Administrator password that you specified when the VM was provisioned.
 
