@@ -25,9 +25,11 @@
 
 ## How do I contribute?
 
-- Any MCT can submit a pull request to the code or content in the GitHub repro, Microsoft and the course author will triage and include content and lab code changes as needed.
+- Updates to course labs are in development. Some minor changes are being implemented and some more global updates are being developed. It may be advisable for contributors to propose changes by raising issues before creating pull requests.  
 
-- You can submit bugs, changes, improvement and ideas.  Find a new Azure feature before we have?  Submit a new demo!
+- Any MCT can submit a pull request (against the Master branch) to the code or content in the GitHub repro, Microsoft and the course author will triage and include content and lab code changes as needed. If you encounter any blocking issues in the labs, please raise issues immediately.
+
+- You can submit bugs, changes, improvement and ideas. Find a new Azure feature before we have? Submit a new demo!
 
 ## Notes
 
