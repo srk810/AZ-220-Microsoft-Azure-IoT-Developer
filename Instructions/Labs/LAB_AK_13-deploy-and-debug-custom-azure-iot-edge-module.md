@@ -202,6 +202,8 @@ Azure Container Registry provides storage of private Docker images for container
 
 In this exercise, you will use the Azure portal to create a new Azure Container Registry resource.
 
+#### Task 1: Create the container registry
+
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
@@ -250,10 +252,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. To complete the creation of the Container Registry, at the bottom of the blade, click **Create**.
 
-
-#### Task ?:
-
-
+#### Task 2: Connect Docker to the container registry
 
 1. On your dashboard, refresh your Resources tile, and then click **acraz220training{your-id}**.
 
@@ -292,6 +291,8 @@ Now that you have created the Azure Container Registry and authenticated your lo
 ### Exercise 4: Create Custom Edge Module in C\#
 
 In this exercise, you will create an Azure IoT Edge Solution that contains a custom Azure IoT Edge Module written in C#.
+
+#### Task 1: Create the solution
 
 1. Open Visual Studio Code.
 
@@ -339,6 +340,8 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
     Once the new **IoT Edge Solution** has been created, Visual Studio Code will open the solution.
 
     If Visual Studio Code prompts you to load required resources or C# extension, click **Yes**
+
+#### Task 2: Configure the solution
 
 1. Take a moment to review the contents of the **Explorer** pane.
 
@@ -421,6 +424,8 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     > **Note**: Since you are using the **IoT Edge on Ubuntu** Linux VM, the `amd64` option is the appropriate choice. For a Windows VM, use `windows-amd64`, and for modules that will be running on an ARM CPU architecture, use choose the `arm32v7` option.
 
+#### Task 3: Review the module code
+
 1. In the **Explorer** pane, to expand the `/modules/ObjectCountingModule` directory, click **modules**.
 
     Notice that this directory contains the source code files for the new IoT Edge Module being developed.
@@ -459,6 +464,8 @@ We have now created and configured a sample custom module. Next, we will debug i
 
 In this exercise, you will build and run a custom IoT Edge Module solution using the IoT Edge Simulator from within Visual Studio Code.
 
+#### Task 1: Create a test IoT Edge device
+
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
@@ -493,6 +500,8 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. Leave the other settings at their defaults, and then click **Save**.
 
+#### Task 2: Configure the test module
+
 1. Switch to the **Visual Studio Code** instance containing your IoT Edge solution.
 
 1. In the **Explorer** pane, right-click **deployment.debug.template.json**, and then click **Build and Run IoT Edge Solution in Simulator**. 
@@ -514,6 +523,8 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
     Once the IoT Edge Simulator is set up successfully, a **Setup IoT Edge Simulator successfully** message will be displayed in the Visual Studio Code TERMINAL.
 
     Now when you build and run the module in the IoT Edge Simulator, it will run as expected.
+
+#### Task 3: Build and run the module
 
 1. In the **Explorer** pane, right-click **deployment.debug.template.json**, and then click **Build and Run IoT Edge Solution in Simulator**.
 
@@ -577,6 +588,8 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. To stop monitoring Azure IoT Hub events, press **Ctrl + C** within the Azure Cloud Shell.
 
+#### Task 4: Debug the module
+
 1. Switch to your Visual Studio Code window.
 
 1. On the left side toolbar, to open the Visual Studio Code debugger view, click **Run**.
@@ -622,6 +635,8 @@ Now that the module has been created and tested in the IoT Edge simulator, it is
 ### Exercise 6: Deploy the IoT Edge Solution
 
 In this exercise, you will build and publish the custom IoT Edge Module into the Azure Container Registry (ACR) service. Once published to ACR, the custom module will then be made available to be deployed to any IoT Edge Device.
+
+#### Task 1:  Publish module to the Azure Container Registry
 
 1. Open the Visual Studio Code window containing your EdgeSolution project.
 
@@ -685,6 +700,8 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
     ```text
     objectcountingmodule:0.0.1-amd64
     ```
+
+#### Task 2: Configure an IoT Edge device to use the module
 
 1. Navigate to your Azure IoT Hub resource.
 
