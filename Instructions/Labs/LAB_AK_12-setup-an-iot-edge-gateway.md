@@ -172,7 +172,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. In the resource group Name popup, under **Name**, enter **AZ-220-GWVM-RG** and then click **OK**.
 
-1. Under **Instance details**, in the **Virtual machine name** textbox, enter **AZ-220-VM-EDGEGW-{YOUR-ID}**.
+1. Under **Instance details**, in the **Virtual machine name** textbox, enter **AZ-220-GWVM-EDGE-{YOUR-ID}**.
 
 1. In the **Region** dropdown, select the region where your Azure IoT Hub is provisioned.
 
