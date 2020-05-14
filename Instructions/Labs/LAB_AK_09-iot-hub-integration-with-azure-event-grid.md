@@ -299,7 +299,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
     When you have completed this step you should see a message body that is similar to the following:
 
-    ![Fill out email information](./Media//LAB_AK_09-email_content.png)
+    ![Fill out email information](./media/LAB_AK_09-email_content.png)
 
 1. At the top of the designer, to save all changes to the Logic App Workflow, click **Save** .
 
@@ -399,6 +399,6 @@ Test your logic app by creating a new device to trigger an event notification em
 
     If you added the four examples total, your list of IoT devices should look like the following image:
 
-    ![IoT Hub device list](./Media/LAB_AK_09-iot-hub-device-list.png)
+    ![IoT Hub device list](./media/LAB_AK_09-iot-hub-device-list.png)
 
 1. Once you've added a few devices to your IoT hub, check your email to see which ones triggered the logic app.
