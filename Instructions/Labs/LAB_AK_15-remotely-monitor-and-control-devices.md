@@ -1025,11 +1025,11 @@ To test the method, start the apps in the correct order.
 
 1. Check the console output for the **cheesecavedevice** device app and confirm that the device twin synchronized correctly.
 
-    ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-received.png)
+    ![Console Output](./media/LAB_AK_15-cheesecave-device-twin-received.png)
 
     If we let the fan do its work, we should eventually get rid of those red alerts!
 
-    ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-success.png)
+    ![Console Output](./media/LAB_AK_15-cheesecave-device-twin-success.png)
 
 1. For both instances of Visual Studio Code, stop the app and then close the Visual Studio Code window.
 
