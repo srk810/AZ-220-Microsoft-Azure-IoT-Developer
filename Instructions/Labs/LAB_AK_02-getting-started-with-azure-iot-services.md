@@ -72,9 +72,9 @@ If your Unique ID is: **CAH191216**
 
 | Resource Type | Name Template | Example |
 | :--- | :--- | :--- |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ | AZ-220-HUB-CAH191216 |
-| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ | AZ-220-DPS-CAH191216 |
-| Azure Storage Account <br/>(name must be lower-case and no dashes) | az220storage_{YOUR-ID}_ | az220storagecah191216 |
+| IoT Hub | AZ-220-HUB-*{YOUR-ID}* | AZ-220-HUB-CAH191216 |
+| Device Provisioning Service | AZ-220-DPS-*{YOUR-ID}* | AZ-220-DPS-CAH191216 |
+| Azure Storage Account <br/>(name must be lower-case and no dashes) | az220storage*{YOUR-ID}* | az220storagecah191216 |
 
 You may also be required to update values within bash scripts and C# source files as well as entering the names into the Azure Portal UI. Here are some examples:
 
@@ -165,9 +165,9 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
 1. To the right of **IoT Hub Name**, enter a globally unique name for your IoT Hub.
 
-    To provide a globally unique name, enter **AZ-220-HUB-_{YOUR-ID}_**.
+    To provide a globally unique name, enter **AZ-220-HUB-*{YOUR-ID}***.
     
-    Remember to replace **_{YOUR-ID}_** with the unique ID you created in Lab 1.
+    Remember to replace ***{YOUR-ID}*** with the unique ID you created in Lab 1.
 
     For example: **AZ-220-HUB-CAH191021**
 
@@ -233,7 +233,7 @@ IoT Hub's capabilities help you build scalable, full-featured IoT solutions such
 
 1. Verify that your AZ-220 dashboard is being displayed.
 
-1. On the AZ-220-RG resource group tile, click **AZ-220-HUB-_{YOUR-ID}_**
+1. On the AZ-220-RG resource group tile, click **AZ-220-HUB-*{YOUR-ID}***
 
     When you first open your IoT Hub, it will display the _Overview_ blade. As you can see, the area at the top of this blade provides some essential information about your IoT Hub service, such as datacenter location and subscription. But this blade also includes tiles that provide information about how you are using your hub and recent activities. Let's take a look at these tiles before exploring further.
 
@@ -326,7 +326,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. Under **Name**, enter a unique name for your Device Provisioning Service.
 
-    To provide a unique name, enter **AZ-220-DPS-_{YOUR-ID}_**.
+    To provide a unique name, enter **AZ-220-DPS-*{YOUR-ID}***.
 
     For example: **AZ-220-DPS-CAH191216**
 
@@ -358,7 +358,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     You should see both your IoT Hub and DPS resources listed - (you may need to hit **Refresh** if the resources were only recently created)
 
-1. On your Resource group tile, click **AZ-220-DPS-_{YOUR-ID}_**.
+1. On your Resource group tile, click **AZ-220-DPS-*{YOUR-ID}***.
 
 1. On the _Device Provisioning Service_ blade, under **Settings**, click **Linked IoT hubs**.
 
@@ -370,7 +370,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
     The subscription is used to provide a list of the available IoT hubs.
 
-1. Open the IoT hub dropdown, and then click **AZ-220-HUB-_{YOUR-ID}_**.
+1. Open the IoT hub dropdown, and then click **AZ-220-HUB-*{YOUR-ID}***.
 
     This is the IoT Hub that you created in the previous exercise.
 
@@ -396,7 +396,7 @@ The IoT Hub Device Provisioning Service is a helper service for IoT Hub that ena
 
 1. Verify that your AZ-220 dashboard is being displayed.
 
-1. On the _AZ-220-RG_ resource group tile, click **AZ-220-DPS-_{YOUR-ID}_**
+1. On the _AZ-220-RG_ resource group tile, click **AZ-220-DPS-*{YOUR-ID}***
 
     When you first open your Device Provisioning Service instance, it will display the _Overview_ blade. As you can see, the area at the top of this blade provides some essential information about your DPS instance, such as status, datacenter location and subscription. This blade also provides the _Quick Links_ section, which provide access to:
 
