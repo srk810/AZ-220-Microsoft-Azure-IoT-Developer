@@ -20,18 +20,6 @@ lab:
 
 ## Lab Scenario
 
-
-
-
-
-
-**TODO - Consider removing Event Hubs from the scenario since the scenario does not represent a Big Data solution that requires it and the exam OD does not explicitly call out integrating Event Hubs in an IoT Hub based solution. Message Routing was part of the previous module, so there is no motivation/advantage to having students create a route in this lab**
-
-
-
-
-
-
 You have developed a simulated IoT device that generates vibration data and other telemetry outputs that are representative of the conveyor belt system used in Contoso's cheese packaging process. You have built and tested a logging route that sends data to Azure Blob storage. You will now start work on a new route within IoT hub that will send telemetry data to an Azure Event Hubs service.
 
 The primary difference between Azure IoT Hub and Azure Event Hubs is that Event Hubs is designed for big data streaming, while IoT hub is optimized for an IoT solution. Both services support ingestion of data with low latency and high reliability. Since Azure Event Hubs provides a input to Stream Analytics in a manner that is similar to IoT hub, your choice of Event Hubs in this case allows you explore an additional Azure service option within your solution.

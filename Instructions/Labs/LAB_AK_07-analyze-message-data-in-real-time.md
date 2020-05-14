@@ -8,17 +8,6 @@ lab:
 
 ## Lab Scenario
 
-
-
-
-
-**TODO: This lab scenario needs to be reviewed and adjusted from the ground up. The scenario should focus on the following message processing and real-time analysis technologies: IoT Hub Message Routing; Azure Stream Analytics; Azure Functions (and possibly message enrichments). Lab 7 is the only lab tied to this module, but currently overlaps with Lab 8 in undesirable ways, so Lab 8 should be included in this review. Routing should be demonstrated in a reasonable way, and it would be nice to implement two routes, but routing should be allocated less time than Stream Analytics when considering the hands-on time in the lab. If required, we could define Lab 7A and Lab 7B to separate ASA from routing and provide the hands-on with ASA that should be included in this course. Another option would be to provide one or more optional Exercises that dig deeper into ASA at the end of the lab.**
-
-
-
-
-
-
 Contoso Management is impressed with your implementation of automatic device enrollment using DPS. They are now interested in having you develop an IoT-based solution related to product packaging and shipping.
 
 The cost associated with packaging and shipping cheese is significant. To maximize cost efficiency, Contoso operates an on-premises packaging facility. The workflow is straightforward - cheese is cut and packaged, packages are assembled into shipping containers, containers are delivered to specific bins associated with their destination. A conveyor belt system is used to move the product through this process. The metric for success is the number of packages leaving the conveyor belt system during a given time period (typically a work shift).
@@ -609,20 +598,6 @@ In this exercise, you will create and test the logging route.
     The URL link will open in a new browser tab. Although the data is not formatted in a way that is easy to read, you should be able to recognize it as your vibration messages. 
 
 1. Close browser tab containing your data, and then navigate back to your Azure portal Dashboard.
-
-
-
-
-
-
-
-
-**TODO - Work with Daren to define a new Exercise for an ASA job that makes more sense. Consider what message data is available, including conveyor stopped. Maybe we could output to Service Bus Queue or trigger an Azure Function. We wouldn't even need to do anything with the Service Bus Queue output in this lab, just explain the purpose, and we could provide the code for the Azure Function that sends a text (or just have it do nothing)**
-
-
-
-
-
 
 ### Exercise 4: Logging Route Azure Stream Analytics Job
 
