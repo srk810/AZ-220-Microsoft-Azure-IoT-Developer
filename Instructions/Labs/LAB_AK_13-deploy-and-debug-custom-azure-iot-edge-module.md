@@ -273,18 +273,16 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 1. Open a command prompt, and then enter the following command:
 
     ```cmd/sh
-    docker login --username <username> --password-stdin <loginserver>
+    docker login <loginserver>
     ```
 
-    Replace the placeholders with the information you recorded, and enter the password you recorded when prompted.  For example:
+    Replace `<loginserver>` with the name you recorded, and enter the username and password you recorded when prompted.  For example:
 
     ```cmd/sh
-    docker login --username acraz220trainingcah191204 --password-stdin  acraz220trainingcah191204.azurecr.io
+    docker login az220acrcah191204.azurecr.io
     ```
 
     This command will record your credentials in the local Docker client configuration file (`$HOME/.docker/config.json`) or your operating system's secure credential storage mechanism (depending on the Docker configuration) for future use by the Docker toolset.
-
-    > **Note**: You will not be prompted to enter your password - just type it after you enter the above command. You will see your password as you enter it. Press **Enter** to submit the password. It may take a few moments before the **Login Succeeded** message is shown.
 
 Now that you have created the Azure Container Registry and authenticated your local machine against it, you can create a custom IoT Edge Module container that will be stored in the registry.
 
