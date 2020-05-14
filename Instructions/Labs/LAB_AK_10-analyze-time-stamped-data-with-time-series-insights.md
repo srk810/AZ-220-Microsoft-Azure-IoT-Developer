@@ -231,11 +231,11 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
  
 1. On the **Time Series Insights environment** blade, in the left side navigation menu, under **Settings**, click **Event Sources**.
 
-1. On the **Event Sources** pane, notice the **AZ-220-HUB-_{YOUR-ID}_** Event Source in the list.
+1. On the **Event Sources** pane, notice the **AZ-220-HUB-*{YOUR-ID}*** Event Source in the list.
 
     This is the event source that was configured when the TSI resource was created.
 
-1. To view the event source details, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. To view the event source details, click **AZ-220-HUB-*{YOUR-ID}***.
 
     Notice that the configuration of the event source matches what was set when the Time Series Insights resource was created.
 

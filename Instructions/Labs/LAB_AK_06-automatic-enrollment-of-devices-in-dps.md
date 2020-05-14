@@ -37,8 +37,8 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
+| IoT Hub | AZ-220-HUB-*{YOUR-ID}* |
+| Device Provisioning Service | AZ-220-DPS-*{YOUR-ID}* |
 
 If these resources are not available, you will need to run the **lab06-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -304,7 +304,7 @@ In this exercise, you will create a new enrollment group within the Device Provi
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your resource group tile, click **AZ-220-DPS-_{YOUR-ID}_**.
+1. On your resource group tile, click **AZ-220-DPS-*{YOUR-ID}***.
 
 1. On the left side of the Device Provisioning Service blade, under **Settings**, click **Manage enrollments**.
 
@@ -769,7 +769,7 @@ In this exercise, you will run the simulated device. When the device is started 
 
     Scroll up to the top of the information displayed in the Terminal window.
 
-    Notice the X.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the **AZ-220-HUB-_{YOUR-ID}_** IoT Hub, and the device twin desired properties are loaded.
+    Notice the X.509 certificate was loaded, the device was registered with the Device Provisioning Service, it was assigned to connect to the **AZ-220-HUB-*{YOUR-ID}*** IoT Hub, and the device twin desired properties are loaded.
 
     ```text
     localmachine:LabFiles User$ dotnet run
@@ -891,7 +891,7 @@ In this exercise, you will retire the enrollment group and its devices from both
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your resource group tile, to navigate to the Device Provisioning Service, click **AZ-220-DPS-_{YOUR-ID}_**.
+1. On your resource group tile, to navigate to the Device Provisioning Service, click **AZ-220-DPS-*{YOUR-ID}***.
 
 1. On the left side menu, under **Settings**, click **Manage enrollments**.
 
@@ -923,7 +923,7 @@ In this exercise, you will retire the enrollment group and its devices from both
 
 Once the enrollment group has been removed from the Device Provisioning Service (DPS), the device registration will still exist within Azure IoT Hub. To fully retire the devices, you will need to remove that registration as well.
 
-1. Within the Azure portal, on your resource group tile, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. Within the Azure portal, on your resource group tile, click **AZ-220-HUB-*{YOUR-ID}***.
 
 1. On the left side of the **IoT Hub** blade, under **Explorers**, click **IoT devices**.
 

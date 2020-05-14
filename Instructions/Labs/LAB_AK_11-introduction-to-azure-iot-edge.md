@@ -40,7 +40,7 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| IoT Hub | AZ-220-HUB-*{YOUR-ID}* |
 
 If these resources are not available, you will need to run the **lab11-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -265,7 +265,7 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 1. To display the **Connection String** for your IoT Edge device, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --device-id myEdgeDevice --hub-name AZ-220-HUB-_{YOUR-ID}_
+    az iot hub device-identity show-connection-string --device-id myEdgeDevice --hub-name AZ-220-HUB-*{YOUR-ID}*
     ```
 
     Be sure to replace the `{YOUR-ID}` placeholder with the YOUR-ID value that you created at the start of this course.
@@ -360,7 +360,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, to open your IoT Hub, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. On your Resource group tile, to open your IoT Hub, click **AZ-220-HUB-*{YOUR-ID}***.
 
 1. At the left of the **IoT Hub** blade, under **Automatic Device Management**, click **IoT Edge**.
 
@@ -581,7 +581,7 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. On the **New** blade, under **Azure Marketplace**, click **Internet of Things**, and then click **Stream Analytics job**.
 
-1. On the **New Stream Analytics job** blade, in the **Job name** field, enter **AZ-220-ASA-_{YOUR-ID}_**
+1. On the **New Stream Analytics job** blade, in the **Job name** field, enter **AZ-220-ASA-*{YOUR-ID}***
 
 1. In the **Resource group** dropdown, click **AZ-220-RG**.
 
@@ -680,7 +680,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 #### Task 5: Deploy the Stream Analytics Job
 
-1. In the Azure portal, navigate to your **AZ-220-HUB-_{YOUR-ID}_** IoT Hub resource.
+1. In the Azure portal, navigate to your **AZ-220-HUB-*{YOUR-ID}*** IoT Hub resource.
 
 1. On the left side navigation menu, under **Automatic Device Management**, click **IoT Edge**.
 
@@ -694,9 +694,9 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 1. On the **Edge deployment** pane, under **Subscription**, ensure that the subscription you are using for this course is selected.
 
-1. In the **Edge job** dropdown, ensure that the **AZ-220-ASA-_{YOUR-ID}_** Steam Analytics job is selected.
+1. In the **Edge job** dropdown, ensure that the **AZ-220-ASA-*{YOUR-ID}*** Steam Analytics job is selected.
 
-    > **Note**:  The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **AZ-220-ASA-_{YOUR-ID}_** job again. The **Save** button should then become enabled.
+    > **Note**:  The job may already be selected, yet the **Save** button is disabled - just open the **Edge job** dropdown again and select the **AZ-220-ASA-*{YOUR-ID}*** job again. The **Save** button should then become enabled.
 
 1. At the bottom of the pane, click **Save**.
 
@@ -704,7 +704,7 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 
 1. Once the Edge package has been successfully published, notice that the new ASA module is listed under the **IoT Edge Modules** section
 
-1. Under **IoT Edge Modules**, click **AZ-220-ASA-_{YOUR-ID}_**. 
+1. Under **IoT Edge Modules**, click **AZ-220-ASA-*{YOUR-ID}***. 
 
     This is the Steam Analytics module that was just added to your Edge device.
 

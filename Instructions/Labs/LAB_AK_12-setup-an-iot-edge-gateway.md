@@ -46,7 +46,7 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| IoT Hub | AZ-220-HUB-*{YOUR-ID}* |
 
 If these resources are not available, you will need to run the **lab12-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -529,21 +529,21 @@ In this exercise, you will use Azure IoT Hub to create a new IoT Edge Device ide
 
 ### Exercise 5: Setup IoT Edge Gateway Hostname
 
-In this exercise, you will configure the DNS name for Public IP Address of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** simulated Edge device, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
+In this exercise, you will configure the DNS name for Public IP Address of the **AZ-220-VM-EDGEGW-*{YOUR-ID}*** simulated Edge device, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Dashboard page, to open your IoT Edge virtual machine, click **AZ-220-VM-EDGEGW-_{YOUR-ID}_**.
+1. On your Dashboard page, to open your IoT Edge virtual machine, click **AZ-220-VM-EDGEGW-*{YOUR-ID}***.
 
-1. On the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** blade, in the upper section, locate the **DNS name** field.
+1. On the **AZ-220-VM-EDGEGW-*{YOUR-ID}*** blade, in the upper section, locate the **DNS name** field.
 
     If the "Essentials" section at the top of the Overview blade is collapsed, to expand it, click **Essentials**.
 
 1. To the right of the **DNS name** field, click **Configure**.
 
-1. On the **AZ-220-VM-EDGEGW-_{YOUR-ID}_-ip - Configuration** blade, in the **DNS name label** field, enter **az-220-vm-edgegw-{your-id}**
+1. On the **AZ-220-VM-EDGEGW-*{YOUR-ID}*-ip - Configuration** blade, in the **DNS name label** field, enter **az-220-vm-edgegw-{your-id}**
 
     This label must be globally unique, and only lowercase letters, numbers and hyphens.
 
@@ -605,7 +605,7 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
 1. Set the **hostname** value to the value of the **Full DNS name** that you saved earlier.
 
-    This is the **Full DNS name** of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_** virtual machine.
+    This is the **Full DNS name** of the **AZ-220-VM-EDGEGW-*{YOUR-ID}*** virtual machine.
 
     > **Note**: If you did not save the name, you can find it in the **Overview** pane of the virtual machine.  You can even copy it from there to paste into the Cloud Shell window.
 
@@ -691,7 +691,7 @@ In a production scenario, you will want to open only the minimum number of ports
 
     Notice that this resource group tile also includes a link to the associated Network security group.
   
-1. On the Resources tile, click **AZ-220-VM-EDGEGW-_{YOUR-ID}_-nsg**.
+1. On the Resources tile, click **AZ-220-VM-EDGEGW-*{YOUR-ID}*-nsg**.
 
 1. On the **Network security group** blade, left side navigation menu under **Settings**, click **Inbound security rules**.
 
@@ -726,9 +726,9 @@ In this exercise, you will create a new IoT Device identity in Azure IoT Hub for
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Azure dashboard, to open your IoT Hub, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. On your Azure dashboard, to open your IoT Hub, click **AZ-220-HUB-*{YOUR-ID}***.
 
-1. On the **AZ-220-HUB-_{YOUR-ID}_** blade, on the left side navigation menu under **Explorers**, click **IoT devices**.
+1. On the **AZ-220-HUB-*{YOUR-ID}*** blade, on the left side navigation menu under **Explorers**, click **IoT devices**.
 
     This pane of the IoT Hub blade allows you to manage the IoT Devices connected to the IoT Hub.
 
@@ -748,7 +748,7 @@ In this exercise, you will create a new IoT Device identity in Azure IoT Hub for
 
     We will be configuring this downstream device to communicate with IoT Hub through the IoT Edge Gateway device that we created earlier in this lab.
 
-1. On the **Set an Edge device as a parent device** blade, under **Device ID**, click **AZ-220-VM-EDGEGW-_{YOUR-ID}_**, and then click **OK**.
+1. On the **Set an Edge device as a parent device** blade, under **Device ID**, click **AZ-220-VM-EDGEGW-*{YOUR-ID}***, and then click **OK**.
 
 1. On the **Create a device** blade, to create the IoT Device identity for the downstream device, click **Save**.
 

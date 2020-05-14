@@ -51,7 +51,7 @@ This lab assumes that the following Azure resources are available:
 | Resource Type | Resource Name |
 | :-- | :-- |
 | Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| IoT Hub | AZ-220-HUB-*{YOUR-ID}* |
 
 If these resources are not available, you will need to run the **lab13-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -456,7 +456,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-HUB-_{YOUR-ID}_**.
+1. On your Resource group tile, click **AZ-220-HUB-*{YOUR-ID}***.
 
 1. On the left hand navigation menu, under **Settings**, click **Shared access policies**.
 

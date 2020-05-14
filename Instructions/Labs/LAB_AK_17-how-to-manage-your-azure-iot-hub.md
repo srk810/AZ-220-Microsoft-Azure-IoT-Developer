@@ -636,7 +636,7 @@ The first X.509 certificates needed are CA and intermediate certificates. These 
 
 1. In the **Primary Certificate** dropdown, click **root-ca-cert**.
 
-    Verify that the **Select the IoT hubs this group can be assigned to** dropdown includes your **AZ-220-HUB-_{YOUR-ID}_** IoT Hub. This will ensure when the device is provisioned, it gets added to this IoT Hub.
+    Verify that the **Select the IoT hubs this group can be assigned to** dropdown includes your **AZ-220-HUB-*{YOUR-ID}*** IoT Hub. This will ensure when the device is provisioned, it gets added to this IoT Hub.
 
 1. In the Initial Device Twin State field, modify the `properties.desired` JSON object to include a property named `telemetryDelay` with the value of `"1"`. This will be used by the Device to set the time delay for reading sensor telemetry and sending events to IoT Hub.
 
