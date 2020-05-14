@@ -165,7 +165,7 @@ There are several methods that you can use to create an IoT Hub. For example, yo
 
 1. To the right of **IoT Hub Name**, enter a globally unique name for your IoT Hub.
 
-    To provide a globally unique name, enter **AZ-220-HUB-_{YOUR-ID}_** (remember to replace **_{YOUR-ID}_** with the unique ID you created in Lab 1.).
+    To provide a globally unique name, enter **AZ-220-HUB-_{YOUR-ID}_**. Remember to replace **_{YOUR-ID}_** with the unique ID you created in Lab 1.
 
     For example: **AZ-220-HUB-CAH191021**
 
