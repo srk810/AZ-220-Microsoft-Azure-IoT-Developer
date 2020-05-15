@@ -1,0 +1,132 @@
+#!/bin/bash
+
+# Change these values!
+YourID="{YOUR-ID}"
+Location="{YOUR-LOCATION}"
+
+RGName="rg-az220"
+
+IoTHubName="iot-az220-training-$YourID"
+StorageAccountName="vibrationstore$YourID"
+StorageContainer="vibrationcontainer"
+EventHubNamespace="vibrationNamespace$YourID"
+EventHubName="vibrationeventhubinstance"
+DeviceID="sensor-v-3000"
+
+CurrentSubscription=$( az account show --query name -o tsv )
+CurrentSubscriptionId=$( az account show --query id -o tsv )
+
+# ensure variables have been set
+if [ $YourID = "{YOUR-ID}" ] || [ $Location = "{YOUR-LOCATION}" ]
+then
+    echo "You must change the YourID and/or Location values"
+    exit 1
+fi
+
+# Setup colored output
+YELLOW='\033[0;33m'
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+NC='\033[0m' # No Color
+
+# functions
+reportStatus() {
+    if [ -z "$1" ]
+    then
+        return
+    fi
+    if [ $1 -eq "0" ]
+    then 
+        printf "${GREEN}Success${NC}\n"
+    else
+        printf "${RED}Failed - ${2}${NC}\n"
+        echo $2 >> build.log
+    fi
+}
+
+# build log file
+rm build.log.old 2> /dev/null
+cp build.log build.log.old 2> /dev/null
+echo "Building Lab 08 Resources" > build.log
+
+# create resource group
+printf "${YELLOW}Create resource group ${RGName} - ${NC}"
+output=$( az group create --name $RGName --location $Location -o json 2>&1 >> build.log)
+reportStatus $? "$output"
+
+
+# create IoT Hub
+printf "${YELLOW}Create IoT Hub $IoTHubName - ${NC}"
+output=$( az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location -o json 2>&1 >> build.log)
+reportStatus $? "$output"
+
+IoTHubConnectionString=$( az iot hub show-connection-string --hub-name $IoTHubName -o tsv )
+
+# create a device ID using Symmetric Key Auth and Connect it to the IoT Hub
+printf "${YELLOW}Create device ${DeviceID} - ${NC}"
+output=$( az iot hub device-identity create --hub-name $IoTHubName --device-id $DeviceID -o json 2>&1 >> build.log )
+reportStatus $? "$output"
+
+DeviceConnectionString=$( az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id $DeviceID -o tsv )
+
+# Create a Storage Account
+printf "${YELLOW}Create storage account ${StorageAccountName} - ${NC}"
+output=$( az storage account create --name $StorageAccountName --resource-group $RGName --location $Location --sku Standard_LRS -o table 2>&1 >> build.log )
+reportStatus $? "$output"
+
+StorageConnectionString=$( az storage account show-connection-string --name $StorageAccountName -o tsv )
+StorageAccountKey=$( az storage account keys list -g $RGName -n $StorageAccountName --query "[0].value" -o tsv )
+
+# Create a Storage Container
+printf "${YELLOW}Create storage container ${StorageContainer} - ${NC}"
+output=$( az storage container create -n $StorageContainer --connection-string $StorageConnectionString -o table 2>&1 >> build.log )
+reportStatus $? "$output"
+
+# Add IoT Hub Message Route for Storage
+printf "${YELLOW}Create IoT Hub endpoint vibrationLogEndpoint - ${NC}"
+output=$( az iot hub routing-endpoint create --resource-group $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --endpoint-type azurestoragecontainer  --endpoint-resource-group $RGName --endpoint-subscription-id $CurrentSubscriptionId --connection-string $StorageConnectionString --container-name $StorageContainer --batch-frequency 100 --chunk-size 100 --ff "{iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}" -o table 2>&1 >> build.log )
+reportStatus $? "$output"
+
+printf "${YELLOW}Create IoT Hub route vibrationLoggingRoute - ${NC}"
+output=$( az iot hub route create -g $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --source-type DeviceMessages --route-name vibrationLoggingRoute --condition "sensorID = \"VSLog\"" --enabled true -o table 2>&1 >> build.log )
+reportStatus $? "$output"
+
+# Create an Event Hubs namespace. 
+printf "${YELLOW}Create event hubs namespace ${EventHubNamespace} - ${NC}"
+output=$( az eventhubs namespace create --name $EventHubNamespace --resource-group $RGName -l $Location -o table 2>&1 >> build.log )
+reportStatus $? "$output"
+
+EventHubNamespaceConnectionString=$( az eventhubs namespace authorization-rule keys list --resource-group $RGName --namespace-name $EventHubNamespace --name RootManageSharedAccessKey --query "primaryConnectionString" -o tsv )
+EventHubNamespaceConnectionString="$EventHubNamespaceConnectionString;EntityPath=$EventHubName"
+
+# Create an event hub. 
+printf "${YELLOW}Create event hub ${EventHubName} - ${NC}"
+output=$( az eventhubs eventhub create --name $EventHubName --resource-group $RGName --namespace-name $EventHubNamespace -o table 2>&1 >> build.log )
+reportStatus $? "$output"
+
+# Add IoT Hub Message Route for Real-time Messages
+printf "${YELLOW}Create routing-endpoint vibrationTelemetryEndpoint - ${NC}"
+output=$( az iot hub routing-endpoint create --resource-group $RGName --hub-name $IoTHubName --endpoint-name vibrationTelemetryEndpoint --endpoint-type eventhub  --endpoint-resource-group $RGName --connection-string $EventHubNamespaceConnectionString --endpoint-subscription-id $CurrentSubscriptionId -o table 2>&1 >> build.log )
+reportStatus $? "$output"
+
+printf "${YELLOW}Create iot hub route ${vibrationLogEndpoint} - ${NC}"
+output=$( az iot hub route create -g $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --source-type DeviceMessages --route-name vibrationTelemetryRoute --condition "sensorID = \"VSTel\"" --enabled true -o table 2>&1 >> build.log )
+reportStatus $? "$output"
+
+# Call the PowerShell script to setup Azure Streaming
+printf "${YELLOW}Setup Azure Streaming Job - launching PowerShell${NC}\n"
+./Create-Job.ps1 \
+    -SubscriptionID "$CurrentSubscriptionId" \
+    -IoTHubName "$IoTHubName" \
+    -YourId "$YourID" \
+    -ResourceGroup "$RGName" \
+    -Location "$Location" \
+    -StorageAccountName "$StorageAccountName" \
+    -StorageAccountKey "$StorageAccountKey" \
+    -Container "$StorageContainer" \
+    -ScriptLocation "$( pwd )" 
+
+
+printf "${YELLOW}Device Connection String for the application:${NC}\n"
+echo ----------------------------------------------------
+echo $DeviceConnectionString

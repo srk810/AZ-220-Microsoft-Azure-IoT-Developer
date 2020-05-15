@@ -1,0 +1,28 @@
+{
+    "properties": {
+        "datasource": {
+            "type": "Microsoft.Storage/Blob",
+            "properties": {
+                "storageAccounts": [
+                    {
+                      "accountName": "{YOUR-STORAGE-ACCOUNT}",
+                      "accountKey": "{YOUR-STORAGE-ACCOUNT-KEY}"
+                    }
+                ],
+                "container": "{YOUR-CONTAINER}",
+                "pathPattern": "output/",
+                "dateFormat": "yyyy/MM/dd",
+                "timeFormat": "HH"
+            }
+        },
+        "serialization": {
+            "type": "Json",
+            "properties": {
+                "encoding": "UTF8",
+                "format": "LineSeparated"
+            }
+        }
+    },
+    "name": "BlobOutput",
+    "type": "Microsoft.StreamAnalytics/streamingjobs/outputs"
+}
