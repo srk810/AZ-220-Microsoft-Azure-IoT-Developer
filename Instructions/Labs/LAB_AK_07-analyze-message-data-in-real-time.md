@@ -50,7 +50,7 @@ In this lab, you will begin by reviewing the lab prerequisites and you will run 
 
 ### Exercise 1: Verify Lab Prerequisites
 
-This lab assumes the following Azure resources are available:
+This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
@@ -603,7 +603,7 @@ In this exercise, you will create and test the logging route.
 
 In this exercise, you will create a Stream Analytics job that outputs logging messages to Blob storage. You will then use Storage Explorer in the Azure Portal.
 
-This will enable us to verify that our route includes the following settings:
+This will enable you to verify that your route includes the following settings:
 
 * **Name** - vibrationLoggingRoute
 * **Data Source** - DeviceMessages
@@ -617,21 +617,21 @@ This will enable us to verify that our route includes the following settings:
 
 1. On the Azure portal menu, click **+ Create a resource**.
 
-1. On the **New** blade, in the **Search the Marketplace** textbox, enter **Stream Analytics job** and then click **Stream Analytics job**.
+1. On the **New** blade, in the **Search the Marketplace** textbox, type **stream analytics** and then click **Stream Analytics job**.
 
 1. On the **Stream Analytics job** blade, click **Create**.
 
     The **New Stream Analytics job** pane is displayed.
 
-1. On the **New Stream Analytics job** pane, under **Name**, enter `vibrationJob`.
+1. On the **New Stream Analytics job** pane, under **Name**, enter **vibrationJob**.
 
 1. Under **Subscription**, choose the subscription you are using for the lab.
 
 1. Under **Resource group**, select **rg-az220**.
 
-1. Under **Location**, select the region you are using for all of your lab work.
+1. Under **Location**, select the region that you are using for the labs in this course.
 
-1. Under **Hosting environment**, select **Cloud**.
+1. Under **Hosting environment**, ensure that **Cloud** is selected.
 
     Edge hosting will be discussed later in the course.
 
@@ -649,21 +649,21 @@ This will enable us to verify that our route includes the following settings:
 
     Notice that you have an empty job, showing no inputs or outputs, and a skeleton query. The next step is to populate these entries.
 
-1. To create an input, in the left hand navigation, under **Job topology**, click **Inputs**.
+1. On the left-side menu under **Job topology**, click **Inputs**.
 
-    The **Inputs** pane is displayed.
+    The **Inputs** pane will be displayed.
 
-1. On the **Inputs** pane, click **+ Add stream input**, and select **IoT Hub** from the dropdown list.
+1. On the **Inputs** pane, click **+ Add stream input**, and then click **IoT Hub**.
 
-    The **New Input** pane will be displayed.
+    The **IoT Hub - New input** pane will be displayed.
 
-1. On the **New Input** pane, under **Input alias**, enter `vibrationInput`.
+1. On the **IoT Hub - New input** pane, under **Input alias**, enter `vibrationInput`.
 
 1. Ensure that **Select IoT Hub from your subscriptions** is selected.
 
 1. Under **Subscription**, ensure that the subscription you used to create the IoT Hub earlier is selected.
 
-1. Under **IoT Hub**, select the IoT Hub you created at the beginning of the course labs, **iot-az220-training-_{YourID}_**.
+1. Under **IoT Hub**, ensure that your **iot-az220-training-{your-id}** IoT hub is selected.
 
 1. Under **Endpoint**, ensure that **Messaging** is selected.
 
@@ -685,21 +685,21 @@ This will enable us to verify that our route includes the following settings:
 
     The **Inputs** list should be updated to show the new input.
 
-1. To create an output, in the left hand navigation, under **Job topology**, click **Outputs**.
+1. To create an output, on the left-side menu under **Job topology**, click **Outputs**.
 
     The **Outputs** pane is displayed.
 
-1. On the **Outputs** pane, click **+ Add**, and then select **Blob storage/Data Lake Storage Gen2** from the dropdown list.
+1. On the **Outputs** pane, click **+ Add**, and then click **Blob storage/Data Lake Storage Gen2**.
 
-    The **New output** pane is displayed.
+    The **Blob storage/Data Lake Storage Gen2 - New output** pane is displayed.
 
-1. On the **New output** pane, under **Output alias**, enter `vibrationOutput`.
+1. On the **Blob storage/Data Lake Storage Gen2 - New output** pane, under **Output alias**, enter `vibrationOutput`.
 
 1. Ensure that **Select storage from your subscriptions** is selected.
 
 1. Under **Subscription**, select the subscription you are using for this lab.
 
-1. Under **Storage account**, select the storage account that you created earlier - **vibrationstore** plus your initials and date.
+1. Under **Storage account**, click **vibrationstore{your-id}**.
 
     > **Note**:  The **Storage account key** is automatically populated and read-only.
 
@@ -721,15 +721,15 @@ This will enable us to verify that our route includes the following settings:
 
 1. Under **Maximum time**, leave **Hours** and **Minutes** blank.
 
-1. Under **Authentication mode**, ensure **Connection string** is selected.
+1. Under **Authentication mode**, ensure that **Connection string** is selected.
 
 1. To create the output, click **Save**, and then wait for the output to be created.
 
     The **Outputs** list will be updated with the new output.
 
-1. To edit the query, in the left hand navigation, under **Job topology**, click **Query**.
+1. To edit the query, on the left-side menu under **Job topology**, click **Query**.
 
-1. In the query edit pane, replace the existing query with the query below:
+1. In the query editor pane, replace the existing query with the query below:
 
     ```sql
     SELECT
@@ -740,9 +740,9 @@ This will enable us to verify that our route includes the following settings:
         vibrationInput
     ```
 
-1. Directly above the edit pane, click **Save Query**.
+1. Directly above the query editor pane, click **Save Query**.
 
-1. In the left hand navigation, click **Overview**.
+1. On the left-side menu, click **Overview**.
 
 #### Task 2: Test the Logging Route
 
@@ -756,11 +756,11 @@ Now for the fun part. Does the telemetry your device app is pumping out work its
 
 1. In the **Start job** pane, leave the **Job output start time** set to **Now**, and then click **Start**.
 
-    It will take a few moments for the job to start.
+    It can take a few moments for the job to start.
 
 1. On the Azure portal menu, click **Dashboard**.
 
-1. On your resource group tile, select the **vibrationstore** (plus your initials and date) Storage account.
+1. On your Resources tile, click **vibrationstore{your-id}**.
 
     If your Storage account is not visible, use the **Refresh** button at the top of the resource group tile.
 
@@ -770,9 +770,9 @@ Now for the fun part. Does the telemetry your device app is pumping out work its
 
     You should see activity in the charts.
 
-1. On the left-side navigation menu, click **Storage Explorer (preview)**.
+1. On the left-side menu, click **Storage Explorer (preview)**.
 
-    We can use Storage Explorer for additional reassurance that all of your data is getting to the storage account. 
+    You can use Storage Explorer for additional reassurance that all of your data is getting to the storage account. 
 
     > **Note**:  The Storage Explorer is currently in preview mode, so its exact mode of operation may change.
 
@@ -782,13 +782,15 @@ Now for the fun part. Does the telemetry your device app is pumping out work its
 
 1. In the right-hand pane, under **Name**, double-click the folder for your IoT hub, and then use double-clicks to navigate down into the hierarchy until you open the most recent hour folder.
 
-    Within the hour folder, you will see files named for the minute they were generated.
+    Within the hour folder, you will see files named for the minute they were generated. This verifies that your data is reaching the storage location as intended.
 
-1. To stop the Azure Streaming Analytics job, return to your portal dashboard, and then select **vibrationJob**.
+1. Navigate back to your Dashboard.
 
-1. On the **Stream Analytics Job** page, click **Stop**, and then click **Yes**.
+1. On your Resources tile, click **vibrationJob**.
 
-    You've traced the activity from the device app, to the hub, down the route, and to the storage container. Great progress! We will continue this scenario stream analytics in the next module when we take a quick look at data visualization.
+1. On the **vibrationJob** blade, click **Stop**, and then click **Yes**.
+
+    You've traced the activity from the device app, to the hub, down the route, and to the storage container. Great progress! You will continue this scenario stream analytics in the next module when you take a quick look at data visualization.
 
 1. Switch to the Visual Studio Code window.
 

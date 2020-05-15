@@ -72,7 +72,7 @@ Let's create the Event Hub, create the second route, update the SQL query, creat
 
 Power BI can be your personal data analysis and visualization tool, and can also serve as the analytics and decision engine behind group projects, divisions, or entire corporations. Later on in this lab, you will build a dashboard and visualize data using Power BI. This exercise explains how to sign up for Power BI as an individual.
 
->**Note:** If you already have a Power BI subscription, you can skip to the next step.
+>**Note:** If you already have a Power BI subscription and you are able to use it during this course, you can skip to Exercise 2.
 
 #### Task 1: Understand Supported Email Addresses
 
@@ -122,27 +122,44 @@ In order to visualize live streaming data from IoT hub in a Power BI dashboard, 
 
 In this exercise, you will ensure that the Device Simulator app from the previous lab is running. 
 
-> **Note**: If you have not completed lab 7 of this course, do that now.
+> **Important**: If you have not completed lab 7 of this course, do that now.
 
-#### Task 1: Start the "VibrationSensor" app in Visual Studio Code
+#### Task 1: Start the VibrationSensor app in Visual Studio Code
 
 1. Open Visual Studio Code.
 
 1. On the **File** menu, click **Open Folder**.
 
-1. In the Open Folder dialog, navigate to the **VibrationSensor** folder, and then click **Select Folder**.
+1. In the **Open Folder** dialog, navigate to the lab 8 Starter folder.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 08-Visualize a Data Stream in Power BI
+            * Starter
+ 
+1. Click **VibrationSensor**, and then click **Select Folder**.
 
     You should see the Program.cs and VibrationSensor.csproj files listed in the EXPLORER pane.
 
-    You may want to verify that the connection string for your device is assigned to the `deviceConnectionString` variable in the Program.cs file. If you completed Lab 7, you should see a variable assignment in your code that is similar to the following:
+1. In the **EXPLORER** pane, click **Program.cs**.
+
+1. In the code editor pane, ensure that the connection string variable, `deviceConnectionString`, is assigned correctly.
+
+    You can find the connection string for the sensor-v-3000 device in IoT hub, or you can check your completed Lab 7 project. 
+
+    The variable assignment in your code should be similar to the following:
 
     ```csharp
     deviceConnectionString = "HostName=iot-az220-training-cah200509.azure-devices.net;DeviceId=sensor-v-3000;SharedAccessKey=nSUbphUKsS1jEd7INrEtmVWZesMBDIxzjVe4jn01KJI=";
     ```
 
+1. On the **File** menu, click **Save**.
+
 1. On the **View** menu, click **Terminal**.
 
-    Verify that the command prompt shows the folder path to the **sensor-v-3000** folder.
+    Verify that the command prompt shows the folder path to the **VibrationDevice** folder.
  
 1. To run the app in the terminal, enter the following command:
 
@@ -164,7 +181,7 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
 ### Exercise 3: Create an Azure Event Hubs service
 
-Now that we have telemetry data streaming into the IoT Hub, we're going to add an Azure Event Hubs Namespace and Azure Event Hubs instance to our solution. Azure Event hubs are ideal for processing streaming data and support live dashboarding scenarios - perfect for passing our vibration data to Power BI.
+Now that you have telemetry data streaming into the IoT Hub, you're going to add an Azure Event Hubs Namespace and Azure Event Hubs instance to our solution. Azure Event Hubs are ideal for processing streaming data and support live dashboarding scenarios - perfect for passing our vibration data to Power BI.
 
 #### Task 1: Create an Event Hubs Namespace
 
@@ -184,34 +201,40 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
     The **Create Namespace** blade will be displayed.
 
-1. On the **Create Namespace** blade, under **Name**, enter **vibrationNamespace** plus a unique identifier
+1. On the **Create Namespace** blade, configure the **Subscription** and **Resource group** fields with the values you are using for this course.
 
-    You can use your initials and today's date to make the Name unique - i.e. **vibrationNamespacecah191212**
+    Resource group should be the same resource group that you used for your IoT hub and other resources - **rg-az220**.
+
+1. In the **Namespace name** field, type **vibrationNamespace** and then enter your unique identifier {your-id}.
+
+    For example: **vibrationNamespacecah191212**
 
     This name must be globally unique.
 
-1. Under **Pricing tier**, select **Standard**.
+1. Under **Location**, choose the same region that you have been using for the other labs in this course.
+
+1. In the **Pricing tier** dropdown, click **Standard**.
 
    > **Note**:  Choosing the standard pricing tier enables _Kafka_. The Event Hubs for Kafka feature provides a protocol head on top of Azure Event Hubs that is binary compatible with Kafka versions 1.0 and later for both reading from and writing to Kafka topics. You can learn more about Event Hubs and Apache Kafka [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-for-kafka-ecosystem-overview). We will not be using Kafka in this lab.
 
-1. Leave **Make this namespace zone redundant** unchecked.
-
-    > **Note**:  Checking this option enables enhanced availability by spreading replicas across availability zones within one region at no additional cost - however we don't need this capability for the lab.
-
-1. Under **Subscription**, select the subscription you are using for this lab.
-
-1. Under **Resource group**, select the resource group you are using for this lab - **rg-az220**.
-
-1. Under **Location**, choose the region you are using for all lab work.
-
-1. Under **Throughput units**, set the value to 1.
+1. For the **Throughput units** field, ensure that the value is set to 1.
 
     This lab does not generate sufficient data to warrant increasing the number of units.
 
+1. At the bottom of the blade, click **Next: Features**.
+
+1. Leave **Enable Availability Zones** unchecked.
+
+    > **Note**:  Checking this option enables enhanced availability by spreading replicas across availability zones within one region at no additional cost - however this capability is not needed for this lab.
+
 1. Leave **Enable Auto-Inflate** unchecked.
 
-    > **Note**:  Auto-Inflate automatically scales the number of Throughput Units assigned to your Event Hubs Namespace when your traffic exceeds the capacity of the Throughput Units assigned to it. You can specify a limit to which the Namespace will automatically scale. We do not require this feature for this lab.
+    > **Note**:  Auto-Inflate automatically scales the number of Throughput Units assigned to your Event Hubs Namespace when your traffic exceeds the capacity of the Throughput Units assigned to it. You can specify a limit to which the Namespace will automatically scale. This feature is not required for this lab.
 
+1. At the bottom of the blade, click **Review + create**.
+
+    You should see a message indicating that validation succeeded. If not, you will need to address the specified issues.
+ 
 1. To create the resource, click **Create**, and then wait for the resource to be deployed.
 
     This deployment can take a few minutes. You can open the Notifications pane to monitor progress. 
@@ -222,7 +245,7 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
 1. Navigate back to your Azure portal Dashboard page.
 
-1. On your resource group tile, select your Event Hub Namespace.
+1. On your Resources tile, click **vibrationNamespace{your-id}**.
 
     If the Event Hubs Namespace is not listed, refresh the tile.
 
@@ -246,15 +269,15 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
     > **Note**:  Azure Event Hubs Capture enables you to automatically deliver the streaming data in Event Hubs to an Azure Blob storage or Azure Data Lake Store account of your choice, with the added flexibility of specifying a time or size interval. We do not require this feature for the lab.
 
-1. To create the Azure Hubs instance, click **Create**. Wait for the resource to be deployed.
+1. To create the Azure Hubs instance, click **Create**, and then wait for the resource to be deployed.
 
 ### Exercise 4: Create Real-Time Message Route
 
-Now that we have an Event Hubs Namespace and an Event Hubs service, we need to pass the telemetry data from the IoT hub to the Event Hub.
+Now that you have an Event Hubs Namespace and an Event Hubs service, you need to pass the telemetry data from the IoT hub to your Event Hubs.
 
 #### Task 1: Create the Telemetry Route
 
-In this task we will add a message route to our IoT hub that will send telemetry messages to the Event Hubs instance we just created.
+In this task, you will add a message route to your IoT hub that will send telemetry messages to the Event Hubs instance that you just created.
 
 1. Navigate to your Azure portal dashboard.
 
@@ -272,17 +295,17 @@ In this task we will add a message route to our IoT hub that will send telemetry
 
 1. On the **Add an event hub endpoint** blade, under **Endpoint name**, enter **vibrationTelemetryEndpoint**.
 
-1. Under **Event hub namespace**, select the namespace you created earlier.
+1. Under **Event hub namespace**, select the namespace that you created earlier.
 
-    It should be similar to the following: **vibrationnamespacecah191212**
+    It should be similar to the following: **vibrationNamespacecah191212**
 
 1. Under **Event hub instance**, click **vibrationeventhubinstance**.
 
-1. To create the endpoint, click **Create**, and wait for the success message.
+1. To create the endpoint, click **Create**, and then wait for the success message.
 
     You will be returned to the **Add a route** blade and the **Endpoint** value will have been updated.
 
-1. Under **Data source**, ensure that **Device Telemetry Messages** is selected.
+1. On the **Add a route** blade, under **Data source**, ensure that **Device Telemetry Messages** is selected.
 
 1. Under **Enable route**, ensure that **Enable** is selected.
 
@@ -303,17 +326,17 @@ In this task we will add a message route to our IoT hub that will send telemetry
     |`vibrationLoggingRoute`|`DeviceMessages`|`sensorID = "VSLog"`|`vibrationLogEndpoint`|`true`|
     |`vibrationTelemetryRoute`|`DeviceMessages`|`sensorID = "VSTel"`|`vibrationTelemetryEndpoint`|`true`|
 
-We are now ready to update the Azure Stream Analytics job to hand the real-time device telemetry.
+You are now ready to update the Azure Stream Analytics job to hand the real-time device telemetry.
 
 ### Exercise 5: Add Telemetry Route
 
-With this new IoT Hub route in place, and the telemetry data streaming into the Event Hub, we need to update our Stream Analytics job. This job will need to consume the data from the Event Hub, perform analysis using the **AnomalyDetection_SpikeAndDip** ML model and then output the results to Power BI.
+With this new IoT Hub route in place, and the telemetry data streaming into the Event Hub, you now need to update our Stream Analytics job. This job will need to consume the data from the Event Hub, perform analysis using the **AnomalyDetection_SpikeAndDip** ML model and then output the results to Power BI.
 
 #### Task 1: Add a New Input to the Job
 
-1. Return to your Azure Portal dashboard
+1. Return to your Azure portal Dashboard.
 
-1. On your resource group tile, click **vibrationJob**.
+1. On your Resources tile, click **vibrationJob**.
 
     This is the Stream Analytics job that you created in the previous lab.
  
@@ -323,25 +346,25 @@ With this new IoT Hub route in place, and the telemetry data streaming into the 
 
 1. In the left hand navigation menu, under **Job topology**, click **Inputs**.
 
-1. On the **Inputs** pane, click **+ Add stream input** and then click **Event Hub**.
+1. On the **Inputs** pane, click **+ Add stream input**, and then click **Event Hub**.
 
 1. On the **Event Hub** pane, under **Input alias**, enter **vibrationEventInput**
 
 1. Ensure that **Select Event Hub from your subscriptions** is selected.
 
-1. Under **Subscription**, select the subscription that you have been using for this lab.
+1. Under **Subscription**, ensure that the subscription that you have been using for this course is selected.
 
-1. Under **Event Hub namespace**, select the namespace that you entered in the previous section.
+1. Under **Event Hub namespace**, ensure that the **vibrationNamespace[your-id}** namespace that you entered in the previous section is selected.
 
 1. Under **Event Hub name**, ensure that **Use existing** is selected and that the Event Hub instance you created in the previous section is selected.
 
-    The **vibrationeventhubinstance** may already be selected for you.
+    The **vibrationeventhubinstance** should already be selected for you.
 
-1. Under **Event Hub policy name**, click **Use existing**, and then ensure that **RootManageSharedAccessKey** is selected.
+1. Under **Event Hub policy name**, click **Use existing**, and then ensure that **RootManageSharedAccessKey** is selected in the dropdown.
 
-    > **Note**:  The **Event Hub policy key** is populated and read-only.
+    > **Note**: The **Event Hub policy key** is populated and read-only.
 
-1. Under **Event Hub Consumer group**, click **Use existing**, and then ensure that `$Default` is selected.
+1. Under **Event Hub Consumer group**, click **Use existing**, and then ensure that **$Default** is selected.
 
 1. Under **Event serialization format**, ensure that **JSON** is selected.
 
@@ -355,7 +378,7 @@ With this new IoT Hub route in place, and the telemetry data streaming into the 
 
 #### Task 2: Add a New Output
 
-1. To create an output, in the left hand navigation menu, under **Job topology**, click **Outputs**.
+1. On the left-side menu under **Job topology**, click **Outputs**.
 
     The **Outputs** pane is displayed.
 
@@ -365,7 +388,7 @@ With this new IoT Hub route in place, and the telemetry data streaming into the 
 
 1. Authorize the connection using the Power BI account you created earlier (or an existing account).
 
-1. On the **New output** pane, under **Output alias**, enter **vibrationBI**.
+1. On the **Power BI - New output** pane, under **Output alias**, enter **vibrationBI**.
 
 1. Under **Group workspace**, select the workspace you wish to use.
 
@@ -383,7 +406,7 @@ With this new IoT Hub route in place, and the telemetry data streaming into the 
 
 #### Task 3: Update the SQL query for the Job
 
-1. In the left hand navigation menu, under **Job topology**, click **Query**.
+1. On the left-side menu under **Job topology**, click **Query**.
 
 1. Copy the following SQL query, and then paste it *above* the existing short query.
 
@@ -423,21 +446,23 @@ With this new IoT Hub route in place, and the telemetry data streaming into the 
 
 1. To save the query, click **Save query**.
 
-1. In the left hand navigation menu, to navigate back to the home page of the job, click **Overview**.
+1. On the left-side menu, click **Overview**.
 
-1. To start the job again, click **Start** and then, at the bottom of the **Start job** pane, click **Start**.
+1. Near the top of the blade, click **Start**.
 
-In order for a human operator to make much sense of the output from this query, we need to visualize the data in a friendly way. One way of doing this visualization is to create a Power BI dashboard.
+1. On the **Start job** pane, under **Job output start time**, ensure **Now** is selected, and then click **Start**.
+
+In order for a human operator to easily interpret the output from this query, you need to visualize the data in a friendly way. One way of doing this visualization is to create a Power BI dashboard.
 
 ### Exercise 6: Create a Power BI Dashboard
 
-Now for the final part of the scenario - the actual data visualization. We have updated our job to process the vibration telemetry via the ML model and output the results to Power BI. Within Power BI, we need to create a dashboard with a number of tiles to visualize the results and provide decision support for the operator.
+Now for the final part of the scenario - the actual data visualization. You have updated your job to process the vibration telemetry via the ML model and output the results to Power BI. Within Power BI, you need to create a dashboard with a number of tiles to visualize the results and provide decision support for the operator.
 
 #### Task 1: Create a New Dashboard
 
 1. In your browser, navigate to [https://app.powerbi.com/](https://app.powerbi.com/).
 
-1. Once Power BI has opened, using the left navigation area, select the workspace that you chose above.
+1. Once Power BI has opened, on the left-side navigation menu, expand **Workspaces**, and then select the workspace that you specified above.
 
     > **Note**:  At the time of writing, Power BI has a *New Look* in preview. The steps in this task have been written assuming the *New Look* is **Off**. To turn off the *New Look*, on the toolbar at the top of the screen, ensure that the toggle reads **New look off**. 
 
@@ -447,15 +472,13 @@ Now for the final part of the scenario - the actual data visualization. We have 
 
 1. At the top right of the page, click **+ Create**, and then click **Dashboard**.
 
-1. In the **Create dashboard** popup, under **Dashboard name**, enter **Vibration Dash**
-
-1. To create the dashboard, click **Create**.
+1. In the **Create dashboard** popup, under **Dashboard name**, type **Vibration Dash** and then click **Create**.
 
     The new dashboard will be displayed as an essentially blank page.
 
 #### Task 2: Add the Vibration Gauge Tile
 
-1. To add the vibration gauge, at the top of the blank dashboard, click **+ Add tile**.
+1. To add a vibration gauge, at the top of the blank dashboard, click **+ Add tile**.
 
 1. In the **Add tile** pane, under **REAL-TIME DATA**, click **Custom Streaming Data**, and then click **Next**.
 
@@ -485,7 +508,7 @@ Now for the final part of the scenario - the actual data visualization. We have 
 
 #### Task 3: Add the SpikeAndDipScore Clustered Bar Chart Tile
 
-1. To add the SpikeAndDipScore Clustered Bar Chart, at the top of the blank dashboard, click **+ Add tile**.
+1. To add the SpikeAndDipScore Clustered Bar Chart, at the top of the dashboard, click **+ Add tile**.
 
 1. In the **Add tile** pane, under **REAL-TIME DATA**, click **Custom Streaming Data**, and then click **Next**.
 
@@ -495,13 +518,9 @@ Now for the final part of the scenario - the actual data visualization. We have 
 
     Notice that changing the visualization type changes the fields below.
 
-1. Skip the **Axis** and **Legend** fields - we don't need them.
-
 1. Under **Value**, click **+ Add value**, open the dropdown, and then click **SpikeAndDipScore**.
 
 1. To display the Tile details pane, click **Next**.
-
-1. This time, we don't need to enter a **Title** as the value label is sufficient.
 
 1. To close Tile details pane, click **Apply**.
 
@@ -511,13 +530,11 @@ Now for the final part of the scenario - the actual data visualization. We have 
 
 #### Task 4: Add the IsSpikeAndDipAnomaly Card Tile
 
-1. To add the IsSpikeAndDipAnomaly Card, at the top of the blank dashboard, click **+ Add tile**.
+1. At the top of the dashboard, to add a IsSpikeAndDipAnomaly Card visualization, click **+ Add tile**.
 
 1. In the **Add tile** pane, under **REAL-TIME DATA**, click **Custom Streaming Data**, and then click **Next**.
 
 1. On the **Add a custom streaming data tile** pane, under **YOUR DATASETS**, click **vibrationDatset**, and then click **Next**.
-
-    The pane will refresh to allow you to choose a visualization type and fields.
 
 1. Under **Visualization Type**, open the dropdown, and then click **Card**.
 
@@ -545,7 +562,7 @@ Now for the final part of the scenario - the actual data visualization. We have 
 
 Now to create a fourth tile, the `Anomalies Over the Hour` line chart.  This one is a bit more complex.
 
-1. At the top of the blank dashboard, click **+ Add tile**.
+1. At the top of the dashboard, click **+ Add tile**.
 
 1. In the **Add tile** pane, under **REAL-TIME DATA**, click **Custom Streaming Data**, and then click **Next**.
 
