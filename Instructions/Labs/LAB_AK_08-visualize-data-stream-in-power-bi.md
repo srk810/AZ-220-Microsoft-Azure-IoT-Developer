@@ -94,23 +94,23 @@ Follow these steps to sign up for a Power BI account. Once you complete this pro
 
 1. If you see a message requesting you prove you are not a robot, choose either **Text me** or **Call me** and supply the relevant information to receive a verification code, then continue to the next step in this procedure.
 
-    ![Are you a robot](./Media/LAB_AK_08-prove-robot.png)
+    ![Are you a robot](./media/LAB_AK_08-prove-robot.png)
 
     If, instead, you are informed that you already have an account, continue to sign-in and you are ready to use Power BI.
 
-    ![Are you a robot](./Media/LAB_AK_08-existing-account.png)
+    ![Are you a robot](./media/LAB_AK_08-existing-account.png)
 
 1. Check your phone texts or wait for the call, then enter the code that you received, then click **Sign up**.
 
-    ![Sign Up](./Media/LAB_AK_08-sign-up.png)
+    ![Sign Up](./media/LAB_AK_08-sign-up.png)
 
 1. Check your email for a message like this one.
 
-    ![Sign Up](./Media/LAB_AK_08-email-verification.png)
+    ![Sign Up](./media/LAB_AK_08-email-verification.png)
 
 1. On the next screen, enter your information and the verification code from the email. Select a region, review the policies that are linked from this screen, then select Start.
 
-    ![Sign Up](./Media/LAB_AK_08-create-account.png)
+    ![Sign Up](./media/LAB_AK_08-create-account.png)
 
 1. You're then taken to [Power BI sign in page](https://powerbi.microsoft.com/landing/signin/), and you can begin using Power BI.
 

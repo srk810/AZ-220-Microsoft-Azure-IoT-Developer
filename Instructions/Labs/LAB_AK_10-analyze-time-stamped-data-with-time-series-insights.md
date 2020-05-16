@@ -170,7 +170,7 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. In the Azure Portal, on the left side navigation menu, click **+ Create a resource**.
+1. On the Azure portal menu, click **+ Create a resource**.
 
 1. On the **New** blade, in the **Search the Marketplace** textbox, enter **time series insights**
 
@@ -202,11 +202,11 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. In the **Subscription** dropdown, select the subscription that you are using for this course.
 
-1. In the **IoT Hub name** dropdown, select the **iot-az220-training-_{YOUR_ID}_** Azure IoT Hub service that's already been provisioned.
+1. In the **IoT Hub name** dropdown, select the **iot-az220-training-{your-id}** Azure IoT Hub service that's already been provisioned.
 
 1. In the **IoT Hub access policy name** dropdown, click **iothubowner**.
 
-    In a production environment, it's best practice to create a new _Access Policy_ within Azure IoT Hub to use for configuring Time Series Insights (TSI) access. This will enable the security of TSI to be managed independently of any other services connected to the same Azure IoT Hub.  We are not doing that here for convenience reasons.
+    In a production environment, it's best practice to create a new _Access Policy_ within Azure IoT Hub to use for configuring Time Series Insights (TSI) access. This will enable the security of TSI to be managed independently of any other services connected to the same Azure IoT Hub.  You are not doing that here for convenience reasons.
 
 1. Under the **CONSUMER GROUP** section, next to the **IoT Hub consumer group** dropdown, click **New**.
 
@@ -232,11 +232,11 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
     > **Note**: You gave the **Time Series Insights environment** resource the name **tsi-az220-training**. You should also see the *Time Series Insights event source* that you created, but for now you want to have the TSI environment opened.  
  
-1. On the **Time Series Insights environment** blade, in the left side navigation menu, under **Settings**, click **Event Sources**.
+1. On the **Time Series Insights environment** blade, on the left-side menu under **Settings**, click **Event Sources**.
 
 1. On the **Event Sources** pane, notice the **iot-az220-training-{your-id}** Event Source in the list.
 
-    This is the event source that was configured when the TSI resource was created.
+    This is the event source that you configured when the TSI resource was created.
 
 1. To view the event source details, click **iot-az220-training-{your-id}**.
 
@@ -250,7 +250,7 @@ In this exercise, you will run the simulated devices so they starts sending tele
 
 1. On the **File** menu, click **Open Folder**.
 
-1. In the **Open Folder** dialog, navigate to the *Starter* folder for lab 10.
+1. In the **Open Folder** dialog, navigate to the lab 10 Starter folder.
 
     In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
 
@@ -259,7 +259,7 @@ In this exercise, you will run the simulated devices so they starts sending tele
           * 10-Explore and analyze time stamped data with Time Series Insights
             * Starter
 
-1. In the **Open Folder** dialog, click **Starter**, and then click **Select Folder**.
+1. In the **Open Folder** dialog, click **ContainerSimulation**, and then click **Select Folder**.
 
     If prompted, load the C# extension and/or perform a restore.
  
@@ -275,7 +275,7 @@ In this exercise, you will run the simulated devices so they starts sending tele
 
 1. Update the variable assignments with the connection strings that you saved earlier in the lab. 
 
-    Be sure to replace the placeholder values with the Connection String for the corresponding IoT Device.
+    Be sure to replace the placeholder values with the Connection String for the corresponding IoT device.
 
 1. On the **File** menu, click **Save**.
 
@@ -304,7 +304,7 @@ In this exercise, you will run the simulated devices so they starts sending tele
     12/27/2019 8:51:32 PM > Sending CONTAINER message: {"temperature":21.811727088543286,"humidity":50.0}
     ```
 
-1. Leave the **ContainerSimulation** app running for the remaining duration of this lab.
+1. Leave the **ContainerSimulation** app running for the remainder of this lab.
 
     This will ensure device telemetry from the three devices (Container, Truck, and Airplane) is being sent to Azure IoT Hub.
 
@@ -334,7 +334,7 @@ In this exercise, you will be introduced to working with time series data using 
 
 1. On the toolbar at the top of the page, if there is an option to enable the **Preview**, set **Preview** to **On**.
 
-1. On the left side navigation menu, ensure that **Analyze** is selected.
+1. On the left-side menu, ensure that **Analyze** is selected.
 
     You can expand the navigation menu to display the button names. The two options are "Analyze" and "Model". Choose Analyze.
 

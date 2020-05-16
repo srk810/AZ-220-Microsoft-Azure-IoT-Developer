@@ -831,5 +831,3 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
     Resetting temperature sensor..
     11/14/2019 22:26:45 - Send Json Event : {"machine":{"temperature":320.4,"pressure":0.99945886361358849},"ambient":{"temperature":20.940019742324957,"humidity":26},"timeCreated":"2019-11-14T22:26:45.7931201Z"}
     ```
-
-Once you have finished this lab, keep the resources around - you will need them for the next lab.

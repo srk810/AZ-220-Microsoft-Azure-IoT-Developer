@@ -325,7 +325,7 @@ In this task, you will create a new enrollment group within the Device Provision
 
     In large environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. You will have a single IoT Hub associated with the enrollment in this lab, so how you assign devices to IoT hubs doesn't really apply within this lab scenario. 
 
-1. Notice that the **Select the IoT hubs this group can be assigned to** dropdown has your **iot-az220-training-*{your-id}*** IoT Hub selected.
+1. Notice that the **Select the IoT hubs this group can be assigned to** dropdown has your **iot-az220-training-{your-id}** IoT Hub selected.
 
     This field is used to ensure that when the device is provisioned, it gets added to the correct IoT Hub.
 
