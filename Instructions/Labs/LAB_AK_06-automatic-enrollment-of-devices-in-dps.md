@@ -46,11 +46,11 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
 
     If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. Verify that the Azure Cloud Shell is using **Bash**.
+1. Verify that the Cloud Shell is using **Bash**.
 
     The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
@@ -325,7 +325,7 @@ In this task, you will create a new enrollment group within the Device Provision
 
     In large environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. You will have a single IoT Hub associated with the enrollment in this lab, so how you assign devices to IoT hubs doesn't really apply within this lab scenario. 
 
-1. Notice that the **Select the IoT hubs this group can be assigned to** dropdown has your **iot-az220-training-*{your-id}*** IoT Hub selected.
+1. Notice that the **Select the IoT hubs this group can be assigned to** dropdown has your **iot-az220-training-{your-id}** IoT Hub selected.
 
     This field is used to ensure that when the device is provisioned, it gets added to the correct IoT Hub.
 

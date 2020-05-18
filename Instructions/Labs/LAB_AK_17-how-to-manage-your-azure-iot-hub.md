@@ -53,9 +53,9 @@ The **lab17-setup.azcli** script is written to run in a **bash** shell environme
 
     If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. Verify that the Azure Cloud Shell is using **Bash**.
+1. Verify that the Cloud Shell is using **Bash**.
 
-1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
@@ -495,7 +495,7 @@ In this exercise, you will verify the existing environment, perform any necessar
 
 In the following steps you will verify that OpenSSL tools installed in an earlier lab are still available.
 
-1. In your browser, navigate to the [Azure Shell](https://shell.azure.com/) and login to your subscription.
+1. In your browser, navigate to the [Azure Cloud Shell](https://shell.azure.com/) and login to your subscription.
 
 1. At the shell prompt, enter the following command:
 

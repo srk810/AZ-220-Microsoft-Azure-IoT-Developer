@@ -231,8 +231,8 @@ namespace ContainerSimulation
 
         internal double ReadHumidity()
         {
-            temperature = GenerateSensorReading(temperature, TemperatureMin, TemperatureMax);
-            return temperature;
+            humidity = GenerateSensorReading(humidity, HumidityMin, HumidityMax);
+            return humidity;
         }
 
         // Common sensor reading generator
