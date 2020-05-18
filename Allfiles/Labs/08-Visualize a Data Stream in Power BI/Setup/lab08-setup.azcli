@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Change these values!
-YourID="{YOUR-ID}"
-Location="{YOUR-LOCATION}"
+YourID="dm200420"
+Location="eastus"
 
 RGName="rg-az220"
 
@@ -17,7 +17,7 @@ CurrentSubscription=$( az account show --query name -o tsv )
 CurrentSubscriptionId=$( az account show --query id -o tsv )
 
 # ensure variables have been set
-if [ $YourID = "{YOUR-ID}" ] || [ $Location = "{YOUR-LOCATION}" ]
+if [ $YourID = "{your-id}" ] || [ $Location = "{your-location}" ]
 then
     echo "You must change the YourID and/or Location values"
     exit 1
@@ -51,36 +51,68 @@ echo "Building Lab 08 Resources" > build.log
 
 # create resource group
 printf "${YELLOW}Create resource group ${RGName} - ${NC}"
-output=$( az group create --name $RGName --location $Location -o json 2>&1 >> build.log)
-reportStatus $? "$output"
-
+exists=$( az group exists --name rg-az220 -o tsv )
+if [ "${exists}" == "true" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az group create --name $RGName --location $Location -o json 2>&1 >> build.log)
+    reportStatus $? "$output"
+fi
 
 # create IoT Hub
 printf "${YELLOW}Create IoT Hub $IoTHubName - ${NC}"
-output=$( az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location -o json 2>&1 >> build.log)
-reportStatus $? "$output"
+exists=$( az iot hub list --query "[?contains(name, '${IoTHubName}')].name" -o tsv )
+if [ "${exists}" == "${IoTHubName}" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location -o json 2>&1 >> build.log)
+    reportStatus $? "$output"
+fi
 
 IoTHubConnectionString=$( az iot hub show-connection-string --hub-name $IoTHubName -o tsv )
 
 # create a device ID using Symmetric Key Auth and Connect it to the IoT Hub
 printf "${YELLOW}Create device ${DeviceID} - ${NC}"
-output=$( az iot hub device-identity create --hub-name $IoTHubName --device-id $DeviceID -o json 2>&1 >> build.log )
-reportStatus $? "$output"
+exists=$( az iot hub device-identity list  --hub-name iot-az220-training-dm200420 --query "[?contains(deviceId, '${DeviceID}')].deviceId" -o tsv )
+if [ "${exists}" == "${DeviceID}" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az iot hub device-identity create --hub-name $IoTHubName --device-id $DeviceID -o json 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
 
 DeviceConnectionString=$( az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id $DeviceID -o tsv )
 
 # Create a Storage Account
 printf "${YELLOW}Create storage account ${StorageAccountName} - ${NC}"
-output=$( az storage account create --name $StorageAccountName --resource-group $RGName --location $Location --sku Standard_LRS -o table 2>&1 >> build.log )
-reportStatus $? "$output"
+exists=$( az storage account list --resource-group ${RGName} --query "[?contains(name, '${StorageAccountName}')].name" -o tsv )
+if [ "${exists}" == "${StorageAccountName}" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az storage account create --name $StorageAccountName --resource-group $RGName --location $Location --sku Standard_LRS -o table 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
+
 
 StorageConnectionString=$( az storage account show-connection-string --name $StorageAccountName -o tsv )
 StorageAccountKey=$( az storage account keys list -g $RGName -n $StorageAccountName --query "[0].value" -o tsv )
 
 # Create a Storage Container
 printf "${YELLOW}Create storage container ${StorageContainer} - ${NC}"
-output=$( az storage container create -n $StorageContainer --connection-string $StorageConnectionString -o table 2>&1 >> build.log )
-reportStatus $? "$output"
+exists=$( az storage container list --connection-string $StorageConnectionString --query "[?contains(name, '${StorageContainer}')].name" -o tsv )
+if [ "${exists}" == "${StorageContainer}" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az storage container create -n $StorageContainer --connection-string $StorageConnectionString -o table 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
+
+exit
 
 # Add IoT Hub Message Route for Storage
 printf "${YELLOW}Create IoT Hub endpoint vibrationLogEndpoint - ${NC}"
@@ -90,6 +122,8 @@ reportStatus $? "$output"
 printf "${YELLOW}Create IoT Hub route vibrationLoggingRoute - ${NC}"
 output=$( az iot hub route create -g $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --source-type DeviceMessages --route-name vibrationLoggingRoute --condition "sensorID = \"VSLog\"" --enabled true -o table 2>&1 >> build.log )
 reportStatus $? "$output"
+
+exit
 
 # Create an Event Hubs namespace. 
 printf "${YELLOW}Create event hubs namespace ${EventHubNamespace} - ${NC}"
