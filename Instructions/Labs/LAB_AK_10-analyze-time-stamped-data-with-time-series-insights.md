@@ -55,11 +55,11 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
 
 1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. Verify that the Azure Cloud Shell is using **Bash**.
+1. Verify that the Cloud Shell is using **Bash**.
 
     The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
