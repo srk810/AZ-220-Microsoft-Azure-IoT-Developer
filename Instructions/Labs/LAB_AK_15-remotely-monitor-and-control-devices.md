@@ -502,6 +502,8 @@ In this task, you will begin work on the back-end app that will be used to recei
 
     // INSERT service client variable below here
 
+    // INSERT registry manager variable below here
+
     // Connection string for your IoT Hub.
     private readonly static string serviceConnectionString = "<your service connection string>";
 
@@ -871,13 +873,13 @@ To test the direct method, you will need to start the apps in the correct order.
 
 1. Switch to the instance of Visual Studio Code that contains the **cheesecavedevice** device app.
 
-1. To start the **cheesecavedevice** device app, open a Terminal pane and the enter a `dotnet run` command.
+1. To start the **cheesecavedevice** device app, open a Terminal pane and then enter a `dotnet run` command.
 
     It will begin writing to the terminal, and telemetry messages will be displayed.
 
 1. Switch to the instance of Visual Studio Code that contains the **CheeseCaveOperator** back-end app.
 
-1. To start the **CheeseCaveOperator** back-end app, open a Terminal pane and the enter a `dotnet run` command.
+1. To start the **CheeseCaveOperator** back-end app, open a Terminal pane and then enter a `dotnet run` command.
 
     > **Note**:  If you see the message `Direct method failed: timed-out` then double check you have saved the changes in the **CheeseCaveDevice** and started the app.
 
@@ -926,7 +928,7 @@ In this exercise, you will add some code to both the device app and back-end ser
     private static RegistryManager registryManager;
     ```
 
-1. Locate the `INSERT create registry manager instance below here` comment.
+1. Locate the `INSERT register desired property changed handler code below here` comment.
 
 1. To add the functionality that creates the registry manager instance and sets the twin properties, enter the following code:
 
@@ -938,7 +940,7 @@ In this exercise, you will add some code to both the device app and back-end ser
 
 1. Locate the `INSERT Device twins section below here` comment.
 
-1. Just above the closing squiggly brace for the **ReadDeviceToCloudMessages** class, add the following code:
+1. To add the functionality that updates device twin desired properties, enter the following code:
 
     ```csharp
     // Device twins section.
@@ -976,7 +978,7 @@ In this exercise, you will add some code to both the device app and back-end ser
 
 #### Task 2: Add Code to Synchronize Device Twin Settings for the Device
 
-1. Return to the Visual Studio Code instance that is running the **CheeseCaveDevice** app.
+1. Return to the Visual Studio Code instance that contains the **cheesecavedevice** app.
 
 1. If the app is still running, place input focus on the terminal and press **CTRL+C** to exit the app.
 
@@ -1034,20 +1036,28 @@ In this exercise, you will add some code to both the device app and back-end ser
 
 #### Task 3: Test the Device Twins
 
-To test the method, start the apps in the correct order.
+To test the code that manages device twin desired property changes, you will start the apps in the correct order, device application first and then back-end application.
 
-1. Start the **CheeseCaveDevice** device app. It will begin writing to the terminal, and telemetry will appear.
+1. Switch to the instance of Visual Studio Code that contains the **cheesecavedevice** device app.
 
-1. Start the **CheeseCaveOperator** back-end app.
+1. To start the **cheesecavedevice** device app, open a Terminal pane and then enter a `dotnet run` command.
 
-1. Check the console output for the **CheeseCaveDevice** device app and confirm that the device twin synchronized correctly.
+    It will begin writing to the terminal, and telemetry messages will be displayed.
+
+1. Switch to the instance of Visual Studio Code that contains the **CheeseCaveOperator** back-end app.
+
+1. To start the **CheeseCaveOperator** back-end app, open a Terminal pane and then enter a `dotnet run` command.
+
+1. Switch back to the instance of Visual Studio Code that contains the **cheesecavedevice** device app.
+
+1. Check the console output and confirm that the device twin synchronized correctly.
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-received.png)
 
-    If we let the fan do its work, we should eventually get rid of those red alerts!
+    If you let the fan do its work, you should eventually see red alerts turn off (unless the fan fails)
 
     ![Console Output](./Media/LAB_AK_15-cheesecave-device-twin-success.png)
 
 1. For both instances of Visual Studio Code, stop the app and then close the Visual Studio Code window.
 
-The code provided in this module isn't industrial quality. It does show how to use direct methods and device twins. However, the messages are sent only when the back-end service app is first run. Typically, a back-end service app would require a browser interface, for an operator to send direct methods, or set device twin properties, when required.
+The code that you implemented in this lab isn't production quality, but it does demonstrate the basics of monitoring and controlling an IoT device using a combination direct methods and device twin properties. You should recognize that in this implementation, operator control messages are only being sent when the back-end service app is first run. Typically, a back-end service app would require a browser interface, for an operator to send direct methods, or set device twin properties, whenever required.
