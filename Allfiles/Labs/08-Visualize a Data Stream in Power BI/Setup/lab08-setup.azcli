@@ -75,7 +75,7 @@ IoTHubConnectionString=$( az iot hub show-connection-string --hub-name $IoTHubNa
 
 # create a device ID using Symmetric Key Auth and Connect it to the IoT Hub
 printf "${YELLOW}Create device ${DeviceID} - ${NC}"
-exists=$( az iot hub device-identity list  --hub-name iot-az220-training-dm200420 --query "[?contains(deviceId, '${DeviceID}')].deviceId" -o tsv )
+exists=$( az iot hub device-identity list  --hub-name $IoTHubName --query "[?contains(deviceId, '${DeviceID}')].deviceId" -o tsv )
 if [ "${exists}" == "${DeviceID}" ]
 then
     printf "${GREEN}Already exists\n${NC}"
