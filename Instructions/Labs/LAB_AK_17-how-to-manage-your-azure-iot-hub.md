@@ -167,7 +167,7 @@ In this exercise, you will enable diagnostic logs and use them to check for erro
 
     Your dashboard should have a link to your IoT Hub on the on the rg-az220 resource group tile.
 
-1. On the left side navigation menu, under **Monitoring**, click **Diagnostic settings**.
+1. On the left-side menu, under **Monitoring**, click **Diagnostic settings**.
 
     > **Note**: Current documentation suggests that Diagnostics may be disabled by default. If so, you may need to "Turn on diagnostics" in order to collect diagnostics data for your IoT Hub. When you click **Turn on diagnostics**, a **Diagnostic settings** pane will open.
 
@@ -215,7 +215,7 @@ In this task, you will set up various metrics to watch for when messages are sen
 
     The previous task left you on the **Diagnostics settings** pane of the IoT HUb blade.
 
-1. On the left side navigation menu, under **Monitoring**, click **Metrics**.
+1. On the left-side menu, under **Monitoring**, click **Metrics**.
 
     The **Metrics** pane is displayed showing a new, empty, chart.
 
@@ -223,11 +223,11 @@ In this task, you will set up various metrics to watch for when messages are sen
 
 1. In the context menu that appears, under **Time range**, click **Last 4 hours**.
 
-1. In the same context menu, under **Time granularity**, click **1 minute**, and under **Show time as**, ensure that **Local** is selected.
+1. In the same context menu, in the **Time granularity** dropdown, click **1 minute**, and under **Show time as**, ensure that **Local** is selected.
 
 1. To save your time settings, click **Apply**.
 
-1. Take a minute to examine the settings are used to specify the chart Metrics.
+1. Take a minute to examine the settings that are used to specify the chart Metrics.
 
     Under the **Chart Title** and the toolbar for the chart, you will see an area to specify Metrics. 
 
@@ -260,19 +260,19 @@ In this task, you will set up various metrics to watch for when messages are sen
 
 1. Under **Aggregation**, ensure that **Avg** is selected.
 
-    Your screen now shows the minimized metric for Telemetry messages sent, plus the new metric for avg connected devices. Notice that the chart title has updated to reflect both metrics.
+    Your screen should now show the minimized metric for Telemetry messages sent, as well as the new metric for avg connected devices. Notice that the chart title has updated to reflect both metrics.
 
     > **Note**: To edit the chart title, click the **pencil** to the right of the title.
 
 1. Under the **Chart Title**, on the right side of the toolbar, click **Pin to dashboard**, and then click **Pin to current dashboard**
 
-    > **Note**:  In order to retain the chart you have just created, it **must** be pinned to a dashboard.
+    > **Note**: In order to retain the chart you have just created, it **must** be pinned to a dashboard.
 
 1. Navigate to the "AZ-220" dashboard and verify the chart is displayed.
 
     > **Note**: You can customize the size and position of the chart by using drag and drop operations.
 
-Now that you have enabled logging and setup a chart to monitor metrics, it is a good time for you to set up an alert.
+Now that you have enabled logging and setup a chart to monitor metrics, it's a good time for you to set up an alert.
 
 ### Exercise 3: Configure an Alert
 
@@ -284,23 +284,29 @@ For your upcoming proof-of-concept demonstration, you want to create an Alert th
 
 In this exercise, you are going to add an alert that triggers when 5 or more devices have connected.
 
-1. In your Azure portal window, open your IoT Hub blade.
+1. If necessary, log in to your Azure portal using your Azure account credentials.
 
-1. On the left side navigation menu, under **Monitoring**, click **Alerts**.
+    If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-    The empty **Alerts** page is displayed. Notice that the **Subscription**, **Resource group**, **Resource** and **Time range** fields are pre-populated.
+1. On your Azure dashboard, click **iot-az220-training-{your-id}**.
+
+    Your dashboard should have a link to your IoT Hub on the on the rg-az220 resource group tile.
+
+1. On the left-side menu, under **Monitoring**, click **Alerts**.
+
+    The empty **Alerts** pane is displayed. Notice that the **Subscription**, **Resource group**, **Resource** and **Time range** fields are pre-populated.
 
 1. In the **Time range** dropdown, click **Past hour**.
 
 1. At the top of the **Alerts** pane, click **+ New alert rule**
 
-    The **Create rule** blade should now be displayed.
+    The **Create alert rule** blade should now be displayed.
 
-1. Take a moment to review the **Create rule** blade.
+1. Take a moment to review the **Create alert rule** blade.
 
-    At the top of the blade are two fields - **RESOURCE** and **HIERARCHY**. Notice that these fields are pre-populated with properties from your IoT Hub. If you needed to change the pre-selected resource, you would click **Select** under RESOURCE.
+    The blade includes fourse sections: Scope, Condition, Action group, and Alert rule details. Scope you can see two fields - Resource and Hierarchy. Notice that these fields are pre-populated with properties from your IoT Hub. You can edit the pre-selected resource if needed.
 
-1. Under **CONDITION**, click **Add**.
+1. Under **Condition**, click **Select condition**.
 
     The **Configure signal logic** pane should now be displayed. Notice that there is a paginated table of available signals displayed. The fields above the table filter the table to assist in finding the signal types you want.
 
@@ -332,7 +338,7 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     > **Note**:  As the names suggest, *Static Thresholds* specify a constant expression for the threshold, whereas *Dynamic Thresholds* detection leverages advanced machine learning (ML) to learn metrics' historical behavior, identify patterns and anomalies that indicate possible service issues. You can learn more about *Dynamic Thresholds* [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-dynamic-thresholds).
 
-    We are going to create a static threshold that raises and alert whenever the *connected devices (preview)* signal is equal to 5 or more.
+    You are going to create a static threshold that raises and alert whenever the *connected devices (preview)* signal is equal to 5 or more.
 
 1. In the **Operator** dropdown, click **Greater than or equal to**.
 
@@ -352,19 +358,21 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
 1. At the bottom of the **Configure signal logic** pane, to configure the alert condition, click **Done**.
 
-    The **Configure signal logic** pane closes and the **Create rule** blade is shown. Notice that the **CONDITION** is now populated and a **Monthly cost in USD** is displayed. At the time of writing, the estimated cost of the alert condition is $0.10.
+    The **Configure signal logic** pane closes and the **Create alert rule** blade is shown. Notice that the **Condition** is now populated and a **Estimated monthly cost** is displayed. At the time of writing, the estimated cost of the alert condition is $0.10 (USD).
 
     Next, you need to configure the action taken when the alert condition is met.
 
-1. Take a moment to review the **ACTIONS GROUPS (optional)** area. 
+1. Take a moment to review the **Action group** area. 
 
-    Notice that no action group is selected. There are two options available - **Add** and **Create**. 
+    Notice that no action group is selected. There is an option to **Select action group**. 
 
     > **Note**: An action group is a collection of notification preferences defined by the owner of an Azure subscription. An action group name must be unique within the Resource Group is is associated with. Azure Monitor and Service Health alerts use action groups to notify users that an alert has been triggered. Various alerts may use the same action group or different action groups depending on the user's requirements. You may configure up to 2,000 action groups in a subscription. You can learn more about creating and managing Action Groups [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/action-groups).
 
-1. Under **ACTIONS GROUPS (optional)**, click **Create**.
+1. Under **Action group**, click **Select action group**.
 
-    The **Add action group** blade is displayed.
+    The **Select an action group to attach to this alert rule** pane is displayed.
+
+1. On the **Select an action group to attach to this alert rule** pane, click **Create action group**.
 
 1. Under **Action group name**, enter **AZ-220 Email Action Group**
 
@@ -414,17 +422,17 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     Then, in quick succession, you should receive both an SMS notification and an email, both of which inform you that you have been added to the **AZ220EmailAG** action group. In the SMS message, you will note that you can reply to the message to stop receiving future notifications and so on - you can learn more about the options [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-sms-behavior). In the email, you have links that you can click to view the details on action groups and, towards the bottom of the email (in a smaller font) you can see the option to unsubscribe.
 
-    Next, you will configure the **ALERT DETAILS**.
+    Next, you will configure the **Alert rule details**.
 
-1. On the **Create rule** blade, under **Alert rule name**, enter **Connected Devices Greater or Equal To 5**
+1. On the **Create alert rule** blade, in the **Alert rule name** field, enter **Connected Devices Greater or Equal To 5**
 
     The name should be descriptive enough to identify the alert.
 
-1. Under **Description**, enter **This alert is raised when the number of devices connected to the iot-az220-training-{your-id} hub is greater than or equal to 5.**
+1. In the **Description** filed, enter **This alert is raised when the number of devices connected to the iot-az220-training-{your-id} hub is greater than or equal to 5.**
 
     The description field is optional, but recommended.
 
-1. Under **Severity**, leave **Sev 3** selected.
+1. In the **Severity** field, ensure that **Sev 3** is selected.
 
     In our scenario, this alert is *informational* and not indicative of any critical failure, therefore **Sev 3** is the correct choice.
 
@@ -437,7 +445,7 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
     >* Sev 3 = Informational
     >* Sev 4 = Verbose
 
-1. Under **Enable rule upon creation**, ensure that **Yes** is selected.
+1. For the **Enable rule upon creation** field, ensure that the checkbox is selected (checked).
 
     > **Note**:  It can take up to 10 minutes for a metric alert rule to become active.
 
@@ -459,13 +467,9 @@ In this exercise, you will verify the existing environment, perform any necessar
 
 1. In your browser, navigate to the [Azure Portal](https://portal.azure.com/) and login to your subscription.
 
-1. On your Dashboard, check the "rg-az220" resource group tile for the **dps-az220-training-{your-id}** Device Provisioning Service.
+1. On your **rg-az220** resource group tile, click **dps-az220-training-{your-id}**.
 
-    > **Note**:  If **dps-az220-training-{your-id}** does not exist, return to Exercise 1 in this lab and run the setup script.
-
-1. On your resource group tile, click  **dps-az220-training-{your-id}**.
-
-1. On the left side navigation menu, under **Settings**, click **Certificates**.
+1. On the left-side menu, under **Settings**, click **Certificates**.
 
 1. With the **Certificates** pane open, follow these instructions:
 
@@ -480,7 +484,7 @@ In this exercise, you will verify the existing environment, perform any necessar
         * Move directly to Task 2 of this exercise - **Task 2: Verify OpenSSL**.
     * If the certificate status is **Verified**, continue to the next step.
 
-1. On the left side navigation menu, under **Settings**, click **Manage enrollments**
+1. On the left-side menu, under **Settings**, click **Manage enrollments**
 
 1. On the **Manage enrollments** pane, to view the list of enrollment groups in DPS, click **Enrollment Groups**.
 
@@ -503,7 +507,7 @@ In the following steps you will verify that OpenSSL tools installed in an earlie
     cd ~/certificates
     ```
 
-    If you see an error that states **No such file or directory**, move directly to Task 3 of this exercise - **Task 3: Install OpenSSL Tools**.
+1. If the command above generates an error that states **No such file or directory**, move directly to Task 3 of this exercise - **Task 3: Install OpenSSL Tools**.
 
 1. At the Cloud Shell command prompt, enter the following command:
 
@@ -538,7 +542,7 @@ In the following steps you will verify that OpenSSL tools installed in an earlie
 
 The first X.509 certificates needed are CA and intermediate certificates. These can be generated using the `certGen.sh` helper script by passing the `create_root_and_intermediate` option.
 
-1. In the cloud shell, ensure that you are in the `~/certificates` directory. 
+1. In the cloud shell, ensure that you are in the **~/certificates** directory. 
 
 1. At the Cloud Shell command prompt, to generate the CA and intermediate certificates, enter the following command:
 
@@ -556,15 +560,17 @@ The first X.509 certificates needed are CA and intermediate certificates. These 
 
 1. In the Azure portal, open the **dps-az220-training-{your-id}** Device Provisioning Service.
 
-1. On the **Device Provisioning Service** blade, in the left side navigation menu under **Settings**, click **Certificates**.
+1. On the **Device Provisioning Service** blade, on the left-side menu under **Settings**, click **Certificates**.
+
+1. If you see an existing **root-ca-cert** certificate, select and delete it.
 
 1. On the **Certificates** pane, at the top of the blade, click **Add**.
 
-    > **Note**:  If you see an existing certificate, select and delete it.
+1. On the **Add Certificate** pane, to the right of the **Certificate .pem or .cer file** field, click the folder icon.
 
-1. On the **Add Certificate** pane, select the x.509 CA Certificate file in the **Certificate .pem or .cer file** upload field. 
+1. In the **Open** dialog, navigate to your downloads folder, click **azure-iot-test-only.root.ca.cert.pem**, and then click **Open**. 
 
-    This is the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that was just downloaded.
+    This is the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that you just created.
 
 1. In the **Certificate Name** field, enter **root-ca-cert**
 
@@ -610,19 +616,23 @@ The first X.509 certificates needed are CA and intermediate certificates. These 
 
 1. In the Azure portal, navigate back to the **Certificate Details** pane for the **CA Certificate**.
 
-1. In the **Verification Certificate .pem or .cer file** field, click **verification-code.cert.pem**.
+1. To the right of the **Verification Certificate .pem or .cer file** field, click the folder icon.
+
+1. In the **Open** dialog, navigate to your downloads folder, click **verification-code.cert.pem**, and then click **Open**.
 
     This is your newly created and downloaded **Verification Certificate** file.
 
 1. On the **Certificate Details** pane, click **Verify**.
 
-    With the **Proof of Possession** completed for the CA Certificate, notice the **Status** for the certificate in the **Certificates** pane is now displayed as **Verified**.
+1. On the **Certificates** pane, click **Refresh**.
+
+    With the **Proof of Possession** completed for the CA Certificate, notice the **Status** for the root-ca-cert certificate is now displayed as **Verified**.
 
 #### Task 5: Create an Enrollment Group
 
 1. In the Azure portal, ensure that you have your **dps-az220-training-{your-id}** Device Provisioning Service blade open.
 
-1. On the left side navigation menu, under **Settings**, click **Manage enrollments**.
+1. On the left-side menu, under **Settings**, click **Manage enrollments**.
 
     There should not be any enrollment groups listed.
  
@@ -742,7 +752,7 @@ With these certificates available, you are ready to configure the device simulat
 
 #### Task 2: Add Certificates to Simulator
 
-1. Copy the downloaded **X.509 Device Certificate** files to the lab 17 **Starter** folder.
+1. Copy the downloaded X.509 Device Certificate files to the lab 17 **Starter** folder.
 
     In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
 
@@ -805,15 +815,21 @@ With these certificates available, you are ready to configure the device simulat
 
     > **Note**: Be sure to replace {your-id} with the ID you created at the start of this class
 
-1. Copy the output of the command
+1. Copy the output generated by the command above.
+
+    You can double-click the value to select it, and then copy it normally.
 
 1. Return to Visual Studio Code.
 
 1. Replace the `<DPS-ID-Scope>` value with the value that you copied from Azure Cloud Shell.
 
-   ```csharp
-   private static string dpsIdScope = "0ne000A6D9B";
-   ```
+    Your code will look similar to the following:
+
+    ```csharp
+    private static string dpsIdScope = "0ne000A6D9B";
+    ```
+
+1. On the **File** menu, click **Save**.
 
 This app is very similar to the app used in the earlier lab **L06-Automatic Enrollment of Devices in DPS**. The primary difference is that instead of just enrolling a single device simulator and then sending telemetry, it instead enrolls 9 devices, one every 30 seconds. Each simulated device will then send telemetry. This should then cause our alert to be raised and log monitoring data to storage.
 
@@ -875,7 +891,7 @@ To use the Azure Portal to review alerts, complete the following steps.
 
     The **Monitor - Overview** page is displayed. This is the overview for all of the monitoring activities for the current subscription.
 
-1. On the left side navigation menu, near the top of the list, click **Alerts**.
+1. On the left-side menu, near the top of the list, click **Alerts**.
 
     This alerts view shows all alerts for all subscriptions. Let's filter this to the IoT Hub.
 
@@ -919,7 +935,7 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
 
     You should see that there is activity displayed.
 
-1. On the left hand navigation menu, to view the data that has been logged, click **Storage explorer (preview)**.
+1. On the left-side menu, to view the data that has been logged, click **Storage Explorer (preview)**.
 
 1. In the **Storage Explorer** pane, expand the **BLOB CONTAINERS** node.
 
