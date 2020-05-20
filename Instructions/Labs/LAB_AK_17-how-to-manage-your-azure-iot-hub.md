@@ -8,13 +8,13 @@ lab:
 
 ## Lab Scenario
 
-Contoso's Asset Monitoring and Tracking Solution is working great. The system provides continuous monitoring throughout the packaging and shipping process. You have implemented Group Enrollments within DPS to provision devices at scale, and when the container arrives at the destination, the IoT device "decommissioned" through DPS so that it can re-used for future shipments.
+Contoso's Asset Monitoring and Tracking Solution is working great. The system provides continuous monitoring throughout the packaging and shipping process. You have implemented Group Enrollments within DPS to provision devices at scale, and when the container arrives at the destination, the IoT device is "decommissioned" through DPS so that it can re-used for future shipments.
 
 To help manage device utilization and other characteristics of the solution, the IT department has asked your team to implement Azure monitoring and logging services within the IoT solution.
 
 You agree to begin by implementing some simple metrics that can be reviewed with the IT folks before you commit to any additional workload.
 
-In this lab, you will implement monitoring to track the number of connected devices and telemetry messages sent, as well as send connection events to a log. In addition, you will create an alert that will be triggered based upon the average number of devices connected. To test the system, you will configure 9 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
+In this lab, you will implement monitoring to track the number of connected devices, the number of telemetry messages sent, and you will also send connection events to a log. In addition, you will create an alert that is triggered when the number of connected devices exceeds a threshold limit. To test the system, you will configure 9 simulated IoT Devices that will authenticate with DPS using a Device CA Certificate generated on the Root CA Certificate chain. The IoT Devices will be configured to send telemetry to the the IoT Hub.
 
 The following resources will be created:
 
@@ -169,13 +169,13 @@ In this exercise, you will enable diagnostic logs and use them to check for erro
 
 1. On the left side navigation menu, under **Monitoring**, click **Diagnostic settings**.
 
-    > **Note**: Current documentation suggests that Diagnostics may be disabled by default. If so, you may need to "Turn on diagnostics" in order to collect diagnostics data for your IoT Hub. When you click **Turn on diagnostics**, a **Diagnostic settings** blade will open.
+    > **Note**: Current documentation suggests that Diagnostics may be disabled by default. If so, you may need to "Turn on diagnostics" in order to collect diagnostics data for your IoT Hub. When you click **Turn on diagnostics**, a **Diagnostic settings** pane will open.
 
 1. On the **Diagnostics settings** pane, under **Name**, click **+ Add diagnostic setting**.
 
 1. In the **Diagnostic settings name** textbox, enter **diags-hub**
 
-1. Take a minute to review the options listed under **Destination details**.
+1. Take a moment to review the options listed under **Destination details**.
 
     You can see that there are 3 options available for routing the metrics - you can learn more about each by following the links below:
 
@@ -183,7 +183,7 @@ In this exercise, you will enable diagnostic logs and use them to check for erro
     * [Stream Azure monitoring data to an event hub](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/stream-monitoring-data-event-hubs)
     * [Collect Azure resource logs in Log Analytics workspace in Azure Monitor](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/resource-logs-collect-workspace)
 
-    In this lab we will use the storage account option.
+    In this lab, you will use the storage account option.
 
 1. Under **Destination details**, click **Archive to a storage account**.
 
