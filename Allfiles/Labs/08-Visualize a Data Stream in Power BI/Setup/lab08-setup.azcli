@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Change these values!
-YourID="dm200420"
-Location="eastus"
+YourID="{your-id}"
+Location="{your-location}"
 
 RGName="rg-az220"
 
@@ -37,7 +37,7 @@ reportStatus() {
     fi
     if [ $1 -eq "0" ]
     then 
-        printf "${GREEN}Success${NC}\n"
+        printf "${GREEN}Succeeded${NC}\n"
     else
         printf "${RED}Failed - ${2}${NC}\n"
         echo $2 >> build.log
@@ -112,40 +112,73 @@ else
     reportStatus $? "$output"
 fi
 
-exit
-
 # Add IoT Hub Message Route for Storage
 printf "${YELLOW}Create IoT Hub endpoint vibrationLogEndpoint - ${NC}"
-output=$( az iot hub routing-endpoint create --resource-group $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --endpoint-type azurestoragecontainer  --endpoint-resource-group $RGName --endpoint-subscription-id $CurrentSubscriptionId --connection-string $StorageConnectionString --container-name $StorageContainer --batch-frequency 100 --chunk-size 100 --ff "{iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}" -o table 2>&1 >> build.log )
-reportStatus $? "$output"
+exists=$( az iot hub routing-endpoint list --resource-group $RGName --hub-name $IoTHubName --query "storageContainers[?contains(name, 'vibrationLogEndpoint')].name" -o tsv )
+if [ "${exists}" == "vibrationLogEndpoint" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az iot hub routing-endpoint create --resource-group $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --endpoint-type azurestoragecontainer  --endpoint-resource-group $RGName --endpoint-subscription-id $CurrentSubscriptionId --connection-string $StorageConnectionString --container-name $StorageContainer --batch-frequency 100 --chunk-size 100 --ff "{iothub}/{partition}/{YYYY}/{MM}/{DD}/{HH}/{mm}" -o table 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
 
 printf "${YELLOW}Create IoT Hub route vibrationLoggingRoute - ${NC}"
-output=$( az iot hub route create -g $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --source-type DeviceMessages --route-name vibrationLoggingRoute --condition "sensorID = \"VSLog\"" --enabled true -o table 2>&1 >> build.log )
-reportStatus $? "$output"
-
-exit
+exists=$( az iot hub route list --resource-group $RGName --hub-name $IoTHubName --query "[?contains(name, 'vibrationLoggingRoute')].name" -o tsv )
+if [ "${exists}" == "vibrationLoggingRoute" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az iot hub route create -g $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --source-type DeviceMessages --route-name vibrationLoggingRoute --condition "sensorID = \"VSLog\"" --enabled true -o table 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
 
 # Create an Event Hubs namespace. 
 printf "${YELLOW}Create event hubs namespace ${EventHubNamespace} - ${NC}"
-output=$( az eventhubs namespace create --name $EventHubNamespace --resource-group $RGName -l $Location -o table 2>&1 >> build.log )
-reportStatus $? "$output"
+
+exists=$( az eventhubs namespace list --resource-group rg-az220 --query "[?contains(name, '${EventHubNamespace}')].name"  -o tsv )
+if [ "${exists}" == "${EventHubNamespace}" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az eventhubs namespace create --name $EventHubNamespace --resource-group $RGName -l $Location -o table 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
 
 EventHubNamespaceConnectionString=$( az eventhubs namespace authorization-rule keys list --resource-group $RGName --namespace-name $EventHubNamespace --name RootManageSharedAccessKey --query "primaryConnectionString" -o tsv )
 EventHubNamespaceConnectionString="$EventHubNamespaceConnectionString;EntityPath=$EventHubName"
 
 # Create an event hub. 
 printf "${YELLOW}Create event hub ${EventHubName} - ${NC}"
-output=$( az eventhubs eventhub create --name $EventHubName --resource-group $RGName --namespace-name $EventHubNamespace -o table 2>&1 >> build.log )
-reportStatus $? "$output"
+exists=$( az eventhubs eventhub list --resource-group rg-az220 --namespace-name $EventHubNamespace --query="[?contains(name, '${EventHubName}')].name" -o tsv )
+if [ "${exists}" == "${EventHubName}" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az eventhubs eventhub create --name $EventHubName --resource-group $RGName --namespace-name $EventHubNamespace -o table 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
 
 # Add IoT Hub Message Route for Real-time Messages
 printf "${YELLOW}Create routing-endpoint vibrationTelemetryEndpoint - ${NC}"
-output=$( az iot hub routing-endpoint create --resource-group $RGName --hub-name $IoTHubName --endpoint-name vibrationTelemetryEndpoint --endpoint-type eventhub  --endpoint-resource-group $RGName --connection-string $EventHubNamespaceConnectionString --endpoint-subscription-id $CurrentSubscriptionId -o table 2>&1 >> build.log )
-reportStatus $? "$output"
+exists=$( az iot hub routing-endpoint list --resource-group $RGName --hub-name $IoTHubName --query "eventHubs[?contains(name, 'vibrationTelemetryEndpoint')].name" -o tsv )
+if [ "${exists}" == "vibrationTelemetryEndpoint" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az iot hub routing-endpoint create --resource-group $RGName --hub-name $IoTHubName --endpoint-name vibrationTelemetryEndpoint --endpoint-type eventhub  --endpoint-resource-group $RGName --connection-string $EventHubNamespaceConnectionString --endpoint-subscription-id $CurrentSubscriptionId -o table 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
 
-printf "${YELLOW}Create iot hub route ${vibrationLogEndpoint} - ${NC}"
-output=$( az iot hub route create -g $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --source-type DeviceMessages --route-name vibrationTelemetryRoute --condition "sensorID = \"VSTel\"" --enabled true -o table 2>&1 >> build.log )
-reportStatus $? "$output"
+printf "${YELLOW}Create iot hub route vibrationLogEndpoint - ${NC}"
+exists=$( az iot hub route list --resource-group $RGName --hub-name $IoTHubName --query "[?contains(name, 'vibrationTelemetryRoute')].name" -o tsv )
+if [ "${exists}" == "vibrationTelemetryRoute" ]
+then
+    printf "${GREEN}Already exists\n${NC}"
+else
+    output=$( az iot hub route create -g $RGName --hub-name $IoTHubName --endpoint-name vibrationLogEndpoint --source-type DeviceMessages --route-name vibrationTelemetryRoute --condition "sensorID = \"VSTel\"" --enabled true -o table 2>&1 >> build.log )
+    reportStatus $? "$output"
+fi
 
 # Call the PowerShell script to setup Azure Streaming
 printf "${YELLOW}Setup Azure Streaming Job - launching PowerShell${NC}\n"
@@ -160,7 +193,7 @@ printf "${YELLOW}Setup Azure Streaming Job - launching PowerShell${NC}\n"
     -Container "$StorageContainer" \
     -ScriptLocation "$( pwd )" 
 
-
-printf "${YELLOW}Device Connection String for the application:${NC}\n"
+echo ""
+printf "${GREEN}Device Connection String for the application:${NC}\n"
 echo ----------------------------------------------------
 echo $DeviceConnectionString
