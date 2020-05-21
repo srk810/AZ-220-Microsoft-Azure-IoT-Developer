@@ -173,20 +173,23 @@ In this exercise, use Azure CLI to create an Ubuntu Server VM with Azure IoT Edg
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
+1. Take a moment to verify that you already have the **rg-az220vm** resource group tile pinned to your Azure dashboard.
+
+    > **Note**: The **rg-az220vm** resource group was created in a previous lab and should be pinned to your dashboard. If it is not already pinned to your dashboard, you will create it below using CLI commands before creating the VM.
+
 1. On the Azure portal toolbar, click **Cloud Shell**.
 
     Ensure that the environment is set to **Bash** in the shell.
 
-1. Verify that you already have a resource group named **rg-az220vm** pinned to your Azure Dashboard.
+1. If you need to create the **rg-az220vm** resource group, follow these instructions:
 
-    This recourse group was created in a previous lab and should be pinned to your dashboard. If you do not already have this resource group created, use the following command to create a resource group for the Azure IoT Edge enabled VM:
+    To create a resource group for the Azure IoT Edge enabled VM, enter the following command:
 
     ```bash
     az group create --name rg-az220vm --location {your-location}
     ```
 
     > **Note**: in the command above, remember to replace `{your-location}` with a region close to you.
-
 
     To pin your new resource group to the dashboard, navigate to your Azure dashboard, and then complete the following:
 

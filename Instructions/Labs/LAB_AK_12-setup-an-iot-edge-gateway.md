@@ -168,9 +168,14 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. On the **Create a virtual machine** blade, in the **Subscription** dropdown, ensure that the subscription you are using for this course is selected.
 
-1. Below the **Resource group** dropdown, click **Create new**.
+1. In the **Resource group** dropdown, click **rg-az220vm**.
 
-1. In the resource group popup, under **Name**, type **rg-az220vm** and then click **OK**.
+    > **Note**: One Resource Group is being used for all of the Virtual Machine resources created during this course. If the **rg-az220vm** resource group has not already been created, use the following instructions to create it now:
+ 
+    * Under the **Resource group** dropdown, click **Create new**.
+    * In the context menu, under **Name**, type **rg-az220vm** and then click **OK**
+
+    > **Note**: You may encounter guidance that suggests creating a separate resource group for each of your VMs. In a production environment, having a separate resource group for each VM can help you to manage any addition resources that you add to the VM. For the simple manner in which you use VMs in this course, having separate resource groups for each VM is not necessary or practical.
 
 1. Under **Instance details**, in the **Virtual machine name** textbox, type **vm-az220-training-gw0001-{your-id}**.
 
@@ -215,6 +220,16 @@ In this exercise, you will generate test certificates using Linux. You will do t
 1. Verify that the IoT Edge virtual machine has been deployed successfully.
 
     You can check the Notification pane in the Azure portal.
+
+1. Verify that your **rg-az220vm** resource group has been pinned to your Azure dashboard.
+
+    To pin your resource group to the dashboard, navigate to your Azure dashboard, and then complete the following:
+
+    * On the Azure portal menu, click **Resource groups**.
+    * On the **Resource groups** blade, under **Name**, locate the **rg-az220vm** resource group.
+    * On the **rg-az220vm** row, on the right side of the blade, click **...** and then click **Pin to dashboard**.
+
+    You may want to edit your dashboard to make the RG tiles and listed resources more accessible.
 
 1. On the Azure portal menu, click **Resource groups**.
 
