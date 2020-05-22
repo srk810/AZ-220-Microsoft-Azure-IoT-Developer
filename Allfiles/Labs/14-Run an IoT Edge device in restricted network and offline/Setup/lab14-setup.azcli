@@ -1,9 +1,9 @@
 #!/bin/bash
 
-RGName="AZ-220-RG"
-IoTHubName="AZ-220-HUB-{YOUR-ID}"
+RGName="rg-az220"
+IoTHubName="iot-az220-training-{your-id}"
 
-Location="{YOUR-LOCATION}"
+Location="{your-location}"
 
 # create resource group
 az group create --name $RGName --location $Location
@@ -12,7 +12,7 @@ az group create --name $RGName --location $Location
 az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location
 
 # create a device ID using Symmetric Key Auth and Connect it to the IoT Hub
-az iot hub device-identity create --hub-name $IoTHubName --device-id SimulatedThermostat -o tsv
+az iot hub device-identity create --hub-name $IoTHubName --device-id sensor-th-0050 -o tsv
 
 # retrieve the Connection String for the IoT Device
-az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id SimulatedThermostat
+az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id sensor-th-0050

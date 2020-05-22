@@ -19,8 +19,6 @@ namespace X509CertificateSimulatedDevice
 {
     class Program
     {
-        // ////////////////////////////////////////////////////////
-
         // Azure Device Provisioning Service (DPS) Global Device Endpoint
         private const string GlobalDeviceEndpoint = "global.azure-devices-provisioning.net";
 
@@ -28,35 +26,32 @@ namespace X509CertificateSimulatedDevice
         private static string dpsIdScope = "<DPS-ID-Scope>";
 
         // Certificate (PFX) File Name
-        private static string[] s_certificateFileNames = new string[]
+        private static string[] certificateFileNames = new string[]
         {
-            "new-asset-track1.cert.pfx",
-            "new-asset-track2.cert.pfx",
-            "new-asset-track3.cert.pfx",
-            "new-asset-track4.cert.pfx",
-            "new-asset-track5.cert.pfx",
-            "new-asset-track6.cert.pfx",
-            "new-asset-track7.cert.pfx",
-            "new-asset-track8.cert.pfx",
-            "new-asset-track9.cert.pfx",
-            "new-asset-track10.cert.pfx",
+            "sensor-thl-2001.cert.pfx",
+            "sensor-thl-2002.cert.pfx",
+            "sensor-thl-2003.cert.pfx",
+            "sensor-thl-2004.cert.pfx",
+            "sensor-thl-2005.cert.pfx",
+            "sensor-thl-2006.cert.pfx",
+            "sensor-thl-2007.cert.pfx",
+            "sensor-thl-2008.cert.pfx",
+            "sensor-thl-2009.cert.pfx",
         };
 
         // Certificate (PFX) Password
-        private static string s_certificatePassword = "1234";
+        private static string certificatePassword = "1234";
 
-        // NOTE: For the purposes of this example, the s_certificatePassword is
+        // NOTE: For the purposes of this example, the certificatePassword is
         // hard coded. In a production device, the password will need to be stored
         // in a more secure manner. Additionally, the certificate file (PFX) should
         // be stored securely on a production device using a Hardware Security Module.
 
-        // ////////////////////////////////////////////////////////
-
         public static async Task<int> Main(string[] args)
         {
             var tasks = new List<Task>();
-            
-            foreach (var fileName in s_certificateFileNames)
+
+            foreach (var fileName in certificateFileNames)
             {
                 X509Certificate2 certificate = LoadProvisioningCertificate(fileName);
 
@@ -68,8 +63,8 @@ namespace X509CertificateSimulatedDevice
                             ProvisioningDeviceClient.Create(GlobalDeviceEndpoint, dpsIdScope, security, transport);
 
 
-                        var provisioningDeviceLogic = new ProvisioningDeviceLogic(provClient, security);
-                        tasks.Add(provisioningDeviceLogic.RunAsync());
+                        var container = new ContainerDeviceSimulator(provClient, security);
+                        tasks.Add(container.RunAsync());
                         await Task.Delay(30000); // add a device every 30 seconds
                     }
                 }
@@ -83,7 +78,7 @@ namespace X509CertificateSimulatedDevice
         private static X509Certificate2 LoadProvisioningCertificate(string certFileName)
         {
             var certificateCollection = new X509Certificate2Collection();
-            certificateCollection.Import(certFileName, s_certificatePassword, X509KeyStorageFlags.UserKeySet);
+            certificateCollection.Import(certFileName, certificatePassword, X509KeyStorageFlags.UserKeySet);
 
             X509Certificate2 certificate = null;
 
@@ -111,41 +106,41 @@ namespace X509CertificateSimulatedDevice
     }
 
 
-    // The ProvisioningDeviceLogic class contains the device logic to read from the
+    // The ContainerDeviceSimulator class contains the device logic to read from the
     // simulated Device Sensors, and send Device-to-Cloud messages to the Azure IoT
     // Hub. It also contains the code that updates the device with changes to the
     // Device Twin "telemetryDelay" Desired Property.
-    public class ProvisioningDeviceLogic
+    public class ContainerDeviceSimulator
     {
         #region Constructor
 
-        readonly ProvisioningDeviceClient _provClient;
-        readonly SecurityProvider _security;
+        readonly ProvisioningDeviceClient provClient;
+        readonly SecurityProvider security;
         DeviceClient iotClient;
-        string _deviceId;
+        string deviceId;
 
         // Delay between Telemetry readings in Seconds (default to 1 second)
-        private int _telemetryDelay = 1;
+        private int telemetryDelay = 1;
 
-        public ProvisioningDeviceLogic(ProvisioningDeviceClient provisioningDeviceClient, SecurityProvider security)
+        public ContainerDeviceSimulator(ProvisioningDeviceClient provisioningDeviceClient, SecurityProvider security)
         {
-            _provClient = provisioningDeviceClient;
-            _security = security;
+            provClient = provisioningDeviceClient;
+            this.security = security;
         }
 
         #endregion
 
         public async Task RunAsync()
         {
-            Console.WriteLine($"RegistrationID = {_security.GetRegistrationID()}");
+            Console.WriteLine($"RegistrationID = {security.GetRegistrationID()}");
 
             // Register the Device with DPS
             Console.Write("ProvisioningClient RegisterAsync . . . ");
-            DeviceRegistrationResult result = await _provClient.RegisterAsync().ConfigureAwait(false);
+            DeviceRegistrationResult result = await provClient.RegisterAsync().ConfigureAwait(false);
 
             Console.WriteLine($"Device Registration Status: {result.Status}");
             Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
-            _deviceId = result.DeviceId;
+            deviceId = result.DeviceId;
 
             // Verify Device Registration Status
             if (result.Status != ProvisioningRegistrationStatusType.Assigned)
@@ -155,7 +150,7 @@ namespace X509CertificateSimulatedDevice
 
             // Create x509 DeviceClient Authentication
             Console.WriteLine("Creating X509 DeviceClient authentication.");
-            var auth = new DeviceAuthenticationWithX509Certificate(result.DeviceId, (_security as SecurityProviderX509).GetAuthenticationCertificate());
+            var auth = new DeviceAuthenticationWithX509Certificate(result.DeviceId, (security as SecurityProviderX509).GetAuthenticationCertificate());
 
 
             Console.WriteLine("Simulated Device. Ctrl-C to exit.");
@@ -199,7 +194,7 @@ namespace X509CertificateSimulatedDevice
                 string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
                 if (desiredTelemetryDelay != null)
                 {
-                    this._telemetryDelay = int.Parse(desiredTelemetryDelay);
+                    this.telemetryDelay = int.Parse(desiredTelemetryDelay);
                 }
                 // if desired telemetryDelay is null or unspecified, don't change it
             }
@@ -207,7 +202,7 @@ namespace X509CertificateSimulatedDevice
 
             // Report Twin Properties
             var reportedProperties = new TwinCollection();
-            reportedProperties["telemetryDelay"] = this._telemetryDelay;
+            reportedProperties["telemetryDelay"] = this.telemetryDelay;
             await iotClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
             Console.WriteLine("Reported Twin Properties:");
             Console.WriteLine($"{reportedProperties.ToJson()}");
@@ -215,32 +210,20 @@ namespace X509CertificateSimulatedDevice
 
         private async Task SendDeviceToCloudMessagesAsync(DeviceClient deviceClient)
         {
-            // Initial telemetry values
-            double minTemperature = 20;
-            double minHumidity = 60;
-            double minPressure = 1013.25;
-            double minLatitude = 39.810492;
-            double minLongitude = -98.556061;
-            Random rand = new Random();
+            var sensor = new EnvironmentSensor();
 
             while (true)
             {
-                double currentTemperature = minTemperature + rand.NextDouble() * 15;
-                double currentHumidity = minHumidity + rand.NextDouble() * 20;
-                double currentPressure = minPressure + rand.NextDouble() * 12;
-                double currentLatitude = minLatitude + rand.NextDouble() * 0.5;
-                double currentLongitude = minLongitude + rand.NextDouble() * 0.5;
+                var currentTemperature = sensor.ReadTemperature();
+                var currentHumidity = sensor.ReadHumidity();
+                var currentPressure = sensor.ReadPressure();
+                var currentLocation = sensor.ReadLocation();
 
-                // Create JSON message
-                var telemetryDataPoint = new
-                {
-                    temperature = currentTemperature,
-                    humidity = currentHumidity,
-                    pressure = currentPressure,
-                    latitude = currentLatitude,
-                    longitude = currentLongitude
-                };
-                var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
+                var messageString = CreateMessageString(currentTemperature,
+                                                        currentHumidity,
+                                                        currentPressure,
+                                                        currentLocation);
+
                 var message = new Message(Encoding.ASCII.GetBytes(messageString));
 
                 // Add a custom application property to the message.
@@ -249,12 +232,62 @@ namespace X509CertificateSimulatedDevice
 
                 // Send the telemetry message
                 await deviceClient.SendEventAsync(message);
-                Console.WriteLine($"{_deviceId} - {DateTime.Now} > Sending message: {messageString}");
+                Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
 
                 // Delay before next Telemetry reading
-                await Task.Delay(this._telemetryDelay * 1000);
+                await Task.Delay(telemetryDelay * 1000);
             }
         }
 
+        private static string CreateMessageString(double temperature, double humidity, double pressure, EnvironmentSensor.Location location)
+        {
+            // Create an anonymous object that matches the data structure we wish to send
+            var telemetryDataPoint = new
+            {
+                temperature = temperature,
+                humidity = humidity,
+                pressure = pressure,
+                latitude = location.Latitude,
+                longitude = location.Longitude
+            };
+            var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
+
+            // Create a JSON string from the anonymous object
+            return JsonConvert.SerializeObject(telemetryDataPoint);
+        }
+    }
+
+    internal class EnvironmentSensor
+    {
+        // Initial telemetry values
+        double minTemperature = 20;
+        double minHumidity = 60;
+        double minPressure = 1013.25;
+        double minLatitude = 39.810492;
+        double minLongitude = -98.556061;
+        Random rand = new Random();
+
+        internal class Location
+        {
+            internal double Latitude;
+            internal double Longitude;
+        }
+
+        internal double ReadTemperature()
+        {
+            return minTemperature + rand.NextDouble() * 15;
+        }
+        internal double ReadHumidity()
+        {
+            return minHumidity + rand.NextDouble() * 20;
+        }
+        internal double ReadPressure()
+        {
+            return minPressure + rand.NextDouble() * 12;
+        }
+        internal Location ReadLocation()
+        {
+            return new Location { Latitude = minLatitude + rand.NextDouble() * 0.5, Longitude = minLongitude + rand.NextDouble() * 0.5 };
+        }
     }
 }

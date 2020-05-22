@@ -140,8 +140,8 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
 
 #### Exercise 2: Create Azure IoT Hub Device ID using Azure CLI
 
@@ -169,9 +169,9 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
+| Device Provisioning Service | dps-az220-training-{your-id} |
 
 #### Exercise 2: Create new individual enrollment (Symmetric keys) in DPS
 
@@ -207,9 +207,9 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| Device Provisioning Service | AZ-220-DPS-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
+| Device Provisioning Service | dps-az220-training-{your-id} |
 
 #### Exercise 2: Generate and Configure X.509 CA Certificates using OpenSSL
 
@@ -271,8 +271,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
 | Device ID | VibrationSensorId |
 
 #### Exercise 2: Write Code for Vibration Telemetry
@@ -424,8 +424,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
 
 If the resources are unavailable, please execute the **lab-setup.azcli** script before starting the lab.
 
@@ -455,10 +455,10 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | `AZ-220-RG` |
-| IoT Hub | `AZ-220-HUB-{YOUR-ID}` |
-| Device ID | `TruckDevice` |
-| Device ID | `AirplaneDevice` |
+| Resource Group | `rg-az220` |
+| IoT Hub | `iot-az220-training-{your-id}` |
+| Device ID | `sensor-thl-truck0001` |
+| Device ID | `sensor-thl-airplane0001` |
 | Device ID | `ContainerDevice` |
 
 #### Exercise 2: Setup Time Series Insights
@@ -531,7 +531,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 #### Exercise 3: Generate and Configure IoT Edge Device CA Certificates
 
-In this exercise, you will generate test certificates using Linux. You will do this on the `AZ-220-VM-EDGEGW-{YOUR-ID}` Virtual Machine using a helper script contained within the `Azure/IoTEdge` GitHub project.
+In this exercise, you will generate test certificates using Linux. You will do this on the `vm-az220-gw-{your-id}` Virtual Machine using a helper script contained within the `Azure/IoTEdge` GitHub project.
 
 #### Exercise 4: Create IoT Edge Device Identity in IoT Hub using Azure Portal
 
@@ -539,7 +539,7 @@ In this exercise, you will create a new IoT Edge Device identity in Azure IoT Hu
 
 #### Exercise 5: Setup IoT Edge Gateway Hostname
 
-In this exercise, you will configure the DNS name for Public IP Address of the **AZ-220-VM-EDGEGW-_{YOUR-ID}_**, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
+In this exercise, you will configure the DNS name for Public IP Address of the **vm-az220-gw-{your-id}**, and configure that DNS name as the `hostname` of the IoT Edge Gateway device.
 
 #### Exercise 6: Connect IoT Edge Gateway Device to IoT Hub
 
@@ -634,9 +634,9 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| IoT Device | SimulatedThermostat |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
+| IoT Device | sensor-th-0050 |
 
 #### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
 
@@ -734,9 +734,9 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
-| IoT Device | CheeseCaveID |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
+| IoT Device | sensor-th-0055 |
 
 #### Exercise 2: Write Code to Send and Receive Telemetry
 
@@ -783,8 +783,8 @@ This lab assumes the following resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-_{YOUR-ID}_ |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
 | IoT Device | SimulatedSolutionThermostat |
 
 #### Exercise 2: Write code to simulate device that implements firmware update

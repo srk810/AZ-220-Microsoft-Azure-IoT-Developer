@@ -22,14 +22,16 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify Lab Prerequisites
-* Create a new IoT Hub
+* Verify that the lab prerequisites are met (that you have the required Azure resources)
+
+    * The script will create an IoT Hub if needed
+
 * Enable Azure Security Center for IoT
 * Create and register a new Device
 * Create a Security Module Twin
 * Install C#-based Security Agent on a Linux Device
-* Configure Solution
-* Configure custom alerts
+* Configure monitored resources
+* Create custom alerts
 * Create a console app to trigger the alert
 * Review the alert in the Azure Security Center
 
@@ -41,8 +43,8 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-{YOUR-ID} |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
 
 If these resources are not available, you will need to run the **lab19-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -52,11 +54,11 @@ If these resources are not available, you will need to run the **lab19-setup.azc
 
 1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. Verify that the Azure Shell is using **Bash**.
+1. Verify that the Cloud Shell is using **Bash**.
 
     The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
@@ -66,7 +68,7 @@ If these resources are not available, you will need to run the **lab19-setup.azc
 
     * Allfiles
       * Labs
-          * 19-Detect if your IoT Device was Tampered with Azure Security Center for IoT
+          * 19-Azure-security-center-for-iot
             * Setup
 
     The lab19-setup.azcli script file is located in the Setup folder for lab 19.
@@ -99,26 +101,26 @@ If these resources are not available, you will need to run the **lab19-setup.azc
     chmod +x lab19-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the **lab19-setup.azcli** file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab19-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **Files** list, to expand the lab19 folder, click **lab19**, and then click **lab19-setup.azcli**.
+1. In the **Files** list, to expand the lab19 folder and open the script file, click **lab19**, and then click **lab19-setup.azcli**.
 
     The editor will now show the contents of the **lab19-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that matches your resource group.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that matches your resource group.
 
     ```bash
     #!/bin/bash
 
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-{your-id}"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -165,18 +167,21 @@ In this task, you will enable **Azure Security Center for IoT** for your IoT Hub
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Azure dashboard, click **AZ-220-HUB-{YOUR-ID}**.
+1. On your Azure dashboard, click **iot-az220-training-{your-id}**.
 
-    Your dashboard should have a link to your IoT Hub on the on the AZ-220-RG resource group tile.
+    The rg-az220 resource group tile on your dashboard should have a link to your IoT Hub.
 
-1. On the left side navigation menu, under **Security**, and then click **Overview**.
+1. On the left-side menu, under **Security**, and then click **Overview**.
 
-    Azure Security Center for IoT Hub will be onboard the first time a Security pane is opened. 
-    
-    * You may be prompted click **Secure your IoT solution**.
-    * After a few moments you may see the message **Onboarding succeeded for this IoT hub, please refresh for changes to take effect**.
+    Azure Security Center for IoT Hub will onboard the first time a Security pane is opened. 
+
+1. If the **Secure your IoT solution** button is displayed, click **Secure your IoT solution**, and then refresh your browser window when prompted.
+
+    After a few moments you will see the message **Onboarding succeeded for this IoT hub, please refresh for changes to take effect**
 
 1. Take a moment to review the contents on the Security Overview pane.
+
+    > **Note**: Threats are not instantly detected the first moment that you onboard Azure Security Center for IoT, you will begin to see threat detections reported on this Overview pane before the end of this lab. 
 
 #### Task 2: Log Analytics creation
 
@@ -202,25 +207,28 @@ In this exercise, you will be setting up a virtual machine that you will then us
 
 #### Task 1: Create a new IoT Device
 
-In this task, you will create the VM that will represent your IoT device.
+In this task, you will create a Virtual Machine that will represent your IoT device. You are using a VM in this lab rather than simulated device code because you will be installing a security module to the IoT device (VM).
 
 1. Login to [portal.azure.com](https://portal.azure.com) using your Azure account credentials.
 
-1. On the portal menu, click **+ Create a resource**, then Search the Marketplace for **Ubuntu Server 18.04 LTS**
+1. On the Azure portal menu, click **Create a resource**.
 
-1. In the search results, click **Ubuntu Server 18.04 LTS**.
+1. On the **New** blade, in the Search the Marketplace textbox, type **Ubuntu Server 18.04 LTS** and then press **Enter**.
 
 1. On the **Ubuntu Server 18.04 LTS** blade, click **Create**.
 
 1. On the **Create a virtual machine** blade, under **Subscription**, ensure that the Subscription you are using for this course is selected.
 
-1. Under the **Resource group** dropdown, click **Create new**
+1. In the **Resource group** dropdown, click **rg-az220vm**.
 
-1. In the context menu, under **Name**, enter **AZ-220-SECVM-RG** and then click **OK**
+    > **Note**: A single resource group is being used to track and manage all of the Virtual Machine resources created during this course. If the **rg-az220vm** resource group has not already been created, use the following instructions to create it now:
+ 
+    * Under the **Resource group** dropdown, click **Create new**.
+    * In the context menu, under **Name**, type **rg-az220vm** and then click **OK**
 
-    > **Note**: Best practice is to create a resource group for your VMs. This helps you to keep track of any addition resources that you add/create for the VM. For the simple use case in this course, the primary benefit could be ease of clean-up, but you will do a bit more with this resource group later in the lab.
+    > **Note**: You may encounter guidance that suggests creating a separate resource group for each of your VMs. Having a separate resource group for each VM can help you to manage any addition resources that you add to the VM. For the simple manner in which you use VMs in this course, having separate resource groups for each VM is not necessary or practical.
 
-1. In the **Virtual machine name** textbox, enter **vm-device01**
+1. In the **Virtual machine name** textbox, enter **vm-az220-training-edge0002-{your-id}**
 
 1. In the **Region** dropdown, select the Azure Region closest to you, or the region where your Azure IoT Hub is provisioned.
 
@@ -259,15 +267,15 @@ As a device must be registered with your IoT hub before it can connect, let's cr
 
 1. On the Azure portal menu, click **Dashboard**.
 
-1. On your AZ-220-RG resource group tile, click **AZ-220-HUB-{YOUR-ID}**.
+1. On your rg-az220 resource group tile, click **iot-az220-training-{your-id}**.
 
     There are plenty of other ways to open your IoT Hub blade, use whatever method you prefer.
 
-1. In the left side navigation menu, under **Explorers**, click **IoT devices**.
+1. In the left-side menu, under **Explorers**, click **IoT devices**.
 
 1. At the top of **IoT devices** pane, click **+ New**
 
-1. Under **Device ID**, enter **vm-device01**
+1. Under **Device ID**, enter **vm-az220-training-edge0002-{your-id}**
 
     Yes, you are using the Name that you assigned to the VM as the Device ID.
 
@@ -290,25 +298,29 @@ In this task, you will be creating a security module twin manually.
 
 1. In the Azure portal, if necessary, navigate to your the **IoT devices** pane of your IoT Hub.
 
-    To open the **IoT devices** pane from your IoT Hub blade, in the left side navigation menu, under **Explorers**, click **IoT devices**.
+    To open the **IoT devices** pane from your IoT Hub blade, in the left-side menu, under **Explorers**, click **IoT devices**.
 
-1. Under **DEVICE ID**, click **vm-device01**.
+1. Under **DEVICE ID**, click **vm-az220-training-edge0002-{your-id}**.
 
-1. On the **vm-device01** blade, near the top of the blade, click **+ Add Module Identity**.
+    You may need to click **Load More** in order to see your device listed.
+
+1. On the **vm-az220-training-edge0002-{your-id}** blade, near the top of the blade, click **+ Add Module Identity**.
 
 1. On the **Add Module Identity** pane, under **Module Identity Name**, enter **azureiotsecurity**
 
-    As we will be using Symmetric Keys for authentication, you can leave all over fields at their defaults.
+    You will be using Symmetric Keys for authentication, so you can leave all over fields at their defaults.
 
 1. At the bottom of the pane, click **Save**.
 
-    Under **Module Identities**, you should now see your **azureiotsecurity** device listed. The connection state is **Disconnected**.
+1. On the **vm-az220-training-edge0002-{your-id}** blade, under **Module Identities**, you should now see your **azureiotsecurity** device listed.
+
+    Notice that the connection state is **Disconnected**.
 
     > **IMPORTANT**: The Module Identity must be called **azureiotsecurity** and not another unique name.
 
     ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-module-identity.png)
 
-1. On the **vm-device01** blade, to the right of **Primary Key**, click **Copy**.
+1. On the **vm-az220-training-edge0002-{your-id}** blade, to the right of **Primary Key**, click **Copy**, and then save the value for later.
 
     > **Note**: Make sure to copy the device's **Primary Key** and not the connection string.
 
@@ -316,11 +328,11 @@ In this task, you will be creating a security module twin manually.
 
 1. Navigate back to your IoT Hub blade.
 
-1. On the left side navigation menu, click **Overview**.
+1. On the left-side menu, click **Overview**.
 
 1. In the Essentials area near the top of the blade, to the right of **Hostname**, click **Copy to clipboard**, and then save the value for later.
 
-    > **Note**: The IoT Hub Hostname looks similar to: AZ-220-HUB-CAH102119.azure-devices.net
+    > **Note**: The IoT Hub Hostname looks similar to: iot-az220-training-cah102119.azure-devices.net
 
 ### Exercise 5: Deploy Azure Security Center for IoT C# Security Agent
 
@@ -345,17 +357,19 @@ In this exercise, you will be adding a security agent for C# that you will deplo
 
     Be sure to select **All resources**, not **All services**.
 
-1. On the **All resources** blade, in the **Filter by name** textbox, enter **vm-device01**
+1. On the **All resources** blade, in the **Filter by name** textbox, enter **vm-az220-training-edge0002**
 
-1. Under **Name**, click **vm-device01**.
+1. Under **Name**, click **vm-az220-training-edge0002-{your-id}**.
 
-    The Overview pane for your newly created virtual machine (**vm-device01**) should now be open.
+    The Overview pane for your newly created virtual machine (**vm-az220-training-edge0002-{your-id}**) should now be open.
 
 1. At the top of the blade, click **Connect**, and then click **SSH**.
 
 1. Take a minute to review the contents of the **Connect** pane
 
     As you have seen previously in this course, you are provided with an example command for opening an SSH connection.
+
+1. Use the sample SSH command to create a command for connection to your VM.
 
     Copy the example command to a text editor, and then remove `-i <private key path> from the command. You should be left with a command in the following format:
 
@@ -380,7 +394,7 @@ In this exercise, you will be adding a security agent for C# that you will deplo
     Notice that, once connected, the terminal command prompt will change to show the name of the Linux VM, similar to the following.
 
     ```cmd/sh
-    demouser@vm-device01:~$
+    demouser@vm-az220-training-edge0002-{your-id}:~$
     ```
 
     This helps you to keep track of which VM you are connected to and the current user.
@@ -391,16 +405,16 @@ You can connect to your IoT Hub with the C# version of the security agent. To im
 
 In this lab, you will be using the symmetric key as authentication and will need to store it in a temporary text document on the device.
 
-1. Verify that you have the **Primary key** value for your **vm-device01** device available.
+1. Verify that you have the **Primary key** value for your **vm-az220-training-edge0002-{your-id}** device available.
 
-    You should have save the Primary key value earlier in this lab. If not, complete the following:
+    You should have saved the Primary key value earlier in this lab. If not, complete the following:
 
     1. Open a new browser tab, and on that new tab, navigate to the Azure portal.
     1. On the Azure portal menu, click **Dashboard**, and then open your IoT Hub.
-    1. On the left side navigation menu, under **Explorers**, click **IoT devices**.
-    1. Under **DEVICE ID**, click **vm-device01**.
+    1. On the left-side menu, under **Explorers**, click **IoT devices**.
+    1. Under **DEVICE ID**, click **vm-az220-training-edge0002-{your-id}**.
     1. From the list of details, copy your **Primary Key**.
-    1. Return the the Azure Cloud Shell browser tab - you should still be connected to your **vm-device01** virtual machine.
+    1. Return the the Azure Cloud Shell browser tab - you should still be connected to your **vm-az220-training-edge0002-{your-id}** virtual machine.
 
 1. At the Cloud Shell command prompt, enter the following command:
 
@@ -408,9 +422,9 @@ In this lab, you will be using the symmetric key as authentication and will need
     echo "<primary_key>" > s.key
     ```
 
-    This command will create a device Authentication type file with your **vm-device01** device's **Primary Key**.
+    This command will create a device Authentication type file with your **vm-az220-training-edge0002-{your-id}** device's **Primary Key**.
 
-    > [!NOTE] To check if you added the correct Primary key into the file, Open your file with `nano s.key` command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
+    > **Note**: To check if you added the correct Primary key into the file, open your file with `nano s.key` command. Check to see your device's **Primary Key** is in the file. To exit the nano editor, holding `Ctrl` and `X`. Save file by holding `shift` and `Y`. Then hit enter.
 
 #### Task 4: Installing Security Agent
 
@@ -421,6 +435,8 @@ In this lab, you will be using the symmetric key as authentication and will need
     ```bash
     wget https://github.com/Azure/Azure-IoT-Security-Agent-CS/releases/download/0.0.6/ubuntu-18.04-x64.tar.gz
     ```
+
+    > **Note**: Notice that the command above targets Ubuntu Server 18.04 LTS
 
 1. At the Cloud Shell command prompt, to extract the contents of the package and navigate to the `/Install` folder, enter the following command:
 
@@ -434,22 +450,22 @@ In this lab, you will be using the symmetric key as authentication and will need
     chmod +x InstallSecurityAgent.sh
     ```
 
-1. At the Cloud Shell command prompt, enter the following command: 
+1. At the Cloud Shell command prompt, customize and then run the following command: 
 
-    You will need to replace the values with your authentication parameters.
+    You will need to replace the placeholder values with your authentication parameters.
 
     ```bash
-    sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f <Insert file location of your s.key file> -hn <Insert your full IoT Hub host name> -di vm-device01
+    sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f <Insert file location of your s.key file> -hn <Insert your full IoT Hub host name> -di vm-az220-training-edge0002-{your-id}
     ```
 
     Here is an example of what the command should look like:
 
-    `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn AZ-220-HUB-AB20200213.azure-devices.net -di vm-device01`
+    `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn iot-az220-training-ab200213.azure-devices.net -di vm-az220-training-edge0002-{your-id}`
 
     > **Note**: Make sure that specify your IoT Hub Hostname instead of the one listed 
     
     > **IMPORTANT**:
-    > Ensure you use the full IoT Hub host name - i.e. **AZ-220-HUB-AB20200213.azure-devices.net** for the `-hn` switch value.
+    > Ensure you use the full IoT Hub host name - i.e. **iot-az220-training-ab200213.azure-devices.net** for the `-hn` switch value.
 
     This script performs the following function:
 
@@ -493,9 +509,9 @@ In this lab, you will be using the symmetric key as authentication and will need
 
     > **Note**: If your Azure Security Center for IoT Agent isn't running or active, please check out [Deploy Azure Security Center for IoT C# based security agent for Linux Guide Troubleshooting Section](https://docs.microsoft.com/en-us/azure/asc-for-iot/how-to-deploy-linux-cs). Common issues are that might leave the service **Active: activating** are an incorrect key value or not specifying the full IoT Hub hostname.
 
-1. In the Azure portal, navigate back your IoT Hub blade, and then open the **vm-device01** device blade.
+1. In the Azure portal, navigate back your IoT Hub blade, and then open the **vm-az220-training-edge0002-{your-id}** device blade.
 
-    Open your IoT Hub blade, on the navigation menu under **Explorers**, click **IoT devices**, and then click **vm-device01**.
+    Open your IoT Hub blade, on the navigation menu under **Explorers**, click **IoT devices**, and then click **vm-az220-training-edge0002-{your-id}**.
 
 1. Under **Module Identities**, notice that your **azureiotsecurity** module is now in a **Connected** state.
 
@@ -505,7 +521,7 @@ Now that your Azure Security Center for IoT device agents are installed on your 
 
 ### Exercise 6: Configure Solution Management
 
-Azure Security Center for IoT provides comprehensive end-to-end security for Azure-based IoT solutions.
+Azure Security Center for IoT provides end-to-end security for Azure-based IoT solutions.
 
 With Azure Security Center for IoT, you can monitor your entire IoT solution in one dashboard, surfacing all of your IoT devices, IoT platforms and back-end resources in Azure.
 
@@ -517,7 +533,7 @@ In addition to automatic relationship detection, you can also pick and choose wh
 
 1. In your browser, open the Azure Portal and navigate to your IoT Hub.
 
-1. On the left side navigation menu, under **Security**, click **Resources**.
+1. On the left-side menu, under **Security**, click **Resources**.
 
     Note that the list of resources already includes your IoT Hub, the workspace that was created when Azure Security Center for IoT was activated earlier as well as the current subscription.
 
@@ -530,7 +546,7 @@ In addition to automatic relationship detection, you can also pick and choose wh
     > **Note:**
     > You can add resources from multiple subscriptions to your security solution.
 
-1. Under **Resource groups**, select the resource group for your VM - **AZ-220-SECVM-RG**.
+1. In the **Resource groups** dropdown, click **rg-az220vm**.
 
     You should now have two Resource Groups selected. Notice that the Resources list has updated to reflect the additional resources in the resource group you just added.
 
@@ -546,13 +562,13 @@ After defining all of the resource relationships, Azure Security Center for IoT 
 
 You now have your the security agent installed on your device and your solution configured. It is a good time to check out the different views for Azure Security Center for IoT.
 
-1. On the left side navigation menu, under **Security**, click **Overview**. 
+1. On the left-side menu, under **Security**, click **Overview**. 
 
     You will see the health overview for your devices, hubs, and other resources appear on two charts. You can see the Built-in real-time monitoring, recommendations and alerts that were enabled right when you turn on your Azure IoT Security Center.
 
     ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-security-dashboard.png)
 
-1. On the left side navigation menu, under **Security**, click **Resources**.
+1. On the left-side menu, under **Security**, click **Resources**.
 
     This pane provides access to the health of your resources across your IoT solution.
 
@@ -583,7 +599,7 @@ In this task, you will create a custom alert.
 
 1. On your Azure portal, navigate to your IoT Hub blade.
 
-1. On the left side navigation menu, under **Security**, click **Custom Alerts**.
+1. On the left-side menu, under **Security**, click **Custom Alerts**.
 
 1. Take a moment to examine the **Custom Alerts** pane.
 
@@ -638,7 +654,7 @@ In this task, you will create a custom alert.
 
 ### Exercise 8: Configure the Device App
 
-In this exercise, you will create an IoT Hub device and a .Net Core console application (C#) that will leverage the **Microsoft.Azure.Devices.Client** nuget package to connect to an IoT Hub. The console application will send telemetry every 10 seconds and is designed to exceed the Device to Cloud message threshold configured in the Custom Alert (that you created in the previous exercise).
+In this exercise, you will configure an IoT Hub device and a .Net Core console application (C#) that will leverage the **Microsoft.Azure.Devices.Client** nuget package to connect to an IoT Hub. The console application will send telemetry every 10 seconds and is designed to exceed the Device to Cloud message threshold configured in the Custom Alert (that you created in the previous exercise).
 
 #### Task 1: Register New IoT Device
 
@@ -646,165 +662,79 @@ A device must be registered with your IoT hub before it can connect.
 
 1. On the Azure portal menu, click **Dashboard**, and then open your IoT Hub.
 
-1. On the left side navigation menu, under **Explorers**, click **IoT devices**.
+1. On the left-side menu, under **Explorers**, click **IoT devices**.
 
 1. At the top of the **IoT devices** pane, click  **+ New**
 
-1. On the **Create a device** blade, under **Device ID**, enter **CheeseCave1-Sensor1**
+1. On the **Create a device** blade, under **Device ID**, enter **sensor-th-0070**
 
     You will be using **symmetric Keys** for authentication, so leave the other values at the defaults.
 
 1. At the bottom of the blade, click **Save**.
 
-1. On the **IoT devices** pane, under **Device ID**, click **CheeseCave1-Sensor1**.
+1. On the **IoT devices** pane, under **Device ID**, click **sensor-th-0070**.
 
-    You may need to click **Load More** in order to access the **CheeseCave1-Sensor1** device.
+    You may need to click **Load More** in order to access the **sensor-th-0070** device.
 
 1. To the right of **Primary connection string**, click **Copy**, and then save the value to a text file.
 
-    Be sure to note that it is the connection string for the CheeseCave1-Sensor1 device. You will need the connection string value for the device app.
+    Be sure to note that it is the connection string for the sensor-th-0070 device. You will need the connection string value for the device app.
 
-#### Task 2: Create a Console App
+#### Task 2: Configure a Cave Device App
 
-1. Open Visual Studio Code.
+1. Open **Visual Studio Code**.
 
-1. On the **File** menu, click **Open Folder**.
+1. On the **File** menu, click **Open Folder**
 
-1. At the top of the **Open Folder** dialog, click **New folder**, type **ThermostatDevice** and then press **Enter**.
+1. In the Open Folder dialog, navigate to the lab 19 Starter folder.
 
-    You can create the ThermostatDevice folder under the Lab 19 folder, or another location of your choice.
+1. Click **CaveDevice**, and then click **Select Folder**.
 
-1. Click **ThermostatDevice**, and then click **Select Folder**.
+    You should see the following files listed in the EXPLORER pane of Visual Studio Code:
 
-1. On the **File** menu, to ensure that file auto-save is enabled, click **Auto Save**.
+    * Program.cs
+    * CaveDevice.csproj
 
-    You will be copying in several blocks of code, and this will ensure you are always operating against the latest edits of your files.
+1. Open the **Program.cs** file.
 
-1. On the **View** menu, to open the integrated terminal, click **Terminal**.
+    A cursory glance will reveal that the **CaveDevice** application is very similar to those used in the preceding labs. This version has an increased delay so that messages are sent every 10 seconds: `await Task.Delay(10000);`
 
-1. At the Terminal command prompt, to create a new console app, enter the following command:
+1. On the **Terminal** menu, click **New Terminal**.
 
-    ```bash
-    dotnet new console
+    Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
+  
+1. At the terminal command prompt, to verify the application builds, enter the following command:
+
+   ```bash
+   dotnet build
+   ```
+
+    The output will be similar to:
+
+    ```text
+    ❯ dotnet build
+    Microsoft (R) Build Engine version 16.5.0+d4cbfca49 for .NET Core
+    Copyright (C) Microsoft Corporation. All rights reserved.
+
+    Restore completed in 39.27 ms for D:\Az220-Code\AllFiles\Labs\15-Remotely monitor and control devices with Azure IoT Hub\Starter\CheeseCaveDevice\CheeseCaveDevice.csproj.
+    CheeseCaveDevice -> D:\Az220-Code\AllFiles\Labs\15-Remotely monitor and control devices with Azure IoT Hub\Starter\CheeseCaveDevice\bin\Debug\netcoreapp3.1\CheeseCaveDevice.dll
+
+    Build succeeded.
+        0 Warning(s)
+        0 Error(s)
+
+    Time Elapsed 00:00:01.16
     ```
 
-#### Task 3: Connect the App to IoT Hub
-
-1. At the Terminal command prompt, to install the required NuGet package, enter the following command:
-
-    ```bash
-    dotnet add package Microsoft.Azure.Devices.Client
-    ```
-
-1. In the EXPLORER pane, click **Program.cs**.
-
-1. In the Code Editor, delete all of the existing code.
-
-1. In the Code Editor, to add the `using` statements that the app will require, enter the following code:
+1. In the code editor pane, find the following line of code:
 
     ```csharp
-    using System;
-    using Microsoft.Azure.Devices.Client;
-    using Newtonsoft.Json;
-    using System.Text;
-    using System.Threading.Tasks;
+    private readonly static string deviceConnectionString = "<your device connection string>";
     ```
 
-1. Below the `using` statements, to create a namespace for the application, enter the following code:
+1. Replace `<your device connection string>` with the Primary Connection String for the sensor-th-0070 device.
 
-    ```csharp
-    namespace ThermostatDevice
-    {
-        // add class below here
-    }
-    ```
-
-1. On a blank code line below the `// add class below here` comment, too create the **ThermostatDevice** class, enter the following code:
-
-    ```csharp
-    class ThermostatDevice
-    {
-        // add variables below here
-    }
-    ```
-
-1. On a blank code line below the `// add variables below here` comment, to define a variable for the device connection string, enter the following code:
-
-    ```csharp
-    private static DeviceClient s_deviceClient;
-    private readonly static string s_connectionString = "<DEVICE-CONNECTION-STRING>";
-
-    // add SendDeviceToCloudMessagesAsync method below here
-    ```
-
-    The first line provides a reference to the `DeviceClient`
-    The second line provide a variable for the device connection string (which you copied earlier) 
-
-    > **Tip**:
-    > Replace `<DEVICE-CONNECTION-STRING>` with the device primary connection string you copied from the Azure Portal earlier.
-
-1. On a blank code line below the `// add SendDeviceToCloudMessagesAsync method below here` comment, to send device to cloud messages to the IoT Hub, add the following code:
-
-    ```csharp
-    private static async void SendDeviceToCloudMessagesAsync()
-    {
-        // Initial telemetry values
-        double minTemperature = 20;
-        double minHumidity = 60;
-        Random rand = new Random();
-
-        // loop until the user hits CTRL+C
-        while (true)
-        {
-            double currentTemperature = minTemperature + rand.NextDouble() * 15;
-            double currentHumidity = minHumidity + rand.NextDouble() * 20;
-
-            // Create JSON message using an anonymous type
-            var telemetryDataPoint = new
-            {
-                temperature = currentTemperature,
-                humidity = currentHumidity
-            };
-            var messageString = JsonConvert.SerializeObject(telemetryDataPoint);
-            var message = new Message(Encoding.ASCII.GetBytes(messageString));
-
-            // Add a custom application property to the message.
-            // An IoT hub can filter on these properties without access to the message body.
-            message.Properties.Add("temperatureAlert", (currentTemperature > 30) ? "true" : "false");
-
-            // Send the telemetry message
-            await s_deviceClient.SendEventAsync(message);
-            Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, messageString);
-
-            // wait 10 seconds before sending the next message
-            await Task.Delay(10000);
-        }
-    }
-
-    // add main method below here
-    ```
-
-    Notice the `await Task.Delay(10000);` code above. This will cause a time delay so that a message will be sent every 10 seconds, which will exceed the "no more than 5 messages in 5 minutes" threshold for the custom alert.
-
-    > **Tip**:
-    > Read the code comments to understand how the method works.
-
-1. On a blank code line below the `// add main method below here` comment, to provide a Main method (entry point) for the app, enter the following code:
-
-    ```csharp
-    private static void Main(string[] args)
-    {
-        Console.WriteLine("IoT Hub C# Simulated Thermostat Device. CTRL+C to exit.\n");
-
-        // Connect to the IoT hub using the MQTT protocol
-        s_deviceClient = DeviceClient.CreateFromConnectionString(s_connectionString, TransportType.Mqtt);
-        SendDeviceToCloudMessagesAsync();
-        Console.ReadLine();
-    }
-    ```
-
-    > **Note**:
-    When the `DeviceClient` instance is created, the **MQTT** protocol is specified with `TransportType.Mqtt` - this ensures that the Device to Cloud messages are sent using the protocol specified in the custom alert created.
+1. On the **File** menu, click **Save**.
 
 1. At the Terminal command prompt, to build and run the application, enter the following command:
 
@@ -812,7 +742,9 @@ A device must be registered with your IoT hub before it can connect.
     dotnet run
     ```
 
-    The output will be similar to:
+1. Verify that telemetry messages are bing sent to IoT hub successfully.
+
+    The output should be similar to:
 
     ```text
     IoT Hub C# Simulated Thermostat Device. CTRL+C to exit.
@@ -838,22 +770,21 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
 1. On the Azure portal menu, click **Dashboard** and then open your IoT Hub.
 
-1. On the left side navigation menu, under **Security**, click **Overview**.
+1. On the left-side menu, under **Security**, click **Overview**.
 
     Take a look at the **Threat detection** section. You should see one or more alerts displayed in the **Device security alerts** chart:
 
     ![Device security alert chart](media/LAB_AK_19-device-security-alert-chart.png)
 
-    You should also see an entry for the **CheeseCave1-Sensor1** device in the **Devices with the most alerts** tile:
+    You should also see an entry for the **sensor-th-0070** device in the **Devices with the most alerts** tile:
 
     ![Devices with the most alerts tile](media/LAB_AK_19-devices-with-most-alerts-tile.png)
 
-    > [!NOTE]
-    > It can take between 10 and 15 minutes for alerts to be displayed on the dashboard.
+    > **Note**: It can take between 10 and 15 minutes for alerts to be displayed on the dashboard.
 
 1. Under **Threat detection**, click the **Devices with the most alerts** tile.
 
-    This will open the same **Alerts** blade as you would see if you were to click **Security Alerts** under **Security** in the left side navigation menu.
+    This will open the same **Alerts** blade as you would see if you were to click **Security Alerts** under **Security** on the left-side menu.
 
     You will see a list of Security Alerts:
 
@@ -863,7 +794,7 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
 1. Click the latest alert.
 
-    A detail pane will open. The **General information** provides high-level information concerning the alert. Beneath this, the **Last 10 Affected Devices** should list the **CheeseCave1-Sensor1** device.
+    A detail pane will open. The **General information** provides high-level information concerning the alert. Beneath this, the **Last 10 Affected Devices** should list the **sensor-th-0070** device.
 
     ![Custom Alert Details Pane](media/LAB_AK_19-custom-alert-details-pane.png)
 

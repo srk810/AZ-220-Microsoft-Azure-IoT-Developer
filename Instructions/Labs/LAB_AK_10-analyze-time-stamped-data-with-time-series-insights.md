@@ -27,10 +27,13 @@ The following resources will be created:
 In this lab, you will complete the following activities:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
+
+    * The script will create an IoT Hub if needed.
+    * The script will create three new device identities for this lab.
+
 * Create an Azure Time Series Insights (TSI) environment
-* Create IoT Hub and simulated device (using CLI)
 * Connect to IoT Hub with Time Series Insights (TSI)
-* Create and deploy TSI resources by using templates with Time Series Insights
+* View time series data using the Time Series Insights (TSI) Explorer
 
 ## Lab Instructions
 
@@ -40,11 +43,11 @@ This lab assumes the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | `AZ-220-RG` |
-| IoT Hub | `AZ-220-HUB-{YOUR-ID}` |
-| Device ID | `TruckDevice` |
-| Device ID | `AirplaneDevice` |
-| Device ID | `ContainerDevice` |
+| Resource Group | `rg-az220` |
+| IoT Hub | `iot-az220-training-{your-id}` |
+| Device ID | `sensor-th-truck0001` |
+| Device ID | `sensor-th-airplane0001` |
+| Device ID | `sensor-th-container0001` |
 
 If these resources are not available, you will need to run the **lab10-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -52,11 +55,11 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
 
 1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. Verify that the Azure Cloud Shell is using **Bash**.
+1. Verify that the Cloud Shell is using **Bash**.
 
     The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
@@ -97,24 +100,24 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab10-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab10-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab10-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
 1. In the **FILES** list, to expand the lab10 folder and open the script file, click **lab10**, and then click **lab10-setup.azcli**.
 
     The editor will now show the contents of the **lab10-setup.azcli** file.
 
-1. In the editor, update the `{YOUR-ID}` and `{YOUR-LOCATION}` assigned values.
+1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID that you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID that you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
-    YourID="{YOUR-ID}"
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-$YourID"
+    YourID="{your-id}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-$YourID"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
@@ -147,7 +150,7 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **TruckDevice**, **AirplaneDevice**, and **ContainerDevice**.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **sensor-th-truck0001**, **sensor-th-airplane0001**, and **sensor-th-container0001**.
 
 1. Notice that, once the script has completed, the connection string for each device is displayed.
 
@@ -167,7 +170,7 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. In the Azure Portal, on the left side navigation menu, click **+ Create a resource**.
+1. On the Azure portal menu, click **+ Create a resource**.
 
 1. On the **New** blade, in the **Search the Marketplace** textbox, enter **time series insights**
 
@@ -175,11 +178,11 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. On the **Time Series Insights** blade, click **Create**.
 
-1. On the **Create Time Series Insights environment** blade, in the **Environment name** field, enter **AZ-220-TSI**
+1. On the **Create Time Series Insights environment** blade, in the **Environment name** field, enter **tsi-az220-training**
 
 1. In the **Subscription** dropdown, select the subscription that you are using for this course.
 
-1. In the **Resource group** dropdown, click **AZ-220-RG**.
+1. In the **Resource group** dropdown, click **rg-az220**.
 
 1. In the **Location** dropdown, select the Azure region used by your resource group.
 
@@ -189,7 +192,7 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. Under the **EVENT SOURCE DETAILS** section, ensure that **Create an event source?** is set to **Yes**.
 
-1. In the **Name** field, enter **AZ-220-HUB-{YOUR-ID}** to specify a unique name for this Event Source.
+1. In the **Name** field, enter **iot-az220-training-{your-id}** to specify a unique name for this Event Source.
 
 1. In the **Source type** dropdown, ensure that **IoT Hub** is selected.
 
@@ -199,11 +202,11 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. In the **Subscription** dropdown, select the subscription that you are using for this course.
 
-1. In the **IoT Hub name** dropdown, select the **AZ-220-HUB-_{YOUR_ID}_** Azure IoT Hub service that's already been provisioned.
+1. In the **IoT Hub name** dropdown, select the **iot-az220-training-{your-id}** Azure IoT Hub service that's already been provisioned.
 
 1. In the **IoT Hub access policy name** dropdown, click **iothubowner**.
 
-    In a production environment, it's best practice to create a new _Access Policy_ within Azure IoT Hub to use for configuring Time Series Insights (TSI) access. This will enable the security of TSI to be managed independently of any other services connected to the same Azure IoT Hub.  We are not doing that here for convenience reasons.
+    In a production environment, it's best practice to create a new _Access Policy_ within Azure IoT Hub to use for configuring Time Series Insights (TSI) access. This will enable the security of TSI to be managed independently of any other services connected to the same Azure IoT Hub.  You are not doing that here for convenience reasons.
 
 1. Under the **CONSUMER GROUP** section, next to the **IoT Hub consumer group** dropdown, click **New**.
 
@@ -223,19 +226,19 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. Once your Time Series Insights deployment is complete, navigate back to your dashboard.
 
-1. Refresh your resource group tile, and then click **AZ-220-TSI**.
+1. Refresh your resource group tile, and then click **tsi-az220-training**.
 
     You may need to resize your dashboard to see all of your resources.
 
-    > **Note**: You gave the **Time Series Insights environment** resource the name **AZ-220-TSI**. You should also see the *Time Series Insights event source* that you created, but for now you want to have the TSI environment opened.  
+    > **Note**: You gave the **Time Series Insights environment** resource the name **tsi-az220-training**. You should also see the *Time Series Insights event source* that you created, but for now you want to have the TSI environment opened.  
  
-1. On the **Time Series Insights environment** blade, in the left side navigation menu, under **Settings**, click **Event Sources**.
+1. On the **Time Series Insights environment** blade, on the left-side menu under **Settings**, click **Event Sources**.
 
-1. On the **Event Sources** pane, notice the **AZ-220-HUB-*{YOUR-ID}*** Event Source in the list.
+1. On the **Event Sources** pane, notice the **iot-az220-training-{your-id}** Event Source in the list.
 
-    This is the event source that was configured when the TSI resource was created.
+    This is the event source that you configured when the TSI resource was created.
 
-1. To view the event source details, click **AZ-220-HUB-*{YOUR-ID}***.
+1. To view the event source details, click **iot-az220-training-{your-id}**.
 
     Notice that the configuration of the event source matches what was set when the Time Series Insights resource was created.
 
@@ -247,7 +250,7 @@ In this exercise, you will run the simulated devices so they starts sending tele
 
 1. On the **File** menu, click **Open Folder**.
 
-1. In the **Open Folder** dialog, navigate to the *Starter* folder for lab 10.
+1. In the **Open Folder** dialog, navigate to the lab 10 Starter folder.
 
     In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
 
@@ -256,31 +259,31 @@ In this exercise, you will run the simulated devices so they starts sending tele
           * 10-Explore and analyze time stamped data with Time Series Insights
             * Starter
 
-1. In the **Open Folder** dialog, click **Starter**, and then click **Select Folder**.
+1. In the **Open Folder** dialog, click **ContainerSimulation**, and then click **Select Folder**.
 
     If prompted, load the C# extension and/or perform a restore.
  
-1. In the EXPLORER pane, to open the DeviceSimulation.cs file, click **DeviceSimulation.cs**.
+1. In the EXPLORER pane, to open the Program.cs file, click **Program.cs**.
 
 1. Locate the variables used to assign the connections strings
 
     ```csharp
-    private readonly static string connectionString_Truck = "{Your Truck device connection string here}";
-    private readonly static string connectionString_Airplane = "{Your Airplane device connection string here}";
-    private readonly static string connectionString_Container = "{Your Container device connection string here}";
+    private readonly static string connectionStringTruck = "{Your Truck device connection string here}";
+    private readonly static string connectionStringAirplane = "{Your Airplane device connection string here}";
+    private readonly static string connectionStringContainer = "{Your Container device connection string here}";
     ```
 
 1. Update the variable assignments with the connection strings that you saved earlier in the lab. 
 
-    Be sure to replace the placeholder values with the Connection String for the corresponding IoT Device.
+    Be sure to replace the placeholder values with the Connection String for the corresponding IoT device.
 
 1. On the **File** menu, click **Save**.
 
 1. On the **View** menu, click **Terminal**.
 
-1. Within the **Terminal** pane, ensure that the command prompt specifies the path to the lab 10 `/Starter` directory.
+1. Within the **Terminal** pane, ensure that the command prompt specifies the path to the lab 10 `/Starter/ContainerSimulation` directory.
 
-1. At the command prompt, to build and run the **DeviceSimulation** app, enter the following command:
+1. At the command prompt, to build and run the **ContainerSimulation** app, enter the following command:
 
     ```cmd/sh
     dotnet run
@@ -288,9 +291,9 @@ In this exercise, you will run the simulated devices so they starts sending tele
 
 1. Notice the messages displayed in the Terminal pane.
 
-    Once the **DeviceSimulation** app is running, it will begin outputting telemetry data to the terminal. This is the telemetry data that it is sending to Azure IoT Hub.
+    Once the **ContainerSimulation** app is running, it will begin outputting telemetry data to the terminal. This is the telemetry data that it is sending to Azure IoT Hub.
 
-    When the **DeviceSimulation** app is running, the **Terminal** output will look similar to the following:
+    When the **ContainerSimulation** app is running, the **Terminal** output will look similar to the following:
 
     ```text
     12/27/2019 8:51:30 PM > Sending TRUCK message: {"temperature":35.15660452608195,"humidity":48.422323938240865}
@@ -301,11 +304,11 @@ In this exercise, you will run the simulated devices so they starts sending tele
     12/27/2019 8:51:32 PM > Sending CONTAINER message: {"temperature":21.811727088543286,"humidity":50.0}
     ```
 
-1. Leave the **DeviceSimulation** app running for the remaining duration of this lab.
+1. Leave the **ContainerSimulation** app running for the remainder of this lab.
 
     This will ensure device telemetry from the three devices (Container, Truck, and Airplane) is being sent to Azure IoT Hub.
 
-1. After the **DeviceSimulation** app has been running for 30 seconds, you will see a message telling you that the **Container** device is changing transport methods.
+1. After the **ContainerSimulation** app has been running for 30 seconds, you will see a message telling you that the **Container** device is changing transport methods.
 
     The transport method will change between **Truck** and **Airplane** every 30 seconds. The **Terminal** output will look like the following when this happens:
 
@@ -323,7 +326,7 @@ In this exercise, you will be introduced to working with time series data using 
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On your Resource group tile, click **AZ-220-TSI**.
+1. On your Resource group tile, click **tsi-az220-training**.
 
 1. On the **Time Series Insights environment** blade, at the top of the **Overview** pane, click **Go to Environment**.
 
@@ -331,7 +334,7 @@ In this exercise, you will be introduced to working with time series data using 
 
 1. On the toolbar at the top of the page, if there is an option to enable the **Preview**, set **Preview** to **On**.
 
-1. On the left side navigation menu, ensure that **Analyze** is selected.
+1. On the left-side menu, ensure that **Analyze** is selected.
 
     You can expand the navigation menu to display the button names. The two options are "Analyze" and "Model". Choose Analyze.
 
@@ -357,9 +360,9 @@ In this exercise, you will be introduced to working with time series data using 
 
 1. Take a moment to examine the temperature data (graphs) for the telemetry streaming into the system from the three simulated devices.
 
-1. Notice that the spikes in **temperature** of the **ContainerDevice** correlate with the temperature spikes of either the **TruckDevice** or the **AirplaneDevice**.
+1. Notice that the spikes in **temperature** of the **sensor-th-container0001** correlate with the temperature spikes of either the **sensor-th-truck0001** or the **sensor-th-airplane0001**.
 
-    This gives you an indication that the ContainerDevice is being transported by Truck or Airplane at those times.
+    This gives you an indication that the sensor-th-container0001 is being transported by Truck or Airplane at those times.
 
 1. To add a second query to the display, set the **MEASURE** dropdown to **humidity**, set the **SPLIT BY** dropdown to **iothub-connection-device-id**, and then click **Add**.
 
@@ -375,4 +378,4 @@ In this exercise, you will be introduced to working with time series data using 
 
     Notice how the appearance of the data changes as you increase the interval.
 
-Once you have completed exploring the data, don't forget to stop the device simulator app by pressing **CTRL+C** in the terminal.
+Once you have completed exploring the data, don't forget to stop the container simulator app by pressing **CTRL+C** in the terminal.

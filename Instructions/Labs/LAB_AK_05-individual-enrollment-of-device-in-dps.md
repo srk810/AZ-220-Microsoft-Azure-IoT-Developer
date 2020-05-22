@@ -8,13 +8,13 @@ lab:
 
 ## Lab Scenario
 
-Contoso management is pushing for an an update to their Asset Monitoring and Tracking Solution that will use IoT devices to reduce the manual data entry work that is required under the current system and provide more advanced monitoring during the shipping process. The solution relies on the ability to provision and de-provision IoT devices. The best option for managing the provisioning requirements appears to be DSP.
+Contoso management is pushing for an update to their existing Asset Monitoring and Tracking Solution. The update will use IoT devices to reduce the manual data entry work that is required under the current system and provide more advanced monitoring during the shipping process. The solution relies on the ability to provision IoT devices when shipping containers are loaded and deprovision the devices when the container arrives at the destination. The best option for managing the provisioning requirements appears to be the IoT Hub Device Provisioning Service (DPS).
 
-The proposed system will use IoT devices with integrated sensors for tracking the location, temperature, pressure of shipping containers during transit. The devices will be placed within the existing shipping containers that Contoso uses to transport their cheese, and will connect to Azure IoT Hub using vehicle provided WiFi. The new system will provide continuous monitoring of the product environment and enable a variety of notification scenarios when issues are detected.
+The proposed system will use IoT devices with integrated sensors for tracking the location, temperature, and pressure of shipping containers during transit. The IoT devices will be placed within the existing shipping containers that Contoso uses to transport their cheese, and will connect to Azure IoT Hub using vehicle-provided WiFi. The new system will provide continuous monitoring of the product environment and enable a variety of notification scenarios when issues are detected. The rate at which telemetry is sent to IoT hub must be configurable.
 
-In Contoso's cheese packaging facility, when an empty container enters the system it will be equipped with the new IoT device and then loaded with packaged cheese products. The IoT device needs to be auto-provisioned to IoT hub using Device Provisioning Service. When the container arrives at the destination, the IoT device will be retrieved and then "decommissioned" through DPS. The device will be re-used for future shipments.
+In Contoso's cheese packaging facility, when an empty container enters the system it will be equipped with the new IoT device and then loaded with packaged cheese products. The IoT device will be auto-provisioned to IoT hub using DPS. When the container arrives at the destination, the IoT device will be retrieved and must be fully deprovisioned (disenrolled and deregistered). The recovered devices will be recycled and re-used for future shipments following the same auto-provisioning process.
 
-You have been tasked with validating the device provisioning and de-provisioning process using DPS. For the initial phase of the process you will use an Individual Enrollment approach.
+You have been tasked with validating the device provisioning and deprovisioning process using DPS. For the initial testing phase you will use an Individual Enrollment approach.
 
 The following resources will be created:
 
@@ -22,13 +22,13 @@ The following resources will be created:
 
 ## In This Lab
 
-In this lab, you will complete the following activities:
+In this lab, you will begin by reviewing the lab prerequisites and you will run a script if needed to ensure that your Azure subscription includes the required resources. You will then create a new individual enrollment in DPS that uses Symmetric Key attestation and specifies an initial Device Twin State (telemetry rate) for the device. With the device enrollment saved, you will go back into the enrollment and get the auto-generated Primary and Secondary keys needed for device attestation. Next, you create a simulated device and verify that device connects successfully with IoT hub and that the initial device twin properties are applied by the device as expected. To finish up, you will complete a deprovisioning process that securely removes the device from your solution by both disenrolling and deregistering the device (from DPS and IoT hub respectively). The lab includes the following exercises:
 
-* Verify that the lab prerequisites are met (that you have the required Azure resources)
-* Create a new Individual Enrollment in DPS
-* Configure a Simulated Device
+* Verify Lab Prerequisites
+* Create new individual enrollment (Symmetric keys) in DPS
+* Configure Simulated Device
 * Test the Simulated Device
-* Retire the Device
+* Deprovision the Device
 
 ## Lab Instructions
 
@@ -38,9 +38,9 @@ This lab assumes that the following Azure resources are available:
 
 | Resource Type | Resource Name |
 | :-- | :-- |
-| Resource Group | AZ-220-RG |
-| IoT Hub | AZ-220-HUB-*{YOUR-ID}* |
-| Device Provisioning Service | AZ-220-DPS-*{YOUR-ID}* |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
+| Device Provisioning Service | dps-az220-training-{your-id} |
 
 If these resources are not available, you will need to run the **lab05-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
@@ -50,11 +50,11 @@ The **lab05-setup.azcli** script is written to run in a **bash** shell environme
 
     If you are prompted about setting up storage for Cloud Shell, accept the defaults.
 
-1. Verify that the Azure Cloud Shell is using **Bash**.
+1. Verify that the Cloud Shell is using **Bash**.
 
     The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
@@ -85,7 +85,7 @@ The **lab05-setup.azcli** script is written to run in a **bash** shell environme
 
     ```bash
     mkdir lab5
-    mv lab05-setup.azcli lab4
+    mv lab05-setup.azcli lab5
     cd lab5
     ```
 
@@ -97,26 +97,27 @@ The **lab05-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab05-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab06-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab05-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **Files** list, to expand the lab6 folder and open the script file, click **lab5**, and then click **lab05-setup.azcli**.
+1. In the **Files** list, to expand the lab5 folder and open the script file, click **lab5**, and then click **lab05-setup.azcli**.
 
     The editor will now show the contents of the **lab05-setup.azcli** file.
 
-1. In the editor, update the values of the `{YOUR-ID}` and `{YOUR-LOCATION}` variables.
+1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-{YOUR-ID}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-{your-id}"
+    DPSName="dps-az220-training-{your-id}"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
-    > **Note**:  The `{YOUR-LOCATION}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
     >
     > ```bash
     > az account list-locations -o Table
@@ -148,23 +149,23 @@ The **lab05-setup.azcli** script is written to run in a **bash** shell environme
 
 ### Exercise 2: Create new individual enrollment (Symmetric keys) in DPS
 
-In this exercise, you will create a new individual enrollment for a device within the Device Provisioning Service (DPS) using _symmetric key attestation_.
+In this exercise, you will create a new individual enrollment for a device within the Device Provisioning Service (DPS) using _symmetric key attestation_. You will also configure the initial device state within the enrollment. After saving your enrollment, you will go back in and obtain the auto-generated attestation Keys that get created when the enrollment is saved.
 
 #### Task 1: Create the enrollment
 
-1. If necessary, log in to your Azure portal using your Azure account credentials.
+1. If necessary, log in to [portal.azure.com](https://portal.azure.com) using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Notice that the **AZ-220** dashboard that you created in the previous task has been loaded.
+1. Notice that the **AZ-220** dashboard has been loaded and your Resources tile is displayed.
 
     You should see both your IoT Hub and DPS resources listed.
 
-1. On your Resource group tile, click **AZ-220-DPS-*{YOUR-ID}***.
+1. On the **rg-az220** resource group tile, click **dps-az220-training-{your-id}**.
 
-1. On the Device Provisioning Service **Settings** pane on the left side, click **Manage enrollments**.
+1. On the left-side menu under **Settings**, click **Manage enrollments**.
 
-1. At the top of the pane, click **+ Add individual enrollment**.
+1. At the top of the **Manage enrollments** pane, click **+ Add individual enrollment**.
 
 1. On the **Add Enrollment** blade, in the **Mechanism** dropdown, click **Symmetric Key**.
 
@@ -174,9 +175,11 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     This sets DPS to automatically generate both the **Primary Key** and **Secondary Key** values for the device enrollment when it's created. Optionally, un-checking this option enables custom keys to be manually entered.
 
-1. In the **Registration ID** field, to specify the Registration ID to use for the device enrollment within DPS, enter **DPSSimulatedDevice1**
+    > **Note**: The Primary Key and Secondary Key values are generated after this record is saved. In the next task you will go back into this record to obtain the values, and then use them within a simulated device app later in this lab.
 
-    By default, the Registration ID will be used as the IoT Hub Device ID when the device is provisioned from the enrollment. If these values need to be different, then enter the required IoT Hub Device ID in that field.
+1. In the **Registration ID** field, to specify the Registration ID to use for the device enrollment within DPS, enter **sensor-thl-1000**
+
+    By default, the Registration ID will be used as the IoT Hub Device ID when the device is provisioned from the enrollment. When these values need to be different, you can enter the required IoT Hub Device ID in that field.
 
 1. Leave the **IoT Hub Device ID** field blank.
 
@@ -184,20 +187,20 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. Leave the **IoT Edge device** field set to **False**.
 
-   The new device will not be an edge device. Working with IoT Edge devices will be discussed later in the course.
+    The new device will not be an edge device. Working with IoT Edge devices will be discussed later in the course.
 
 1. Leave the **Select how you want to assign devices to hubs** field set to **Evenly weighted distribution**.
 
-   As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. There are four supported allocation policies:
+    As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. There are four supported allocation policies:
 
     * **Lowest latency**: Devices are provisioned to an IoT hub based on the hub with the lowest latency to the device.
     * **Evenly weighted distribution (default)**: Linked IoT hubs are equally likely to have devices provisioned to them. This is the default setting. If you are provisioning devices to only one IoT hub, you can keep this setting. 
     * **Static configuration via the enrollment list**: Specification of the desired IoT hub in the enrollment list takes priority over the Device Provisioning Service-level allocation policy.
     * **Custom (Use Azure Function)**: the device provisioning service calls your Azure Function code providing all relevant information about the device and the enrollment. Your function code is executed and returns the IoT hub information used to provisioning the device.
 
-1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **AZ-220-HUB-*{YOUR-ID}*** IoT hub that you created.
+1. Notice that the **Select the IoT hubs this device can be assigned to** dropdown specifies the **iot-az220-training-{your-id}** IoT hub that you created.
 
-   This field is used to specify the IoT Hub(s) that your _DPSSimulatedDevice1_ device can be assigned to.
+    This field is used to specify the IoT Hub(s) that your device can be assigned to.
 
 1. Leave the **Select how you want device data to be handled on re-provisioning** field set to the default value of **Re-provision and migrate data**.
 
@@ -205,9 +208,9 @@ In this exercise, you will create a new individual enrollment for a device withi
 
     * **Re-provision and migrate data**: This policy is the default for new enrollment entries. This policy takes action when devices associated with the enrollment entry submit a new provisioning request. Depending on the enrollment entry configuration, the device may be reassigned to another IoT hub. If the device is changing IoT hubs, the device registration with the initial IoT hub will be removed. All device state information from that initial IoT hub will be migrated over to the new IoT hub.
     * **Re-provision and reset to initial config**: This policy is often used for a factory reset without changing IoT hubs. This policy takes action when devices associated with the enrollment entry submit a new provisioning request. Depending on the enrollment entry configuration, the device may be reassigned to another IoT hub. If the device is changing IoT hubs, the device registration with the initial IoT hub will be removed. The initial configuration data that the provisioning service instance received when the device was provisioned is provided to the new IoT hub.
-    * **Never reprovision**: The device is never reassigned to a different hub. This policy is provided for managing backwards compatibility.
+    * **Never re-provision**: The device is never reassigned to a different hub. This policy is provided for managing backwards compatibility.
 
-1. In the **Initial Device Twin State** field, modify the `properties.desired` JSON object to specify a property named `telemetryDelay` with the value of `"2"`.
+1. In the **Initial Device Twin State** field, to specify a property named `telemetryDelay` with the value of `"2"`, update the JSON object as follows:
 
     The final JSON will be like the following:
 
@@ -230,119 +233,226 @@ In this exercise, you will create a new individual enrollment for a device withi
 
 1. At the top of the **Add Enrollment** blade, click **Save**.
 
-#### Task 2: Validate the enrollment
+#### Task 2: Review Enrollment and Obtain Authentication Keys
 
-1. On the **Manage enrollments** blade, to view the list of individual device enrollments, click **individual enrollments**.
+1. On the **Manage enrollments** pane, to view the list of individual device enrollments, click **individual enrollments**.
 
-1. Under Individual Enrollments, click **DPSSimulatedDevice1**.
+    As you may recall, you will be using the enrollment record to obtain the Authentication keys.
 
-    This enables you to view the enrollment details for the individual enrollment that you just created.
+1. Under **REGISTRATION ID**, click **sensor-thl-1000**.
 
-1. Locate the **Authentication Type** section, and notice that **Mechanism** is set to **Symmetric Key**.
+    This blade enables you to view the enrollment details for the individual enrollment that you just created.
 
-1. Copy the **Primary Key** and **Secondary Key** values for this device enrollment (there is a button to the right of each textbox for this purpose), and save them for reference later.
+1. Locate the **Authentication Type** section.
 
-    These are the authentication keys for the device to authenticate with the service.
+    Since you specified the Authentication Type as Symmetric Key when you created the enrollment, the Primary and Secondary key values have been created for you. Notice that there is a button to the right of each textbox that you can use to copy the values.
+
+1. Copy the **Primary Key** and **Secondary Key** values for this device enrollment, and then save them to a file for later reference.
+
+    These are the authentication keys for the device to authenticate with the IoT Hub service.
 
 1. Locate the **Initial device twin State**, and notice the JSON for the device twin Desired State contains the `telemetryDelay` property set to the value of `"2"`.
 
-1. Close the **DPSSimulatedDevice1** view to return to the **AZ-220-DPS-*{YOUR-ID}*** blade.
+1. Close the **sensor-thl-1000** individual enrollment blade.
 
 ### Exercise 3: Configure Simulated Device
 
-In this exercise, you will configure a Simulated Device written in C# to connect to Azure IoT using the individual enrollment created in the previous unit. You will also add code to the Simulated Device that will read and update device configuration based on the device twin within Azure IoT Hub.
+In this exercise, you will configure a Simulated Device written in C# to connect to Azure IoT using the individual enrollment created in the previous exercise. You will also add code to the Simulated Device that will read and update device configuration based on the device twin within Azure IoT Hub.
 
-The simulated device that you create in this exercise represents an IoT Device that will be located within a shipping container/box, and will be used to monitor Contoso products while they are in transit. The sensor telemetry from the device that will be sent to Azure IoT Hub includes Temperature, Humidity, Pressure, and Latitude/Longitude coordinates of the container. The device is part of the overall asset tracking solution.
+The simulated device that you create in this exercise represents an IoT device that will be located within a shipping container/box, and will be used to monitor Contoso products while they are in transit. The sensor telemetry from the device that will be sent to Azure IoT Hub includes Temperature, Humidity, Pressure, and Latitude/Longitude coordinates of the container. The device is part of the overall asset tracking solution.
 
-This is different than the earlier lab where a simulated device connected to Azure because in that lab, you used a shared access key to authenticate, which does not require device provisioning, but also does not give the provisioning management benefits (such as device twins), and requires fairly large distribution and management of a shared key.  In this lab, you are provisioning a unique device through the Device Provisioning Service.
+> **Note**: You may have the impression that creating this simulated device is a bit redundant with what you created in the previous lab, but the attestation mechanism in that you implement in this lab is quite different from what you did previously. In the previous lab, you used a shared access key to authenticate, which does not require device provisioning, but also does not give the provisioning management benefits (such as leveraging device twins), and it requires fairly large distribution and management of a shared key. In this lab, you are provisioning a unique device through the Device Provisioning Service.
 
 #### Task 1: Create the Simulated Device
 
-1. On the **AZ-220-DPS-*{YOUR-ID}*** blade, navigate to the **Overview** pane.
+1. On the left-side menu of the **dps-az220-training-{your-id}** blade, click **Overview**.
 
-1. In the top-right area of the blade, hover the mouse pointer over value assigned to ID Scope, and then click **Copy to clipboard**.
+1. In the top-right area of the blade, hover the mouse pointer over value assigned to **ID Scope**, and then click **Copy to clipboard**.
 
     You will be using this value shortly, so make note of the value if you are unable to use the clipboard. Be sure to differentiate between uppercase "O" and the number "0".
 
     The **ID Scope** will be similar to this value: `0ne0004E52G`
 
-1. Using **Visual Studio Code**, open the Starter folder for Lab 5.
+1. Open **Visual Studio Code**.
 
-    Again, this is referring to the lab resources files that you downloaded when setting up your development environment in lab 3. The folder path is:
+1. On the **File** menu, click **Open Folder** and then navigate to the Starter folder for Lab 5.
+
+    The Lab 5 Starter folder is part of the lab resources files that you downloaded when setting up your development environment in lab 3. The folder path is:
 
     * Allfiles
       * Labs
           * 05-Individual Enrollment of a Device in DPS
             * Starter
 
-1. on the **View** menu, click **Terminal**.
+1. In the **Open Folder** dialog, click **ContainerDevice**, and then click **Select Folder**.
+ 
+    The ContainerDevice folder is a sub-folder of the Lab 5 Starter folder. It contains a Program.cs file and a ContainerDevice.csproj file.
+
+    > **Note**: If Visual Studio Code prompts you to load required assets, you can click **Yes** to load them.
+ 
+1. On the **View** menu, click **Terminal**.
 
     Verify that the selected terminal shell is the windows command prompt.
 
-1. To restore all the application NuGet packages via the command-line, in the Terminal view, at the command prompt, enter the following command:
+1. At the Terminal command prompt, to restore all the application NuGet packages, enter the following command:
 
     ```cmd/sh
     dotnet restore
     ```
 
-1. In the Visual Studio Code Explorer pane, click **Program.cs**.
+1. In the Visual Studio Code **EXPLORER** pane, click **Program.cs**.
 
-1. In the code editor, near the top of the Program class, locate the `dpsIdScope` variable, and then update the assigned value using the ID Scope value that you copied from the Device Provisioning Service in the Azure portal.
+1. In the code editor, near the top of the Program class, locate the **dpsIdScope** variable.
+
+1. Update the value assigned to **dpsIdScope** using the ID Scope that you copied from the Device Provisioning Service.
 
     > **Note**: If you don't have the value of ID Scope available to you, you can find it on the Overview blade of the DPS service (in the Azure portal).
 
-1. Locate the `registrationId` variable, and replace the value with **DPSSimulatedDevice1**
+1. Locate the **registrationId** variable, and update the assigned value using **sensor-thl-1000**
 
     This variable represents the **Registration ID** value for the individual enrollment that you created in the Device Provisioning Service.
 
-1. Locate the `individualEnrollmentPrimaryKey` and `individualEnrollmentSecondaryKey` variables, and replace their values with the **Primary Key** and **Secondary Key** values that you saved when configuring the individual enrollment for the simulated device.
+1. Update the **individualEnrollmentPrimaryKey** and **individualEnrollmentSecondaryKey** variables using the **Primary Key** and **Secondary Key** values that you saved.
 
     > **Note**: If you don't have these Key values available, you can copy them from the Azure portal as follows -
     >
-    > Open the **Manage enrollments** blade, click **Individual Enrollments**, click **DPSSimulatedDevice1**. Copy the values and then paste as noted above.
+    > Open the **Manage enrollments** blade, click **Individual Enrollments**, click **sensor-thl-1000**. Copy the values and then paste as noted above.
 
-1. Review the source code for the simulated device, and take notice of the following items:
+#### Task 2: Add the provisioning code
 
-    * The `ProvisioningDeviceLogic` class contains the logic for reading from the simulated device sensors.
-    * The `ProvisioningDeviceLogic.SendDeviceToCloudMessagesAsync` method contains the logic for generating the simulated sensor readings for Temperature, Humidity, Pressure, Latitude, and Longitude. This method also sends the telemetry as Device-to-Cloud messages to Azure IoT Hub.
+In this task, you will implement the code that provisions the device via DPS and creates a DeviceClient instance that can be used to connect to the IoT Hub.
 
-1. At the bottom of the `ProvisioningDeviceLogic.SendDeviceToCloudMessagesAsync` method, notice the call to `Task.Delay`.
+1. Take a minute to scan through the code in the **Program.cs** file. 
 
-    `Task.Delay` is used to "pause" the `while` loop for a period of time before creating and sending the next telemetry message. The `_telemetryDelay` variable is used to define how many seconds to wait before sending the next telemetry message.
+    The overall layout of the **ContainerDevice** application is similar to the **CaveDevice** application that you created in Lab 4. Notice that both applications include the following:
 
-1. Near the top of the `ProvisioningDeviceLogic` class, locate the `_telemetryDelay` variable declaration.
+    * Using statements
+    * Namespace definition
+      * Program class - responsible for connecting to Azure IoT and sending telemetry
+      * EnvironmentSensor class - responsible for generating sensor data
 
-    Notice that the default value for the delay is set to `1` second. Your next step is to integrate the code that uses a device twin value to control the delay time.
+1. In the code editor, locate the `// INSERT Main method below here` comment.
+
+1. To create the **Main** method for your simulated device application, enter the following code:
+
+    ```csharp
+    public static async Task Main(string[] args)
+    {
+
+        using (var security = new SecurityProviderSymmetricKey(registrationId,
+                                                                individualEnrollmentPrimaryKey,
+                                                                individualEnrollmentSecondaryKey))
+        using (var transport = new ProvisioningTransportHandlerAmqp(TransportFallbackType.TcpOnly))
+        {
+            ProvisioningDeviceClient provClient =
+                ProvisioningDeviceClient.Create(GlobalDeviceEndpoint, dpsIdScope, security, transport);
+
+            using (deviceClient = await ProvisionDevice(provClient, security))
+            {
+                await deviceClient.OpenAsync().ConfigureAwait(false);
+
+                // INSERT Setup OnDesiredPropertyChanged Event Handling below here
+
+                // INSERT Load Device Twin Properties below here
+
+                // Start reading and sending device telemetry
+                Console.WriteLine("Start reading and sending device telemetry...");
+                await SendDeviceToCloudMessagesAsync(deviceClient);
+
+                await deviceClient.CloseAsync().ConfigureAwait(false);
+            }
+        }
+    }
+    ```
+
+    Although the Main method in this application serves a similar purpose to the Main method of the CaveDevice application that you created in a previous lab, it is a little more complex. In the CaveDevice app, you used a device connection string to directly connect to an IoT Hub, this time you need to first provision the device (or, for subsequent connections, confirm the device is still provisioned), then retrieve the appropriate IoT Hub connection details.
+
+    To connect to DPS, you not only require the **dpsScopeId** and the **GlobalDeviceEndpoint** (defined in the variables), you also need to specify the following:
+
+    * **security** - the method used for authenticating the enrollment. Earlier you configured the individual enrollment to use symmetric keys, therefore the **SecurityProviderSymmetricKey** is the logical choice. As you might expect, there are variants of the providers that support X.509 and TPM as well.
+
+    * **transport** - the transport protocol used by the provisioned device. In this instance, the AMQP handler was chosen (**ProvisioningTransportHandlerAmqp**). Of course, HTTP and MQTT handlers are also available.
+
+    Once the **security** and **transport** variables are populated, you create an instance of the **ProvisioningDeviceClient**. You will use this instance to register the device and create a **DeviceClient** in the **ProvisionDevice** method, which you will add shortly.
+
+    The remainder of the **Main** method uses the device client a little differently than you did in the **CaveDevice** - this time you explicitly open the device connection so that the app can use device twins (more on this in the next exercise), and then call the **SendDeviceToCloudMessagesAsync** method to start sending telemetry.
+
+    The **SendDeviceToCloudMessagesAsync** method is very similar to what you created in the **CaveDevice** application. It creates an instance of the **EnvironmentSensor** class (this one also returns pressure and location data), builds a message and sends it. Notice that instead of a fixed delay within the method loop, the delay is calculated by using the **telemetryDelay** variable: `await Task.Delay(telemetryDelay * 1000);`. If time permits, take a deeper look yourself and compare this to the class used in the earlier lab.
+
+    Finally, back in the **Main** method, the device client is closed.
+
+    > **Information**: You can find the documentation for the **ProvisioningDeviceClient** [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.provisioning.client.provisioningdeviceclient?view=azure-dotnet) - from there you can easily navigate to the other related classes.
+
+1. Locate the `// INSERT ProvisionDevice method below here` comment.
+
+1. To create the **ProvisionDevice** method, enter the following code:
+
+    ```csharp
+    private static async Task<DeviceClient> ProvisionDevice(ProvisioningDeviceClient provisioningDeviceClient, SecurityProviderSymmetricKey security)
+    {
+        var result = await provisioningDeviceClient.RegisterAsync().ConfigureAwait(false);
+        Console.WriteLine($"ProvisioningClient AssignedHub: {result.AssignedHub}; DeviceID: {result.DeviceId}");
+        if (result.Status != ProvisioningRegistrationStatusType.Assigned)
+        {
+            throw new Exception($"DeviceRegistrationResult.Status is NOT 'Assigned'");
+        }
+
+        var auth = new DeviceAuthenticationWithRegistrySymmetricKey(
+            result.DeviceId,
+            security.GetPrimaryKey());
+
+        return DeviceClient.Create(result.AssignedHub, auth, TransportType.Amqp);
+    }
+    ```
+
+    As you can see, this method receives the the provisioning device client and security instances you created earlier. The `provisioningDeviceClient.RegisterAsync()` is called, which returns a **DeviceRegistrationResult** instance. This result contains a number of properties including the **DeviceId**, **AssignedHub** and the **Status**.
+
+    > **Information**: Full details of the **DeviceRegistrationResult** properties can be found [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.provisioning.client.deviceregistrationresult?view=azure-dotnet).
+
+    The method then checks to ensure that the provisioning status has been set and throws an exception if the device is not *Assigned*  - other possible results here include *Unassigned*, *Assigning*, *Failed* and *Disabled*.
+
+    * The **Program.ProvisionDevice** method contains the logic for registering the device via DPS.
+    * The **Program.SendDeviceToCloudMessagesAsync** method sends the telemetry as Device-to-Cloud messages to Azure IoT Hub.
+    * The **EnvironmentSensor** class contains the logic for generating the simulated sensor readings for Temperature, Humidity, Pressure, Latitude, and Longitude. 
+
+1. Locate the **SendDeviceToCloudMessagesAsync** method.
+
+1. At the bottom of the **SendDeviceToCloudMessagesAsync** method, notice the call to `Task.Delay()`.
+
+    `Task.Delay()` is used to "pause" the `while` loop for a period of time before creating and sending the next telemetry message. The **telemetryDelay** variable is used to define how many seconds to wait before sending the next telemetry message. Contoso is requiring that the delay time be configurable.  
+
+1. Near the top of the **Program** class, locate the **telemetryDelay** variable declaration.
+
+    Notice that the default value for the delay is set to **1** second. Your next step is to integrate the code that uses a device twin value to control the delay time.
 
 #### Task 2: Integrate Device Twin Properties
 
-To use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, we want to update our simulated device code to read a device twin Desired Property, and then assign that value to the `_telemetryDelay` variable. We also want to update the device twin Reported Property to indicate the delay value that is currently implemented on our device.
+In order to use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, you want to update your simulated device code to read the telemetryDelay device twin Desired Property, and then assign that value to the corresponding **telemetryDelay** variable in your code. You also want to update the device twin Reported Property (maintained by IoT Hub) to have a record of the delay time that is currently implemented on our device.
 
-1. In the Visual Studio Code editor, locate the `RunAsync` method.
+1. In the Visual Studio Code editor, locate the **Main** method.
 
-1. Take a moment to review the code, and then find the `// TODO 1: Setup OnDesiredPropertyChanged Event Handling` comment.
+    To begin the integration of device twin properties, your code that enables the simulated device needs to be notified when a device twin property is updated.
 
-    To begin the integration of device twin properties, we need code that enables the simulated device to be notified when a device twin property is updated.
+    To achieve this, you will use the `DeviceClient.SetDesiredPropertyUpdateCallbackAsync` method, and set up an event handler by creating an `OnDesiredPropertyChanged` method.
 
-    To achieve this, we can use the `DeviceClient.SetDesiredPropertyUpdateCallbackAsync` method, and set up an event handler by creating an `OnDesiredPropertyChanged` event.
+1. Locate the `// INSERT Setup OnDesiredPropertyChanged Event Handling below here` comment.
 
-1. To set up the DeviceClient for an OnDesiredPropertyChanged event, replace the `// TODO 1:` comment with the following code:
+1. To set up the DeviceClient for an OnDesiredPropertyChanged event, enter the following code:
 
     ```csharp
-    Console.WriteLine("Connecting SetDesiredPropertyUpdateCallbackAsync event handler...");
-    await iotClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
+    await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).ConfigureAwait(false);
     ```
 
-    In case you are wondering, we created the `iotClient` instance of DeviceClient at the top of the ProvisioningDeviceLogic class.
+    The **SetDesiredPropertyUpdateCallbackAsync** method is used to set up the **DesiredPropertyUpdateCallback** event handler to receive device twin desired property changes. This code configures **deviceClient** to call a method named **OnDesiredPropertyChanged** when a device twin property change event is received.
 
-    Next, we need to add our `OnDesiredPropertyChanged` method to the `ProvisioningDeviceLogic` class.
+    Now that the **SetDesiredPropertyUpdateCallbackAsync** method is in place to set up the event handler, you need to create the **OnDesiredPropertyChanged** method that it calls.
 
-1. To complete the setup of the event handler, add the following method code to the ProvisioningDeviceLogic class:
+1. Locate the `// INSERT OnDesiredPropertyChanged method below here` comment.
 
-    > **Note**: You can place this code below the `RunAsync` method (that way it will be near the other code that you're updating).
+1. To create the **OnDesiredPropertyChanged** method, enter the following code:
 
     ```csharp
-    private async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
+    private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
     {
         Console.WriteLine("Desired Twin Property Changed:");
         Console.WriteLine($"{desiredProperties.ToJson()}");
@@ -353,50 +463,54 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
             string desiredTelemetryDelay = desiredProperties["telemetryDelay"];
             if (desiredTelemetryDelay != null)
             {
-                this._telemetryDelay = int.Parse(desiredTelemetryDelay);
+                telemetryDelay = int.Parse(desiredTelemetryDelay);
             }
             // if desired telemetryDelay is null or unspecified, don't change it
         }
 
-
         // Report Twin Properties
         var reportedProperties = new TwinCollection();
-        reportedProperties["telemetryDelay"] = this._telemetryDelay.ToString();
-        await iotClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
+        reportedProperties["telemetryDelay"] = telemetryDelay.ToString();
+        await deviceClient.UpdateReportedPropertiesAsync(reportedProperties).ConfigureAwait(false);
         Console.WriteLine("Reported Twin Properties:");
         Console.WriteLine($"{reportedProperties.ToJson()}");
     }
     ```
 
-    Notice that the `OnDesiredPropertyChanged` method includes the code to read the device twin Desired Properties, configures the `_telemetryDelay` variable, and then reports the Reported Properties back to the device twin to tell Azure IoT Hub what the current state of the simulated device is configured to.
+    Notice that the **OnDesiredPropertyChanged** event handler accepts a **desiredProperties** parameter of type **TwinCollection**.
 
-1. In the `RunAsync` method, locate the `//TODO 2: Load device twin Properties` comment.
+    Notice that if the value of the **desiredProperties** parameter contains **telemetryDelay** (a device twin desired property), the code will assign the value of the device twin property to the **telemetryDelay** variable. You may recall that the **SendDeviceToCloudMessagesAsync** method includes a **Task.Delay** call that uses the **telemetryDelay** variable to set the delay time between messages sent to IoT hub.
 
-1. To read the device twin desired properties and configure the device to match on device startup, replace the `// TODO 2:` comment with the following code:
+    Notice the next block of code is used to report the current state of the device back up to Azure IoT Hub. This code calls the **DeviceClient.UpdateReportedPropertiesAsync** method and passes it a **TwinCollection** that contains the current state of the device properties. This is how the device reports back to IoT Hub that it received the device twin desired properties changed event, and has now updated its configuration accordingly. Note that it reports what the properties are now set to, not an echo of the desired properties. In the case where the reported properties sent from the device are different than the desired state that the device received, IoT Hub will maintain an accurate Device Twin that reflects the state of the device.
+
+    Now that the device can receive updates to the device twin desired properties from Azure IoT Hub, it also needs to be coded to configure its initial setup when the device starts up. To do this the device will need to load the current device twin desired properties from Azure IoT Hub, and configure itself accordingly.
+
+1. In the **Main** method, locate the `// INSERT Load Device Twin Properties below here` comment.
+
+1. To read the device twin desired properties and configure the device to match on device startup, enter following code:
 
     ```csharp
-    Console.WriteLine("Loading device twin Properties...");
-    var twin = await iotClient.GetTwinAsync().ConfigureAwait(false);
+    var twin = await deviceClient.GetTwinAsync().ConfigureAwait(false);
     await OnDesiredPropertyChanged(twin.Properties.Desired, null);
     ```
 
-    This code calls the `DeviceTwin.GetTwinAsync` method to retrieve the device twin for the simulated device. It then accesses the `Properties.Desired` property object to retrieve the current Desired State for the device, and passes that to the `OnDesiredPropertyChanged` method that will configure the simulated devices `_telemetryDelay` variable.
+    This code calls the `DeviceTwin.GetTwinAsync` method to retrieve the device twin for the simulated device. It then accesses the `Properties.Desired` property object to retrieve the current Desired State for the device, and passes that to the **OnDesiredPropertyChanged** method that will configure the simulated devices **telemetryDelay** variable.
 
-    Notice, this code reuses the `OnDesiredPropertyChanged` method that was already created for handling _OnDesiredPropertyChanged_ events. This helps keep the code that reads the device twin desired state properties and configures the device at startup in a single place. The resulting code is simpler and easier to maintain.
+    Notice, this code reuses the **OnDesiredPropertyChanged** method that was already created for handling _OnDesiredPropertyChanged_ events. This helps keep the code that reads the device twin desired state properties and configures the device at startup in a single place. The resulting code is simpler and easier to maintain.
 
-1. On the top menu of Visual Studio Code, click **File**, and then click **Save**.
+1. On the Visual Studio Code **File** menu, click **Save**.
 
     Your simulated device will now use the device twin properties from Azure IoT Hub to set the delay between telemetry messages.
 
 ### Exercise 4: Test the Simulated Device
 
-In this exercise, you will run the Simulated Device and verify it's sending sensor telemetry to Azure IoT Hub. You will also update the delay at which telemetry is sent to Azure IoT Hub by updating the device twin for the simulated device within Azure IoT Hub.
+In this exercise, you will run the Simulated Device and verify that it's sending sensor telemetry to Azure IoT Hub. You will also change the rate at which telemetry is sent to Azure IoT Hub by updating the telemetryDelay device twin property for the simulated device within Azure IoT Hub.
 
 #### Task 1: Build and run the device
 
 1. Ensure that you have your code project open in Visual Studio Code.
 
-1. On the top menu, click **View**, and then click **Terminal**.
+1. On the **View** menu, click **Terminal**.
 
 1. In the Terminal pane, ensure the command prompt shows the directory path for the `Program.cs` file.
 
@@ -413,18 +527,11 @@ In this exercise, you will run the Simulated Device and verify it's sending sens
     You can scroll up in the terminal pane to review the output. It should be similar to the following:
 
     ```text
-    RegistrationID = DPSSimulatedDevice1
-    ProvisioningClient RegisterAsync . . . Device Registration Status: Assigned
-    ProvisioningClient AssignedHub: AZ-220-HUB-CP1019.azure-devices.net; DeviceID: DPSSimulatedDevice1
-    Creating Symmetric Key DeviceClient authentication
-    Simulated Device. Ctrl-C to exit.
-    DeviceClient OpenAsync.
-    Connecting SetDesiredPropertyUpdateCallbackAsync event handler...
-    Loading device twin Properties...
+    ProvisioningClient AssignedHub: iot-az220-training-{your-id}.azure-devices.net; DeviceID: sensor-thl-1000
     Desired Twin Property Changed:
     {"telemetryDelay":"2","$version":1}
     Reported Twin Properties:
-    {"telemetryDelay":2}
+    {"telemetryDelay":"2"}
     Start reading and sending device telemetry...
     ```
 
@@ -454,12 +561,12 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
 1. In the Azure Cloud Shell, enter the following command:
 
     ```cmd/sh
-    az iot hub monitor-events --hub-name {IoTHubName} --device-id DPSSimulatedDevice1
+    az iot hub monitor-events --hub-name {IoTHubName} --device-id sensor-thl-1000
     ```
 
     _Be sure to replace the **{IoTHubName}** placeholder with the name of your Azure IoT Hub._
 
-1. Notice that your IoT hub is receiving the telemetry messages from the DPSSimulatedDevice1 device.
+1. Notice that your IoT hub is receiving the telemetry messages from the sensor-thl-1000 device.
 
     Continue to leave the simulated device application running for the next task.
 
@@ -467,15 +574,15 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
 
 With the simulated device running, the `telemetryDelay` configuration can be updated by editing the device twin Desired State within Azure IoT Hub. This can be done by configuring the Device in the Azure IoT Hub within the Azure portal.
 
-1. Open the **Azure Portal** (if it is not already open), and then navigate to your **Azure IoT Hub** service.
+1. Open the Azure portal (if it is not already open), and then navigate to your **Azure IoT Hub** service.
 
-1. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click **IoT devices**.
+1. On the IoT Hub blade, on the left-side menu under **Explorers**, click **IoT devices**.
 
-1. Within the list of IoT devices, click **DPSSimulatedDevice1**.
+1. Under **DEVICE ID**, click **sensor-thl-1000**.
 
     > **IMPORTANT**: Make sure you select the device that you are using for this lab.
 
-1. On the device blade, at the top of the blade, click **Device Twin**.
+1. On the **sensor-thl-1000** device blade, at the top of the blade, click **Device Twin**.
 
     The **Device twin** blade provides an editor with the full JSON for the device twin. This enables you to view and/or edit the device twin state directly within the Azure portal.
 
@@ -487,7 +594,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
     The value includes the quotes ("").
 
-1. At the top of the blade, click **Save**
+1. At the top of the **Device twin** blade, click **Save**
 
     The `OnDesiredPropertyChanged` event will be triggered automatically within the code for the Simulated Device, and the device will update its configuration to reflect the changes to the device twin Desired state.
 
@@ -503,10 +610,9 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
     Desired Twin Property Changed:
     {"telemetryDelay":"5","$version":2}
     Reported Twin Properties:
-    {"telemetryDelay":5}
-    11/6/2019 7:29:55 PM > Sending message: {"temperature":33.01780830277959,"humidity":68.52464504936927,"pressure":1023.0929576073974,"latitude":39.97641877038439,"longitude":-98.49544472071804}
-    11/6/2019 7:30:00 PM > Sending message: {"temperature":33.95490410689027,"humidity":71.57070464062072,"pressure":1013.3468084112261,"latitude":40.01604868659767,"longitude":-98.51051877869526}
-    11/6/2019 7:30:05 PM > Sending message: {"temperature":22.055266337494956,"humidity":67.50505594886144,"pressure":1018.1765662249767,"latitude":40.22292566031555,"longitude":-98.4367936214764}
+    {"telemetryDelay":"5"}
+    4/21/2020 1:20:16 PM > Sending message: {"temperature":34.417625961088405,"humidity":74.12403526442313,"pressure":1023.7792049974805,"latitude":40.172799921919186,"longitude":-98.28591913777421}
+    4/21/2020 1:20:22 PM > Sending message: {"temperature":20.963297521678403,"humidity":68.36916032636965,"pressure":1023.7596862048422,"latitude":39.83252821949164,"longitude":-98.31669969393461}
     ```
 
 1. Switch to the browser page where you are running the Azure CLI command in the Azure Cloud Shell.
@@ -517,41 +623,41 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 1. Use **Ctrl-C** to stop both the `az` command and the Simulated Device application.
 
-1. In the Azure Portal, close the **Device twin** blade.
+1. Switch to your browser window for the Azure portal.
 
-1. Still in the Azure Portal, on the Simulated Device blade, click **Device Twin**.
+1. Close the **Device twin** blade.
 
-1. This time, locate the JSON for the `properties.reported` object.
+1. Still in the Azure Portal, on the **sensor-thl-1000** device blade, click **Device Twin**.
 
-    This contains the state reported by the device. Notice the `telemetryDelay` property exists here as well, and is also set to `5`.  There is also a `$metadata` value that shows you when the value was reported data was last updated and when the specific reported value was last updated.
+1. Locate the JSON for the `properties.reported` object.
 
-1. Again close the **Device twin** blade.
+    This portion of the JSON contains the state reported by the device. Notice the `telemetryDelay` property exists here as well, and is also set to `5`.  There is also a `$metadata` value that shows you when the value was reported data was last updated and when the specific reported value was last updated.
+
+1. Close the **Device twin** blade.
 
 1. Close the simulated device blade, and then close the IoT Hub blade.
 
-### Exercise 5: Retire the Device
+### Exercise 5: Deprovision the Device
 
-In this unit you will perform the necessary tasks to retire the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully retire an IoT Device from an Azure IoT solution it must be removed from both of these services. When the transport box arrives at it's final destination, then sensor will be removed from the box, and needs to be "decommissioned". Complete device retirement is an important step in the life cycle of IoT devices within an IoT solution.
+In your Contoso scenario, when the shipping container arrives at it's final destination, the IoT device will be removed from the container and returned to a Contoso location. Contoso will need to deprovision the device before it can be tested and placed in inventory. In the future the device could be provisioned to the same IoT hub or an IoT hub in a different region. Complete device deprovisioning is an important step in the life cycle of IoT devices within an IoT solution.
 
-#### Task 1: Retire the device from the DPS
+In this exercise, you will perform the tasks necessary to deprovision the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully deprovision an IoT device from an Azure IoT solution it must be removed from both of these services. 
+
+#### Task 1: Disenroll the device from the DPS
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. Notice that the **AZ-220** dashboard that you created in the previous task has been loaded.
+1. On your Resource group tile, to open your Device Provisioning Service, click **dps-az220-training-{your-id}**.
 
-    You should see both your IoT Hub and DPS resources listed.
+1. On the left-side menu under **Settings**, click **Manage enrollments**.
 
-1. On your Resource group tile, to navigate to your Device Provisioning Service, click **AZ-220-DPS-*{YOUR-ID}***.
+1. On the **Manage enrollments** pane, to view the list of individual device enrollments, click **Individual Enrollments**.
 
-1. On the Device Provisioning Service blade, on the left side menu, click **Manage enrollments**.
+1. To the left of **sensor-thl-1000**, click the checkbox.
 
-1. On the Manage enrollments blade, to view the list of individual device enrollments, click **Individual Enrollments**.
-
-1. To select the DPSSimulatedDevice1 individual device enrollment, select the checkbox to the left of the name.
-
-    Note that you don't want to open the device enrollment, you just want to select it.
+    > **Note**: You don't want to open the sensor-thl-1000 individual device enrollment, you just want to select it.
 
 1. At the top of the blade, click **Delete**.
 
@@ -559,17 +665,17 @@ In this unit you will perform the necessary tasks to retire the device from both
 
 1. On the **Remove enrollment** prompt, click **Yes**.
 
-    The individual enrollment is now removed from the Device Provisioning Service (DPS). To complete the device retirement, the **Device ID** for the Simulated Device also must be removed from the **Azure IoT Hub** service.
+    The individual enrollment is now removed from the Device Provisioning Service (DPS). To complete the deprovisioning process, the **Device ID** for the Simulated Device also must be removed from the **Azure IoT Hub** service.
 
-#### Task 2: Retire the device from the IoT Hub
+#### Task 2: Deregister the device from the IoT Hub
 
 1. In the Azure portal, navigate back to your Dashboard.
 
-1. On your resource group tile, click **AZ-220-HUB-*{YOUR-ID}*** to navigate to the Azure IoT Hub.
+1. On your Resource group tile, to open your Azure IoT Hub blade, click **iot-az220-training-{your-id}**.
 
-1. On the IoT Hub blade, on the left side of the blade, under the **Explorers** section, click on **IoT devices**.
+1. On the left-side menu under **Explorers**, click **IoT devices**.
 
-1. Within the list of IoT devices, select the checkbox to the left of the DPSSimulatedDevice1 Device ID.
+1. To the left of **sensor-thl-1000**, click the checkbox.
 
     > **IMPORTANT**: Make sure you select the device representing the simulated device that you used for this lab.
 

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-YourID="{YOUR-ID}"
-RGName="AZ-220-RG"
-IoTHubName="AZ-220-HUB-$YourID"
-DeviceID="CheeseCaveID"
+YourID="{your-id}"
+RGName="rg-az220"
+IoTHubName="iot-az220-training-$YourID"
+DeviceID="sensor-th-0055"
 
 Location="SETLOCATION"
 
-if [ $YourID = "{YOUR-ID}" ] || [ $Location = "SETLOCATION" ]
+if [ $YourID = "{your-id}" ] || [ $Location = "SETLOCATION" ]
 then
     echo "You must change the YourID and/or Location values"
     exit 1

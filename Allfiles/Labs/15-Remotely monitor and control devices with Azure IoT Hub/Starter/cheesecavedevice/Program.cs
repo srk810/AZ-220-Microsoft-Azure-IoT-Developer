@@ -8,101 +8,47 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using static CheeseCaveDevice.CheeseCaveSimulator;
 
-namespace simulated_device
+namespace CheeseCaveDevice
 {
-    class SimulatedDevice
+    class Program
     {
-        // Global constants.
-        const float ambientTemperature = 70;                    // Ambient temperature of a southern cave, in degrees F.
-        const double ambientHumidity = 99;                      // Ambient humidity in relative percentage of air saturation.
-        const double desiredTempLimit = 5;                      // Acceptable range above or below the desired temp, in degrees F.
-        const double desiredHumidityLimit = 10;                 // Acceptable range above or below the desired humidity, in percentages.
         const int intervalInMilliseconds = 5000;                // Interval at which telemetry is sent to the cloud.
 
         // Global variables.
-        private static DeviceClient s_deviceClient;
-        private static stateEnum fanState = stateEnum.off;                      // Initial setting of the fan.
-        private static double desiredTemperature = ambientTemperature - 10;     // Initial desired temperature, in degrees F.
-        private static double desiredHumidity = ambientHumidity - 20;           // Initial desired humidity in relative percentage of air saturation.
+        private static DeviceClient deviceClient;
 
-        // Enum for the state of the fan for cooling/heating, and humidifying/de-humidifying.
-        enum stateEnum
-        {
-            off,
-            on,
-            failed
-        }
+        private static CheeseCaveSimulator cheeseCave;
 
         // The device connection string to authenticate the device with your IoT hub.
-        private readonly static string s_deviceConnectionString = "<your device connection string>";
+        private readonly static string deviceConnectionString = "<your device connection string>";
 
-        private static void colorMessage(string text, ConsoleColor clr)
+        private static void Main(string[] args)
         {
-            Console.ForegroundColor = clr;
-            Console.WriteLine(text);
-            Console.ResetColor();
-        }
-        private static void greenMessage(string text)
-        {
-            colorMessage(text, ConsoleColor.Green);
-        }
+            ConsoleHelper.WriteColorMessage("Cheese Cave device app.\n", ConsoleColor.Yellow);
 
-        private static void redMessage(string text)
-        {
-            colorMessage(text, ConsoleColor.Red);
+            // Connect to the IoT hub using the MQTT protocol.
+            deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
+
+            // Create an instance of the Cheese Cave Simulator
+            cheeseCave = new CheeseCaveSimulator();
+
+            // INSERT register direct method code below here
+
+            // INSERT register desired property changed handler code below here
+
+            SendDeviceToCloudMessagesAsync();
+            Console.ReadLine();
         }
 
         // Async method to send simulated telemetry.
         private static async void SendDeviceToCloudMessagesAsync()
         {
-            double currentTemperature = ambientTemperature;         // Initial setting of temperature.
-            double currentHumidity = ambientHumidity;               // Initial setting of humidity.
-
-            Random rand = new Random();
-
             while (true)
             {
-                // Simulate telemetry.
-                double deltaTemperature = Math.Sign(desiredTemperature - currentTemperature);
-                double deltaHumidity = Math.Sign(desiredHumidity - currentHumidity);
-
-                if (fanState == stateEnum.on)
-                {
-                    // If the fan is on the temperature and humidity will be nudged towards the desired values most of the time.
-                    currentTemperature += (deltaTemperature * rand.NextDouble()) + rand.NextDouble() - 0.5;
-                    currentHumidity += (deltaHumidity * rand.NextDouble()) + rand.NextDouble() - 0.5;
-
-                    // Randomly fail the fan.
-                    if (rand.NextDouble() < 0.01)
-                    {
-                        fanState = stateEnum.failed;
-                        redMessage("Fan has failed");
-                    }
-                }
-                else
-                {
-                    // If the fan is off, or has failed, the temperature and humidity will creep up until they reaches ambient values, thereafter fluctuate randomly.
-                    if (currentTemperature < ambientTemperature - 1)
-                    {
-                        currentTemperature += rand.NextDouble() / 10;
-                    }
-                    else
-                    {
-                        currentTemperature += rand.NextDouble() - 0.5;
-                    }
-                    if (currentHumidity < ambientHumidity - 1)
-                    {
-                        currentHumidity += rand.NextDouble() / 10;
-                    }
-                    else
-                    {
-                        currentHumidity += rand.NextDouble() - 0.5;
-                    }
-                }
-
-                // Check: humidity can never exceed 100%.
-                currentHumidity = Math.Min(100, currentHumidity);
+                var currentTemperature = cheeseCave.ReadTemperature();
+                var currentHumidity = cheeseCave.ReadHumidity();
 
                 // Create JSON message.
                 var telemetryDataPoint = new
@@ -115,14 +61,14 @@ namespace simulated_device
 
                 // Add custom application properties to the message.
                 message.Properties.Add("sensorID", "S1");
-                message.Properties.Add("fanAlert", (fanState == stateEnum.failed) ? "true" : "false");
+                message.Properties.Add("fanAlert", (cheeseCave.FanState == StateEnum.Failed) ? "true" : "false");
 
                 // Send temperature or humidity alerts, only if they occur.
-                if ((currentTemperature > desiredTemperature + desiredTempLimit) || (currentTemperature < desiredTemperature - desiredTempLimit))
+                if (cheeseCave.IsTemperatureAlert)
                 {
                     message.Properties.Add("temperatureAlert", "true");
                 }
-                if ((currentHumidity > desiredHumidity + desiredHumidityLimit) || (currentHumidity < desiredHumidity - desiredHumidityLimit))
+                if (cheeseCave.IsHumidityAlert)
                 {
                     message.Properties.Add("humidityAlert", "true");
                 }
@@ -130,91 +76,144 @@ namespace simulated_device
                 Console.WriteLine("Message data: {0}", messageString);
 
                 // Send the telemetry message.
-                await s_deviceClient.SendEventAsync(message);
-                greenMessage("Message sent\n");
+                await deviceClient.SendEventAsync(message);
+                ConsoleHelper.WriteGreenMessage("Message sent\n");
 
                 await Task.Delay(intervalInMilliseconds);
             }
         }
-        private static void Main(string[] args)
+
+        // INSERT SetFanState method below here
+
+        // INSERT OnDesiredPropertyChanged method below here
+
+    }
+
+    internal class CheeseCaveSimulator
+    {
+        internal enum StateEnum
         {
-            colorMessage("Cheese Cave device app.\n", ConsoleColor.Yellow);
-
-            // Connect to the IoT hub using the MQTT protocol.
-            s_deviceClient = DeviceClient.CreateFromConnectionString(s_deviceConnectionString, TransportType.Mqtt);
-
-            // Create a handler for the direct method call
-            s_deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
-
-            // Get the device twin to report the initial desired properties.
-            Twin deviceTwin = s_deviceClient.GetTwinAsync().GetAwaiter().GetResult();
-            greenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
-
-            // Set the device twin update callback.
-            s_deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).Wait();
-
-            SendDeviceToCloudMessagesAsync();
-            Console.ReadLine();
+            Off,
+            On,
+            Failed
         }
+        
+        // Global constants.
+        private const double ambientTemperature = 70;               // Ambient temperature of a southern cave, in degrees F.
+        private const double ambientHumidity = 99;                  // Ambient humidity in relative percentage of air saturation.
+        private const double desiredTempLimit = 5;                  // Acceptable range above or below the desired temp, in degrees F.
+        private const double desiredHumidityLimit = 10;             // Acceptable range above or below the desired humidity, in percentages.
 
-        // Handle the direct method call
-        private static Task<MethodResponse> SetFanState(MethodRequest methodRequest, object userContext)
+        // state variables
+        private double currentTemperature = ambientTemperature;     // initial value is set to the ambient value
+        private double currentHumidity = ambientHumidity;           // initial value is set to the ambient value
+
+        Random rand = new Random();
+
+        internal StateEnum FanState { get; private set; } = StateEnum.Off;
+
+        internal bool IsTemperatureAlert => (currentTemperature > DesiredTemperature + desiredTempLimit) || (currentTemperature < DesiredTemperature - desiredTempLimit);
+
+        internal bool IsHumidityAlert => (currentHumidity > DesiredHumidity + desiredHumidityLimit) || (currentHumidity < DesiredHumidity - desiredHumidityLimit);
+
+        public double DesiredTemperature {get; set;} = ambientTemperature - 10; // Initial desired temperature, in degrees F.
+
+        public double DesiredHumidity {get; set;} = ambientHumidity - 20; // Initial desired humidity in relative percentage of air saturation.
+
+        public double ReadTemperature()
         {
-            if (fanState == stateEnum.failed)
+            // Simulate telemetry.
+            double deltaTemperature = Math.Sign(DesiredTemperature - currentTemperature);
+
+            if (FanState == StateEnum.On)
             {
-                // Acknowledge the direct method call with a 400 error message.
-                string result = "{\"result\":\"Fan failed\"}";
-                redMessage("Direct method failed: " + result);
-                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
+                // If the fan is on the temperature and humidity will be nudged towards the desired values most of the time.
+                currentTemperature += (deltaTemperature * rand.NextDouble()) + rand.NextDouble() - 0.5;
+
+                // Randomly fail the fan.
+                if (rand.NextDouble() < 0.01)
+                {
+                    FanState = StateEnum.Failed;
+                    ConsoleHelper.WriteRedMessage("Fan has failed");
+                }
             }
             else
             {
-                try
+                // If the fan is off, or has failed, the temperature and humidity will creep up until they reaches ambient values, thereafter fluctuate randomly.
+                if (currentTemperature < ambientTemperature - 1)
                 {
-                    var data = Encoding.UTF8.GetString(methodRequest.Data);
-
-                    // Remove quotes from data.
-                    data = data.Replace("\"", "");
-
-                    // Parse the payload, and trigger an exception if it's not valid.
-                    fanState = (stateEnum)Enum.Parse(typeof(stateEnum), data);
-                    greenMessage("Fan set to: " + data);
-
-                    // Acknowledge the direct method call with a 200 success message.
-                    string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
-                    return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 200));
+                    currentTemperature += rand.NextDouble() / 10;
                 }
-                catch
+                else
                 {
-                    // Acknowledge the direct method call with a 400 error message.
-                    string result = "{\"result\":\"Invalid parameter\"}";
-                    redMessage("Direct method failed: " + result);
-                    return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
+                    currentTemperature += rand.NextDouble() - 0.5;
                 }
             }
+
+            return currentTemperature;
         }
-        private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
+
+        public double ReadHumidity()
         {
-            try
-            {
-                desiredHumidity = desiredProperties["humidity"];
-                desiredTemperature = desiredProperties["temperature"];
-                greenMessage("Setting desired humidity to " + desiredProperties["humidity"]);
-                greenMessage("Setting desired temperature to " + desiredProperties["temperature"]);
+            // Simulate telemetry.
+            double deltaHumidity = Math.Sign(DesiredHumidity - currentHumidity);
 
-                // Report the properties back to the IoT Hub.
-                var reportedProperties = new TwinCollection();
-                reportedProperties["fanstate"] = fanState.ToString();
-                reportedProperties["humidity"] = desiredHumidity;
-                reportedProperties["temperature"] = desiredTemperature;
-                await s_deviceClient.UpdateReportedPropertiesAsync(reportedProperties);
-
-                greenMessage("\nTwin state reported: " + reportedProperties.ToJson());
-            }
-            catch
+            if (FanState == StateEnum.On)
             {
-                redMessage("Failed to update device twin");
+                // If the fan is on the temperature and humidity will be nudged towards the desired values most of the time.
+                currentHumidity += (deltaHumidity * rand.NextDouble()) + rand.NextDouble() - 0.5;
+
+                // Randomly fail the fan.
+                if (rand.NextDouble() < 0.01)
+                {
+                    FanState = StateEnum.Failed;
+                    ConsoleHelper.WriteRedMessage("Fan has failed");
+                }
             }
+            else
+            {
+                // If the fan is off, or has failed, the temperature and humidity will creep up until they reaches ambient values, thereafter fluctuate randomly.
+                if (currentHumidity < ambientHumidity - 1)
+                {
+                    currentHumidity += rand.NextDouble() / 10;
+                }
+                else
+                {
+                    currentHumidity += rand.NextDouble() - 0.5;
+                }
+            }
+
+            // Check: humidity can never exceed 100%.
+            currentHumidity = Math.Min(100, currentHumidity);
+
+            return currentHumidity;
+        }
+
+        internal void UpdateFan(StateEnum newState)
+        {
+            // in a real device, this method would contain logic to start/stop
+            // a fan and determine whether it was successful
+
+            FanState = newState;
+        }
+    }
+
+    internal static class ConsoleHelper
+    {
+        internal static void WriteColorMessage(string text, ConsoleColor clr)
+        {
+            Console.ForegroundColor = clr;
+            Console.WriteLine(text);
+            Console.ResetColor();
+        }
+        internal static void WriteGreenMessage(string text)
+        {
+            WriteColorMessage(text, ConsoleColor.Green);
+        }
+
+        internal static void WriteRedMessage(string text)
+        {
+            WriteColorMessage(text, ConsoleColor.Red);
         }
     }
 }

@@ -35,22 +35,22 @@ This lab assumes the following Azure resources are available:
 
 | Resource Type  | Resource Name          |
 |----------------|------------------------|
-| Resource Group | AZ-220-RG              |
-| IoT Hub        | AZ-220-HUB-*{YOUR-ID}* |
+| Resource Group | rg-az220              |
+| IoT Hub        | iot-az220-training-{your-id} |
 
 If these resources are not available, you will need to run the **lab09-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
 The **lab09-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
-1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
-1. Verify that the Azure Cloud Shell is using **Bash**.
+1. Verify that the Cloud Shell is using **Bash**.
 
     The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
 
-1. To upload the setup script, in the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. To upload the setup script, in the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
-1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
 1. In the dropdown, click **Upload**.
 
@@ -91,24 +91,24 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
     chmod +x lab09-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to edit the lab09-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab09-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
 1. In the **FILES** list, to expand the lab9 folder and open the script file, click **lab9**, and then click **lab09-setup.azcli**.
 
     The editor will now show the contents of the **lab09-setup.azcli** file.
 
-1. In the editor, update the `{YOUR-ID}` and `{YOUR-LOCATION}` assigned values.
+1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
 
-    Referencing the sample below as an example, you need to set `{YOUR-ID}` to the Unique ID you created at the start of this course - i.e. **CAH191211**, and set `{YOUR-LOCATION}` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
-    YourID="{YOUR-ID}"
-    RGName="AZ-220-RG"
-    IoTHubName="AZ-220-HUB-$YourID"
+    YourID="{your-id}"
+    RGName="rg-az220"
+    IoTHubName="iot-az220-training-$YourID"
 
-    Location="{YOUR-LOCATION}"
+    Location="{your-location}"
     ```
 
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
@@ -133,7 +133,7 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **AZ-220-RG** and an IoT Hub named **AZ-220-HUB-{YourID}** enter the following command:
+1. To create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}** enter the following command:
 
     ```bash
     ./lab09-setup.azcli
@@ -163,11 +163,11 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. On the **Basics** tab, under **Project details**, select the **Subscription** that you are using for this course.
 
-1. In the **Resource group** dropdown, under **Select existing**, click **AZ-220-RG**.
+1. In the **Resource group** dropdown, under **Select existing**, click **rg-az220**.
 
-1. Under **Instance details**, in the **Name** field, enter **AZ-220-LogicApp-*{YOUR-ID}***
+1. Under **Instance details**, in the **Name** field, enter **logic-az220-training-{your-id}**
 
-    For example: **AZ-220-LogicApp-CP191218**
+    For example: **logic-az220-training-cp191218**
 
     The name of your Azure Logic App must be globally unique because it is a publicly accessible resource that you must be able to access from any IP connected device.
 
@@ -187,7 +187,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. On your resource group tile, click the link to the Logic App resource that was just deployed.
 
-    If the **AZ-220-LogicApp-*{YOUR-ID}*** Logic app is not displayed, refresh the resource group tile.
+    If the **logic-az220-training-{your-id}** Logic app is not displayed, refresh the resource group tile.
 
     > **Note**: When navigating to the **Logic App** for the first time, the **Logic Apps Designer** pane will be displayed. If this page doesn't come up automatically, click **Logic app designer** under the **Development Tools** section on the **Logic App** blade.
 
@@ -275,7 +275,7 @@ In this exercise, you will create a new Azure Logic App that will be triggered v
 
 1. In the **Body** field, enter the following message content:
 
-    ```
+    ```text
     This is an automated email to inform you that:
 
     {eventType} occurred at {eventTime}
@@ -325,7 +325,7 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
 
 1. Navigate back to your Azure portal dashboard.
 
-1. On your resource group tile, to navigate to your IoT Hub, click **AZ-220-HUB-*{YOUR-ID}***.
+1. On your resource group tile, to navigate to your IoT Hub, click **iot-az220-training-{your-id}**.
 
 1. On the **IoT Hub** blade, on the left side navigation menu, click **Events**.
 
@@ -361,19 +361,9 @@ In this exercise, you will create an Event Subscription within Azure IoT Hub to 
 
     * **Operator**: Select `String begins with`
 
-    * **Value**:  Enter `devices/CheeseCave1_`
+    * **Value**:  Enter `devices/sensor-th`
 
-    We will use this value to filter for device events associated with the Cheese Cave 1 location (CheeseCave1).
-
-1. To create a second filter, click **Add new filter**, and then fill in the fields with these values:
-
-    * **Key**: Enter `Subject`
-
-    * **Operator**: Select `String ends with`
-
-    * **Value**: Enter `_Thermostat`
-
-    We will use this value to filter for device events related to temperature.
+    We will use this value to filter for device events associated with the Cheese Cave temperature and humidity sensors.
 
 1. To save the event subscription, click **Create**.
 
@@ -387,15 +377,15 @@ Test your logic app by creating a new device to trigger an event notification em
 
 1. At the top of the IoT devices blade, click **+ New**.
 
-1. In the **Device ID** field, enter **CheeseCave1_Building1_Thermostat**
+1. In the **Device ID** field, enter **sensor-th-0050**
 
 1. Leave all other fields at the defaults, and then click **Save**.
 
 1. To test the event subscription filters, create additional devices using the following device IDs:
 
-    * `CheeseCave1_Building1_Light`
-    * `CheeseCave2_Building1_Thermostat`
-    * `CheeseCave2_Building2_Light`
+    * `sensor-v-3002`
+    * `sensor-th-0030`
+    * `sensor-v-3003`
 
     If you added the four examples total, your list of IoT devices should look like the following image:
 
