@@ -558,7 +558,7 @@ In this exercise, you will create and test the logging route.
 1. Under **Routing query**, replace **true** with the query below:
 
     ```sql
-    sensorID = "VSLog"
+    sensorID = 'VSLog'
     ```
 
     This query ensures that only messages with the `sensorID` message property set to `VSLog` will be routed to the storage endpoint.
@@ -607,7 +607,7 @@ This will enable you to verify that your route includes the following settings:
 
 * **Name** - vibrationLoggingRoute
 * **Data Source** - DeviceMessages
-* **Routing query** - sensorID = "VSLog"
+* **Routing query** - sensorID = 'VSLog'
 * **Endpoint** - vibrationLogEndpoint
 * **Enabled** - true
 

@@ -312,10 +312,10 @@ In this task, you will add a message route to your IoT hub that will send teleme
 1. Under **Routing query**, replace the existing query with the following:
 
     ```sql
-    sensorID = "VSTel"
+    sensorID = 'VSTel'
     ```
 
-    You may recall that the earlier query sent "VSLog" messages to the logging storage. This message route will be sending "VSTel" (the telemetry) to the Event Hubs instance.
+    You may recall that the earlier query sent 'VSLog' messages to the logging storage. This message route will be sending 'VSTel' (the telemetry) to the Event Hubs instance.
 
 1. To create the message route, click **Save**.
 
@@ -323,8 +323,8 @@ In this task, you will add a message route to your IoT hub that will send teleme
 
     | Name | Data Source | Routing Query | Endpoint | Enabled |
     |:-----|:------------|:--------------|:---------|:--------|
-    |`vibrationLoggingRoute`|`DeviceMessages`|`sensorID = "VSLog"`|`vibrationLogEndpoint`|`true`|
-    |`vibrationTelemetryRoute`|`DeviceMessages`|`sensorID = "VSTel"`|`vibrationTelemetryEndpoint`|`true`|
+    |vibrationLoggingRoute|DeviceMessages|sensorID = 'VSLog'|vibrationLogEndpoint|true|
+    |vibrationTelemetryRoute|DeviceMessages|sensorID = 'VSTel'|vibrationTelemetryEndpoint|true|
 
 You are now ready to update the Azure Stream Analytics job to hand the real-time device telemetry.
 
