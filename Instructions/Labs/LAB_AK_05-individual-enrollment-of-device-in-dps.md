@@ -649,7 +649,6 @@ In this exercise, you will perform the tasks necessary to deprovision the device
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-
 1. On your Resource group tile, to open your Device Provisioning Service, click **dps-az220-training-{your-id}**.
 
 1. On the left-side menu under **Settings**, click **Manage enrollments**.

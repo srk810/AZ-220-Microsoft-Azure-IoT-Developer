@@ -164,7 +164,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. To the right of **Resource group**, click **Create new**.
 
-    We will create a new Resource Group for the VM, which will help with clean-up when we're done.
+    > **Note**: You will be using a single resource group to help track/manage all of the Virtual Machine resources that you create during this course. You may encounter guidance that suggests creating a separate resource group for each of your VMs. In a production environment, having a separate resource group for each VM can help you to manage any addition resources that you add to the VM. For the simple manner in which you use VMs in this course, having separate resource groups for each VM is not necessary or practical.
 
 1. In the popup for the new resource group, under **Name**, enter **rg-az220vm** and then click **OK**.
 
