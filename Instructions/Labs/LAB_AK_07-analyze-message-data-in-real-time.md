@@ -561,7 +561,7 @@ In this exercise, you will create and test the logging route.
     sensorID = 'VSLog'
     ```
 
-    This query ensures that only messages with the `sensorID` message property set to `VSLog` will be routed to the storage endpoint.
+    This query ensures that only messages with the `sensorID` application property set to `VSLog` will be routed to the storage endpoint.
 
 1. To save this route, click **Save**.
 
@@ -601,7 +601,7 @@ In this exercise, you will create and test the logging route.
 
 ### Exercise 4: Logging Route Azure Stream Analytics Job
 
-In this exercise, you will create a Stream Analytics job that outputs logging messages to Blob storage. You will then use Storage Explorer in the Azure Portal.
+In this exercise, you will create a Stream Analytics job that outputs logging messages to Blob storage. You will then use Storage Explorer in the Azure Portal to view the stored data.
 
 This will enable you to verify that your route includes the following settings:
 
