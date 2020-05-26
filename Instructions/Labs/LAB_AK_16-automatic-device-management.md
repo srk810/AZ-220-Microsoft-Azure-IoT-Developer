@@ -63,11 +63,11 @@ This lab assumes the following Azure resources are available:
 | :-- | :-- |
 | Resource Group | rg-az220 |
 | IoT Hub | iot-az220-training-{your-id} |
-| IoT Device | SimulatedSolutionThermostat |
+| IoT Device | sensor-th-0155 |
 
 If these resources are not available, you will need to run the **lab16-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
->**Note:** You will need the connection string for the **SimulatedSolutionThermostat** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
+>**Note:** You will need the connection string for the **sensor-th-0155** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
 > az iot hub device-identity show-connection-string --hub-name iot-az220-training-{your-id} --device-id sensor-th-0050 -o tsv
@@ -171,13 +171,13 @@ The **lab16-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **SimulatedSolutionThermostat** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0155** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, the connection string for the device is displayed.
 
     The connection string starts with "HostName="
 
-1. Copy the connection string into a text document, and note that it is for the **SimulatedSolutionThermostat** device.
+1. Copy the connection string into a text document, and note that it is for the **sensor-th-0155** device.
 
     Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
 
@@ -477,7 +477,7 @@ In this exercise, you will use the Azure portal to create a new device managemen
 
     > **Note**: Remember to replace the placeholder with the actual device connection string, and be sure to include "" around your connection string. 
     > 
-    > For example: `"HostName=iot-az220-training-{YourID}.azure-devices.net;DeviceId=SimulatedSolutionThermostat;SharedAccessKey={}="`
+    > For example: `"HostName=iot-az220-training-{YourID}.azure-devices.net;DeviceId=sensor-th-0155;SharedAccessKey={}="`
 
 1. Review the contents of the Terminal pane.
 
@@ -543,7 +543,7 @@ In this exercise, you will use the Azure portal to create a new device managemen
     deviceId='<your device id>'
     ```
 
-    > **Note**: Be sure to replace `'<your device id>'` with the Device ID that you used to create the device. For example: `'SimulatedSolutionThermostat'`
+    > **Note**: Be sure to replace `'<your device id>'` with the Device ID that you used to create the device. For example: `'sensor-th-0155'`
 
 1. At the bottom of the blade, click **Next: Review + Create >**
 

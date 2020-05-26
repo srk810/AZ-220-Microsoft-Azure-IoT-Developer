@@ -47,7 +47,7 @@ reportStatus() {
 # build log file
 rm build.log.old 2> /dev/null
 cp build.log build.log.old 2> /dev/null
-echo "Building Lab 08 Resources" > build.log
+echo "Building Lab Resources" > build.log
 
 # create resource group
 printf "${YELLOW}Create resource group ${RGName} - ${NC}"

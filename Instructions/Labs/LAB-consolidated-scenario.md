@@ -785,7 +785,7 @@ This lab assumes the following resources are available:
 | :-- | :-- |
 | Resource Group | rg-az220 |
 | IoT Hub | iot-az220-training-{your-id} |
-| IoT Device | SimulatedSolutionThermostat |
+| IoT Device | sensor-th-0155 |
 
 #### Exercise 2: Write code to simulate device that implements firmware update
 
