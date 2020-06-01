@@ -397,7 +397,7 @@ In this task, you will begin work on the back-end app that will be used to recei
     </Project>
     ```
 
-    > **Note**: If package version numbers in your file are later than those show above, that's okay.
+    > **Note**: If package version numbers in your file are later than those shown above, that's okay.
 
     The project file (.csproj) is an XML document that specifies the type of project that you are working on. In this case, the project is an **Sdk** style project.
 

@@ -318,7 +318,7 @@ In this task, you will use Visual Studio Code to review the contents and purpose
     </Project>
     ```
 
-    > **Note**: The package version numbers in your file may differ from those show above, that's okay.
+    > **Note**: The package version numbers in your file may differ from those shown above, that's okay.
 
     The project file (.csproj) is an XML document that specifies the type of project that you are working on. In this case, the project is an **Sdk** style project.
 
