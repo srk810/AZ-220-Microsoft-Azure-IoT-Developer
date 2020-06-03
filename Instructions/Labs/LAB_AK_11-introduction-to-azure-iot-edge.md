@@ -418,7 +418,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
 1. Under **Deployment**, take a minute to review the deployment manifest that is displayed. 
 
-    As you ca nsee, the Deployment Manifest for the IoT Edge Device is formatted as JSON, which makes it pretty easy to read.
+    As you can see, the Deployment Manifest for the IoT Edge Device is formatted as JSON, which makes it pretty easy to read.
 
     Under the `properties.desired` section is the `modules` section that declares the IoT Edge Modules that will be deployed to the IoT Edge Device. This includes the Image URIs of all the modules, including any container registry credentials.
 
