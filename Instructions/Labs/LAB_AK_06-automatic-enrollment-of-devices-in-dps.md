@@ -1144,6 +1144,7 @@ In this exercise, you will deprovision the full enrollment group. Again, this in
 
 #### Task 1: Disenroll the enrollment group from the DPS
 
+
 In this task, you will delete your Enrollment Group, which will remove the enrolled devices.
 
 1. Navigate to your Azure Dashboard.

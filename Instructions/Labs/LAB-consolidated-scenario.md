@@ -103,7 +103,7 @@ In support of these decisions, you will be setting up the following environment:
 * Azure CLI (current/latest)
 * .NET Core 3.0.100 (or later) SDK
 * VS Code (latest)
-* Python 3.7 (not 3.8)
+* Python 3.8
 * Docker Desktop Community 2.1.0.5 (or later) set to Linux Containers
 * Power BI Desktop (for data visualization)
 * IoT Extensions for VS Code and Azure CLI
