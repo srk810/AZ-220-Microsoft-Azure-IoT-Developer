@@ -676,6 +676,102 @@ A device must be registered with your IoT hub before it can connect.
 
     You may need to click **Load More** in order to access the **sensor-th-0070** device.
 
+1. To display the device twin, click **Device Twin**.
+
+    The existing device twin JSON will be displayed and will be similar to the following:
+
+    ```json
+    {
+        "deviceId": "sensor-th-0070",
+        "etag": "AAAAAAAAAAE=",
+        "deviceEtag": "Mjg2NzY5NzAw",
+        "status": "enabled",
+        "statusUpdateTime": "0001-01-01T00:00:00Z",
+        "connectionState": "Disconnected",
+        "lastActivityTime": "0001-01-01T00:00:00Z",
+        "cloudToDeviceMessageCount": 0,
+        "authenticationType": "sas",
+        "x509Thumbprint": {
+            "primaryThumbprint": null,
+            "secondaryThumbprint": null
+        },
+        "version": 2,
+        "tags": {
+            "SecurityGroup": "default"
+        },
+        "properties": {
+            "desired": {
+                "$metadata": {
+                    "$lastUpdated": "2020-06-11T13:09:38.4712899Z"
+                },
+                "$version": 1
+            },
+            "reported": {
+                "$metadata": {
+                    "$lastUpdated": "2020-06-11T13:09:38.4712899Z"
+                },
+                "$version": 1
+            }
+        },
+        "capabilities": {
+            "iotEdge": false
+        }
+    }
+    ```
+
+1. To add the device to the **default** security group, insert the following JSON between the **version** and **properties** fields:
+
+    ```json
+    "tags": {
+        "SecurityGroup": "default"
+    },
+    ```
+
+    The resultant JSON will be similar to:
+
+    ```json
+    {
+        "deviceId": "sensor-th-0070",
+        "etag": "AAAAAAAAAAE=",
+        "deviceEtag": "Mjg2NzY5NzAw",
+        "status": "enabled",
+        "statusUpdateTime": "0001-01-01T00:00:00Z",
+        "connectionState": "Disconnected",
+        "lastActivityTime": "0001-01-01T00:00:00Z",
+        "cloudToDeviceMessageCount": 0,
+        "authenticationType": "sas",
+        "x509Thumbprint": {
+            "primaryThumbprint": null,
+            "secondaryThumbprint": null
+        },
+        "version": 2,
+        "tags": {
+            "SecurityGroup": "default"
+        },
+        "properties": {
+            "desired": {
+                "$metadata": {
+                    "$lastUpdated": "2020-06-11T13:09:38.4712899Z"
+                },
+                "$version": 1
+            },
+            "reported": {
+                "$metadata": {
+                    "$lastUpdated": "2020-06-11T13:09:38.4712899Z"
+                },
+                "$version": 1
+            }
+        },
+        "capabilities": {
+            "iotEdge": false
+        }
+    }
+    ```
+
+1. To apply the updated JSON, click **Save**.
+
+1. Close the **Device Twin** pane and return to the **sensor-th-0070** detail view.
+
 1. To the right of **Primary connection string**, click **Copy**, and then save the value to a text file.
 
     Be sure to note that it is the connection string for the sensor-th-0070 device. You will need the connection string value for the device app.
