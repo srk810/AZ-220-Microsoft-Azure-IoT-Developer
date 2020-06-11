@@ -20,17 +20,17 @@ lab:
 
 You have developed a simulated IoT device that generates vibration data and other telemetry outputs that are representative of the conveyor belt system used in Contoso's cheese packaging process. You have built and tested a logging route that sends data to Azure Blob storage. You will now start work on a new route within IoT hub that will send telemetry data to an Azure Event Hubs service.
 
-The primary difference between Azure IoT Hub and Azure Event Hubs is that Event Hubs is designed for big data streaming, while IoT hub is optimized for an IoT solution. Both services support ingestion of data with low latency and high reliability. Since Azure Event Hubs provides a input to Stream Analytics in a manner that is similar to IoT hub, your choice of Event Hubs in this case allows you explore an additional Azure service option within your solution.
+The primary difference between Azure IoT Hub and Azure Event Hubs is that Event Hubs is designed for big data streaming, while IoT hub is optimized for an IoT solution. Both services support ingestion of data with low latency and high reliability. Since Azure Event Hubs provides an input to Stream Analytics in a manner that is similar to IoT hub, your choice of Event Hubs in this case allows you explore an additional Azure service option within your solution.
 
 ### Make a Call to a Built-in Machine Learning Model
 
-In this lab, you will be calling a built-in Machine Learning (ML) function named `AnomalyDetection_SpikeAndDip`. The `AnomalyDetection_SpikeAndDip` function uses a sliding window to analyze data for anomalies. The sliding window could be, for example, the most recent two minutes of telemetry data. The window advances in near real-time with the flow of telemetry. Generally speaking, if the size of the sliding window is increased to include more data, the accuracy of anomaly detection will increase as well (however, the latency also increases, so a ballance must be found).
+In this lab, you will be calling a built-in Machine Learning (ML) function named `AnomalyDetection_SpikeAndDip`. The `AnomalyDetection_SpikeAndDip` function uses a sliding window to analyze data for anomalies. The sliding window could be, for example, the most recent two minutes of telemetry data. The window advances in near real-time with the flow of telemetry. Generally speaking, if the size of the sliding window is increased to include more data, the accuracy of anomaly detection will increase as well (however, the latency also increases, so a balance must be found).
 
 The function establishes a "normal" range for the data and then uses it to identify anomalies and assign a rating. It works like this: as the function continues to monitor the flow of data, the algorithm establishes a normal range of values, then compares new values against those norms. The result is a score for each value, expressed as a percentage that determines the confidence level that the given value is anomalous. As you may expect, low confidence levels can be ignored, but you may wonder what percentage confidence value is acceptable. In your query, you will set this tipping point at 95%.
 
 There are always complications, like when there are gaps in the data (the conveyor belt stops for a while, perhaps). The algorithm handles voids in the data by imputing values.
 
-> **Note**: In statistics, imputation is the process of replacing missing data with substituted values. You can learn more about about imputations [here](https://en.wikipedia.org/wiki/Imputation_%28statistics%29).
+> **Note**: In statistics, imputation is the process of replacing missing data with substituted values. You can learn more about imputations [here](https://en.wikipedia.org/wiki/Imputation_%28statistics%29).
 
 Spikes and dips in telemetry data are temporary anomalies. However, since you are simulating vibration data using sine waves, you can expect a period of "normal" values followed by a high or low value that triggers an anomaly alert. An operator may look for a cluster of anomalies occurring in a short time span, which would signal that something is wrong.
 
@@ -42,7 +42,7 @@ Visualizing numerical data, especially volumes of it, is a challenge in itself. 
 
 The solution we use in this module is to use some built-in functionality of Power BI along with the ability of Azure Stream Analytics to send data in a real-time format that Power BI can ingest.
 
-We use the dashboard feature of Power BI to create a number of tiles. One tile contains the actual vibration measurement. Another tile is a gauge, showing from 0.0 to 1.0 the confidence level that the value is an anomaly. A third tile indicates if the 95% confidence level is reached. Finally, the forth tile shows the number of anomalies detected over the past hour. By including time as the x-axis, this tile makes it clear if a clutch of anomalies were detected in short succession as they will be clustered together horizontally.
+We use the dashboard feature of Power BI to create a number of tiles. One tile contains the actual vibration measurement. Another tile is a gauge, showing from 0.0 to 1.0 the confidence level that the value is an anomaly. A third tile indicates if the 95% confidence level is reached. Finally, the fourth tile shows the number of anomalies detected over the past hour. By including time as the x-axis, this tile makes it clear if a clutch of anomalies were detected in short succession as they will be clustered together horizontally.
 
 The fourth tile allows you to compare the anomalies with the red text in the telemetry console window. Is there a cluster of anomalies being detected when forced, or increasing, or both, vibrations are in action?
 
@@ -464,10 +464,10 @@ In this task, you will add a message route to your IoT hub that will send teleme
 1. Under **Routing query**, replace the existing query with the following:
 
     ```sql
-    sensorID = "VSTel"
+    sensorID = 'VSTel'
     ```
 
-    You may recall that the earlier query sent "VSLog" messages to the logging storage. This message route will be sending "VSTel" (the telemetry) to the Event Hubs instance.
+    You may recall that the earlier query sent 'VSLog' messages to the logging storage. This message route will be sending 'VSTel' (the telemetry) to the Event Hubs instance.
 
 1. To create the message route, click **Save**.
 
@@ -475,8 +475,8 @@ In this task, you will add a message route to your IoT hub that will send teleme
 
     | Name | Data Source | Routing Query | Endpoint | Enabled |
     |:-----|:------------|:--------------|:---------|:--------|
-    |`vibrationLoggingRoute`|`DeviceMessages`|`sensorID = "VSLog"`|`vibrationLogEndpoint`|`true`|
-    |`vibrationTelemetryRoute`|`DeviceMessages`|`sensorID = "VSTel"`|`vibrationTelemetryEndpoint`|`true`|
+    |vibrationLoggingRoute|DeviceMessages|sensorID = 'VSLog'|vibrationLogEndpoint|true|
+    |vibrationTelemetryRoute|DeviceMessages|sensorID = 'VSTel'|vibrationTelemetryEndpoint|true|
 
 You are now ready to update the Azure Stream Analytics job to hand the real-time device telemetry.
 

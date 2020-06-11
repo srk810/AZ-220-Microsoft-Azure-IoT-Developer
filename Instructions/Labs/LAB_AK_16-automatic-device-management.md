@@ -25,7 +25,7 @@ Azure IoT Hub offers advanced support for implementing device management operati
 
 ## Lab Scenario
 
-The automated air processing system that you implemented in Contoso's cheese caves has helped the company to raise their already high quality bar. The company has more award winning cheeses than ever before.
+The automated air processing system that you implemented in Contoso's cheese caves has helped the company to raise their already high quality bar. The company has more award-winning cheeses than ever before.
 
 Your base solution consists of IoT devices that are integrated with sensors and a climate control system to provide real-time control of temperature and humidity within a multi-chamber cave system. You also developed a simple back-end app that demonstrated the ability to manage devices using both direct methods and device twin properties.
 
