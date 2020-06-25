@@ -141,7 +141,7 @@ The **lab08-setup.azcli** script is written to run in a **bash** shell environme
 
 1. On the Cloud Shell toolbar, to enable access to the lab08-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **FILES** list, to expand the lab7 folder and open the script file, click **lab7**, and then click **lab08-setup.azcli**.
+1. In the **FILES** list, to expand the lab8 folder and open the script file, click **lab8**, and then click **lab08-setup.azcli**.
 
     The editor will now show the contents of the **lab08-setup.azcli** file.
 
