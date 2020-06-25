@@ -1,7 +1,5 @@
 #!/bin/bash
 
-#!/bin/bash
-
 # Change these values!
 YourID="{your-id}"
 Location="{your-location}"
