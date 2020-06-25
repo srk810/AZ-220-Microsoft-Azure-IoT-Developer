@@ -179,7 +179,7 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0055** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0055** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, information pertaining to your IoT Hub and device is displayed.
 
@@ -188,19 +188,19 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     ```text
     Configuration Data:
     ------------------------------------------------
-    iot-az220-training-{YourID} Service connectionstring:
-    HostName=iot-az220-training-{YourID}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
+    iot-az220-training-{your-id} Service connectionstring:
+    HostName=iot-az220-training-{your-id}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
 
     sensor-th-0055 device connection string:
-    HostName=iot-az220-training-{YourID}.azure-devices.net;DeviceId=sensor-th-0055;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
+    HostName=iot-az220-training-{your-id}.azure-devices.net;DeviceId=sensor-th-0055;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
 
-    iot-az220-training-{YourID} eventhub endpoint:
+    iot-az220-training-{your-id} eventhub endpoint:
     sb://iothub-ns-iot-az220-training-2610348-5a463f1b56.servicebus.windows.net/
 
-    iot-az220-training-{YourID} eventhub path:
-    iot-az220-training-{YourID}
+    iot-az220-training-{your-id} eventhub path:
+    iot-az220-training-{your-id}
 
-    iot-az220-training-{YourID} eventhub SaS primarykey:
+    iot-az220-training-{your-id} eventhub SaS primarykey:
     tGEwDqI+kWoZroH6lKuIFOI7XqyetQHf7xmoSf1t+zQ=
     ```
 

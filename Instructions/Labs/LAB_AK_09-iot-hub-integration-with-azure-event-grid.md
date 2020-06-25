@@ -133,7 +133,7 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}** enter the following command:
+1. To create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}** enter the following command:
 
     ```bash
     ./lab09-setup.azcli

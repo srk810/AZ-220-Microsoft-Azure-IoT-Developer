@@ -150,7 +150,7 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
 
     This script can take a few minutes to run. You will see JSON output as each step completes.
 
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **sensor-th-truck0001**, **sensor-th-airplane0001**, and **sensor-th-container0001**.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **sensor-th-truck0001**, **sensor-th-airplane0001**, and **sensor-th-container0001**.
 
 1. Notice that, once the script has completed, the connection string for each device is displayed.
 
