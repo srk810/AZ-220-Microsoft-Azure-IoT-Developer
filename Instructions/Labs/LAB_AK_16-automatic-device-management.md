@@ -169,7 +169,7 @@ The **lab16-setup.azcli** script is written to run in a **bash** shell environme
     ./lab16-setup.azcli
     ```
 
-    This script can take a few minutes to run. You will see JSON output as each step completes.
+    This script can take a few minutes to run. You will see output as each step completes.
 
     The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0155** to the IoT hub and display the device connection string.
 

@@ -142,7 +142,7 @@ If these resources are not available, you will need to run the **lab11-setup.azc
     ./lab11-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This will take a few minutes to run. You will see output as each step completes.
 
 Once the script has completed, you will be ready to continue with the lab.
 
