@@ -116,9 +116,8 @@ If these resources are not available, you will need to run the **lab12-setup.azc
     ```bash
     #!/bin/bash
 
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-{your-id}"
-
+    # Change these values!
+    YourID="{your-id}"
     Location="{your-location}"
     ```
 
@@ -148,7 +147,7 @@ If these resources are not available, you will need to run the **lab12-setup.azc
     ./lab12-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This will take a few minutes to run. You will see output as each step completes.
 
 Once the script has completed, you will be ready to continue with the lab.
 

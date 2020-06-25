@@ -104,9 +104,8 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
     ```bash
     #!/bin/bash
 
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-{your-id}"
-
+    # Change these values!
+    YourID="{your-id}"
     Location="{your-location}"
     ```
 
@@ -136,7 +135,7 @@ The **lab06-setup.azcli** script is written to run in a **bash** shell environme
     ./lab06-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This will take a few minutes to run. You will see output as each step completes.
 
     Once the script has completed, you will be ready to continue with the lab.
 
@@ -1143,6 +1142,7 @@ In this task, you will use the **sensor-thl-2004** device for the individual enr
 In this exercise, you will deprovision the full enrollment group. Again, this includes disenrolling from Device Provisioning Service and deregistering the devices from IoT Hub.
 
 #### Task 1: Disenroll the enrollment group from the DPS
+
 
 In this task, you will delete your Enrollment Group, which will remove the enrolled devices.
 

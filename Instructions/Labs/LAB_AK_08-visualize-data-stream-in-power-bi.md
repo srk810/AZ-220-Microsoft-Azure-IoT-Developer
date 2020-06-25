@@ -6,8 +6,6 @@ lab:
 
 # Visualize a Data Stream in Power BI
 
-> **Note**:  This lab is a continuation of Lab 7 - Device Message Routing.
->
 > **IMPORTANT**: This lab has several service prerequisites that are not related to the Azure subscription you were given for the course:
 >
 > 1. The ability to sign in to a "Work or School Account" (Azure Active Directory account)
@@ -56,6 +54,7 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
+* Verify lab prerequisites
 * Sign-up for Power BI
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 * Analyze Telemetry in Real-Time
@@ -68,7 +67,160 @@ Let's create the Event Hub, create the second route, update the SQL query, creat
 
 ## Lab Instructions
 
-### Exercise 1: Sign Up For Power BI
+### Exercise 1: Verify Lab Prerequisites
+
+This lab assumes the following Azure resources are available:
+
+| Resource Type | Resource Name |
+| :-- | :-- |
+| Resource Group | rg-az220 |
+| IoT Hub | iot-az220-training-{your-id} |
+| Device ID | sensor-v-3000 |
+| Storage Account Name | vibrationstore{your-id} |
+| Storage Container | vibrationcontainer |
+| Event Hub Namespace | vibrationNamespace{your-id} |
+| Event Hub Name | vibrationeventhubinstance |
+| Streaming Job | vibrationJob |
+| Streaming Job Input | vibrationInput |
+| Streaming Job Output | vibrationOutput |
+| Streaming Job Transformation | VibrationJobTransformation |
+
+If these resources are not available, you will need to run the **lab08-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+
+The **lab08-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+
+1. Using a browser, open the [Azure Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+
+    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+
+1. Verify that the Azure Cloud Shell is using **Bash**.
+
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+
+1. On the Azure Shell toolbar, click **Upload/Download files** (fourth button from the right).
+
+1. In the dropdown, click **Upload**.
+
+1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+
+    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+
+    * Allfiles
+      * Labs
+          * 08-Visualize a Data Stream in Power BI
+            * Setup
+
+    The lab08-setup.azcli script file is located in the Setup folder for lab 7.
+
+1. Select the **lab08-setup.zip** file, and then click **Open**.
+
+    A notification will appear when the file upload has completed.
+
+1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
+
+    ```bash
+    ls
+    ```
+
+    The `ls` command lists the content of the current directory. You should see the lab08-setup.azcli file listed.
+
+1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
+
+    ```bash
+    mkdir lab8
+    unzip lab08-setup.zip -d ./lab8
+    cd lab8
+    ```
+
+1. To ensure that **lab08-setup.azcli** and **Create-Job.ps1** have the execute permission, enter the following command:
+
+    ```bash
+    chmod +x lab08-setup.azcli
+    chmod +x Create-Job.ps1
+    ```
+
+1. On the Cloud Shell toolbar, to enable access to the lab08-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+
+1. In the **FILES** list, to expand the lab8 folder and open the script file, click **lab8**, and then click **lab08-setup.azcli**.
+
+    The editor will now show the contents of the **lab08-setup.azcli** file.
+
+1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
+
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
+
+    ```bash
+    #!/bin/bash
+
+    # Change these values!
+    YourID="{your-id}"
+    Location="{your-location}"
+    ```
+
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
+    >
+    > ```bash
+    > az account list-locations -o Table
+    >
+    > DisplayName           Latitude    Longitude    Name
+    > --------------------  ----------  -----------  ------------------
+    > East Asia             22.267      114.188      eastasia
+    > Southeast Asia        1.283       103.833      southeastasia
+    > Central US            41.5908     -93.6208     centralus
+    > East US               37.3719     -79.8164     eastus
+    > East US 2             36.6681     -78.3889     eastus2
+    > ```
+
+1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
+
+    If prompted to save, click **Save** and the editor will close.
+
+    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
+
+1. To create the resources required for this lab, enter the following command:
+
+    ```bash
+    ./lab08-setup.azcli
+    ```
+
+    This script will take a few minutes to run. You will see output as each step completes:
+
+    ```text
+    Create resource group rg-az220 - Success
+    Create IoT Hub iot-az220-training-dm200420 - Success
+    Create device sensor-v-3000 - Success
+    Create storage account vibrationstoredm200420 - Success
+    Create storage container vibrationcontainer - Success
+    Create IoT Hub endpoint vibrationLogEndpoint - Success
+    Create IoT Hub route vibrationLoggingRoute - Success
+    Create event hubs namespace vibrationNamespacedm200420 - Success
+    Create event hub vibrationeventhubinstance - Success
+    Create routing-endpoint vibrationTelemetryEndpoint - Success
+    Create iot hub route  - Success
+    Setup Azure Streaming Job - launching PowerShell
+
+    MOTD: Download scripts from PowerShell Gallery: Install-Script <script name>
+
+    VERBOSE: Authenticating to Azure ...
+    VERBOSE: Building your Azure drive ...
+    Creating job vibrationJob
+    Creating job input vibrationInput
+    Creating job output vibrationOutput
+    Creating job transformation VibrationJobTransformation
+    Device Connection String for the application:
+    ----------------------------------------------------
+    HostName=iot-az220-training-dm200420.azure-devices.net;DeviceId=sensor-v-3000;SharedAccessKey=5p9giH/AnpcykMaM+OYcidtIkNz0o9/KDnZTrgii4cc=
+    ```
+
+1. Notice that, once the script has completed, the connection string for the device is displayed.
+
+    The connection string starts with "HostName="
+
+1. Copy the connection string into a text document, and note that it is for the **sensor-v-3000** device.
+
+    Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
+
+### Exercise 2: Sign Up For Power BI
 
 Power BI can be your personal data analysis and visualization tool, and can also serve as the analytics and decision engine behind group projects, divisions, or entire corporations. Later on in this lab, you will build a dashboard and visualize data using Power BI. This exercise explains how to sign up for Power BI as an individual.
 
@@ -116,7 +268,7 @@ Follow these steps to sign up for a Power BI account. Once you complete this pro
 
 Now you have access to Power BI, you are ready to route real-time telemetry data to a Power BI dashboard.
 
-### Exercise 2: Verify Lab Prerequisites
+### Exercise 3: Verify Lab Prerequisites
 
 In order to visualize live streaming data from IoT hub in a Power BI dashboard, you will need to have a real or simulated IoT device that is sending telemetry messages. Fortunately, you created a simulated device in Lab 7 that satisfies this requirement.
 
@@ -179,7 +331,7 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
     The telemetry data is needed for data visualization.
 
-### Exercise 3: Create an Azure Event Hubs service
+### Exercise 4: Create an Azure Event Hubs service
 
 Now that you have telemetry data streaming into the IoT Hub, you're going to add an Azure Event Hubs Namespace and Azure Event Hubs instance to our solution. Azure Event Hubs are ideal for processing streaming data and support live dashboarding scenarios - perfect for passing our vibration data to Power BI.
 
@@ -271,7 +423,7 @@ In this task, you will use the Azure portal to create an Event Hubs resource.
 
 1. To create the Azure Hubs instance, click **Create**, and then wait for the resource to be deployed.
 
-### Exercise 4: Create Real-Time Message Route
+### Exercise 5: Create Real-Time Message Route
 
 Now that you have an Event Hubs Namespace and an Event Hubs service, you need to pass the telemetry data from the IoT hub to your Event Hubs.
 
@@ -328,7 +480,7 @@ In this task, you will add a message route to your IoT hub that will send teleme
 
 You are now ready to update the Azure Stream Analytics job to hand the real-time device telemetry.
 
-### Exercise 5: Add Telemetry Route
+### Exercise 6: Add Telemetry Route
 
 With this new IoT Hub route in place, and the telemetry data streaming into the Event Hub, you now need to update our Stream Analytics job. This job will need to consume the data from the Event Hub, perform analysis using the **AnomalyDetection_SpikeAndDip** ML model and then output the results to Power BI.
 
@@ -454,7 +606,7 @@ With this new IoT Hub route in place, and the telemetry data streaming into the 
 
 In order for a human operator to easily interpret the output from this query, you need to visualize the data in a friendly way. One way of doing this visualization is to create a Power BI dashboard.
 
-### Exercise 6: Create a Power BI Dashboard
+### Exercise 7: Create a Power BI Dashboard
 
 Now for the final part of the scenario - the actual data visualization. You have updated your job to process the vibration telemetry via the ML model and output the results to Power BI. Within Power BI, you need to create a dashboard with a number of tiles to visualize the results and provide decision support for the operator.
 

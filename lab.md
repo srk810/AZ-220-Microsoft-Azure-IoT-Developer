@@ -12,7 +12,7 @@
 | Azure PowerShell | https://docs.microsoft.com/powershell/azure/install-az-ps |
 | Azure CLI | https://docs.microsoft.com/cli/azure/install-azure-cli |
 | Git for Windows | https://git-scm.com/download/win |
-| Python 3.7| https://www.python.org/downloads/release/python-370/ |
+| Python 3.8| https://www.python.org/downloads/release/python-380/ |
 | Docker Desktop Community 2.1.0.5 (or later)| https://docs.docker.com/docker-for-windows/install/ |
 | .NET Core 3 SDK (current/latest)| https://dotnet.microsoft.com/download |
 | Power BI Desktop (current/latest) | https://powerbi.microsoft.com/en-us/desktop/ |

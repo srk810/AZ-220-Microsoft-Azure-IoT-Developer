@@ -109,9 +109,8 @@ If these resources are not available, you will need to run the **lab04-setup.azc
     ```bash
     #!/bin/bash
 
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-{your-id}"
-
+    # Change these values!
+    YourID="{your-id}"
     Location="{your-location}"
     ```
 
@@ -141,7 +140,7 @@ If these resources are not available, you will need to run the **lab04-setup.azc
     ./lab04-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This will take a few minutes to run. You will see output as each step completes.
 
 Once the script has completed, you will be ready to continue with the lab.
 
@@ -318,7 +317,7 @@ In this task, you will use Visual Studio Code to review the contents and purpose
     </Project>
     ```
 
-    > **Note**: The package version numbers in your file may differ from those show above, that's okay.
+    > **Note**: The package version numbers in your file may differ from those shown above, that's okay.
 
     The project file (.csproj) is an XML document that specifies the type of project that you are working on. In this case, the project is an **Sdk** style project.
 

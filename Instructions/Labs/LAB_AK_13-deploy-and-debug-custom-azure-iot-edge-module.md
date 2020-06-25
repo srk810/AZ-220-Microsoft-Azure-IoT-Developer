@@ -121,9 +121,8 @@ If these resources are not available, you will need to run the **lab13-setup.azc
     ```bash
     #!/bin/bash
 
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-{your-id}"
-
+    # Change these values!
+    YourID="{your-id}"
     Location="{your-location}"
     ```
 
@@ -153,7 +152,7 @@ If these resources are not available, you will need to run the **lab13-setup.azc
     ./lab13-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This will take a few minutes to run. You will see output as each step completes.
 
 Once the script has completed, you will be ready to continue with the lab.
 
@@ -161,9 +160,9 @@ Once the script has completed, you will be ready to continue with the lab.
 
 In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
-1. Verify that you have Python 3.7 installed in your development environment.
+1. Verify that you have Python 3.8 installed in your development environment.
 
-    Lab 3 of this course has you prepare the lab environment, including the installation Python 3.7. If Python is not installed, refer back to the instructions in Lab 3.
+    Lab 3 of this course has you prepare the lab environment, including the installation Python 3.8. If Python is not installed, refer back to the instructions in Lab 3.
 
     > **Note**:  Currently, the Azure IoT EdgeHub Dev Tool uses a docker-py library that is not compatible with Python 3.8.
 

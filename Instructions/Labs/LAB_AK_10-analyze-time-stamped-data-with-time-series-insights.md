@@ -49,7 +49,9 @@ This lab assumes the following Azure resources are available:
 | Device ID | `sensor-th-airplane0001` |
 | Device ID | `sensor-th-container0001` |
 
-If these resources are not available, you will need to run the **lab10-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+> **Important**: Run the setup script to create the required devices.
+
+To create any missing resources and the new devices you will need to run the **lab10-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
 The **lab10-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
@@ -113,10 +115,8 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
     ```bash
     #!/bin/bash
 
+    # Change these values!
     YourID="{your-id}"
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-$YourID"
-
     Location="{your-location}"
     ```
 
@@ -148,9 +148,9 @@ The **lab10-setup.azcli** script is written to run in a **bash** shell environme
     ./lab10-setup.azcli
     ```
 
-    This script can take a few minutes to run. You will see JSON output as each step completes.
+    This script can take a few minutes to run. You will see output as each step completes.
 
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **sensor-th-truck0001**, **sensor-th-airplane0001**, and **sensor-th-container0001**.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add three devices to the IoT hub and display the device connection string. The device IDs are: **sensor-th-truck0001**, **sensor-th-airplane0001**, and **sensor-th-container0001**.
 
 1. Notice that, once the script has completed, the connection string for each device is displayed.
 

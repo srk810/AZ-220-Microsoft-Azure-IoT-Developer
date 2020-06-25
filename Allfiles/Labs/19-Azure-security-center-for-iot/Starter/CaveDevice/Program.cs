@@ -25,7 +25,7 @@ namespace CaveDevice
         // Note: in real-world applications you would not "hard-code" the connection string
         // It could be stored within an environment variable, passed in via the command-line or
         // store securely within a TPM module.
-        private readonly static string connectionString = "<your device connection string>";
+        private readonly static string connectionString = "{Your connection string here}";
 
         // INSERT Main method below here
         private static async Task Main(string[] args)

@@ -69,7 +69,9 @@ This lab assumes the following Azure resources are available:
 | IoT Hub | iot-az220-training-{your-id} |
 | IoT Device | sensor-th-0055 |
 
-If these resources are not available, you will need to run the **lab15-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+> **Important**: Run the setup script to create the required device.
+
+To create any missing resources and the new device you will need to run the **lab15-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
 The **lab15-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
@@ -134,19 +136,16 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
     The editor will now show the contents of the **lab15-setup.azcli** file.
 
-1. In the editor, update the `{your-id}` and `SETLOCATION` assigned values.
+1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
 
-    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `SETLOCATION` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
+    # Change these values!
     YourID="{your-id}"
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-$YourID"
-    DeviceID="sensor-th-0055"
-
-    Location="SETLOCATION"
+    Location="{your-location}"
     ```
 
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
@@ -177,9 +176,9 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     ./lab15-setup.azcli
     ```
 
-    This script can take a few minutes to run. You will see JSON output as each step completes.
+    This script can take a few minutes to run. You will see output as each step completes.
 
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0055** to the IoT hub and display the device connection string.
+    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0055** to the IoT hub and display the device connection string.
 
 1. Notice that, once the script has completed, information pertaining to your IoT Hub and device is displayed.
 
@@ -188,19 +187,19 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
     ```text
     Configuration Data:
     ------------------------------------------------
-    iot-az220-training-{YourID} Service connectionstring:
-    HostName=iot-az220-training-{YourID}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
+    iot-az220-training-{your-id} Service connectionstring:
+    HostName=iot-az220-training-{your-id}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
 
     sensor-th-0055 device connection string:
-    HostName=iot-az220-training-{YourID}.azure-devices.net;DeviceId=sensor-th-0055;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
+    HostName=iot-az220-training-{your-id}.azure-devices.net;DeviceId=sensor-th-0055;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
 
-    iot-az220-training-{YourID} eventhub endpoint:
+    iot-az220-training-{your-id} eventhub endpoint:
     sb://iothub-ns-iot-az220-training-2610348-5a463f1b56.servicebus.windows.net/
 
-    iot-az220-training-{YourID} eventhub path:
-    iot-az220-training-{YourID}
+    iot-az220-training-{your-id} eventhub path:
+    iot-az220-training-{your-id}
 
-    iot-az220-training-{YourID} eventhub SaS primarykey:
+    iot-az220-training-{your-id} eventhub SaS primarykey:
     tGEwDqI+kWoZroH6lKuIFOI7XqyetQHf7xmoSf1t+zQ=
     ```
 
@@ -397,7 +396,7 @@ In this task, you will begin work on the back-end app that will be used to recei
     </Project>
     ```
 
-    > **Note**: If package version numbers in your file are later than those show above, that's okay.
+    > **Note**: If package version numbers in your file are later than those shown above, that's okay.
 
     The project file (.csproj) is an XML document that specifies the type of project that you are working on. In this case, the project is an **Sdk** style project.
 

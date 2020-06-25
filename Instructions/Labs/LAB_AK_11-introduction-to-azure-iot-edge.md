@@ -110,9 +110,8 @@ If these resources are not available, you will need to run the **lab11-setup.azc
     ```bash
     #!/bin/bash
 
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-{your-id}"
-
+    # Change these values!
+    YourID="{your-id}"
     Location="{your-location}"
     ```
 
@@ -142,7 +141,7 @@ If these resources are not available, you will need to run the **lab11-setup.azc
     ./lab11-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This will take a few minutes to run. You will see output as each step completes.
 
 Once the script has completed, you will be ready to continue with the lab.
 
@@ -418,7 +417,7 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
 1. Under **Deployment**, take a minute to review the deployment manifest that is displayed. 
 
-    As you ca nsee, the Deployment Manifest for the IoT Edge Device is formatted as JSON, which makes it pretty easy to read.
+    As you can see, the Deployment Manifest for the IoT Edge Device is formatted as JSON, which makes it pretty easy to read.
 
     Under the `properties.desired` section is the `modules` section that declares the IoT Edge Modules that will be deployed to the IoT Edge Device. This includes the Image URIs of all the modules, including any container registry credentials.
 

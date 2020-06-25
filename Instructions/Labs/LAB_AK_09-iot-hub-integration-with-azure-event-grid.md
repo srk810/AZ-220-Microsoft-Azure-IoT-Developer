@@ -104,10 +104,8 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
     ```bash
     #!/bin/bash
 
+    # Change these values!
     YourID="{your-id}"
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-$YourID"
-
     Location="{your-location}"
     ```
 
@@ -133,13 +131,13 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
 
     > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
 
-1. To create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{YourID}** enter the following command:
+1. To create the resources required for this lab, enter the following command:
 
     ```bash
     ./lab09-setup.azcli
     ```
 
-    This will take a few minutes to run. You will see JSON output as each step completes.
+    This will take a few minutes to run. You will see output as each step completes.
 
 ### Exercise 2: Create HTTP Web Hook Logic App that sends an email
 
