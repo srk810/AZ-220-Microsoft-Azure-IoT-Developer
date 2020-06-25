@@ -134,19 +134,16 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
     The editor will now show the contents of the **lab15-setup.azcli** file.
 
-1. In the editor, update the `{your-id}` and `SETLOCATION` assigned values.
+1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
 
-    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `SETLOCATION` to the location that makes sense for your resources.
+    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
 
     ```bash
     #!/bin/bash
 
+    # Change these values!
     YourID="{your-id}"
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-$YourID"
-    DeviceID="sensor-th-0055"
-
-    Location="SETLOCATION"
+    Location="{your-location}"
     ```
 
     > **Note**:  The `Location` variable should be set to the short name for the location. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:

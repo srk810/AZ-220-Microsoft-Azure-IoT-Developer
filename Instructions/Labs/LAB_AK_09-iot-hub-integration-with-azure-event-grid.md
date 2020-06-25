@@ -104,10 +104,8 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
     ```bash
     #!/bin/bash
 
+    # Change these values!
     YourID="{your-id}"
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-$YourID"
-
     Location="{your-location}"
     ```
 

@@ -109,11 +109,8 @@ The **lab17-setup.azcli** script is written to run in a **bash** shell environme
     ```bash
     #!/bin/bash
 
+    # Change these values!
     YourID="{your-id}"
-    RGName="rg-az220"
-    IoTHubName="iot-az220-training-$YourID"
-    DPSName="dps-az220-training-$YourID"
-    DeviceName="asset-track"
     Location="{your-location}"
     ```
 
