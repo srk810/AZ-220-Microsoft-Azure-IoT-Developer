@@ -49,7 +49,9 @@ This lab assumes the following Azure resources are available:
 | Device ID | `sensor-th-airplane0001` |
 | Device ID | `sensor-th-container0001` |
 
-If these resources are not available, you will need to run the **lab10-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+> **Important**: Run the setup script to create the required devices.
+
+To create any missing resources and the new devices you will need to run the **lab10-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
 The **lab10-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 

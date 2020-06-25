@@ -65,7 +65,9 @@ This lab assumes the following Azure resources are available:
 | IoT Hub | iot-az220-training-{your-id} |
 | IoT Device | sensor-th-0155 |
 
-If these resources are not available, you will need to run the **lab16-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+> **Important**: Run the setup script to create the required device.
+
+To create any missing resources and the new device you will need to run the **lab16-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
 >**Note:** You will need the connection string for the **sensor-th-0155** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >

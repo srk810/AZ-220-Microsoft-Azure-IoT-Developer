@@ -39,8 +39,7 @@ In this lab, you will begin by reviewing the lab prerequisites and you will run 
 
 * Verify Lab Prerequisites
 
-    * A script can be used to create an Azure IoT Hub if you don't have one
-    * A script will be used to create a new device identity (sensor-v-3000) for this lab
+  * A script will be used to create any missing resources and a new device identity (sensor-v-3000) for this lab
 
 * Write Code to generate Vibration Telemetry
 * Create a Message Route to Azure Blob Storage
@@ -58,7 +57,9 @@ This lab assumes that the following Azure resources are available:
 | IoT Hub | iot-az220-training-{your-id} |
 | Device ID | sensor-v-3000 |
 
-If these resources are not available, you will need to run the **lab07-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+> **Important**: Run the setup script to create the required device.
+
+To create any missing resources and the new device you will need to run the **lab07-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
 The **lab07-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
