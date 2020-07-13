@@ -101,13 +101,19 @@ The data that will be communicated between a remote device and IoT Central is sp
 
 1. Under **Create a custom device template**, click **IoT device**.
 
-1. At the bottom of the page, click **Next: Customize**, and then click **Next: Review**.
+1. At the bottom of the page, click **Next: Customize**
+    
+1. In the **Enter a device template name** textbox, enter **RefrigeratedTruck** and then press **Enter**.
 
-    If you selected **Gateway device** on the previous screen, go back and unselect it.
+    > **Note**: do not select **Gateway device**.
+    
+1. At the bottom of the page, click **Next: Review**.
+
+    Verify the **Basic Info** shown.
     
 1. At the bottom of the **Review** page, click **Create**.
 
-1. In the **Enter a device template name** textbox, enter **RefrigeratedTruck** and then press **Enter**.
+    Once the template has been created, the **RefrigeratedTruck** page will be displayed.
 
 1. On the **RefrigeratedTruck** page, under **Create a capability model**, click **Custom**.
 
@@ -1210,7 +1216,7 @@ To make this process as simple as possible, each additional section of code shou
             if (desiredProperties.Contains(setting))
             {
                 BuildAcknowledgement(desiredProperties, setting);
-                optimalTemperature = (int) desiredProperties[setting]["value"];
+                optimalTemperature = (int) desiredProperties[setting];
                 greenMessage($"Optimal temperature updated: {optimalTemperature}");
             }
             await s_deviceClient.UpdateReportedPropertiesAsync(reportedProperties);
@@ -1220,7 +1226,7 @@ To make this process as simple as possible, each additional section of code shou
         {
             reportedProperties[setting] = new
             {
-                value = desiredProperties[setting]["value"],
+                value = desiredProperties[setting],
                 status = "completed",
                 desiredVersion = desiredProperties["$version"],
                 message = "Processed"
