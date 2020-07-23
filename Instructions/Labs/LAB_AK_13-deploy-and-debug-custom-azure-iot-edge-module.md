@@ -164,8 +164,6 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
     Lab 3 of this course has you prepare the lab environment, including the installation Python 3.8. If Python is not installed, refer back to the instructions in Lab 3.
 
-    > **Note**:  Currently, the Azure IoT EdgeHub Dev Tool uses a docker-py library that is not compatible with Python 3.8.
-
 1. With Python installed, open Windows Command Prompt.
 
 1. At the command prompt, to install the package manager for Python (Pip), enter the following commands:
@@ -419,7 +417,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     This target platform needs to be set to the hardware platform architecture of the IoT Edge Device.
 
-    > **Note**: Since you are using the **IoT Edge on Ubuntu** Linux VM, the `amd64` option is the appropriate choice. For a Windows VM, use `windows-amd64`, and for modules that will be running on an ARM CPU architecture, use choose the `arm32v7` option.
+    > **Note**: Since you are using the **IoT Edge on Ubuntu** Linux VM, the `amd64` option is the appropriate choice. For a Windows VM, use `windows-amd64`, and for modules that will be running on an ARM CPU architecture, you would choose the `arm32v7` option.
 
 #### Task 3: Review the module code
 
@@ -513,7 +511,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. When prompted to **Select an IoT Edge Device**, click **SimulatedDevice**.
 
-    > **Note**: If you get an **Unauthorized** error in the lower-right-hand corner, run the `Azure IoT Edge: Set IoT Hub Connection String` command from the Command Palette to reconfigure your simulator connection string, then run `Azure IoT Edge: Setup IoT Edge Simulator` from the command palette and try to select your device again.
+    > **Note**: If you get an **Unauthorized** error in the lower-right-hand corner, run the `Azure IoT Hub: Set IoT Hub Connection String` command from the Command Palette to reconfigure your simulator connection string, then run `Azure IoT Edge: Setup IoT Edge Simulator` from the command palette and try to select your device again.
 
     > **Note**: It is possible that you will be prompted for your Admin password on your local machine (in the Visual Studio Code **TERMINAL** window), particularly on Linux or macOS. Enter your password at the prompt and press **Enter**. The reason it might ask for your password is that the setup command for `iotedgehubdev` is being run using `sudo` as it requires elevated privileges.
 
