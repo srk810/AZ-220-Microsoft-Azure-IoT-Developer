@@ -423,7 +423,7 @@ In this task, you will implement the code that provisions the device via DPS and
 
     Notice that the default value for the delay is set to **1** second. Your next step is to integrate the code that uses a device twin value to control the delay time.
 
-#### Task 2: Integrate Device Twin Properties
+#### Task 3: Integrate Device Twin Properties
 
 In order to use the device twin properties (from Azure IoT Hub) on a device, you need to create the code that accesses and applies the device twin properties. In this case, you want to update your simulated device code to read the telemetryDelay device twin Desired Property, and then assign that value to the corresponding **telemetryDelay** variable in your code. You also want to update the device twin Reported Property (maintained by IoT Hub) to have a record of the delay time that is currently implemented on our device.
 
