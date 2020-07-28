@@ -35,7 +35,7 @@
 
 These labs are written as companions to the instructor-led AZ-220 course.  Although great effort has been made to ensure that the labs include explanations of each step to allow them to be instructional tools, not all requirements for successful completion are documented.  For example, in a classroom environment, students have access to a relatively unrestricted Azure subscription; as a result, a complete list of resource providers used in the labs does not exist.  This means that lab steps in a locked-down subscription (one with [Azure Policy](https://docs.microsoft.com/azure/governance/policy/overview) restrictions, for example) may fail.
 
-Microsoft Learn offers several [learning paths](https://docs.microsoft.com/learn/browse/?resource_type=learning%20path&filter-products=IOT&products=azure-iot) for IoT that include sandboxed lab environments.  These are going to be more suitable for many students looking for IoT self-study opportunities..
+Microsoft Learn offers several [learning paths](https://docs.microsoft.com/en-us/learn/browse/?resource_type=learning%20path&products=azure-iot&roles=developer) for IoT that include sandboxed lab environments.  These are going to be more suitable for many students looking for IoT self-study opportunities..
 
 ## Notes
 
