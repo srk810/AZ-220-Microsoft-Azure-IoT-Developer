@@ -127,18 +127,18 @@ If these resources are not available, you will need to run the **lab13-setup.azc
     ```
 
     > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
-    >
-    > ```bash
-    > az account list-locations -o Table
-    >
-    > DisplayName           Latitude    Longitude    Name
-    > --------------------  ----------  -----------  ------------------
-    > East Asia             22.267      114.188      eastasia
-    > Southeast Asia        1.283       103.833      southeastasia
-    > Central US            41.5908     -93.6208     centralus
-    > East US               37.3719     -79.8164     eastus
-    > East US 2             36.6681     -78.3889     eastus2
-    > ```
+
+    ```bash
+    az account list-locations -o Table
+    
+    DisplayName           Latitude    Longitude    Name
+    --------------------  ----------  -----------  ------------------
+    East Asia             22.267      114.188      eastasia
+    Southeast Asia        1.283       103.833      southeastasia
+    Central US            41.5908     -93.6208     centralus
+    East US               37.3719     -79.8164     eastus
+    East US 2             36.6681     -78.3889     eastus2
+    ```
 
 1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
@@ -235,10 +235,6 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. In the **Location** dropdown, choose the same Azure region that was used for the resource group.
 
-1. Under **Admin user**, click **Enable**.
-
-    This option will enable you to Docker login to the Azure Container Registry service using the registry name as the username and admin user access key as the password.
-
 1. In the **SKU** dropdown, ensure that **Standard** is selected.
 
     Azure Container Registry is available in multiple service tiers, known as SKUs. These SKUs provide predictable pricing and several options for aligning to the capacity and usage patterns of your private Docker registry in Azure.
@@ -255,7 +251,9 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. On the left side navigation menu, under **Settings**, click **Access keys**.
 
-    This is where you will find the username and password for the **Admin user**  
+1. Under **Admin user**, click **Enable**.
+
+    This option will enable you to Docker login to the Azure Container Registry service using the registry name as the username and admin user access key as the password.
 
 1. Make a record of the following values:
 
@@ -334,7 +332,9 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     Once the new **IoT Edge Solution** has been created, Visual Studio Code will open the solution.
 
-    If Visual Studio Code prompts you to load required resources or C# extension, click **Yes**
+    > **Note**: If Visual Studio Code prompts you to load required resources or C# extension, click **Yes**
+
+    > **Note**: If Visual Studio Code prompts you to configure the **.env** file, and proceed to Task 2 below.
 
 #### Task 2: Configure the solution
 
@@ -345,6 +345,8 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 1. In the **Explorer** pane, to open the `.env` file, click **.env**.
 
     The .env file is located in the root directory of the IoT Edge Solution. This is where the username and password are configured for accessing your Docker registry.
+
+    > **Note:** Visual Studio Code may have already opened this file for you.
 
     The username and password are stored in this file using the following format:
 
@@ -363,12 +365,14 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     > **Note**: You may wonder why you ran `docker login` before when you're supplying the same credentials here.  At the time when this lab was written, the Visual Studio Code tools do not automatically perform the `docker login` step with these credentials; they are only used to supply the credentials to the Edge Agent later as part of the deployment template.
 
-1. Within the `.env` file, replace the placeholder values with the username and password values that you save earlier. 
+1. Within the `.env` file, replace the placeholder values with the username and password values that you saved earlier. 
 
     Replace the `<registry-username>` placeholder with the **Registry name** (_aka Username_) of the Azure Container Registry that was previously created.
     Replace the `<registry-password>` placeholder with the **password** for the Azure Container Registry.
 
     > **Note**:  The Azure Container Registry **Username** and **password** values can be found by accessing the **Access keys** pane for the **Azure Container Registry** service within the Azure portal, if you did not record them earlier.
+
+1. Save the updated **.env** file.
 
 1. In the **Explorer** pane, to open the `deployment.template.json` file, click **deployment.template.json**.
 
