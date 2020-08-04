@@ -334,7 +334,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     > **Note**: If Visual Studio Code prompts you to load required resources or C# extension, click **Yes**
 
-    > **Note**: If Visual Studio Code prompts you to configure the **.env** file, and proceed to Task 2 below.
+    > **Note**: If Visual Studio Code prompts you to configure the **.env** file, select **Yes** and proceed to Task 2 below.
 
 #### Task 2: Configure the solution
 
