@@ -130,7 +130,7 @@ If these resources are not available, you will need to run the **lab13-setup.azc
 
     ```bash
     az account list-locations -o Table
-    
+
     DisplayName           Latitude    Longitude    Name
     --------------------  ----------  -----------  ------------------
     East Asia             22.267      114.188      eastasia

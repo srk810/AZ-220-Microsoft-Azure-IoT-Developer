@@ -114,19 +114,19 @@ The **lab17-setup.azcli** script is written to run in a **bash** shell environme
     Location="{your-location}"
     ```
 
-    > **Note**:  The `{your-location}` variable should be set to the short name for the region. You can see a list of the available regions and their short-names (the **Name** column) by entering this command:
-    >
-    > ```bash
-    > az account list-locations -o Table
-    >
-    > DisplayName           Latitude    Longitude    Name
-    > --------------------  ----------  -----------  ------------------
-    > East Asia             22.267      114.188      eastasia
-    > Southeast Asia        1.283       103.833      southeastasia
-    > Central US            41.5908     -93.6208     centralus
-    > East US               37.3719     -79.8164     eastus
-    > East US 2             36.6681     -78.3889     eastus2
-    > ```
+    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
+
+    ```bash
+    az account list-locations -o Table
+
+    DisplayName           Latitude    Longitude    Name
+    --------------------  ----------  -----------  ------------------
+    East Asia             22.267      114.188      eastasia
+    Southeast Asia        1.283       103.833      southeastasia
+    Central US            41.5908     -93.6208     centralus
+    East US               37.3719     -79.8164     eastus
+    East US 2             36.6681     -78.3889     eastus2
+    ```
 
 1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
 
