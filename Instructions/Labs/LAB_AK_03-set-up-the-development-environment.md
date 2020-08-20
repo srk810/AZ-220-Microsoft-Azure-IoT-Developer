@@ -248,6 +248,8 @@ Microsoft has created a GitHub repo to provide access to lab resource files. Hav
 
 1. Click **Browse**, and then navigate to folder location that is convenient to access.
 
+    > **Important**: By default, Windows has a [maximum file path length of 260](https://docs.microsoft.com/en-us/windows/win32/fileio/naming-a-file#maximum-path-length-limitation). As the file paths within the ZIP are already long, avoid extracting the archive within nested folders with a large file path. For example, the default path prompted to extract the zip could be similar to **c:\users\\[username]\downloads\AZ-220-Microsoft-Azure-IoT-Developer-master** - it is recommended that you shorten this as much as possible, to perhaps **c:\az220**
+
 1. To extract the files, click **Extract**.
 
     Be sure to make note of where you located the files.
