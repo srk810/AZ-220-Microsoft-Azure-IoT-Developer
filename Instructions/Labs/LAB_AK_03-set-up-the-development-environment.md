@@ -174,9 +174,9 @@ The Visual Studio Code and Azure CLI tools both support an Azure IoT extension t
 
 1. Close Visual Studio Code.
 
-#### Task 2: Install Azure CLI Extensions
+#### Task 2: Install Azure CLI Extension - local environment
 
-1. Open a new command-line / terminal window.
+1. Open a new command-line / terminal window, to install the Azure IoT CLI extensions locally.
 
     For example, you can use the Windows **Command Prompt** command-line application.
 
@@ -186,7 +186,31 @@ The Visual Studio Code and Azure CLI tools both support an Azure IoT extension t
     az extension add --name azure-iot
     ```
 
-#### Task 3: Verify Development Environment Setup
+#### Task 3: Install Azure CLI Extension - cloud environment
+
+Many of the labs will require the use of the Azure CLI IoT extensions via the Azure Cloud Shell. The following steps ensure the extension is installed and running the latest version.
+
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+
+1. If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+
+1. Verify that the Cloud Shell is using **Bash**.
+
+    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+
+1. At the command prompt, to install the Azure CLI extension for IoT, enter the following command:
+
+    ```bash
+    az extension add --name azure-iot
+    ```
+
+    **Note**: If the extension is already installed, you can ensure you are running the latest version by entering the following command:
+
+    ```bash
+    az extension update --name azure-iot
+    ```
+
+#### Task 4: Verify Development Environment Setup
 
 You should verify that the development environment has been set up successfully. Once this is complete, you will be ready to start building your IoT solutions.
 
@@ -201,15 +225,15 @@ You should verify that the development environment has been set up successfully.
     The `az --version` command will output the version information for Azure CLI that you have installed (the `azure-cli` version number). This command also outputs the version number for all the Azure CLI modules installed, including the IoT extension. You should see output similar to the following:
 
     ```cmd/sh
-    azure-cli                           2.4.0
+    azure-cli                           2.9.1
 
     command-modules-nspkg               2.0.3
-    core                                2.4.0
+    core                                2.9.1
     nspkg                               3.0.4
     telemetry                           1.0.4
 
     Extensions:
-    azure-iot                           0.9.1
+    azure-iot                           0.9.8
     ```
 
 1. Validate the **.NET Core 3.x SDK** installation by running the following command that will output the version number for the currently installed version of the .NET Core SDK.
