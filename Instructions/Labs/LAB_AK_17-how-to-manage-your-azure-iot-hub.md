@@ -301,7 +301,7 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
 1. Take a moment to review the **Create alert rule** blade.
 
-    The blade includes fourse sections: Scope, Condition, Action group, and Alert rule details. Scope you can see two fields - Resource and Hierarchy. Notice that these fields are pre-populated with properties from your IoT Hub. You can edit the pre-selected resource if needed.
+    The blade includes four sections: Scope, Condition, Action group, and Alert rule details. Scope you can see two fields - Resource and Hierarchy. Notice that these fields are pre-populated with properties from your IoT Hub. You can edit the pre-selected resource if needed.
 
 1. Under **Condition**, click **Select condition**.
 
@@ -367,9 +367,19 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
 1. Under **Action group**, click **Select action group**.
 
-    The **Select an action group to attach to this alert rule** pane is displayed.
+    The **Select an action group to attach to this alert rule** pane is displayed. If there are existing Action Groups available within the selected subscription, they will be listed here. Notice that you can change the subscription and filter the list. In this lab, we will create a new action group.
 
 1. On the **Select an action group to attach to this alert rule** pane, click **Create action group**.
+
+    The **Create action group** pane is displayed.
+
+1. On the **Basics** tab, under **Subscription**, ensure that the subscription you have been using for this lab is selected.
+
+1. In the **Resource group** dropdown, click **rg-az220**.
+
+    > **Note**: Action Groups are usually shared across a subscription and would likely be centrally managed by the Azure subscription owner. As such they are more likely to be included in a common resource group rather than in a project specific resource group such as "rg-az220". We are using "rg-az220" to make it easier to clean up the resources after the lab.
+
+    The next area, **Instance details** is used to specify the full and display names for the group.
 
 1. Under **Action group name**, enter **AZ-220 Email Action Group**
 
@@ -379,23 +389,21 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     > **Note**: The display name is used in place of a full action group name when notifications are sent using this group and is limited to a max of 12 characters.
 
-1. Under **Subscription**, ensure that the subscription you have been using for this lab is selected.
+1. Click **Next: Notifications**, to view the action group notification fields.
 
-1. In the **Resource group** dropdown, click **rg-az220**.
+1. Open the **Notification Type** dropdown, and then review the available options.
 
-    > **Note**: Action Groups are usually shared across a subscription and would likely be centrally managed by the Azure subscription owner. As such they are more likely to be included in a common resource group rather than in a project specific resource group such as "rg-az220". We are using "rg-az220" to make it easier to clean up the resources after the lab.
+1. In the **Notification Type** dropdown, click **Email/SMS message/Push/Voice**.
 
-    The next area, **Actions** is used to define a list of actions that will be performed whenever this action group is invoked.
+    > **Note**: After selecting the notification type, a new, blank, row is added to enable multiple notifications to be added. To the right of each row with values, **Edit details** and **Delete** icons are available.
 
-1. Under **Action name**, enter **AZ220Notifications**
+1. Under **Name**, enter **AZ220Notifications**
 
-1. Open the **Action Type** dropdown, and then review the available options.
+1. On the right of the current notification, to enter the notification details, click the **Edit details**.
 
-1. In the **Action Type** dropdown, click **Email/SMS/Push/Voice**.
+    The **Email/SMS message/Push/Voice** pane opens.
 
-    Immediately, the **Email/SMS/Push/Voice** blade is displayed showing you the action details for this action type. Notice that you can choose up to 4 methods for delivering the notification.
-
-1. On the **Email/SMS/Push/Voice** blade, click **Email**, and then enter an email address that you have easy access to. 
+1. On the **Email/SMS message/Push/Voice** blade, click **Email**, and then enter an email address that you have easy access to. 
 
 1. Click **SMS**, and then enter the **Country code** and the **Phone number** for the phone that you wish to use to receive the SMS alert.
 
@@ -404,16 +412,22 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 1. Under **Enable the common alert schema**, click **Yes**.
 
    > **Note**:  There are many benefits to using the Common Alert Schema. It standardizes the consumption experience for alert notifications in Azure today. Historically, the three alert types in Azure today (metric, log, and activity log) have had their own email templates, webhook schemas, etc. With the common alert schema, you can now receive alert notifications with a consistent schema. You can learn more about the Common ALert6 Schema [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/alerts-common-schema).
-   >
+
    > **Important:** Given the benefits, you may wonder why the common alert schema is not enabled by default - well, when you select **Yes** you will see a warning **Enabling the common alert schema might break any existing integrations.** Bear this in mind in your own environments.
 
-1. At the bottom of the **Email/SMS/Push/Voice** blade, to save the action configuration, click **OK**.
+1. At the bottom of the **Email/SMS message/Push/Voice** blade, to save the action configuration, click **OK**.
 
-    The **Add action group** blade should now list your Action. Notice that the new action has a link to **Edit details** if changes are required.
+    The notification row should now show that Email and SMS message have been selected. The  **Edit details** icon can be clicked if further changes are required.
+
+1. Click **Next: Actions**, to view the action group action fields.
+
+1. Open the **Action type** dropdown, and then review the available options.
 
     At this point, we could add multiple actions if we needed to launch some business integration via *WebHooks* or an *Azure Function*, however for this lab, a simple notification is enough.
 
-1. At the bottom of the **Add action group** blade, to create this action group, click **OK**.
+1. At the bottom of the **Add action group** blade, to validate this action group, click **Review + create**.
+
+1. Once the validation has completed, click **Create**.
 
     A few things happen at the same time. First, **Add action group** blade closes, leaving you on the **Create rule** blade, with the new Action Group added to the list of **ACTIONS**.
 
@@ -425,24 +439,24 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     The name should be descriptive enough to identify the alert.
 
-1. In the **Description** filed, enter **This alert is raised when the number of devices connected to the iot-az220-training-{your-id} hub is greater than or equal to 5.**
+1. In the **Description** field, enter **This alert is raised when the number of devices connected to the iot-az220-training-{your-id} hub is greater than or equal to 5.**
 
     The description field is optional, but recommended.
+
+1. In the **Save alert to resource group** field, ensure the expected resource group is selected - i.e. **rg-az220**.
 
 1. In the **Severity** field, ensure that **Sev 3** is selected.
 
     In our scenario, this alert is *informational* and not indicative of any critical failure, therefore **Sev 3** is the correct choice.
 
-    > **Note**:  The severity level option are Sev 0 - Sev 4. Your business should have an established definition for each level. 
-    >
-    > For example, Contoso may have defined these levels as follows:
+    > **Note**:  The severity level option are Sev 0 - Sev 4. Your business should have an established definition for each level. For example, Contoso may have defined these levels as follows:
     >* Sev 0 = Critical
     >* Sev 1 = Error
     >* Sev 2 = Warning
     >* Sev 3 = Informational
     >* Sev 4 = Verbose
 
-1. For the **Enable rule upon creation** field, ensure that the checkbox is selected (checked).
+1. For the **Enable alert rule upon creation** field, ensure that the checkbox is selected (checked).
 
     > **Note**:  It can take up to 10 minutes for a metric alert rule to become active.
 
