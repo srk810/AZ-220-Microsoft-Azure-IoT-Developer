@@ -264,7 +264,7 @@ In this exercise, you will create a new IoT Edge Device Identity within Azure Io
 1. To display the **Connection String** for your IoT Edge device, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --device-id sensor-th-0067 --hub-name iot-az220-training-{your-id}
+    az iot hub device-identity connection-string show --device-id sensor-th-0067 --hub-name iot-az220-training-{your-id}
     ```
 
     Be sure to replace the `{your-id}` placeholder with the YOUR-ID value that you created at the start of this course.

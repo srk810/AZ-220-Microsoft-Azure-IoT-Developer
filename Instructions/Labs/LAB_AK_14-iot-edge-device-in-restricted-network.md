@@ -56,7 +56,7 @@ The **lab14-setup.azcli** script is written to run in a **bash** shell environme
 >**Note:** You will need the connection string for the **sensor-th-0050** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
 >
 > ```bash
-> az iot hub device-identity show-connection-string --hub-name iot-az220-training-{your-id} --device-id sensor-th-0050 -o tsv
+> az iot hub device-identity connection-string show --hub-name iot-az220-training-{your-id} --device-id sensor-th-0050 -o tsv
 > ```
 
 #### Task 1: Execute Setup Script
@@ -294,12 +294,12 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 1. To retrieve the **Connection String** of the **vm-az220-training-gw0002-{your-id}** device from IoT Hub, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name iot-az220-training-{your-id} --device-id vm-az220-training-gw0002-{your-id} -o tsv
+    az iot hub device-identity connection-string show --hub-name iot-az220-training-{your-id} --device-id vm-az220-training-gw0002-{your-id} -o tsv
     ```
 
     > **Note**:  Be sure to replace the **iot-az220-training-{your-id}** IoT Hub name with the name of your Azure IoT Hub.
 
-    Notice the `az iot hub device-identity show-connection-string` command is called by passing in several parameters:
+    Notice the `az iot hub device-identity connection-string show` command is called by passing in several parameters:
 
     * `--hub-name`: This required parameter is used to specify the name of the **Azure IoT Hub** to add the new device to.
 
@@ -374,7 +374,7 @@ In this exercise, you will register an IoT Edge Device with Azure IoT Hub, and t
 1. To retrieve the **Connection String** of the **sensor-th-0084** device from IoT Hub, enter the following command:
 
     ```cmd/sh
-    az iot hub device-identity show-connection-string --hub-name iot-az220-training-{your-id} --device-id sensor-th-0084 -o tsv
+    az iot hub device-identity connection-string show --hub-name iot-az220-training-{your-id} --device-id sensor-th-0084 -o tsv
     ```
 
     > **Note**:  Be sure to replace the **iot-az220-training-{your-id}** IoT Hub name with the name of your Azure IoT Hub.

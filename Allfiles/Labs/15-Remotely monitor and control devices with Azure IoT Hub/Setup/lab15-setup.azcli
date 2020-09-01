@@ -84,7 +84,7 @@ az iot hub show-connection-string --query connectionString --hub-name $IoTHubNam
 echo ""
 
 echo "$DeviceID device connection string:"
-az iot hub device-identity show-connection-string --hub-name $IoTHubName --device-id $DeviceID -o tsv
+az iot hub device-identity connection-string show --hub-name $IoTHubName --device-id $DeviceID -o tsv
 echo ""
 
 echo "$IoTHubName eventhub endpoint:"
