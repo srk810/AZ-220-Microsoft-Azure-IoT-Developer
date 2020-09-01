@@ -375,9 +375,9 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     > **Note**: An action group name must be unique within the Resource Group it is associated with.
 
-1. Under **Short name**, enter **AZ220EmailAG**
+1. Under **Display name**, enter **AZ220EmailAG**
 
-    > **Note**: The short name is used in place of a full action group name when notifications are sent using this group and is limited to a max of 12 characters.
+    > **Note**: The display name is used in place of a full action group name when notifications are sent using this group and is limited to a max of 12 characters.
 
 1. Under **Subscription**, ensure that the subscription you have been using for this lab is selected.
 
