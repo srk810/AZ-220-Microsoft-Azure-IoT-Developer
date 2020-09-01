@@ -193,8 +193,6 @@ The **lab08-setup.azcli** script is written to run in a **bash** shell environme
     Create storage container vibrationcontainer - Success
     Create IoT Hub endpoint vibrationLogEndpoint - Success
     Create IoT Hub route vibrationLoggingRoute - Success
-    Create event hubs namespace vibrationNamespacedm200420 - Success
-    Create event hub vibrationeventhubinstance - Success
     Create routing-endpoint vibrationTelemetryEndpoint - Success
     Create iot hub route  - Success
     Setup Azure Streaming Job - launching PowerShell
