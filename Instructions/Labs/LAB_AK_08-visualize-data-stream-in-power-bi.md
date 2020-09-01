@@ -323,7 +323,7 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
 1. You should quickly see console output, similar to the following:
 
-    ![Console Output](./Media/LAB_AK_08-vibration-telemetry.png)
+    ![Console Output](./media/LAB_AK_08-vibration-telemetry.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
