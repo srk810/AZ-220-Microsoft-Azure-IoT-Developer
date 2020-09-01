@@ -276,7 +276,7 @@ In this exercise, you will ensure that the Device Simulator app from the previou
 
 > **Important**: If you have not completed lab 7 of this course, do that now.
 
-#### Task 1: Start the VibrationSensor app in Visual Studio Code
+#### Task 1: Start the VibrationDevice app in Visual Studio Code
 
 1. Open Visual Studio Code.
 
@@ -291,9 +291,9 @@ In this exercise, you will ensure that the Device Simulator app from the previou
           * 08-Visualize a Data Stream in Power BI
             * Starter
  
-1. Click **VibrationSensor**, and then click **Select Folder**.
+1. Click **VibrationDevice**, and then click **Select Folder**.
 
-    You should see the Program.cs and VibrationSensor.csproj files listed in the EXPLORER pane.
+    You should see the Program.cs and VibrationDevice.csproj files listed in the EXPLORER pane.
 
 1. In the **EXPLORER** pane, click **Program.cs**.
 
