@@ -162,6 +162,9 @@ In this exercise, you will generate an X.509 CA Certificate using OpenSSL within
 1. At the Cloud Shell command prompt, to create and then move into a new directory, enter the following commands:
 
     ```sh
+    # ensure the current directory is the user's home directory
+    cd ~
+
     # make a directory named "certificates"
     mkdir certificates
 
