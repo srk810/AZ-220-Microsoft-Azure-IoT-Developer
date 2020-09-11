@@ -192,11 +192,20 @@ In this task, you will take a quick look at the workspace configuration of Log A
 
 1. At the top of the blade, to show the security settings, click **Settings**. 
 
-    The **Settings** blade should now be open with the **Data Collection** pane displayed. 
+    The **Settings Page** is displayed, listing the four areas that can be configured:
 
-1. Take a minute to review the Settings information displayed.
+    * Data Collection
+    * Recommendations Configuration
+    * Monitored Resources
+    * Custom Alerts
 
-    Notice the **Workspace configuration** that has be defined for your Log Analytics workspace.
+1. To review the default **Data Collection** settings, click **Data Collection**.
+
+1. In the **Subscription** dropdown, ensure the subscription you are using for this lab is selected.
+
+1. In the **Workspace** dropdown, the workspace that was automatically created should be displayed.
+
+    > **Important**: At the time of writing, the **Workspace** value is not displayed, although the workspace has been created. To ensure the value is displayed, toggle the **Choose the Log Analytics workspace you wish to connect to:** field **off** and then back **on**. The **Workspace** value should now be displayed. As no actual change to data has ocurred, the **Save** button will not be enabled.
 
 By default, turning on the Azure Security Center for IoT solution automatically secures all IoT Hubs under your Azure subscription.
 
@@ -567,12 +576,12 @@ You now have your the security agent installed on your device and your solution 
 
     ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-security-dashboard.png)
 
-1. On the left-side menu, under **Security**, click **Resources**.
+1. On the left-side menu, under **Security**, to view the monitored resources, click **Settings** and then click **Monitored Resources**
 
-    This pane provides access to the health of your resources across your IoT solution.
+    This pane lists all of the resources current monitored for your IoT Solution. At a glance, you can see the overall health of your resources across your IoT solution and can then drill into each resource and see more details. If you wish to add additional resources, you can click **Edit**, and then select a subscription and resource group from which to add.
 
     > **IMPORTANT**:
-    > The process that evaluates the security configuration of your IoT resources may take up to 24 hours to run, therefore the initial status displayed on the dashboard does not reflect the actual state of your resources. 
+    > The process that evaluates the security configuration of your IoT resources may take up to 24 hours to run, therefore the initial status displayed on the dashboard does not reflect the actual state of your resources.
 
     The image below shows the dashboard status once the security evaluation has been performed.
 
