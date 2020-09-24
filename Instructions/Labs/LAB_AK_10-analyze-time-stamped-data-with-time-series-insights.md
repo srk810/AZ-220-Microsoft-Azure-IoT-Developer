@@ -184,7 +184,7 @@ In this exercise, you will setup Time Series Insights integration with Azure IoT
 
 1. In the **Location** dropdown, select the Azure region used by your resource group.
 
-1. In the **Tier** field, ensure that the **S1** pricing tier is selected and that **Capacity** is set to **1**.
+1. In the **Tier** field, ensure that the **Gen1 (S1)** pricing tier is selected and that **Capacity** is set to **1**.
 
 1. At the bottom of the blade, click **Next: Event Source**.
 
@@ -326,11 +326,9 @@ In this exercise, you will be introduced to working with time series data using 
 
 1. On your Resource group tile, click **tsi-az220-training**.
 
-1. On the **Time Series Insights environment** blade, at the top of the **Overview** pane, click **Go to Environment**.
+1. On the **Time Series Insights environment** blade, at the top of the **Overview** pane, click **Go to TSI Explorer**.
 
     This will open the **Time Series Insights Explorer** in a new browser tab.
-
-1. On the toolbar at the top of the page, if there is an option to enable the **Preview**, set **Preview** to **On**.
 
 1. On the left-side menu, ensure that **Analyze** is selected.
 
@@ -338,13 +336,13 @@ In this exercise, you will be introduced to working with time series data using 
 
     Collapse the navigation menu to ensure that you can see the query edit area on the left side of the page.
 
-1. In the query editor, open the **MEASURE** dropdown, and then click **temperature**.
+1. To begin to edit a query, click **Add new query**.
+
+1. In the query editor, under **Query 1**, open the **MEASURE** dropdown, and then click **temperature**.
 
 1. Open the **SPLIT BY** dropdown, and then click **iothub-connection-device-id**.
 
     When you run the query, this will split the graph to show the telemetry from each of the IoT Devices separately on the graph.
-
-1. Click **Add**.
 
 1. At the top of the page, to have the display automatically refresh, click **Auto Refresh**.
 
@@ -362,7 +360,9 @@ In this exercise, you will be introduced to working with time series data using 
 
     This gives you an indication that the sensor-th-container0001 is being transported by Truck or Airplane at those times.
 
-1. To add a second query to the display, set the **MEASURE** dropdown to **humidity**, set the **SPLIT BY** dropdown to **iothub-connection-device-id**, and then click **Add**.
+1. To add a second query to the display, click **Add new query**.
+
+1. Under **Query 2**, set the **MEASURE** dropdown to **humidity**, set the **SPLIT BY** dropdown to **iothub-connection-device-id**, and then click **Add**.
 
     Notice that there are now two graphs displayed. The top graph shows **temperature** while the lower graph shows **humidity**, both using their own Y-axis scale.
 
