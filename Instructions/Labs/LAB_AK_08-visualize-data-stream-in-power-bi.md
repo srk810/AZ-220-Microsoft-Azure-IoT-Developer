@@ -54,9 +54,9 @@ The following resources will be created:
 
 In this lab, you will complete the following activities:
 
-* Verify lab prerequisites
-* Sign-up for Power BI
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
+* Sign-up for Power BI
+* Generate Telemetry from Simulated Device
 * Analyze Telemetry in Real-Time
 * Create an Azure Event Hubs service
 * Create a Real-time Message Route
@@ -266,7 +266,7 @@ Follow these steps to sign up for a Power BI account. Once you complete this pro
 
 Now you have access to Power BI, you are ready to route real-time telemetry data to a Power BI dashboard.
 
-### Exercise 3: Verify Lab Prerequisites
+### Exercise 3: Generate Telemetry from Simulated Device
 
 In order to visualize live streaming data from IoT hub in a Power BI dashboard, you will need to have a real or simulated IoT device that is sending telemetry messages. Fortunately, you created a simulated device in Lab 7 that satisfies this requirement.
 
