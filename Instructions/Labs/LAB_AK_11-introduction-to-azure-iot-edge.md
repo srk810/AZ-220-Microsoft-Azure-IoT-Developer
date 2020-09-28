@@ -477,8 +477,6 @@ In this exercise, you will add a Simulated Temperature Sensor as a custom IoT Ed
 
 1. At the bottom of the blade, to finish setting the modules for the device, click **Create**.
 
-#### Task ?:
-
 1. On the **sensor-th-0067** blade, under **Modules**, notice that **tempsensor** is now listed.
 
     > **Note**: You may have to click **Refresh** to see the module listed for the first time.
