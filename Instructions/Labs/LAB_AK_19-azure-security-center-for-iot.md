@@ -541,7 +541,16 @@ In addition to automatic relationship detection, you can also pick and choose wh
 
 1. In your browser, open the Azure Portal and navigate to your IoT Hub.
 
-1. On the left-side menu, under **Security**, click **Resources**.
+1. On the left-side menu, under **Security**, click **Settings**.
+
+    The **Settings Page** lists the following areas:
+
+    * Data Collection
+    * Recommendations Configuration
+    * Monitored Resources
+    * Custom Alerts
+
+1. To view the list of resources, click **Monitored Resources**.
 
     Note that the list of resources already includes your IoT Hub, the workspace that was created when Azure Security Center for IoT was activated earlier as well as the current subscription.
 
@@ -607,7 +616,16 @@ In this task, you will create a custom alert.
 
 1. On your Azure portal, navigate to your IoT Hub blade.
 
-1. On the left-side menu, under **Security**, click **Custom Alerts**.
+1. On the left-side menu, under **Security**, click **Settings**.
+
+    The **Settings Page** lists the following areas:
+
+    * Data Collection
+    * Recommendations Configuration
+    * Monitored Resources
+    * Custom Alerts
+
+1. To view the list of custom alerts, click **Custom Alerts**.
 
 1. Take a moment to examine the **Custom Alerts** pane.
 
