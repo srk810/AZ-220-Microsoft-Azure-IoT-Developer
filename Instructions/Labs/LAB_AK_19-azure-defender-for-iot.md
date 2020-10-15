@@ -583,7 +583,7 @@ You now have your the security agent installed on your device and your solution 
 
 1. On the left-side menu, under **Security**, click **Overview**. 
 
-    You will see the health overview for your devices, hubs, and other resources appear on two charts. You can see the Built-in real-time monitoring, recommendations and alerts that were enabled right when you turn on your Azure IoT Security Center.
+    You will see the health overview for your devices, hubs, and other resources appear on two charts. You can see the Built-in real-time monitoring, recommendations and alerts that were enabled right when you turn on Azure Defender for IoT.
 
     ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-security-dashboard.png)
 
@@ -883,14 +883,14 @@ A device must be registered with your IoT hub before it can connect.
 
     You can leave the app running for the remainder of this lab to generate multiple alerts.
 
-### Exercise 9: Review Security Center Alerts
+### Exercise 9: Review Azure Defender Alerts
 
 At this point, your console app will have sent enough telemetry to trigger the Custom Alert created earlier. 
 
 > **Tip**:
 > The alert was set up to trigger if less than 1 and more than 5 messages where sent from a device to the cloud within a 5 minute time window.
 
-#### Task 1: Review the Security Center Dashboard
+#### Task 1: Review the Azure Defender Dashboard
 
 1. On the Azure portal menu, click **Dashboard** and then open your IoT Hub.
 
