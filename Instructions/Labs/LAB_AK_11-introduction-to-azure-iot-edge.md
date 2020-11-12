@@ -173,15 +173,15 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. Leave **Availability options** set to **No infrastructure redundancy required**.
 
-1. Notice that the **Image** field is configured to use the **Ubuntu Server 16.04 LTS + Azure IoT Edge runtime** image.
+1. Notice that the **Image** field is configured to use the **Ubuntu Server 16.04 LTS + Azure IoT Edge runtime - Gen1** image.
 
 1. Leave **Azure Spot instance** set to **No**.
 
 1. To the right of **Size**, click **Change size**.
 
-1. On the **Select a VM size** blade, under **VM Size**, click **DS1_v2**, and then click **Select**.
+1. On the **Select a VM size** blade, under **VM Size**, click **Standard_B1ms**, and then click **Select**.
 
-    If you don't see DS1_v2 listed, you may need to use the **Clear all filters** link to make this size available in the list.
+    If you don't see Standard_B1ms listed, you may need to use the **Clear all filters** link to make this size available in the list.
 
     > **Note**:  Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
@@ -550,9 +550,9 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 
 1. On the **New** blade, in the search textbox type **storage** and then press **Enter**.
 
-1. On the **Marketplace** blade, click **Storage account - blob, file, table, queue**.
+1. On the **Marketplace** blade, click **Storage account**.
 
-1. On the **Storage account - blob, file, table, queue** blade, click **Create**.
+1. On the **Storage account** blade, click **Create**.
 
 1. On the **Create storage account** blade, ensure that the Subscription dropdown is displaying the subscription that you are using for this course.
 
@@ -579,6 +579,9 @@ Now that the tempSensor module is deployed and running on the IoT Edge device, w
 1. On the Azure portal menu, click **+ Create a resource**.
 
 1. On the **New** blade, under **Azure Marketplace**, click **Internet of Things**, and then click **Stream Analytics job**.
+
+    > [!NOTE]
+    > You may need to click **See all** to see **Stream Analytics job** in the list.
 
 1. On the **New Stream Analytics job** blade, in the **Job name** field, enter **asa-az220-training-{your-id}**
 
@@ -710,12 +713,12 @@ To prepare the Stream Analytics job to be deployed to an IoT Edge Device, it nee
 1. On the **Update IoT Edge Module** pane, notice that the **Image URI** points to a standard Azure Stream Analytics image.
 
     ```text
-    mcr.microsoft.com/azure-stream-analytics/azureiotedge:1.0.6
+    mcr.microsoft.com/azure-stream-analytics/azureiotedge:1.0.8
     ```
 
     This is the same image used for every ASA job that gets deployed to an IoT Edge Device.
 
-    > **Note**:  The version number at the end of the **Image URI** that is configured will reflect the current latest version when you created the Stream Analytics Module. At the time or writing this unit, the version was `1.0.6`.
+    > **Note**:  The version number at the end of the **Image URI** that is configured will reflect the current latest version when you created the Stream Analytics Module. At the time or writing this unit, the version was `1.0.8`.
 
 1. Leave all values as their defaults, and close the **IoT Edge Custom Modules** pane.
 
