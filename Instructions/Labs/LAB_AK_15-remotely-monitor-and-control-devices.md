@@ -519,7 +519,7 @@ In this task, you will begin work on the back-end app that will be used to recei
 
     The **eventHubClient** variable will contain the event hub client instance, which will be used to receive messages from the IoT Hub.
 
-    The **serviceClient** variable will contain the service client instance that will be sued to send message from the app to the IoT Hub (and from there, on to targeted devices, etc.).
+    The **serviceClient** variable will contain the service client instance that will be used to send messages from the app to the IoT Hub (and from there, on to targeted devices, etc.).
 
     The **serviceConnectionString** variable will contain the connection string that will enable the operator app to connect to the IoT Hub.
 
