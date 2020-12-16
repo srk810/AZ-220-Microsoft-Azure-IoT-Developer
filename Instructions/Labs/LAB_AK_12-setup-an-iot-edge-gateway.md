@@ -170,7 +170,7 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 1. In the **Resource group** dropdown, click **rg-az220vm**.
 
     > **Note**: One Resource Group is being used for all of the Virtual Machine resources created during this course. If the **rg-az220vm** resource group has not already been created, use the following instructions to create it now:
- 
+
     * Under the **Resource group** dropdown, click **Create new**.
     * In the context menu, under **Name**, type **rg-az220vm** and then click **OK**
 
@@ -182,13 +182,13 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. Leave the **Availability options** field set to **No infrastructure redundancy required**.
 
-1. Notice that the **Image** dropdown has the **Ubuntu Server 16.04 LTS + Azure IoT Edge runtime** image selected.
+1. Notice that the **Image** dropdown has the **Ubuntu Server 16.04 LTS + Azure IoT Edge runtime - Gen1** image selected.
 
-1. Leave the **Azure Spot instance** field set to **No**.
+1. Leave the **Azure Spot instance** field unchecked.
 
 1. Under **Size**, click **Select size**.
 
-1. On the **Select a VM size** blade, click **DS1_v2**, and then click **Select**.
+1. On the **Select a VM size** blade, click **Standard_DS1_v2**, and then click **Select**.
 
     You may need to use the **Clear all filters** link to make this size available in the list.
 
@@ -239,10 +239,10 @@ In this exercise, you will generate test certificates using Linux. You will do t
 1. On the context menu, click **Pin to dashboard**, and then navigate back to your dashboard.
 
     You can **Edit** your dashboard to rearrange the tiles if that makes it easier to access your resources.
- 
+
 1. On the **rg-az220vm** resource group tile, to open the Edge Gateway virtual machine, click **vm-az220-training-gw0001-{your-id}**.
 
-    > **Note**: Since the resource names are long and some are similar, be sure to select the VM, not the Disk, Public IP address, or Network security group.  
+    > **Note**: Since the resource names are long and some are similar, be sure to select the VM, not the Disk, Public IP address, or Network security group.
 
 1. At the top of the **vm-az220-training-gw0001-{your-id}** blade, click **Connect**, and then click **SSH**.
 
@@ -323,7 +323,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
     ~/lab12/certs/azure-iot-test-only.root.ca.cert.pem
     ```
 
-    Now that the root CA has been generated, the IoT Edge device CA certificate and private key need to be generated. 
+    Now that the root CA has been generated, the IoT Edge device CA certificate and private key need to be generated.
 
 1. To generate the IoT Edge device CA certificate, enter the following command:
 
@@ -426,7 +426,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
     >
     > You have to stop Insert mode before you can Save or Quit.
 
-1. To update the **certificates** code lines, remove the leading **# ** characters and enter the certificate path as shown below:
+1. To update the **certificates** code lines, remove the leading **'# '** (pound symbol and space) characters and enter the certificate path as shown below:
 
     ```yaml
     certificates:
@@ -435,7 +435,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
       trusted_ca_certs: "/home/<username>/lab12/certs/azure-iot-test-only.root.ca.cert.pem"
     ```
 
-    > **Note**: Be sure to replace the `<username>` placeholder within the file path specification above. You need to specify the **Username** of the user that is connected to SSH (the Admin user that you specified when creating the VM). 
+    > **Note**: Be sure to replace the `<username>` placeholder within the file path specification above. You need to specify the **Username** of the user that is connected to SSH (the Admin user that you specified when creating the VM).
 
     > **Important**: YAML treats spaces as significant characters. In the lines entered above, this means that there should not be any leading spaces in front of **certificates:** and that there should be two leading spaces in front of **device_ca_cert:**, **device_ca_pk:**, and **trusted_ca_certs:**
 
@@ -493,7 +493,7 @@ In this exercise, you will generate test certificates using Linux. You will do t
 In this exercise, you will use Azure IoT Hub to create a new IoT Edge device identity that you will use for the IoT Edge Transparent Gateway (your IoT Edge VM).
 
 1. If necessary, log in to your Azure portal using your Azure account credentials, and then navigate to your Azure Dashboard.
- 
+
 1. On the **rg-az220** resource group tile, to open your IoT hub, click **iot-az220-training-{your-id}**.
 
 1. On the **iot-az220-training-{your-id}** blade, on the left-side menu under **Automatic Device Management**, click **IoT Edge**.
@@ -587,7 +587,7 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
 1. Make a record of the full DNS name for your **vm-az220-training-gw0001-{your-id}** virtual machine, and save it for reference later.
 
-1. Navigate back to the **vm-az220-training-gw0001-{your-id}** blade, and then click **Refresh**. 
+1. Navigate back to the **vm-az220-training-gw0001-{your-id}** blade, and then click **Refresh**.
 
     > **Note**: If you are still in the IP configuration blade, you can use the breadcrumb trail at the top of the page to get back to the VM quickly.  In that case, at the top of the **Overview** pane, use the Refresh button to update the DNS name in the display.
 
@@ -602,7 +602,7 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
     This sample SSH command can be used to connect to the virtual machine that contains the IP Address for the VM and the Administrator username. Now that the DNS name label has been configured, the command should look similar to the following: **ssh demouser@vm-az220-training-gw0001-{your-id}.eastus.cloudapp.azure.com**
 
     > **Note**: If the sample command includes **-i \<private key path\>**, use a text editor to remove that portion of the command, and then copy the updated command into the clipboard.
- 
+
 1. On the Azure portal toolbar, click **Cloud Shell**.
 
     Ensure that the Cloud Shell environment is set to use **Bash**.
@@ -621,8 +621,8 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
     > **Note**: Again, you can use another editor if you wish.
 
-1. Scroll down within the file to locate the **Edge device hostname** section. 
-    
+1. Scroll down within the file to locate the **Edge device hostname** section.
+
     > **Note**:  Here are some tips for using **vi** when editing the **config.yaml** file:
     > * Press **Esc** and enter **/** followed by a search string, then press enter to search
     > * Pressing **n** will cycle through matches.
@@ -774,7 +774,7 @@ In this exercise, you will create a new IoT device identity in Azure IoT Hub for
 
 1. On the **IoT devices** pane, at the top of the pane, click **Refresh**.
 
-1. Under **Device ID**, click **sensor-th-0072**. 
+1. Under **Device ID**, click **sensor-th-0072**.
 
     This will open the details view for this device.
 
