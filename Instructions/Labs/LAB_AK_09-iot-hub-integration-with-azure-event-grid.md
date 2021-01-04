@@ -137,6 +137,22 @@ The **lab09-setup.azcli** script is written to run in a **bash** shell environme
 
     This will take a few minutes to run. You will see output as each step completes.
 
+    >**Note**: You may need to register the **microsoft.eventgrid** resource provider for this lab to be successful. Run the following command to check:
+
+    ```bash
+    az provider show --namespace microsoft.eventgrid -o tsv
+    ```
+   > If the results shows **Registered** nothing more is required. If **NotRegistered**, run the following command to register the **microsoft.eventgrid** provider:
+    
+    ```bash
+    az provider register --namespace microsoft.eventgrid
+    ```
+    > This may take 15 minutes or longer to complete. You should see the following message:
+    
+    ```bash
+    Registering is still on-going. You can monitor using 'az provider show -n microsoft.eventgrid'
+    ```
+
 ### Exercise 2: Create HTTP Web Hook Logic App that sends an email
 
 Azure Logic Apps is a cloud service that helps you schedule, automate, and orchestrate tasks, business processes, and workflows when you need to integrate apps, data, systems, and services across enterprises or organizations.
