@@ -303,7 +303,7 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     The blade includes four sections: Scope, Condition, Action group, and Alert rule details. Scope you can see two fields - Resource and Hierarchy. Notice that these fields are pre-populated with properties from your IoT Hub. You can edit the pre-selected resource if needed.
 
-1. Under **Condition**, click **Select condition**.
+1. Under **Condition**, click **Add condition**.
 
     The **Configure signal logic** pane should now be displayed. Notice that there is a paginated table of available signals displayed. The fields above the table filter the table to assist in finding the signal types you want.
 
