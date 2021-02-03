@@ -107,7 +107,7 @@ As noted above, when you create these types of resources, you will be provided w
 
 1. Apply an additional `01` or `02` if it turns out that your unique ID isn't so unique.
 
-    It could happen that two or more people with the same initials start the course on the same day. You may not know, unless the person is sitting next to you, until you create your IoT Hub in the next exercise. Azure will let you know if the suggested resource name, including your unique ID, isn't globally unique. In that case you will be instructed to update your unique ID by appending an additional `##` value. For example, if the value of your unique ID is `cah191216`, your updated unique ID value could become: 
+    It could happen that two or more people with the same initials start the course on the same day. You may not know, unless the person is sitting next to you, until you create your IoT Hub in the next exercise. Azure will let you know if the suggested resource name, including your unique ID, isn't globally unique. In that case you will be instructed to update your unique ID by appending an additional `##` value. For example, if the value of your unique ID is `cah191216`, your updated unique ID value could become:
 
     ```text
     cah20121600
@@ -153,7 +153,7 @@ In this exercise, you will use the Azure portal to create and configure your IoT
 
     The **Marketplace** blade will open to display the available services matching your search criteria.
 
-    > **Note**: Marketplace services provided by private contributors may include a cost that is not covered by a Microsoft Azure Pass or other Microsoft Azure free credit offerings. You will be using Microsoft provided resources during the labs in this course. 
+    > **Note**: Marketplace services provided by private contributors may include a cost that is not covered by a Microsoft Azure Pass or other Microsoft Azure free credit offerings. You will be using Microsoft provided resources during the labs in this course.
 
 1. On the **Marketplace** blade, click **IoT Hub**.
 
@@ -210,7 +210,7 @@ In this exercise, you will use the Azure portal to create and configure your IoT
 
     > **Note**: Some resource names do not allow extended characters like the dash (-) or underscore (_), so stick with numeric digits when updating your unique ID.
 
-1. At the top of the blade, click **Size and scale**.
+1. At the top of the blade, click **Management**.
 
     Take a minute to review the fields and other information presented on this tab.
 
@@ -224,13 +224,16 @@ In this exercise, you will use the Azure portal to create and configure your IoT
 
     As mentioned above, the pricing tier that you choose establishes the number of messages that your hub can process per unit per day. To increase the number of messages that your hub can process without moving to a higher pricing tier, you can increase the number of units. For example, if you want your IoT hub to support ingress of up to 800,000 messages per day, you could specify *two* S1 tier units. For this course you will be using just 1 unit.
 
-1. To the right of **Azure Security Center**, ensure that **Off** is selected.
+1. To the right of **Defender for IoT**, ensure that **Off** is selected.
 
-    Azure Security Center unifies security management and enables end-to-end threat detection and analysis across hybrid cloud workloads and your Azure IoT solution.
+    Azure Defender for IoT is a unified security solution for identifying IoT/OT devices, vulnerabilities, and threats. It enables you to secure your entire IoT/OT environment, whether you need to protect existing IoT/OT devices or build security into new IoT innovations.
 
-    Azure Security Center is on by default because security is important to your IoT solution. You will be exploring Azure Security Center in Lab 19 of this course. Disabling it for now ensures that the Lab 19 instructions work as expected.
+    > **TIP**:
+    **Azure Defender for IoT** was formally known as **Azure Security Center** and you may still see places in Azure, and in this content, where the name has not yet been updated.
 
-    Currently, you can enable Azure Security Center at the subscription level, through the Azure portal. The Standard tier of Azure Security Center is free for the first 30 days. Any usage beyond 30 days will be automatically charged as per the pricing information detailed [here](https://azure.microsoft.com/en-us/pricing/details/security-center/).
+    Azure Defender for IoT is on by default because security is important to your IoT solution. You will be exploring Azure Defender for IoT in Lab 19 of this course. Disabling it for now ensures that the Lab 19 instructions work as expected.
+
+    Currently, you can enable Azure Defender at the subscription level, through the Azure portal. Azure Defender is free for the first 30 days. Any usage beyond 30 days will be automatically  charged as per the pricing information detailed [here](https://azure.microsoft.com/en-us/pricing/details/azure-defender/).
 
 1. Expand **Advanced Settings**, and then ensure that **Device-to-cloud partitions** is set to **4**.
 
@@ -256,7 +259,7 @@ As you have already learned, IoT Hub is a managed service, hosted in the cloud, 
 
 IoT Hub's capabilities help you build scalable, full-featured IoT solutions such as managing industrial equipment used in manufacturing, tracking valuable assets in healthcare, monitoring office building usage, and many more scenarios. IoT Hub monitoring helps you maintain the health of your solution by tracking events such as device creation, device failures, and device connections.
 
-In this exercise, you will examine some of the features that IoT Hub provides. 
+In this exercise, you will examine some of the features that IoT Hub provides.
 
 #### Task 1: Explore the IoT Hub Overview information
 
