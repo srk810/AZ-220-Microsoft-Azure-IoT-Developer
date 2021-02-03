@@ -1,10 +1,10 @@
 ---
 lab:
-    title: 'Lab 19: Detect if your IoT Device was Tampered with Azure Security Center for IoT'
-    module: 'Module 10: Azure Security Center and IoT Security'
+    title: 'Lab 19: Detect if your IoT Device was Tampered with Azure Defender for IoT'
+    module: 'Module 10: Azure Defender and IoT Security'
 ---
 
-# Detect Device Tampering with Azure Security Center for IoT
+# Detect Device Tampering with Azure Defender for IoT
 
 ## Lab Scenario
 
@@ -18,6 +18,8 @@ The following resources will be created:
 
 ![Lab 19 Architecture](media/LAB_AK_19-architecture.png)
 
+> **TIP**: **Azure Defender for IoT** was previously referred to as **Azure Security Center for IoT**. You may find some inconsistencies in the online documentation, GitHub resources and in this content due to the phased rollout of the name change.
+
 ## In This Lab
 
 In this lab, you will complete the following activities:
@@ -26,14 +28,14 @@ In this lab, you will complete the following activities:
 
     * The script will create an IoT Hub if needed
 
-* Enable Azure Security Center for IoT
+* Enable Azure Defender for IoT
 * Create and register a new Device
 * Create a Security Module Twin
 * Install C#-based Security Agent on a Linux Device
 * Configure monitored resources
 * Create custom alerts
 * Create a console app to trigger the alert
-* Review the alert in the Azure Security Center
+* Review the alert in the Azure Defender for IoT
 
 ## Lab Instructions
 
@@ -147,20 +149,20 @@ If these resources are not available, you will need to run the **lab19-setup.azc
 
     This will take a few minutes to run. You will see output as each step completes.
 
-### Exercise 2: Enable Azure Security Center for IoT Hub
+### Exercise 2: Enable Azure Defender for IoT Hub
 
-Azure Security Center for IoT enables you to unify security management and enable end-to-end threat detection and analysis across hybrid cloud workloads and your Azure IoT solution.
+Azure Defender for IoT enables you to unify security management and enable end-to-end threat detection and analysis across hybrid cloud workloads and your Azure IoT solution.
 
-Azure Security Center for IoT is composed of the following components:
+Azure Defender for IoT is composed of the following components:
 
 * IoT Hub integration
 * Device agents (optional)
 * Send security message SDK
 * Analytics pipeline
 
-#### Task 1: Enable Azure Security Center for IoT
+#### Task 1: Enable Azure Defender for IoT
 
-In this task, you will enable **Azure Security Center for IoT** for your IoT Hub. 
+In this task, you will enable **Azure Defender for IoT** for your IoT Hub.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
@@ -172,7 +174,7 @@ In this task, you will enable **Azure Security Center for IoT** for your IoT Hub
 
 1. On the left-side menu, under **Security**, and then click **Overview**.
 
-    Azure Security Center for IoT Hub will onboard the first time a Security pane is opened. 
+    Azure Defender for IoT Hub will onboard the first time a Security pane is opened.
 
 1. If the **Secure your IoT solution** button is displayed, click **Secure your IoT solution**, and then refresh your browser window when prompted.
 
@@ -180,17 +182,17 @@ In this task, you will enable **Azure Security Center for IoT** for your IoT Hub
 
 1. Take a moment to review the contents on the Security Overview pane.
 
-    > **Note**: Threats are not instantly detected the first moment that you onboard Azure Security Center for IoT, you will begin to see threat detections reported on this Overview pane before the end of this lab. 
+    > **Note**: Threats are not instantly detected the first moment that you onboard Azure Defender for IoT, you will begin to see threat detections reported on this Overview pane before the end of this lab.
 
 #### Task 2: Log Analytics creation
 
-When Azure Security Center for IoT is turned on, a default Azure Log Analytics workspace is created to store raw security events, alerts, and recommendations for your IoT devices, IoT Edge, and IoT Hub.
+When Azure Defender for IoT is turned on, a default Azure Log Analytics workspace is created to store raw security events, alerts, and recommendations for your IoT devices, IoT Edge, and IoT Hub.
 
 In this task, you will take a quick look at the workspace configuration of Log Analytics.
 
 1. If needed, open the Security Overview pane for your IoT Hub.
 
-1. At the top of the blade, to show the security settings, click **Settings**. 
+1. At the top of the blade, to show the security settings, click **Settings**.
 
     The **Settings Page** is displayed, listing the four areas that can be configured:
 
@@ -207,7 +209,7 @@ In this task, you will take a quick look at the workspace configuration of Log A
 
     > **Important**: At the time of writing, the **Workspace** value is not displayed, although the workspace has been created. To ensure the value is displayed, toggle the **Choose the Log Analytics workspace you wish to connect to:** field **off** and then back **on**. The **Workspace** value should now be displayed. As no actual change to data has ocurred, the **Save** button will not be enabled.
 
-By default, turning on the Azure Security Center for IoT solution automatically secures all IoT Hubs under your Azure subscription.
+By default, turning on the Azure Defender for IoT solution automatically secures all IoT Hubs under your Azure subscription.
 
 ### Exercise 3: Create and Register a New Device
 
@@ -230,7 +232,7 @@ In this task, you will create a Virtual Machine that will represent your IoT dev
 1. In the **Resource group** dropdown, click **rg-az220vm**.
 
     > **Note**: A single resource group is being used to track and manage all of the Virtual Machine resources created during this course. If the **rg-az220vm** resource group has not already been created, use the following instructions to create it now:
- 
+
     * Under the **Resource group** dropdown, click **Create new**.
     * In the context menu, under **Name**, type **rg-az220vm** and then click **OK**
 
@@ -256,7 +258,7 @@ In this task, you will create a Virtual Machine that will represent your IoT dev
 
 1. For the Administrator **Username** and **Password** fields, enter values for the VM Administrator account.
 
-    > **Important**: Make a record of the VM Administrator username and password. In a production environment, you would need to keep these secure. For this lab it is okay to save the values to a text document so that you can find them later (in case you forget). 
+    > **Important**: Make a record of the VM Administrator username and password. In a production environment, you would need to keep these secure. For this lab it is okay to save the values to a text document so that you can find them later (in case you forget).
 
 1. To the right of **Inbound port rules**, notice that **SSH (22)** is selected.
 
@@ -293,9 +295,9 @@ As a device must be registered with your IoT hub before it can connect, let's cr
 
 ### Exercise 4: Create a Security Module Twin
 
-Azure Security Center for IoT offers full integration with your existing IoT device management platform, enabling you to manage your device security status as well as make use of existing device control capabilities.
+Azure Defender for IoT offers full integration with your existing IoT device management platform, enabling you to manage your device security status as well as make use of existing device control capabilities.
 
-Azure Security Center for IoT makes use of the module twin mechanism and maintains a security module twin named azureiotsecurity for each of your devices. The security module twin holds all the information relevant to device security for each of your devices. To make full use of Azure Security Center for IoT features, you will need to create, configure, and use these security module twins for your new IoT Edge device.
+Azure Defender for IoT makes use of the module twin mechanism and maintains a security module twin named azureiotsecurity for each of your devices. The security module twin holds all the information relevant to device security for each of your devices. To make full use of Azure Defender for IoT features, you will need to create, configure, and use these security module twins for your new IoT Edge device.
 
 The security module twin (**azureiotsecurity**) can be created by using either of the following methods:
 
@@ -342,18 +344,18 @@ In this task, you will be creating a security module twin manually.
 
     > **Note**: The IoT Hub Hostname looks similar to: iot-az220-training-cah102119.azure-devices.net
 
-### Exercise 5: Deploy Azure Security Center for IoT C# Security Agent
+### Exercise 5: Deploy Azure Defender for IoT C# Security Agent
 
-Azure Security Center for IoT provides a reference architecture for security agents that log, process, aggregate, and send security data through IoT Hub. There are C and C# based agents. C agents are recommended for devices with more restricted or minimal device resources.
+Azure Defender for IoT provides a reference architecture for security agents that log, process, aggregate, and send security data through IoT Hub. There are C and C# based agents. C agents are recommended for devices with more restricted or minimal device resources.
 
 Security agents support the following features:
 
-* Collect raw security events from the underlying Operating System (Linux, Windows). To read more about available security data collectors, see Azure Security Center for IoT agent configuration.
+* Collect raw security events from the underlying Operating System (Linux, Windows). To read more about available security data collectors, see Azure Defender for IoT agent configuration.
 * Aggregate raw security events into messages sent through IoT Hub.
 * Authenticate with existing device identity, or a dedicated module identity. To read more, see Security agent authentication methods.
-* Configure remotely through use of the **azureiotsecurity** module twin. To read more, see Configure an Azure Security Center for IoT agent.
+* Configure remotely through use of the **azureiotsecurity** module twin. To read more, see Configure an Azure Defender for IoT agent.
 
-In this exercise, you will be adding a security agent for C# that you will deploy to your simulated device (Linux VM). 
+In this exercise, you will be adding a security agent for C# that you will deploy to your simulated device (Linux VM).
 
 #### Task 1: Logging into IoT Device - Linux VM
 
@@ -458,7 +460,7 @@ In this lab, you will be using the symmetric key as authentication and will need
     chmod +x InstallSecurityAgent.sh
     ```
 
-1. At the Cloud Shell command prompt, customize and then run the following command: 
+1. At the Cloud Shell command prompt, customize and then run the following command:
 
     You will need to replace the placeholder values with your authentication parameters.
 
@@ -470,8 +472,8 @@ In this lab, you will be using the symmetric key as authentication and will need
 
     `sudo ./InstallSecurityAgent.sh -i -aui Device -aum SymmetricKey -f ../s.key -hn iot-az220-training-ab200213.azure-devices.net -di vm-az220-training-edge0002-{your-id}`
 
-    > **Note**: Make sure that specify your IoT Hub Hostname instead of the one listed 
-    
+    > **Note**: Make sure that specify your IoT Hub Hostname instead of the one listed
+
     > **IMPORTANT**:
     > Ensure you use the full IoT Hub host name - i.e. **iot-az220-training-ab200213.azure-devices.net** for the `-hn` switch value.
 
@@ -490,12 +492,12 @@ In this lab, you will be using the symmetric key as authentication and will need
 1. In the Cloud Shell terminal, to start the reboot, enter **y**
 
     The SSH session will be lost when the device reboots.
- 
+
 1. At the Cloud Shell command prompt, to reconnect to your virtual machine, enter the SSH command you used earlier.
 
-    Your Azure Security Center for IoT Agent should now be active and running.
+    Your Azure Defender for IoT Agent should now be active and running.
 
-1. At the Cloud Shell command prompt, to check the deployment status of the Azure Security Center for IoT Agent, enter the following command. 
+1. At the Cloud Shell command prompt, to check the deployment status of the Azure Defender for IoT Agent, enter the following command.
 
     ```cmd/sh
     systemctl status ASCIoTAgent.service
@@ -515,7 +517,7 @@ In this lab, you will be using the symmetric key as authentication and will need
 
     Specifically, you should verify that the service is **Loaded: loaded** and **Active: active (running)**.
 
-    > **Note**: If your Azure Security Center for IoT Agent isn't running or active, please check out [Deploy Azure Security Center for IoT C# based security agent for Linux Guide Troubleshooting Section](https://docs.microsoft.com/en-us/azure/asc-for-iot/how-to-deploy-linux-cs). Common issues are that might leave the service **Active: activating** are an incorrect key value or not specifying the full IoT Hub hostname.
+    > **Note**: If your Azure Defender for IoT Agent isn't running or active, please check out [Deploy Defender for IoT C# based security agent for Linux](https://docs.microsoft.com/en-us/azure/defender-for-iot/how-to-deploy-linux-css). Common issues are that might leave the service **Active: activating** are an incorrect key value or not specifying the full IoT Hub hostname.
 
 1. In the Azure portal, navigate back your IoT Hub blade, and then open the **vm-az220-training-edge0002-{your-id}** device blade.
 
@@ -525,15 +527,15 @@ In this lab, you will be using the symmetric key as authentication and will need
 
     ![Screenshot of Azure IoT Security Module Connected](media/LAB_AK_19-device-connected-agent.png)
 
-Now that your Azure Security Center for IoT device agents are installed on your device, the agents will be able to collect, aggregate and analyze raw security events from your device.
+Now that your Azure Defender for IoT device agents are installed on your device, the agents will be able to collect, aggregate and analyze raw security events from your device.
 
 ### Exercise 6: Configure Solution Management
 
-Azure Security Center for IoT provides end-to-end security for Azure-based IoT solutions.
+Azure Defender for IoT provides end-to-end security for Azure-based IoT solutions.
 
-With Azure Security Center for IoT, you can monitor your entire IoT solution in one dashboard, surfacing all of your IoT devices, IoT platforms and back-end resources in Azure.
+With Azure Defender for IoT, you can monitor your entire IoT solution in one dashboard, surfacing all of your IoT devices, IoT platforms and back-end resources in Azure.
 
-Once enabled on your IoT Hub, Azure Security Center for IoT automatically identifies other Azure services, also connected to your IoT Hub and related to your IoT solution.
+Once enabled on your IoT Hub, Azure Defender for IoT automatically identifies other Azure services, also connected to your IoT Hub and related to your IoT solution.
 
 In addition to automatic relationship detection, you can also pick and choose which other Azure resource groups to tag as part of your IoT solution. Your selections allow you to add entire subscriptions, resource groups, or single resources.
 
@@ -552,7 +554,7 @@ In addition to automatic relationship detection, you can also pick and choose wh
 
 1. To view the list of resources, click **Monitored Resources**.
 
-    Note that the list of resources already includes your IoT Hub, the workspace that was created when Azure Security Center for IoT was activated earlier as well as the current subscription.
+    Note that the list of resources already includes your IoT Hub, the workspace that was created when Azure Defender for IoT was activated earlier as well as the current subscription.
 
 1. At the top of the pane, click **Edit**.
 
@@ -573,15 +575,15 @@ In addition to automatic relationship detection, you can also pick and choose wh
 
 1. Close the **Solution Management** pane.
 
-After defining all of the resource relationships, Azure Security Center for IoT leverages Azure Security Center to provide you security recommendations and alerts for these resources.
+After defining all of the resource relationships, Azure Defender for IoT leverages Azure Defender to provide you security recommendations and alerts for these resources.
 
-#### Task 2: View Azure Security Center for IoT in Action
+#### Task 2: View Azure Defender for IoT in Action
 
-You now have your the security agent installed on your device and your solution configured. It is a good time to check out the different views for Azure Security Center for IoT.
+You now have your the security agent installed on your device and your solution configured. It is a good time to check out the different views for Azure Defender for IoT.
 
-1. On the left-side menu, under **Security**, click **Overview**. 
+1. On the left-side menu, under **Security**, click **Overview**.
 
-    You will see the health overview for your devices, hubs, and other resources appear on two charts. You can see the Built-in real-time monitoring, recommendations and alerts that were enabled right when you turn on your Azure IoT Security Center.
+    You will see the health overview for your devices, hubs, and other resources appear on two charts. You can see the Built-in real-time monitoring, recommendations and alerts that were enabled right when you turn on your Azure IoT Defender.
 
     ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-security-dashboard.png)
 
@@ -598,13 +600,13 @@ You now have your the security agent installed on your device and your solution 
 
 ### Exercise 7: Introduce custom alerts
 
-Custom security groups and alerts can be used to take full advantage of the end-to-end security information and categorical device knowledge across your full IoT solution. This will help you to provide better security for your solution. 
+Custom security groups and alerts can be used to take full advantage of the end-to-end security information and categorical device knowledge across your full IoT solution. This will help you to provide better security for your solution.
 
 #### Why use custom alerts?
 
 You know your IoT devices better than an out-of-the-box algorithm.
 
-For customers who fully understand their expected device behavior, Azure Security Center for IoT allows you to translate this understanding into a device behavior policy and alert on any deviation from expected, normal behavior.
+For customers who fully understand their expected device behavior, Azure Defender for IoT allows you to translate this understanding into a device behavior policy and alert on any deviation from expected, normal behavior.
 
 #### Task 1 - Customize an alert
 
@@ -824,7 +826,7 @@ A device must be registered with your IoT hub before it can connect.
 1. On the **Terminal** menu, click **New Terminal**.
 
     Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
-  
+
 1. At the terminal command prompt, to verify the application builds, enter the following command:
 
    ```bash
@@ -881,14 +883,14 @@ A device must be registered with your IoT hub before it can connect.
 
     You can leave the app running for the remainder of this lab to generate multiple alerts.
 
-### Exercise 9: Review Security Center Alerts
+### Exercise 9: Review Azure Defender for IoT Alerts
 
-At this point, your console app will have sent enough telemetry to trigger the Custom Alert created earlier. 
+At this point, your console app will have sent enough telemetry to trigger the Custom Alert created earlier.
 
 > **Tip**:
 > The alert was set up to trigger if less than 1 and more than 5 messages where sent from a device to the cloud within a 5 minute time window.
 
-#### Task 1: Review the Security Center Dashboard
+#### Task 1: Review the Azure Defender for IoT Dashboard
 
 1. On the Azure portal menu, click **Dashboard** and then open your IoT Hub.
 
