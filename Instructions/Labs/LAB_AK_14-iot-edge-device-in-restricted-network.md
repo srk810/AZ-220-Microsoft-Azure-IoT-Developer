@@ -24,8 +24,8 @@ In this lab, you will complete the following activities:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 
-    * The script will create an IoT Hub if needed.
-    * The script will create a new device identity needed for this lab.
+  * The script will create an IoT Hub if needed.
+  * The script will create a new device identity needed for this lab.
 
 * Deploy Azure IoT Edge Enabled Linux VM
 * Setup an IoT Edge Parent device with a Child IoT device
@@ -53,11 +53,11 @@ To create any missing resources and the new device you will need to run the **la
 
 The **lab14-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
->**Note:** You will need the connection string for the **sensor-th-0050** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
->
-> ```bash
-> az iot hub device-identity connection-string show --hub-name iot-az220-training-{your-id} --device-id sensor-th-0050 -o tsv
-> ```
+>**Note:** You will need the connection string for the **sensor-th-0050** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell:
+
+```bash
+az iot hub device-identity connection-string show --hub-name iot-az220-training-{your-id} --device-id sensor-th-0050 -o tsv
+```
 
 #### Task 1: Execute Setup Script
 
@@ -401,7 +401,7 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
 
 1. On the Visual Studio Code **File** menu, click **Open Folder**.
 
-1. In the Open Folder dialog, navigate to your lab 14 Setup folder. 
+1. In the Open Folder dialog, navigate to your lab 14 Setup folder.
 
     In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
 
@@ -412,7 +412,7 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
 
 1. Click **Setup**, and then click **Select Folder**.
 
-1. In the **EXPLORER** pane, click **setup-iot-edge-gateway.sh**. 
+1. In the **EXPLORER** pane, click **setup-iot-edge-gateway.sh**.
 
 1. In the code editor, replace the placeholder values as follows:
 
@@ -423,7 +423,7 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
     hostname="{iot-edge-device-hostname}"
     ```
 
-    Guidance on the placeholder values: 
+    Guidance on the placeholder values:
 
     | Placeholder | Value to replace with |
     | :--- | :--- |
@@ -432,7 +432,7 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
 
 1. On the **File** menu, click **Save**.
 
-1. In the **EXPLORER** pane, click **setup-remote-iot-edge-gateway.sh**. 
+1. In the **EXPLORER** pane, click **setup-remote-iot-edge-gateway.sh**.
 
 1. In the code editor, replace the placeholder values as follows:
 
@@ -443,11 +443,11 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
     ipaddress="{iot-edge-ipaddress}"
     ```
 
-    Guidance on the placeholder values: 
+    Guidance on the placeholder values:
 
     | Placeholder | Value to replace with |
     | :--- | :--- |
-    | `{iot-edge-username}` | Enter the admin **username** to connect to the **vm-az220-training-gw0002-{your-id}** IoT Edge on Ubuntu VM. This username will be used to connect to the VM via SSH. This username is specified as **vmadmin** within the Azure CLI command that was provided (for creating the VM) earlier in this lab. 
+    | `{iot-edge-username}` | Enter the admin **username** to connect to the **vm-az220-training-gw0002-{your-id}** IoT Edge on Ubuntu VM. This username will be used to connect to the VM via SSH. This username is specified as **vmadmin** within the Azure CLI command that was provided (for creating the VM) earlier in this lab.
     | `{iot-edge-ipaddress}` | Enter the **Public IP Address** for the **vm-az220-training-gw0002-{your-id}** IoT Edge on Ubuntu VM. This IP address will be used to connect to the VM via SSH.
 
 1. On the **File** menu, click **Save**.
@@ -556,6 +556,13 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
 
     The `ls` command lists the content of the current directory. Ensure that you have both files before continuing.
 
+1. To correct any DOS vs UNIX end-of-line character issues, execute the following commands:
+
+    ```sh
+    dos2unix setup-remote-iot-edge-gateway.sh
+    dos2unix setup-iot-edge-gateway.sh
+    ```
+
 1. To ensure that the **setup-remote-iot-edge-gateway.sh** has read/write/execute permissions, enter the following command:
 
     ```sh
@@ -576,7 +583,7 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
 
     When the helper script finishes configuring the IoT Edge on Ubuntu VM to be an IoT Edge Transparent Gateway, the Cloud Shell will download the `azure-iot-test-only.root.ca.cert.pem` X.509 certificate.
 
-1. When prompted, save the X.509 certificate to your Downloads folder. 
+1. When prompted, save the X.509 certificate to your Downloads folder.
 
     This certificate will be used to configure the Child IoT Device authentication.
 
@@ -586,7 +593,7 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
     download azure-iot-test-only.root.ca.cert.pem
     ```
 
-    In this exercise, you used helper scripts to setup and configure the IoT Edge on Ubuntu VM as an IoT Edge Transparent Gateway Device. Using script files keeps the lab activity focused on the bigger scenario - understanding the restricted network and offline capabilities of Azure IoT Edge. For step-by-step instruction on setting up the IoT Edge on Ubuntu VM as an IoT Edge Transparent Gateway, see lab 12 of this course. 
+    In this exercise, you used helper scripts to setup and configure the IoT Edge on Ubuntu VM as an IoT Edge Transparent Gateway Device. Using script files keeps the lab activity focused on the bigger scenario - understanding the restricted network and offline capabilities of Azure IoT Edge. For step-by-step instruction on setting up the IoT Edge on Ubuntu VM as an IoT Edge Transparent Gateway, see lab 12 of this course.
 
 ### Exercise 5: Open IoT Edge Gateway Device Inbound Ports using Azure CLI
 
@@ -649,7 +656,7 @@ Configuring your IoT Edge Devices for extended offline scenarios includes specif
 
 The default value for Time-to-Live (TTL) is `7200` (7200 seconds, which is 2 hours). This is plenty of time for quick interruptions, but there are cases when two hours may not be long enough, when a device or solution needs to function in Offline mode for an extended period of time. For the solution to operate without telemetry data loss when extended periods in a disconnected state can occur, you can configure the TTL property of the IoT Edge Hub module to a value up to 1,209,600 seconds (a 2 week TTL period).
 
-The IoT Edge Hub module (`$edgeHub`) is used to coordinate communications between the the Azure IoT Hub service and the IoT Edge Hub running on the gateway device. Within the Desired Properties for the Module Twin, the `storeAndForwardConfiguration.timeToLiveSecs` property specifies the time in seconds that IoT Edge Hub keeps messages when in a state disconnected from routing endpoints, such as the Azure IoT Hub service. The `timeToLiveSecs` property for the Edge Hub can be specified in the Deployment Manifest on a specific device as part of a single-device or at-scale deployment. 
+The IoT Edge Hub module (`$edgeHub`) is used to coordinate communications between the the Azure IoT Hub service and the IoT Edge Hub running on the gateway device. Within the Desired Properties for the Module Twin, the `storeAndForwardConfiguration.timeToLiveSecs` property specifies the time in seconds that IoT Edge Hub keeps messages when in a state disconnected from routing endpoints, such as the Azure IoT Hub service. The `timeToLiveSecs` property for the Edge Hub can be specified in the Deployment Manifest on a specific device as part of a single-device or at-scale deployment.
 
 The IoT Edge Device will automatically store messages when in a disconnected / offline state. The storage location can be configured using a `HostConfig` object.
 
@@ -675,7 +682,7 @@ In this exercise, you will use the Azure Portal user interface for Azure IoT Hub
 
 1. On the **Module Identity Details** blade, click **Module Identity Twin**.
 
-    This blade contains the module identity twin for `vm-az220-training-gw0002-{your-id}/$edgeHub` displayed as JSON in an editor pane. 
+    This blade contains the module identity twin for `vm-az220-training-gw0002-{your-id}/$edgeHub` displayed as JSON in an editor pane.
 
 1. Take a moment to review the contents of the $edgeHub module identity twin.
 
@@ -705,7 +712,7 @@ In this exercise, you will use the Azure Portal user interface for Azure IoT Hub
 
 1. Locate the **Create Options** field.
 
-    Notice that this field contains a `HostConfig` JSON object that can be configured. You will create a `HostConfig` property and an Environment Variable to configure the storage location for your Edge device. 
+    Notice that this field contains a `HostConfig` JSON object that can be configured. You will create a `HostConfig` property and an Environment Variable to configure the storage location for your Edge device.
 
 1. In the `HostConfig` object, below the closing bracket of `PortBindings` property, add the following `Binds` property:
 
@@ -764,7 +771,7 @@ In this exercise, you will use the Azure Portal user interface for Azure IoT Hub
 
 1. Take a minute to review the contents of the deployment manifest.
 
-    Find your updates within the deployment manifest. You will need to look under both `$edgeAgent` and `$edgeHub` to find them.  
+    Find your updates within the deployment manifest. You will need to look under both `$edgeAgent` and `$edgeHub` to find them.
 
 1. At the bottom of the blade, click **Create**.
 
@@ -839,7 +846,7 @@ Before continuing, it is essential for you to ensure that the user profile for t
     ```text
     Unhandled Exception: System.AggregateException: One or more errors occurred. (Access to the path '/iotedge/storage/edgeHub' is denied.) ---> System.UnauthorizedAccessException: Access to the path '/iotedge/storage/edgeHub' is denied. ---> System.IO.IOException: Permission denied
     ```
-  
+
 1. To update the directory permissions, enter the following commands:
 
     ```sh
@@ -848,6 +855,12 @@ Before continuing, it is essential for you to ensure that the user profile for t
     ```
 
     The first command sets the owner of the directory to the current user and the owning user group to **iotedge**. The second command enables full access to both the current user and members of the **iotedge** group. This will ensure that the *edgeHub* module is able to create directories and files within the **/etc/iotedge/storage/** directory.
+
+    > **NOTE**: If you see an error stating **chown: cannot access '/etc/iotedge/storage/': No such file or directory**, create the directory using the following command and then re-run the commands above:
+
+    ```sh
+    sudo mkdir /etc/iotedge/storage
+    ```
 
 1. To restart the *edgeHub* module, and then verify that it is started, enter the following commands:
 
@@ -870,7 +883,7 @@ You are now ready to connect an IoT device (the child/leaf) to this IoT Edge Gat
 
 The process to authenticate regular IoT devices to IoT Hub with symmetric keys also applies to downstream (or child / leaf) devices. The only difference is that you need to add a pointer to the Gateway Device to route the connection or, in offline scenarios, to handle the authentication on behalf of IoT Hub.
 
-> **Note**: You will be using the connection string value for **sensor-th-0084** that you saved earlier in the lab. If you need a new copy of the connection string, it can be accessed from your Azure IoT Hub in the Azure portal. Open the **IoT devices** pane of your IoT Hub, click **sensor-th-0084**, copy the **Primary Connection String**, and then save it to a text file. 
+> **Note**: You will be using the connection string value for **sensor-th-0084** that you saved earlier in the lab. If you need a new copy of the connection string, it can be accessed from your Azure IoT Hub in the Azure portal. Open the **IoT devices** pane of your IoT Hub, click **sensor-th-0084**, copy the **Primary Connection String**, and then save it to a text file.
 
 In this exercise, you will configure the downstream IoT device (child or leaf device) to connect to IoT Hub using Symmetric Keys. The devices will be configured to connect to IoT Hub and the parent IoT Edge Device using a Connection String that contains the Symmetric Key (in addition to the Gateway Hostname for the Parent IoT Edge Device).
 
@@ -881,7 +894,7 @@ In this exercise, you will configure the downstream IoT device (child or leaf de
 1. In the **Downloads** folder, right-click **azure-iot-test-only.root.ca.cert.pem**, and then click **Copy**.
 
     > **Note**: If you already had an azure-iot-test-only.root.ca.cert.pem file in your Downloads folder, the file that you need may be named azure-iot-test-only.root.ca.cert (1).pem. You will need to rename it to azure-iot-test-only.root.ca.cert.pem once you've added it to the destination folder.
- 
+
     This file is the X.509 certificate file that you downloaded and will be adding to the lab 14 /Starter/ChildIoTDevice directory (where the source code for the Child IoT Device is located).
 
 1. Navigate to the lab 14 Starter folder, and then paste the copied file into the **ChildIoTDevice** folder.
@@ -1022,7 +1035,7 @@ In this exercise, you will monitor events from the **sensor-th-0084** that are b
 
 1. At the bottom of the blade, click **Add**.
 
-1. Go back to the **Cloud Shell** in the Azure portal. 
+1. Go back to the **Cloud Shell** in the Azure portal.
 
 1. If the `az iot hub monitor-events` command is still running, end it by pressing **Ctrl + C**.
 
