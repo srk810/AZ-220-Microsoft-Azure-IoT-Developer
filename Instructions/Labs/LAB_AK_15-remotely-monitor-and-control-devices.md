@@ -240,7 +240,7 @@ In this exercise, you will be creating the simulated device app (for the sensor-
 1. On the **Terminal** menu, click **New Terminal**.
 
     Notice the directory path indicated as part of the command prompt. You do not want to start building this project within the folder structure of a previous lab project.
-  
+
 1. At the terminal command prompt, to verify the application builds, enter the following command:
 
     ```bash
@@ -342,7 +342,7 @@ The simulated device app that you will build in this task simulates an IoT devic
 
     You should quickly see console output, similar to the following:
 
-    ![Console Output](./Media/LAB_AK_15-cheesecave-telemetry.png)
+    ![Console Output](media/LAB_AK_15-cheesecave-telemetry.png)
 
     > **Note**:  Green text is used to indicate when things are working as they should be. Red text is used to indicate when there is a problem. If you don't get a screen similar to the image above, start by checking your device connection string.
 
@@ -368,7 +368,7 @@ In this task, you will begin work on the back-end app that will be used to recei
 
 1. Click **CheeseCaveOperator**, and then click **Select Folder**.
 
-    The CheeseCaveOperator application that has been prepared for you is a simple console application that includes a couple of NuGet package libraries and some comments that will be used guide you through the process of building your code. You will need to add code blocks to the project before you are able to run the application. 
+    The CheeseCaveOperator application that has been prepared for you is a simple console application that includes a couple of NuGet package libraries and some comments that will be used guide you through the process of building your code. You will need to add code blocks to the project before you are able to run the application.
 
 1. In the **EXPLORER** pane, to open the application project file, click **CheeseCaveOperator.csproj**.
 
@@ -402,7 +402,7 @@ In this task, you will begin work on the back-end app that will be used to recei
 
     The **PropertyGroup** defines the type of output that building this project will produce. In this case you will be building an executable file that targets .NET Core 3.1.
 
-    The **ItemGroup** specifies any external libraries that are required for the application. These particular references are for NuGet packages, and each package reference specifies the package name and the version. 
+    The **ItemGroup** specifies any external libraries that are required for the application. These particular references are for NuGet packages, and each package reference specifies the package name and the version.
 
     > **Note**: You can add NuGet libraries (such as the ones listed in ItemGroup above) to the project file manually by entering the command `dotnet add package` at a command prompt (such as the Visual Studio Code Terminal command prompt). Enter the `dotnet restore` command will ensure that all of the dependencies are downloaded. For example, to load the libraries above and to ensure that they are available in your code project, you could enter the following commands:
     >
@@ -675,7 +675,7 @@ This test is important, checking whether your back-end app is picking up the tel
 
     If not, carefully check your IoT Hub service connection string, noting that this string should be the service connection string, and not any other:
 
-    ![Console Output](./Media/LAB_AK_15-cheesecave-telemetry-received.png)
+    ![Console Output](media/LAB_AK_15-cheesecave-telemetry-received.png)
 
     > **Note**:  Green text is used to show things are working as they should and red text when bad stuff is happening. If you don't get a screen similar to this image, start by checking your device connection string.
 
@@ -768,7 +768,7 @@ In this Exercise, you will update your device app by adding the code for a direc
     }
     ```
 
-    This is the method that runs on the device when the associated remote method, also called **SetFanState**, is invoked via IoT Hub. Notice that in addition to receiving a **MethodRequest** instance, it also receives the **userContext** object that was defined when the direct message callback was registered (in this case it will be null). 
+    This is the method that runs on the device when the associated remote method, also called **SetFanState**, is invoked via IoT Hub. Notice that in addition to receiving a **MethodRequest** instance, it also receives the **userContext** object that was defined when the direct message callback was registered (in this case it will be null).
 
     The first line of this method determines whether the cheese cave fan is currently in a **Failed** state - the assumption made by the cheese cave simulator is that once the fan has failed, any subsequent command will automatically fail. Therefore, a JSON string is created with the **result** property set to **Fan Failed**. A new **MethodResponse** object is then constructed, with the result string encoded into a byte array and an HTTP status code - in this instance, **400** is used which, in the context of a REST API means a generic client-side error has occurred. As direct method callbacks are required to return a **Task\<MethodResponse\>**, a new task is created and returned.
 
@@ -884,11 +884,11 @@ To test the direct method, you will need to start the apps in the correct order.
 
     Notice the output similar to the following:
 
-    ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-sent.png)
+    ![Console Output](media/LAB_AK_15-cheesecave-direct-method-sent.png)
 
 1. Now check the console output for the **cheesecavedevice** device app, you should see that the fan has been turned on.
 
-   ![Console Output](./Media/LAB_AK_15-cheesecave-direct-method-received.png)
+   ![Console Output](media/LAB_AK_15-cheesecave-direct-method-received.png)
 
 You are now successfully monitoring and controlling a remote device. You have implemented a direct method on the device that can be invoked from the cloud. In the Contoso scenario, the direct method is used to turn on a fan, which will bring the environment in the cave to our desired settings. You should notice that the temperature and humidity readings reduce over time, eventually removing the alerts (unless the fan fails).
 
@@ -1049,11 +1049,11 @@ To test the code that manages device twin desired property changes, you will sta
 
 1. Check the console output and confirm that the device twin synchronized correctly.
 
-    ![Console Output](./media/LAB_AK_15-cheesecave-device-twin-received.png)
+    ![Console Output](media/LAB_AK_15-cheesecave-device-twin-received.png)
 
     If you let the fan do its work, you should eventually see red alerts turn off (unless the fan fails)
 
-    ![Console Output](./media/LAB_AK_15-cheesecave-device-twin-success.png)
+    ![Console Output](media/LAB_AK_15-cheesecave-device-twin-success.png)
 
 1. For both instances of Visual Studio Code, stop the app and then close the Visual Studio Code window.
 
