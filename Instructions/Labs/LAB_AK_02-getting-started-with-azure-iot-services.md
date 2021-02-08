@@ -229,7 +229,7 @@ In this exercise, you will use the Azure portal to create and configure your IoT
     Azure Defender for IoT is a unified security solution for identifying IoT/OT devices, vulnerabilities, and threats. It enables you to secure your entire IoT/OT environment, whether you need to protect existing IoT/OT devices or build security into new IoT innovations.
 
     > **TIP**:
-    **Azure Defender for IoT** was formally known as **Azure Security Center** and you may still see places in Azure, and in this content, where the name has not yet been updated.
+    **Azure Defender for IoT** was formerly known as **Azure Security Center** and you may still see places in Azure, and in this content, where the name has not yet been updated.
 
     Azure Defender for IoT is on by default because security is important to your IoT solution. You will be exploring Azure Defender for IoT in Lab 19 of this course. Disabling it for now ensures that the Lab 19 instructions work as expected.
 
