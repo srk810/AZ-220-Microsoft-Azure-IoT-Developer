@@ -149,15 +149,20 @@ In this exercise, you will use the Azure portal to create and configure your IoT
 
     The **New** blade that opens is a front-end to the Azure Marketplace, which is a collection of all the resources you can create in Azure. The marketplace contains resources from both Microsoft and the community.
 
-1. In the Search textbox, type **IoT** and then press **Enter**.
+1. In the Search textbox, type **IoT Hub** and then press **Enter**.
 
     The **Marketplace** blade will open to display the available services matching your search criteria.
 
     > **Note**: Marketplace services provided by private contributors may include a cost that is not covered by a Microsoft Azure Pass or other Microsoft Azure free credit offerings. You will be using Microsoft provided resources during the labs in this course.
 
-1. On the **Marketplace** blade, click **IoT Hub**.
+1. On the **Marketplace** blade, click the **IoT Hub** search result.
 
-1. On the **IoT Hub** blade, under **Useful Links**, notice the list resource links.
+    > [!NOTE]
+    > A **Create** action is shown at the bottom of the **IoT Hub** search result - that will navigate directly to the IoT Hub creation view. In normal use you may chose to click this - for the purpose of the tutorial, click anywhere in the main body of the **IoT Hub** search result.
+
+1. On the **IoT Hub** blade, click **Usage Information + Support**
+
+    Under **Useful Links**, notice the list of resource links.
 
     There is no need to explore these links now, but it's worth noting that they are available. The _Documentation_ link, for example, takes you to the root page for IoT Hub resources and documentation. You can use this page to review the most up-to-date Azure IoT Hub documentation and explore additional resources that are outside the scope of this course. You will be referred to the docs.microsoft.com site throughout this course for additional reading on specific topics.
 
@@ -176,9 +181,9 @@ In this exercise, you will use the Azure portal to create and configure your IoT
 
 1. On the **IoT hub** blade, in the **Subscription** dropdown, ensure that the Azure subscription that you intend to use for this course is selected.
 
-    The _Basics_ tab that is selected initially contains uninitialized fields that you are required to fill in, but there are settings on the _Size and scale_ tab that you will need to be familiar with as well.
+    The _Basics_ tab that is selected initially contains uninitialized fields that you are required to fill in, but there are settings on other tabs that you will need to be familiar with as well.
 
-1. To the right of **Resource group**, open the **Select existing** dropdown, and then click **rg-az220**
+1. To the right of **Resource group**, open the dropdown, and then click **rg-az220**
 
     This is the resource group that you created in the previous lab. You will be grouping the resources that you create for this course together in the same resource group. It is best practice to group related resources in this way, and will help you to clean up your resources when you no longer need them.
 
@@ -239,6 +244,14 @@ In this exercise, you will use the Azure portal to create and configure your IoT
 
     The number of partitions relates the device-to-cloud messages to the number of simultaneous readers of these messages. Most IoT hubs will only need four partitions, which is the default value. For this course you will create your IoT Hub using the default number of partitions.
 
+1. Within the **Transport Layer Security (TLS)** section, ensure the **Minimum TLS Version** is set to **1.0**.
+
+    IoT Hub uses Transport Layer Security (TLS) to secure connections from IoT devices and services. Three versions of the TLS protocol are currently supported, namely versions 1.0, 1.1, and 1.2.
+
+    > [!Important]
+    > The **Minimum TLS Version** property cannot be changed once your IoT Hub resource is created. It is therefore essential that you properly test and validate that all your IoT devices and services are compatible with TLS 1.2 and the recommended ciphers in advance. You can learn more about IoT Hub and TLS below:
+    > * [Transport Layer Security (TLS) support in IoT Hub](https://docs.microsoft.com/azure/iot-hub/iot-hub-tls-support)
+
 1. At the top of the blade, click **Review + create**.
 
     Take a minute to review the settings that your provided.
@@ -279,11 +292,11 @@ In this exercise, you will examine some of the features that IoT Hub provides.
 
     This tile provides a quick overview of what is connected to your hub and message count. As you add devices and start sending messages, this tile will provide nice "at-a-glance" information.
 
-1. To the right of the **IoT Hub Usage** tile, notice the **Device twin operations** tile and the **Device to cloud messages** tile.
+1. To the right of the **IoT Hub Usage** tile, notice the **Number of messages used** tile and the **Device to cloud messages** tile.
 
-    The **Device to cloud messages** tile provides a quick view of the incoming messages from your devices over time. You will be registering a device and sending messages to your hub during a lab in the next module, so you will begin to see information on these tiles pretty soon.
+    The **Device to cloud messages** tile provides a quick view of the incoming messages from your devices over time. You will be registering a device and sending messages to your hub during a module in the next module, so you will begin to see information on these tiles pretty soon.
 
-    The **Device twin operations** tile can help you to keep track of device twin access. You will be learning about device twins and device twin operations during the modules of this course that cover device configuration, device provisioning, and device management. For now all you need to know is that each device that you register with your IoT Hub will have a device twin that you can use when you need to manage the device.
+    The **Number of messages used** tile can help you to keep track of the total number of messages used.
 
 #### Task 2: View features of IoT Hub using the left-side menu
 
@@ -344,9 +357,14 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. In the Search textbox, type **Device Provisioning Service** and then press Enter.
 
-1. On the **Marketplace** blade, click **IoT Hub Device Provisioning Service**.
+1. On the **Marketplace** blade, click **IoT Hub Device Provisioning Service** search result.
 
-1. On the **IoT Hub Device Provisioning Service** blade, under **Useful Links**, notice the list resource links.
+    > [!NOTE]
+    > A **Create** action is shown at the bottom of the **IoT Hub Device Provisioning Service** search result - that will navigate directly to the IoT Hub Device Provisioning Service creation view. In normal use you may chose to click this - for the purpose of the tutorial, click anywhere in the main body of the **IoT Hub Device Provisioning Service** search result.
+
+1. On the **IoT Hub Device Provisioning Service** blade, click **Usage Information + Support**.
+
+    Under **Useful links**, notice the list of resource links.
 
     Again, there is no need to explore this documentation now, but is is good to know that it is available. The IoT Hub Device Provisioning Service Documentation page is the root page for DPS. You can use this page to explore current documentation and find tutorials and other resources that will help you to explore activities that are outside the scope of this course. You will be referred to the docs.microsoft.com site throughout this course for additional reading on specific topics.
 
@@ -366,7 +384,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. Under **Subscription**, ensure that the subscription you are using for this course is selected.
 
-1. Under **Resource Group**, open the **Select existing** dropdown, and then click **rg-az220**
+1. Under **Resource Group**, open the dropdown, and then click **rg-az220**
 
     You will be grouping the resources that you create for this course together in the same resource group. It's a best practice to group related resources in this way, and will help you to clean up your resources when you no longer need them.
 
