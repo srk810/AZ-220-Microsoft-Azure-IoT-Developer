@@ -14,9 +14,9 @@ In the past, temperature and humidity data was collected by factory floor worker
 
 Contoso has decided to launch an automated system that uses IoT devices to monitor temperature and humidity. The rate at which telemetry data is communicated will be adjustable to help ensure that their manufacturing process is under control as batches of cheese proceed through environmentally sensitive processes.
 
-To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device (that includes temperature and humidity sensors) to IoT Hub. 
+To evaluate this asset monitoring solution prior to full scale implementation, you will be connecting an IoT device (that includes temperature and humidity sensors) to IoT Hub.
 
-> **Note**: For the purposes of this lab, you will be creating a .NET Core console application that simulates the physical IoT device and sensors. Your simulated device will implement the IoT Device SDK and it will connect to IoT Hub just like a physical device would. Your simulated device will also communicate telemetry values using the same SDK resources used by a physical device, but the sensor readings will be generated values rather than real values read from temperature and humidity sensors.   
+> **Note**: For the purposes of this lab, you will be creating a .NET Core console application that simulates the physical IoT device and sensors. Your simulated device will implement the IoT Device SDK and it will connect to IoT Hub just like a physical device would. Your simulated device will also communicate telemetry values using the same SDK resources used by a physical device, but the sensor readings will be generated values rather than real values read from temperature and humidity sensors.
 
 The following resources will be created:
 
@@ -166,12 +166,12 @@ In this exercise, you will open your IoT Hub in the Azure portal, add a new IoT 
 
 1. In the **Device ID** field, enter **sensor-th-0001**
 
-    The device identity (Device ID) is used for device authentication and access control. 
+    The device identity (Device ID) is used for device authentication and access control.
 
     It is helpful to establish some form of naming convention for your device identities. There are several reasons for this, including that the device ID is the value IoT Hub uses represent a device. Having a device ID that succinctly and informatively differentiates one device from another is therefor helpful.
 
     The suggested naming convention above, _sensor-th-0001_, identifies this device as a sensor enabled device (_sensor_) that reports temperature and humidity values (_-th_) and is the first device of this type in a series of up to 9999 (_-0001_). Contoso may have 200 or 5000 of these devices installed and reporting environmental conditions from the factory floor, and the device identity will be one of the ways that a device can be recognized.
- 
+
 1. Under **Authentication type**, ensure that **Symmetric key** is selected.
 
     Notice that there are three types of authentication available. In this lab you will leverage the simplest of the three, Symmetric key. X.509 Certificates and their use for authentication will be covered in later labs.
@@ -194,6 +194,8 @@ In this exercise, you will open your IoT Hub in the Azure portal, add a new IoT 
 
     After a few moments, the **IoT devices** pane will refresh and the new device will be listed.
 
+    > **TIP**: You may need to refresh manually - click the **Refresh** button on the page, rather than refreshing the browser
+
 #### Task 2: Get the Device Connection String
 
 In order for a device to connect to an IoT Hub, it needs to establish a connection. In this lab, you will use a connection string to connect your device directly to the IoT Hub (this for of authentication is often referred to as symmetric key authentication). When using Symmetric key authentication, there are two connection strings available - one that utilizes the Primary key, the other that uses the Secondary key. As noted above, the Primary and Secondary keys are only generated once the device record is saved. Therefore, to obtain one of the connection strings, you must first save the record (as you did in the task above) and then re-open the device record (which is what you are about to do).
@@ -212,7 +214,7 @@ In order for a device to connect to an IoT Hub, it needs to establish a connecti
 
     You can hover your mouse pointer over the button icons to display their names; the Copy button is on the far right.
 
-    > **Note**: You will need to use the Primary Connection String value later in the lab, so you may want to save it to an accessible location (perhaps by pasting the value into a text editor such as NotePad). 
+    > **Note**: You will need to use the Primary Connection String value later in the lab, so you may want to save it to an accessible location (perhaps by pasting the value into a text editor such as NotePad).
 
     The connection string will be in the following format:
 
@@ -311,7 +313,6 @@ In this task, you will use Visual Studio Code to review the contents and purpose
 
         <ItemGroup>
             <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.*" />
-            <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
         </ItemGroup>
 
     </Project>
@@ -327,7 +328,7 @@ In this task, you will use Visual Studio Code to review the contents and purpose
 
     The **ItemGroup** specifies any external libraries that are required for the application. These particular references are for NuGet packages, and each package reference specifies the package name and the version. The `dotnet add package` commands (that you entered in the steps above) added these references to the project file and the `dotnet restore` command ensured that all of the dependencies were downloaded.
 
-    > **Information**: You can learn more about NuGet [here](https://docs.microsoft.com/en-us/nuget/what-is-nuget).
+    > **Tip**: You can learn more about NuGet [here](https://docs.microsoft.com/en-us/nuget/what-is-nuget).
 
 1. In the **EXPLORER** pane, click **Program.cs**.
 
@@ -384,7 +385,7 @@ In this task, you will use Visual Studio Code to review the contents and purpose
 
     After a moment, you should see **Hello World!** displayed on the line directly below the `dotnet run` command that you entered.
 
-    You will be using the same `Console.WriteLine` approach in your simulated device application to display information locally, which will help you see the information being sent to IoT Hub and keep track of processes that are being completed by your device. 
+    You will be using the same `Console.WriteLine` approach in your simulated device application to display information locally, which will help you see the information being sent to IoT Hub and keep track of processes that are being completed by your device.
 
     Although this Hello World app demonstrates some basic concepts, it is clearly not a simulated device. In the next task you will replace this code with the code for your simulated device.
 
@@ -397,6 +398,15 @@ In this task, you will use Visual Studio Code to enter the code that leverages t
 1. Select all of the existing code, and then delete it.
 
 1. In the code editor pane, to create the basic structure of your simulated device application, enter the following code:
+
+    > **Important**: If you are intending to paste the code into a learning environment such as LODS, there are a few things to be aware of:
+    >
+    > * The **Type text -> Type clipboard text** buffer is limited, so it may truncate the code that is copied - double check your work and add any missing characters.
+    > * As the **Type clipboard text** simulates typing, the default settings in Visual Studio Code will automatically indent code and insert closing braces - `)`, `}` and `] - resulting in duplicate characters and incorrect indentation. These actions can be turned off with the following settings:
+    >    * **Editor: Auto Closing Brackets**
+    >    * **Editor: Auto Indent**
+    > * The source can be reformatted at any time by using **F1** and entering **Format Document** or by pressing **SHIFT + ALT + F**
+
 
     ```csharp
     // INSERT using statements below here
@@ -421,6 +431,8 @@ In this task, you will use Visual Studio Code to enter the code that leverages t
     ```
 
     > **Note:** As you can see, the namespace and the class have been retained, however, the other items are placeholder comments. In the following steps you will be inserting code into the file below specific comments.
+
+    > **Tip**: To reformat the pasted text in Visual Studio Code, press **SHIFT + ALT + F**, or press **F1** to open the command palette and search for **Format Document**.
 
 1. Locate the `// INSERT using statements below here` comment.
 
@@ -461,7 +473,7 @@ In this task, you will use Visual Studio Code to enter the code that leverages t
 
     > **Important**: You will see examples in this and other labs throughout this course where connection strings, passwords and other configuration information is hard-coded into the application. This is done solely to simplify the labs and **is not** a recommended practice. As much as possible, security issues like this will be addressed as they come up in the labs. Security topics (and other important considerations) will be addressed during the instructor presentation and in your Student Handbook content in a manner that supports the overall flow of the course. The two may not always align perfectly. As a result, you may be exposed to topics in the labs that are not covered in detail until later in the course.
 
-    As noted within the code comments, connection strings and similar configuration values should be supplied via alternative means such as environment variables, command-line parameters or, better still, stored in secured hardware such as Trusted Platform Modules (TPM).    
+    As noted within the code comments, connection strings and similar configuration values should be supplied via alternative means such as environment variables, command-line parameters or, better still, stored in secured hardware such as Trusted Platform Modules (TPM).
 
 1. In the code that you just entered, update the value for **connectionString** using the Primary Connection String that you copied from IoT Hub.
 
@@ -505,9 +517,9 @@ In this task, you will use Visual Studio Code to enter the code that leverages t
     Finally, the application waits for user input.
 
     > **Information**: The **DeviceClient** class is documented [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.client.deviceclient?view=azure-dotnet).
-    > 
-    > **Information**: The **CreateFromConnectionString** method is documented [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.client.deviceclient.createfromconnectionstring?view=azure-dotnet#Microsoft_Azure_Devices_Client_DeviceClient_CreateFromConnectionString_System_String_Microsoft_Azure_Devices_Client_TransportType_). 
-    > 
+    >
+    > **Information**: The **CreateFromConnectionString** method is documented [here](https://docs.microsoft.com/en-us/dotnet/api/microsoft.azure.devices.client.deviceclient.createfromconnectionstring?view=azure-dotnet#Microsoft_Azure_Devices_Client_DeviceClient_CreateFromConnectionString_System_String_Microsoft_Azure_Devices_Client_TransportType_).
+    >
     > **Information**: The supported transport protocols are documented [here](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-protocols).
 
 1. Locate the `// INSERT - SendDeviceToCloudMessagesAsync below here` comment.
@@ -605,7 +617,7 @@ In this task, you will use Visual Studio Code to enter the code that leverages t
 
     ```csharp
     /// <summary>
-    /// This class represents a sensor 
+    /// This class represents a sensor
     /// real-world sensors would contain code to initialize
     /// the device or devices and maintain internal state
     /// a real-world example can be found here: https://bit.ly/IoT-BME280
@@ -642,7 +654,7 @@ In this task, you will use Visual Studio Code to enter the code that leverages t
 
 1. Take a minute to scan through your completed application.
 
-    Your completed application represents a simple simulated device. It demonstrates how to connect a device to an IoT Hub and send Device to Cloud messages. 
+    Your completed application represents a simple simulated device. It demonstrates how to connect a device to an IoT Hub and send Device to Cloud messages.
 
     You are now ready to test the application
 
@@ -711,7 +723,7 @@ In this task, you will use the Azure CLI to verify telemetry sent by the simulat
 
     The `--device-id` parameter is optional and allows you to monitor the events from a single device. If the parameter is omitted, the command will monitor all events sent to the specified Azure IoT Hub.
 
-1. Notice that the `az iot hub monitor-events` Azure CLI command outputs a JSON representation of the events that are arriving at your specified Azure IoT Hub. 
+1. Notice that the `az iot hub monitor-events` Azure CLI command outputs a JSON representation of the events that are arriving at your specified Azure IoT Hub.
 
     This command enables you to monitor the events being sent to IoT hub. You are also verifying that the device is able to connect to and communicate with the your IoT hub.
 
