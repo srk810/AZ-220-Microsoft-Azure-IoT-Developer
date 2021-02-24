@@ -29,7 +29,7 @@ reportStatus() {
         return
     fi
     if [ $1 -eq "0" ]
-    then 
+    then
         printf "${GREEN}Succeeded${NC}\n"
     else
         printf "${RED}Failed - ${2}${NC}\n"
@@ -77,7 +77,7 @@ fi
 
 # Get IoT Hub Connection String so DPS can be linked
 IoTHubConnectionString=$(
-    az iot hub show-connection-string --hub-name $IoTHubName --query connectionString --output tsv
+    az iot hub connection-string show --hub-name $IoTHubName --query connectionString --output tsv
 )
 
 # Link IoT Hub with DPS

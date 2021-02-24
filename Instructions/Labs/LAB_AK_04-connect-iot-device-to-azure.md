@@ -402,7 +402,7 @@ In this task, you will use Visual Studio Code to enter the code that leverages t
     > **Important**: If you are intending to paste the code into a learning environment such as LODS, there are a few things to be aware of:
     >
     > * The **Type text -> Type clipboard text** buffer is limited, so it may truncate the code that is copied - double check your work and add any missing characters.
-    > * As the **Type clipboard text** simulates typing, the default settings in Visual Studio Code will automatically indent code and insert closing braces - `)`, `}` and `] - resulting in duplicate characters and incorrect indentation. These actions can be turned off with the following settings:
+    > * As the **Type clipboard text** simulates typing, the default settings in Visual Studio Code will automatically indent code and insert closing braces - `)`, `}` and `]` - resulting in duplicate characters and incorrect indentation. These actions can be turned off with the following settings:
     >    * **Editor: Auto Closing Brackets**
     >    * **Editor: Auto Indent**
     > * The source can be reformatted at any time by using **F1** and entering **Format Document** or by pressing **SHIFT + ALT + F**
