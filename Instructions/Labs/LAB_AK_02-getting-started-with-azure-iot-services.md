@@ -157,7 +157,7 @@ In this exercise, you will use the Azure portal to create and configure your IoT
 
 1. On the **Marketplace** blade, click the **IoT Hub** search result.
 
-    > [!NOTE]
+    > **Note**:
     > A **Create** action is shown at the bottom of the **IoT Hub** search result - that will navigate directly to the IoT Hub creation view. In normal use you may chose to click this - for the purpose of the tutorial, click anywhere in the main body of the **IoT Hub** search result.
 
 1. On the **IoT Hub** blade, click **Usage Information + Support**
@@ -359,7 +359,7 @@ There are several methods that you can use to create an instance of the IoT Hub 
 
 1. On the **Marketplace** blade, click **IoT Hub Device Provisioning Service** search result.
 
-    > [!NOTE]
+    > **Note**:
     > A **Create** action is shown at the bottom of the **IoT Hub Device Provisioning Service** search result - that will navigate directly to the IoT Hub Device Provisioning Service creation view. In normal use you may chose to click this - for the purpose of the tutorial, click anywhere in the main body of the **IoT Hub Device Provisioning Service** search result.
 
 1. On the **IoT Hub Device Provisioning Service** blade, click **Usage Information + Support**.
