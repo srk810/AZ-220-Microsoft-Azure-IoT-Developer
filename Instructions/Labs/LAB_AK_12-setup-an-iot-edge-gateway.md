@@ -151,19 +151,19 @@ If these resources are not available, you will need to run the **lab12-setup.azc
 
 Once the script has completed, you will be ready to continue with the lab.
 
-### Exercise 2: Deploy Azure IoT Edge enabled Linux VM
+### Exercise 2: Deploy a Linux VM and install IoT Edge runtime
 
-In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtime support from the Azure Marketplace. You will be configuring this simulated IoT Edge device for use as an Edge Gateway.
+In this exercise, you will deploy an Ubuntu Server VM.
 
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
 
-1. On the Azure portal menu, click **+ Create a resource**.
+1. In the **Search resources, services and docs** field, enter **Virtual machines**.
 
-1. On the **New** blade, in the **Search the Marketplace** box, type **Azure IoT Edge on** and then click **Azure IoT Edge on Ubuntu**.
+1. In the search results, under **Services**, click **Virtual machines**.
 
-1. On the **Azure IoT Edge on Ubuntu** blade, click **Create**.
+1. On the **Virtual machines** page, click **+ Add** and select **Virtual machine**.
 
 1. On the **Create a virtual machine** blade, in the **Subscription** dropdown, ensure that the subscription you are using for this course is selected.
 
@@ -180,15 +180,15 @@ In this exercise, you will deploy an Ubuntu Server VM with Azure IoT Edge runtim
 
 1. In the **Region** dropdown, select the region where your Azure IoT Hub is provisioned.
 
-1. Leave the **Availability options** field set to **No infrastructure redundancy required**.
+1. Leave **Availability options** set to **No infrastructure redundancy required**.
 
-1. Notice that the **Image** dropdown has the **Ubuntu Server 16.04 LTS + Azure IoT Edge runtime - Gen1** image selected.
+1. In the **Image** field, select **Ubuntu Server 18.04 LTS - Gen1** image.
 
-1. Leave the **Azure Spot instance** field unchecked.
+1. Leave **Azure Spot instance** field unchecked.
 
-1. Under **Size**, click **Select size**.
+1. To the right of **Size**, click **Change size**.
 
-1. On the **Select a VM size** blade, click **Standard_DS1_v2**, and then click **Select**.
+1. On the **Select a VM size** blade, under **VM Size**, click **Standard_B1ms**, and then click **Select**.
 
     You may need to use the **Clear all filters** link to make this size available in the list.
 
@@ -344,60 +344,89 @@ In this exercise, you will generate test certificates using Linux. You will do t
 
     > **Note**: Now that the IoT Edge Device CA certificate has been generated, do not re-run the previous command that generates the root CA certificate. Doing so will overwrite the existing certificate with a new one that will no longer match the **MyEdgeDeviceCA** IoT Edge Device CA certificate that was just generated.
 
-#### Task 3: Confirm IoT Edge version and update as required
+#### Task 3: Add the Microsoft installation packages to the package manager
 
-1. To confirm that the Azure IoT Edge Runtime is installed on the VM, enter the following command:
+1. To configure the VM to access the Microsoft installation packages, run the following command:
+
+    ```bash
+    curl https://packages.microsoft.com/config/ubuntu/18.04/multiarch/prod.list > ./microsoft-prod.list
+    ```
+
+1. To add the downloaded package list to the package manager, run the following command:
+
+    ```bash
+    sudo cp ./microsoft-prod.list /etc/apt/sources.list.d/
+    ```
+
+1. To install the packages, the Microsoft GPG public key must be installed. Run the following commands:
+
+    ```bash
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+    sudo cp ./microsoft.gpg /etc/apt/trusted.gpg.d/
+    ```
+
+    > **IMPORTANT**: Azure IoT Edge software packages are subject to the license terms located in each package **(usr/share/doc/{package-name}** or the **LICENSE** directory). Read the license terms prior to using a package. Your installation and use of a package constitutes your acceptance of these terms. If you do not agree with the license terms, do not use that package.
+
+#### Task 4: Install a container engine
+
+Azure IoT Edge relies on an OCI-compatible container runtime. For production scenarios, the Moby engine is recommended. The Moby engine is the only container engine officially supported with Azure IoT Edge. Docker CE/EE container images are compatible with the Moby runtime.
+
+1. To update the package lists on the device, run the following command:
+
+    ```bash
+    sudo apt-get update
+    ```
+
+    This command may take a few minutes to run.
+
+1. To install the **Moby** engine, run the following command:
+
+    ```bash
+    sudo apt-get install moby-engine
+    ```
+
+    If prompted to continue, enter **Y**. The install may take a few minutes.
+
+#### Task 5: Install IoT Edge
+
+The IoT Edge security daemon provides and maintains security standards on the IoT Edge device. The daemon starts on every boot and bootstraps the device by starting the rest of the IoT Edge runtime.
+
+1. Usually, updating the package list is a good practice before installing a new package, however the packages were updated in the previous task.To update the package lists on the device, you would run the following command:
+
+    ```bash
+    sudo apt-get update
+    ```
+
+1. To list the versions of **IoT Edge runtime** that are available, run the following command:
+
+    ```bash
+    apt list -a iotedge
+    ```
+
+    > **TIP**: This command is useful if you need to install an earlier version of the runtime.
+
+1. To install the latest version of the **IoT Edge runtime**, run the following command:
+
+    ```bash
+    sudo apt-get install iotedge
+    ```
+
+    If prompted to continue, enter **Y**. The install may take a few minutes.
+
+    > **TIP**: If you wanted to install an earlier version that appeared in the output of the `apt list -a iotedge` command, say **1.0.9-1**, you would use the following command:
+    > ```bash
+    > sudo apt-get install iotedge=1.0.9-1 libiothsm-std=1.0.9-1
+    > ```
+
+1. To confirm that the Azure IoT Edge Runtime is installed on the VM, run the following command:
 
     ```bash
     iotedge version
     ```
 
-    This command will output the version of the Azure IoT Edge Runtime that is currently installed on the virtual machine.
+    This command outputs the version of the Azure IoT Edge Runtime that is currently installed on the virtual machine.
 
-    The version output will be similar to the following:
-
-    ```bash
-    username@vm-az220-training-gw0001-{your-id}:~/lab12$ iotedge version
-    iotedge 1.0.8 (208b2204fd30e856d00b280112422130c104b9f0)
-    ```
-
-    > **Important**: If the displayed version is **1.0.8**, then the runtime must be updated to address a TLS authentication bug.
-
-    If the displayed version is at least **1.0.9**, skip forward to **Task 4: Configure IoT Edge**.
-
-1. To update the Azure IoT Edge version, enter the following commands:
-
-    ```bash
-    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_amd64.deb -o libiothsm-std.deb && sudo dpkg -i ./libiothsm-std.deb
-    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb -o iotedge.deb && sudo dpkg -i ./iotedge.deb
-    ```
-
-    Each command downloads a package and installs it.
-
-1. During the setup of IoT Edge, you may be prompted to update the **Configuration file '/etc/iotedge/config.yaml'** - enter **N** to keep the current version.
-
-1. To restart the IoT Edge service, enter the following command:
-
-    ```bash
-    systemctl restart iotedge
-    ```
-
-1. When prompted, enter the user password.
-
-1. To confirm that the Azure IoT Edge Runtime version, enter the following command:
-
-    ```bash
-    iotedge version
-    ```
-
-    Confirm that the displayed version is 1.0.9 (as shown below):
-
-    ```bash
-    vmadmin@vm-az220-training-gw0001-dm200420:~$ iotedge --version
-    iotedge 1.0.9
-    ```
-
-#### Task 4: Configure IoT Edge
+#### Task 6: Configure IoT Edge
 
 1. To ensure that you are able to configure Azure IoT Edge, enter the following command:
 
