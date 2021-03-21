@@ -170,6 +170,8 @@ az iot hub device-identity connection-string show --hub-name iot-az220-training-
 
 In this exercise, use Azure CLI to create an Ubuntu Server VM with Azure IoT Edge runtime support.
 
+#### Task 1: Create the VM
+
 1. If necessary, log in to your Azure portal using your Azure account credentials.
 
     If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
@@ -203,15 +205,12 @@ In this exercise, use Azure CLI to create an Ubuntu Server VM with Azure IoT Edg
 1. At the Cloud Shell command prompt, to create a Linux VM, enter the following two commands:
 
     ```bash
-    az vm image terms accept --urn microsoft_iot_edge:iot_edge_vm_ubuntu:ubuntu_1604_edgeruntimeonly:latest
-    az vm create --resource-group rg-az220vm --name vm-az220-training-gw0002-{your-id} --image microsoft_iot_edge:iot_edge_vm_ubuntu:ubuntu_1604_edgeruntimeonly:latest --admin-username vmadmin --admin-password {YOUR-PASSWORD-HERE} --authentication-type password
+    az vm create --resource-group rg-az220vm --name vm-az220-training-gw0002-{your-id} --image Canonical:UbuntuServer:18.04-LTS:latest --admin-username vmadmin --admin-password {YOUR-PASSWORD-HERE} --authentication-type password
     ```
 
     > **Note**: Be sure to replace the placeholders that are included in the second command.
 
-    The first command above accepts the terms and conditions of use for VM image.
-
-    The second command actually creates the VM within the resource group specified above. Remember to update **vm-az220-training-gw0002-{your-id}** with your unique id and replace `{YOUR-PASSWORD-HERE}` with a suitably secure password.
+    The command creates the VM within the resource group specified above. Remember to update **vm-az220-training-gw0002-{your-id}** with your unique id and replace `{YOUR-PASSWORD-HERE}` with a suitably secure password.
 
     > **Note**: In production, you may elect to generate SSH keys rather than use the username/password approach. You can learn more about Linux VMs and SSH here: [https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed](https://docs.microsoft.com/en-us/azure/virtual-machines/linux/create-ssh-keys-detailed).
     >
@@ -395,7 +394,144 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
 
 > **Note**: You will use a helper script to configure the IoT Edge Device as a Transparent Gateway. This will enable you to complete the process more quickly.
 
-#### Task 1: Configure helper scripts
+#### Task 1 - Ensure VM is running
+
+1. If necessary, on the Azure portal toolbar, click **Cloud Shell**
+
+    Ensure that the environment is using **Bash**.
+
+1. To view the status of the VMs in the **rg-az220vm** group, enter the following command:
+
+    ```bash
+    az vm list --show-details --resource-group rg-az220vm -o table
+    ```
+
+    You will see a list of VMs within the **rg-az220vm**. Find the row for the **vm-az220-training-gw0002-{your-id}** VM and review the value of the **PowerState** column. If the **PowerState** is **VM running**, make a note of the **PublicIps** value.
+
+1. If the VM **PowerState** is not equal to **VM running**, to start the VM, enter the following command:
+
+    ```bash
+    az vm start --name vm-az220-training-gw0002-{your-id} --resource-group rg-az220vm
+    ```
+
+    The command will take a few minutes to complete.
+
+1. To obtain the **Public IP** of the **vm-az220-training-gw0002-{your-id}** VM, reenter the following command:
+
+    ```bash
+    az vm list --show-details --resource-group rg-az220vm -o table
+    ```
+
+    Confirm that the **PowerState** is **VM running** and make a note of the **PublicIps** value.
+
+#### Task 2: Add the Microsoft installation packages to the package manager
+
+1. If necessary, log in to your Azure portal using your Azure account credentials.
+
+1. On the Azure portal toolbar, click **Cloud Shell**
+
+    Ensure that the environment is set to use **Bash**.
+
+1. At the Cloud Shell command prompt, to establish an SSH connection to your Edge VM, enter the following command:
+
+    ```bash
+    ssh {username}@{Public-IP-Address}
+    ```
+
+    Be sure to replace the placeholder values for username and the **Public IP Address**. For example: `ssh vmadmin@52.170.205.37`
+
+1. When you see the prompt **Are you sure you want to continue connecting (yes/no)?**, enter **yes**
+
+1. To configure the VM to access the Microsoft installation packages, run the following command:
+
+    ```bash
+    curl https://packages.microsoft.com/config/ubuntu/18.04/multiarch/prod.list > ./microsoft-prod.list
+    ```
+
+1. To add the downloaded package list to the package manager, run the following command:
+
+    ```bash
+    sudo cp ./microsoft-prod.list /etc/apt/sources.list.d/
+    ```
+
+1. To install the packages, the Microsoft GPG public key must be installed. Run the following commands:
+
+    ```bash
+    curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+    sudo cp ./microsoft.gpg /etc/apt/trusted.gpg.d/
+    ```
+
+    > **IMPORTANT**: Azure IoT Edge software packages are subject to the license terms located in each package **(usr/share/doc/{package-name}** or the **LICENSE** directory). Read the license terms prior to using a package. Your installation and use of a package constitutes your acceptance of these terms. If you do not agree with the license terms, do not use that package.
+
+#### Task 3: Install a container engine
+
+Azure IoT Edge relies on an OCI-compatible container runtime. For production scenarios, the Moby engine is recommended. The Moby engine is the only container engine officially supported with Azure IoT Edge. Docker CE/EE container images are compatible with the Moby runtime.
+
+1. To update the package lists on the device, run the following command:
+
+    ```bash
+    sudo apt-get update
+    ```
+
+    This command may take a few minutes to run.
+
+1. To install the **Moby** engine, run the following command:
+
+    ```bash
+    sudo apt-get install moby-engine
+    ```
+
+    If prompted to continue, enter **Y**. The install may take a few minutes.
+
+#### Task 4: Install IoT Edge
+
+The IoT Edge security daemon provides and maintains security standards on the IoT Edge device. The daemon starts on every boot and bootstraps the device by starting the rest of the IoT Edge runtime.
+
+1. Usually, updating the package list is a good practice before installing a new package, however the packages were updated in the previous task.To update the package lists on the device, you would run the following command:
+
+    ```bash
+    sudo apt-get update
+    ```
+
+1. To list the versions of **IoT Edge runtime** that are available, run the following command:
+
+    ```bash
+    apt list -a iotedge
+    ```
+
+    > **TIP**: This command is useful if you need to install an earlier version of the runtime.
+
+1. To install the latest version of the **IoT Edge runtime**, run the following command:
+
+    ```bash
+    sudo apt-get install iotedge
+    ```
+
+    If prompted to continue, enter **Y**. The install may take a few minutes.
+
+    > **TIP**: If you wanted to install an earlier version that appeared in the output of the `apt list -a iotedge` command, say **1.0.9-1**, you would use the following command:
+    > ```bash
+    > sudo apt-get install iotedge=1.0.9-1 libiothsm-std=1.0.9-1
+    > ```
+
+1. To confirm that the Azure IoT Edge Runtime is installed on the VM, run the following command:
+
+    ```bash
+    iotedge version
+    ```
+
+    This command outputs the version of the Azure IoT Edge Runtime that is currently installed on the virtual machine.
+
+    The version output will be similar to the following:
+
+    ```bash
+    vmadmin@vm-az220-training-gw0002-dm200420:~$ iotedge --version
+    iotedge 1.1.1
+    ```
+
+1. At the Cloud Shell command prompt, to close the SSH session, type **exit** and then press **Enter**.
+
+#### Task 5: Configure helper scripts
 
 1. Open a new instance of Visual Studio Code.
 
@@ -452,82 +588,7 @@ In this exercise, you will configure the Azure IoT Edge on Ubuntu virtual machin
 
 1. On the **File** menu, click **Save**.
 
-#### Task 2: Confirm IoT Edge version and update as required
-
-1. If necessary, log in to your Azure portal using your Azure account credentials.
-
-    If you have more than one Azure account, be sure that you are logged in with the account that is tied to the subscription that you will be using for this course.
-
-1. On the Azure portal toolbar, click **Cloud Shell**
-
-    Ensure that the environment is set to use **Bash**.
-
-1. At the Cloud Shell command prompt, to establish an SSH connection to your Edge VM, enter the following command:
-
-    ```bash
-    ssh {username}@{Public-IP-Address}
-    ```
-
-    Be sure to replace the placeholder values for username and the Public IP Address. For example: `ssh vmadmin@52.170.205.37`
-
-1. When you see the prompt **Are you sure you want to continue connecting (yes/no)?**, enter **yes**
-
-1. When prompted for the user password, enter the password that you created for the VM admin.
-
-1. To confirm that the Azure IoT Edge Runtime is installed on the VM, enter the following command:
-
-    ```bash
-    iotedge version
-    ```
-
-    This command will output the version of the Azure IoT Edge Runtime that is currently installed on the virtual machine.
-
-    The version output will be similar to the following:
-
-    ```bash
-    vmadmin@vm-az220-training-gw0001-dm200420:~$ iotedge --version
-    iotedge 1.0.8 (208b2204fd30e856d00b280112422130c104b9f0)
-    ```
-
-    > **Important**: If the displayed version is **1.0.8**, then the runtime must be updated to address a TLS authentication bug.
-
-    If the displayed version is at least **1.0.9**, skip forward to **Task 3: Execute helper scripts**.
-
-1. To update the Azure IoT Edge version, enter the following commands:
-
-    ```bash
-    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/libiothsm-std_1.0.9-1_ubuntu16.04_amd64.deb -o libiothsm-std.deb && sudo dpkg -i ./libiothsm-std.deb
-    curl -L https://github.com/Azure/azure-iotedge/releases/download/1.0.9/iotedge_1.0.9-1_ubuntu16.04_amd64.deb -o iotedge.deb && sudo dpkg -i ./iotedge.deb
-    ```
-
-    Each command downloads a package and installs it.
-
-1. During the setup of IoT Edge, you may be prompted to update the **Configuration file '/etc/iotedge/config.yaml'** - enter **N** to keep the current version.
-
-1. To restart the IoT Edge service, enter the following command:
-
-    ```bash
-    systemctl restart iotedge
-    ```
-
-1. When prompted, enter the Admin user password.
-
-1. To confirm that the Azure IoT Edge Runtime version has been updated, enter the following command:
-
-    ```bash
-    iotedge version
-    ```
-
-    Confirm that the displayed version is 1.0.9:
-
-    ```bash
-    vmadmin@vm-az220-training-gw0001-dm200420:~$ iotedge --version
-    iotedge 1.0.9
-    ```
-
-1. At the Cloud Shell command prompt, to close the SSH session, type **exit** and then press **Enter**.
-
-#### Task 3: Execute helper scripts
+#### Task 6: Execute helper scripts
 
 1. On the Azure Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
 
