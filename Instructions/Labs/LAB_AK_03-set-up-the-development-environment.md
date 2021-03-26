@@ -222,6 +222,12 @@ The Visual Studio Code and Azure CLI tools both support an Azure IoT extension t
     az extension add --name azure-iot
     ```
 
+1. At the command prompt, to install the Azure CLI extension for Time Series Insights, enter the following command:
+
+    ```bash
+    az extension add --name timeseriesinsights
+    ```
+
 #### Task 3: Install Azure CLI Extension - cloud environment
 
 Many of the labs will require the use of the Azure CLI IoT extensions via the Azure Cloud Shell. The following steps ensure the extension is installed and running the latest version.
@@ -244,6 +250,12 @@ Many of the labs will require the use of the Azure CLI IoT extensions via the Az
 
     ```bash
     az extension update --name azure-iot
+    ```
+
+1. At the command prompt, to install the Azure CLI extension for Time Series Insights, enter the following command:
+
+    ```bash
+    az extension add --name timeseriesinsights
     ```
 
 #### Task 4: Verify Development Environment Setup
