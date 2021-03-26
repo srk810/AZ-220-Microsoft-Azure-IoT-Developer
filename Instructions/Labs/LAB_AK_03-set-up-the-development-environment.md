@@ -31,6 +31,7 @@ In support of these decisions, you will be setting up the following environment:
 * Python 3.8
 * Docker Desktop Community 2.1.0.5 (or later) set to Linux Containers
 * IoT Extensions for VS Code and Azure CLI
+* node.js (latest)
 
 > **Note**: A virtual machine has been created for this course that provides a majority of the tools specified above. The instructions below support using the prepared VM or setting up the development environment locally using your PC.
 
@@ -111,7 +112,7 @@ Azure CLI is a command-line tool that is designed to make scripting Azure-relate
 
 #### Task 4: Install Python 3.8
 
-You will be using Python 3.8 in support of IoT Edge and Docker. 
+You will be using Python 3.8 in support of IoT Edge and Docker.
 
 1. In your Web browser, navigate to [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
@@ -154,6 +155,41 @@ You will be using Docker Desktop Community (latest stable version) during a lab 
 1. When the Installation Succeeded message appears, click **Close**.
 
     Docker Desktop does not start automatically after installation. To start Docker Desktop, search for Docker, and select Docker Desktop in the search results. When the whale icon in the status bar stays steady, Docker Desktop is up-and-running, and is accessible from any terminal window.
+
+#### Task 6 - Install node.js
+
+Some sample web applications are run locally using node.js. The following steps ensure node.js is installed and running the lastest version:
+
+1. Using a browser, open the [node.js download page](https://nodejs.org/en/#home-downloadhead)
+
+1. Download the latest LTS (Long Term Support) version - 14.16.0 at the time of writing.
+
+1. When prompted, select the option to run the installer.
+
+1. Step through the installer:
+
+   * **End-User License Agreement** - accept terms and click **Next**.
+   * **Destination Folder** - accept the default (or change if required) and click **Next**.
+   * **Custom Setup** - accept the defaults and click **Next**.
+   * **Tools for Native Modules** - check the **Automatically install** and click **Next**.
+   * **Ready to install Node.js** - click **Install**
+     * On the UAC dialog, click **Yes**.
+
+1. Wait for the install to complete and click **Finish**.
+
+1. In the **Install Additional Tools for Node.js** command window, when prompted, press **Enter** to continue.
+
+1. On the UAC dialog, click **Yes**.
+
+    Multiple packages will be downloaded and installed. This will take some time.
+
+1. Once the installation has completed, open a **new** command shell and enter the following command:
+
+    ```powershell
+    node --version
+    ```
+
+    If node is installed successfully, the installed version will be displayed.
 
 ### Exercise 2: Install Dev Tool Extensions
 
@@ -225,15 +261,13 @@ You should verify that the development environment has been set up successfully.
     The `az --version` command will output the version information for Azure CLI that you have installed (the `azure-cli` version number). This command also outputs the version number for all the Azure CLI modules installed, including the IoT extension. You should see output similar to the following:
 
     ```cmd/sh
-    azure-cli                           2.9.1
+    azure-cli                           2.20.0
 
-    command-modules-nspkg               2.0.3
-    core                                2.9.1
-    nspkg                               3.0.4
-    telemetry                           1.0.4
+    core                                2.20.0
+    telemetry                           1.0.6
 
     Extensions:
-    azure-iot                           0.9.8
+    azure-iot                           0.10.9
     ```
 
 1. Validate the **.NET Core 3.x SDK** installation by running the following command that will output the version number for the currently installed version of the .NET Core SDK.
@@ -242,7 +276,7 @@ You should verify that the development environment has been set up successfully.
     dotnet --version
     ```
 
-    The `dotnet --version` command will output the version of the .NET Core SDK that is currently installed. 
+    The `dotnet --version` command will output the version of the .NET Core SDK that is currently installed.
 
 1. Verify that .NET Core 3.1 or higher is installed.
 
@@ -252,7 +286,7 @@ Your development environment should now be set up!
 
 A number of the labs in this course rely on pre-built resources, such as a code project that can be used as a starting point for the lab activity. These lab resources are provided in a GitHub project that you should download to your dev environment.
 
-In addition to the resources that directly support the course labs (the resources contained in the GitHub project), there are some optional tools that you may choose to install because they support learning opportunities outside of this course. One example is PowerShell, which you may see referenced within Microsoft tutorials and other resources.  
+In addition to the resources that directly support the course labs (the resources contained in the GitHub project), there are some optional tools that you may choose to install because they support learning opportunities outside of this course. One example is PowerShell, which you may see referenced within Microsoft tutorials and other resources.
 
 The instructions below lead you through the configuration of both these resource types.
 
@@ -319,7 +353,7 @@ Azure PowerShell is a set of cmdlets for managing Azure resources directly from 
     The Az module is a rollup module for the Azure PowerShell cmdlets. Installing it downloads all of the available Azure Resource Manager modules, and makes their cmdlets available for use.
 
 > **Note**: If the **Az** module is already installed, you can update to the latest version using:
-> 
+>
 > ```powershell
 > Update-Module -Name Az
 > ```
