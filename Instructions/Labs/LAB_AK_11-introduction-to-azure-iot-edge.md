@@ -433,7 +433,7 @@ This tasks walks through the steps to connect the VM with symmetric key authenti
 
     > **Note**: If you would rather use a different editor such as **code**, **nano**, or **emacs**, that's fine.
 
-1. In the vi/vim editor, scroll down within the file until you locate the **Certificate settings** section.
+1. In the vi/vim editor, scroll down within the file until you locate the **Manual provisioning configuration using a connection string** section.
 
     > **Note**:  Here are some tips for using **vi** when editing the **config.yaml** file:
     > * Press the **i** key to put the editor into Insert mode, then you will be able to make changes.
@@ -444,7 +444,7 @@ This tasks walks through the steps to connect the VM with symmetric key authenti
     >
     > You have to stop Insert mode before you can Save or Quit.
 
-1.  Find the provisioning configurations of the file and uncomment the Manual provisioning configuration using a connection string section, if it isn't already uncommented by removing the leading **'# '** (pound symbol and space) characters and enter the connection string as shown below:
+1. Find the provisioning configurations of the file and uncomment the Manual provisioning configuration using a connection string section, if it isn't already uncommented by removing the leading **'# '** (pound symbol and space) characters and replace `<ADD DEVICE CONNECTION STRING HERE>` with the Connection String you copied previously for your IoT Edge Device:
 
     ```yaml
     # Manual provisioning configuration using a connection string

@@ -675,27 +675,71 @@ In this exercise, you will configure the DNS name for Public IP Address of the *
 
     The `hostname` setting configures the Edge Hub server hostname. Regardless of the case used for this setting, a lowercase value is used to configure the Edge Hub server. This is also the hostname that downstream IoT devices will need to use when connecting to the IoT Edge Gateway for the encrypted communication to work properly.
 
-1. Save the file and exit vi/vim.
+1. Leave **config.yaml** open in vi/vim (or the editor you are using)
 
 ### Exercise 6: Connect IoT Edge Gateway Device to IoT Hub
 
 In this exercise, you will connect the IoT Edge Device to Azure IoT Hub.
 
-1. In the Azure portal, verify that your SSH session is still open in the Cloud Shell.
+1. Return to the **config.yaml** document in vi/vim:
 
-    If the Cloud Shell command prompt lists your VM, you are connected via SSH, If not, reconnect now.
+1. Find the **Manual provisioning configuration using a connection string** of the file and uncomment the Manual provisioning configuration using a connection string section, if it isn't already uncommented by removing the leading **'# '** (pound symbol and space) characters and replace `<ADD DEVICE CONNECTION STRING HERE>` with the Connection String you copied previously for your IoT Edge Device:
 
-1. To configure the Edge device with the Connection String for Azure IoT Hub, enter the following command:
-
-    ```bash
-    sudo /etc/iotedge/configedge.sh "{iot-edge-device-connection-string}"
+    ```yaml
+    # Manual provisioning configuration using a connection string
+    provisioning:
+      source: "manual"
+      device_connection_string: "<ADD DEVICE CONNECTION STRING HERE>"
+      dynamic_reprovisioning: false
     ```
 
-    Be sure to replace the **{iot-edge-device-connection-string}** placeholder with the Connection String you copied previously for your IoT Edge Device.
+    > **Important**: YAML treats spaces as significant characters. In the lines entered above, this means that there should not be any leading spaces in front of **provisioning:** and that there should be two leading spaces in front of **source:**, **device_connection_string:**, and **dynamic_reprovisioning:**
 
-    The **/etc/iotedge/configedge.sh** script that you entered above is installed as part of the Azure IoT Edge Runtime. It can used to configure the Edge device with the Connection String necessary to connect it to Azure IoT Hub.
+1. To save your changes and exit the editor, press **Esc** and type **:x** and then press **Enter**
 
-    Once this command completes, the IoT Edge Device will be configured to connect to Azure IoT Hub using the Connection String that was entered.
+1. To apply the changes, the IoT Edge daemon must be restarted with the following command:
+
+    ```bash
+    sudo systemctl restart iotedge
+    ```
+
+1. To ensure the IoT Edge daemon is running, enter the following command:
+
+    ```bash
+    sudo systemctl status iotedge
+    ```
+
+    This command will display many lines of content, of which the first 3 lines indicate if the service is running. For a running service, the output will be similar to:
+
+    ```bash
+    ● iotedge.service - Azure IoT Edge daemon
+       Loaded: loaded (/lib/systemd/system/iotedge.service; enabled; vendor preset: enabled)
+       Active: active (running) since Fri 2021-03-19 18:06:16 UTC; 1min 0s ago
+    ```
+
+1. To verify the IoT Edge runtime has connected, run the following command:
+
+    ```bash
+    sudo iotedge check
+    ```
+
+    This runs a number of checks and displays the results. For this lab, ignore the **Configuration checks** warnings/errors. The **Connectivity checks** should succeed and be similar to:
+
+    ```bash
+    Connectivity checks
+    -------------------
+    √ host can connect to and perform TLS handshake with IoT Hub AMQP port - OK
+    √ host can connect to and perform TLS handshake with IoT Hub HTTPS / WebSockets port - OK
+    √ host can connect to and perform TLS handshake with IoT Hub MQTT port - OK
+    √ container on the default network can connect to IoT Hub AMQP port - OK
+    √ container on the default network can connect to IoT Hub HTTPS / WebSockets port - OK
+    √ container on the default network can connect to IoT Hub MQTT port - OK
+    √ container on the IoT Edge module network can connect to IoT Hub AMQP port - OK
+    √ container on the IoT Edge module network can connect to IoT Hub HTTPS / WebSockets port - OK
+    √ container on the IoT Edge module network can connect to IoT Hub MQTT port - OK
+    ```
+
+    If the connection fails, double-check the connection string value in **config.yaml**.
 
 1. Wait a few moments.
 
