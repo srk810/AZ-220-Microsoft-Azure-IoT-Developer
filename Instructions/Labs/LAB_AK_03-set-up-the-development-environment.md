@@ -28,7 +28,7 @@ In support of these decisions, you will be setting up the following environment:
 * Azure CLI (current/latest)
 * .NET Core 3.1.200 (or later) SDK
 * VS Code (latest)
-* Python 3.8
+* Python 3.9
 * Docker Desktop Community 2.1.0.5 (or later) set to Linux Containers
 * IoT Extensions for VS Code and Azure CLI
 * node.js (latest)
@@ -110,21 +110,17 @@ Azure CLI is a command-line tool that is designed to make scripting Azure-relate
 
     You will be given detailed instructions for using the Azure CLI tools during the labs in this course, but if you want more information now, see [Get started with Azure CLI](https://docs.microsoft.com/en-us/cli/azure/get-started-with-azure-cli?view=azure-cli-latest)
 
-#### Task 4: Install Python 3.8
+#### Task 4: Install Python 3.9
 
-You will be using Python 3.8 in support of IoT Edge and Docker.
+You will be using Python 3.9 in support of IoT Edge and Docker.
 
 1. In your Web browser, navigate to [https://www.python.org/downloads/](https://www.python.org/downloads/)
 
-1. Under "Looking for a specific release?", to the right of Python 3.8.3, click **Download**.
-
-1. On the Python 3.8.3 page, scroll down to the Files section of the page.
-
-1. Under Files, select the installer file that is appropriate for your Operating System.
+1. On the Python download page, select the installer file that is appropriate for your Operating System.
 
 1. When prompted, select the option to run the installer
 
-1. On the Install Python 3.8.3 dialog, click **Add Python 3.8 to PATH**.
+1. On the Install Python  dialog, click **Add Python 3.9 to PATH**.
 
 1. Click **Install Now**.
 
@@ -158,7 +154,7 @@ You will be using Docker Desktop Community (latest stable version) during a lab 
 
 #### Task 6 - Install node.js
 
-Some sample web applications are run locally using node.js. The following steps ensure node.js is installed and running the lastest version:
+Some sample web applications are run locally using node.js. The following steps ensure node.js is installed and running the latest version:
 
 1. Using a browser, open the [node.js download page](https://nodejs.org/en/#home-downloadhead)
 
@@ -207,6 +203,7 @@ The Visual Studio Code and Azure CLI tools both support an Azure IoT extension t
 
     * [Azure IoT Tools](https://marketplace.visualstudio.com/items?itemName=vsciot-vscode.azure-iot-tools) (`vsciot-vscode.azure-iot-tools`) by Microsoft
     * [C# for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-vscode.csharp) (`ms-vscode.csharp`) by Microsoft
+    * [Azure Functions for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azurefunctions) (ms-azuretools.vscode-azurefunctions) by Microsoft
 
 1. Close Visual Studio Code.
 

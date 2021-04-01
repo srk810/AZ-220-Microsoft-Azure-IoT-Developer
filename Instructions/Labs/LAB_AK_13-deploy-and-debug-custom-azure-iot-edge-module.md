@@ -27,7 +27,7 @@ This lab includes the following prerequisites for the development machine (lab h
 * Docker Community Edition installed on development machine, with Docker Client version 18.03.0 or later
   * [Download Docker Desktop for Mac and Windows](https://www.docker.com/products/docker-desktop)
 
-    > **Important**: Due to the January 13, 2020 removal of Azure Container Registry support for any TLS versions before TLS version 1.2, you must be running Docker Client 18.03.0 or later. 
+    > **Important**: Due to the January 13, 2020 removal of Azure Container Registry support for any TLS versions before TLS version 1.2, you must be running Docker Client 18.03.0 or later.
 
 The following resources will be created:
 
@@ -173,7 +173,7 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
     python get-pip.py
     ```
 
-    Pip is required to install the Azure IoT EdgeHub Dev Tool on your development machine. 
+    Pip is required to install the Azure IoT EdgeHub Dev Tool on your development machine.
 
     > **Important**: When downloading code like this, you should consider reviewing the code before running it.
 
@@ -181,10 +181,10 @@ In this exercise, you will will install the Azure IoT EdgeHub Dev Tool.
 
     > **Note**: On Windows, Python and/or Pip are sometimes installed but are not in the `PATH`. Check with your instructor if you have Python installed but it does not seem to be available.
 
-1. To install the Azure IoT EdgeHub Dev Tool, enter the following command: 
+1. To install the Azure IoT EdgeHub Dev Tool, enter the following command:
 
     ```cmd/sh
-    pip install iotedgehubdev
+    pip install iotedgehubdev --user
     ```
 
     > **Note**:  If you have multiple versions of Python installed in your development environment, including pre-installed Python 2.7 (for example, on Ubuntu or macOS), make sure you are using the correct `pip` or `pip3` to install `iotedgehubdev`.
@@ -213,6 +213,10 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
 1. On the **Container Registry** blade, click **Create**.
 
+1. On the **Create container registry** blade, under **Subscription**, ensure that the subscription you are using for this course is selected.
+
+1. In the **Resource group** dropdown, click **rg-az220**.
+
 1. On the **Create container registry** blade, under **Registry name**, enter a globally unique name.
 
     To provide a globally unique name, enter **acraz220training{your-id}**.
@@ -229,11 +233,11 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
     > **Note**:  Azure will ensure that the name you enter is unique. If the name that you enter is not unique, Azure will display an asterisk at the end of the name field as a warning. You can append the name suggested above with `01` or `02` as necessary to achieve a globally unique name.
 
-1. Under **Subscription**, ensure that the subscription you are using for this course is selected.
-
-1. In the **Resource group** dropdown, click **rg-az220**.
-
 1. In the **Location** dropdown, choose the same Azure region that was used for the resource group.
+
+1. Under **Availability zones**, leave the checkbox **unchecked**.
+
+    Availability zones is a high-availability offering that provides resiliency and high availability to a container registry in a specific region.
 
 1. In the **SKU** dropdown, ensure that **Standard** is selected.
 
@@ -263,7 +267,7 @@ In this exercise, you will use the Azure portal to create a new Azure Container 
 
     By default, the admin Username will match the ACR name - **acraz220training{your-id}**
 
-    This information will enable you to authenticate to the new registry, which is required to perform Docker operations in the upcoming steps.  
+    This information will enable you to authenticate to the new registry, which is required to perform Docker operations in the upcoming steps.
 
 1. Open a command prompt, and then enter the following command:
 
@@ -311,7 +315,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     Replace the `localhost:5000` part of the default `localhost:5000/objectcountingmodule` repository location with the name of the Azure Container Registry server - similar to `acraz220training{your-id}.azurecr.io`
 
-    This will be the Docker repository where the IoT Edge Module docker image will be published. 
+    This will be the Docker repository where the IoT Edge Module docker image will be published.
 
     The Docker image repository location follows the format shown below:
 
@@ -365,7 +369,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     > **Note**: You may wonder why you ran `docker login` before when you're supplying the same credentials here.  At the time when this lab was written, the Visual Studio Code tools do not automatically perform the `docker login` step with these credentials; they are only used to supply the credentials to the Edge Agent later as part of the deployment template.
 
-1. Within the `.env` file, replace the placeholder values with the username and password values that you saved earlier. 
+1. Within the `.env` file, replace the placeholder values with the username and password values that you saved earlier.
 
     Replace the `<registry-username>` placeholder with the **Registry name** (_aka Username_) of the Azure Container Registry that was previously created.
     Replace the `<registry-password>` placeholder with the **password** for the Azure Container Registry.
@@ -392,7 +396,7 @@ In this exercise, you will create an Azure IoT Edge Solution that contains a cus
 
     * `SimulatedTemperatureSensor`: This defines the Simulated Temperature Sensor module to be deployed to the IoT Edge device.
 
-1. Notice the `$edgeHub` section of the deployment manifest. 
+1. Notice the `$edgeHub` section of the deployment manifest.
 
     This section defines the desired properties (via `properties.desired` element) that includes the message routes for communicating messages between the IoT Edge Modules and finally to Azure IoT Hub service.
 
@@ -481,7 +485,7 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
     Record this value, as you will need it below.
 
-1. On the left hand navigation menu, under **Automatic Device Management**, click **IoT Edge**. 
+1. On the left hand navigation menu, under **Automatic Device Management**, click **IoT Edge**.
 
     This pane allows you to manage the IoT Edge devices connected to the IoT Hub.
 
@@ -503,13 +507,13 @@ In this exercise, you will build and run a custom IoT Edge Module solution using
 
 1. Switch to the **Visual Studio Code** instance containing your IoT Edge solution.
 
-1. In the **Explorer** pane, right-click **deployment.debug.template.json**, and then click **Build and Run IoT Edge Solution in Simulator**. 
+1. In the **Explorer** pane, right-click **deployment.debug.template.json**, and then click **Build and Run IoT Edge Solution in Simulator**.
 
     This file is the debugging deployment manifest file. It is located in the root directory of the IoT Edge Solution.
 
     When the process begins, you will see a dialog open in the lower right corner of the windows that says, **Please setup iotedgehubdev first before starting simulator**.
 
-1. When you see the prompt to **setup iotedgehubdev**, click **Setup**. 
+1. When you see the prompt to **setup iotedgehubdev**, click **Setup**.
 
 1. When prompted for the **IoT Hub Connection String**, enter the **Connection string--primary key** you noted earlier.
 
@@ -641,7 +645,7 @@ In this exercise, you will build and publish the custom IoT Edge Module into the
 
 1. In the **Explorer** view, to open the `.env` file, click **.env**.
 
-    The `.env` file is located in the root directory of the IoT Edge Solution. 
+    The `.env` file is located in the root directory of the IoT Edge Solution.
 
 1. Ensure that the credentials for the Azure Container Registry have been set.
 
