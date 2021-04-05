@@ -367,3 +367,110 @@ Azure PowerShell is a set of cmdlets for managing Azure resources directly from 
 > ```powershell
 > Update-Module -Name Az
 > ```
+
+### Exercise 3 - Register resource providers
+
+Many different types of resources will be created during this course, some of which may not have been register for use in the current subscription. While some resources are registered automatically during the first use, others must be registered before they can be used, otherwise errors will be reported.
+
+#### Task 1 - Register resource providers using the Azure CLI
+
+The Azure CLI provides a number of commands to help manage resource providers. In this task, you will ensure that the resource providers required for this course are registered.
+
+1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+
+1. To view a list of the current state of the resource providers, enter the following command:
+
+    ```powershell
+    az provider list -o table
+    ```
+
+    This will display a *long* list of resources, similar to:
+
+    ```powershell
+    Namespace                                RegistrationPolicy    RegistrationState
+    ---------------------------------------  --------------------  -------------------
+    Microsoft.OperationalInsights            RegistrationRequired  Registered
+    microsoft.insights                       RegistrationRequired  NotRegistered
+    Microsoft.DataLakeStore                  RegistrationRequired  Registered
+    Microsoft.DataLakeAnalytics              RegistrationRequired  Registered
+    Microsoft.Web                            RegistrationRequired  Registered
+    Microsoft.ContainerRegistry              RegistrationRequired  Registered
+    Microsoft.ResourceHealth                 RegistrationRequired  Registered
+    Microsoft.BotService                     RegistrationRequired  Registered
+    Microsoft.Search                         RegistrationRequired  Registered
+    Microsoft.EventGrid                      RegistrationRequired  Registered
+    Microsoft.SignalRService                 RegistrationRequired  Registered
+    Microsoft.VSOnline                       RegistrationRequired  Registered
+    Microsoft.Sql                            RegistrationRequired  Registered
+    Microsoft.ContainerService               RegistrationRequired  Registered
+    Microsoft.ManagedIdentity                RegistrationRequired  Registered
+    ...
+    ```
+
+1. To see return a list of the namespaces that contains the string **Event**, run the following command:
+
+    ```powershell
+    az provider list -o table --query "[?contains(namespace, 'Event')]"
+    ```
+
+    The results will be similar to:
+
+    ```powershell
+    Namespace            RegistrationState    RegistrationPolicy
+    -------------------  -------------------  --------------------
+    Microsoft.EventGrid  NotRegistered        RegistrationRequired
+    Microsoft.EventHub   Registered           RegistrationRequired
+    ```
+
+1. To register the resources required for this course, execute the following commands:
+
+    ```powershell
+    az provider register --namespace "Microsoft.EventGrid" --accept-terms
+    az provider register --namespace "Microsoft.EventHub" --accept-terms
+    az provider register --namespace "Microsoft.Insights" --accept-terms
+    az provider register --namespace "Microsoft.TimeSeriesInsights" --accept-terms
+    ```
+
+    > **NOTE**: You may see a warning that **-accept-terms** is in preview - you can ignore this.
+
+    > **NOTE**: The **microsoft.insights** is listed in lowercase - however the register/unregister commands are case-insensitive.
+
+1. To view the updated status of the  resources, execute the following commands:
+
+    ```powershell
+    az provider list -o table --query "[?(contains(namespace, 'insight') || contains(namespace, 'Event') || contains(namespace, 'TimeSeriesInsights'))]"
+    ```
+
+    > **NOTE**: Although the register/unregister commands are case-insensitive, the query language is not, so **insight** must be lowercase.
+
+    The resources should now be registered.
+
+#### Task 2 - Register resource providers using the Azure Portal
+
+You can see the registration status and register a resource provider namespace through the portal. In this task, you will familiarize yourself with the UI.
+
+1. If necessary, log in to [portal.azure.com](https://portal.azure.com) using your Azure account credentials.
+
+1. From the portal, select **All services**.
+
+    ![Select all services](media/LAB_AK_03-select-all-services.png )
+
+1. Select Subscriptions.
+
+    ![Select subscriptions](media/LAB_AK_03-select-subscriptions.png)
+
+1. From the list of subscriptions, select the subscription you want to use for registering the resource provider.
+
+    ![Select subscription to register resource provider](media/LAB_AK_03-select-subscription-to-register.png)
+
+1. For your subscription, select **Resource providers**.
+
+    ![Select resource providers](media/LAB_AK_03-select-resource-provider.png)
+
+1. Look at the list of resource providers, resources can be be registered or unregistered by clicking the appropriate action.
+
+    ![List resource providers](media/LAB_AK_03-list-resource-providers.png)
+
+1. To filter the listed resources, in the search textbox, enter **insights**.
+
+    Notice that the list is filtered as search criteria is entered. The search is also case-insensitive.

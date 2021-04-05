@@ -49,7 +49,7 @@ if [ "${exists}" == "true" ]
 then
     printf "${GREEN}Already exists\n${NC}"
 else
-    output=$( az group create --name $RGName --location $Location -o json 2>&1 >> build.log)
+    output=$( az group create --name $RGName --location $Location -o json >> build.log 2>&1)
     reportStatus $? "$output"
 fi
 
@@ -60,7 +60,7 @@ if [ "${exists}" == "${IoTHubName}" ]
 then
     printf "${GREEN}Already exists\n${NC}"
 else
-    output=$( az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location -o json 2>&1 >> build.log)
+    output=$( az iot hub create --name $IoTHubName -g $RGName --sku S1 --location $Location -o json >> build.log 2>&1)
     reportStatus $? "$output"
 fi
 
@@ -71,7 +71,7 @@ if [ "${exists}" == "${DPSName}" ]
 then
     printf "${GREEN}Already exists\n${NC}"
 else
-    output=$( az iot dps create --name $DPSName -g $RGName --sku S1 -o json 2>&1 >> build.log)
+    output=$( az iot dps create --name $DPSName -g $RGName --sku S1 -o json >> build.log 2>&1)
     reportStatus $? "$output"
 fi
 
@@ -87,6 +87,6 @@ if [ "${exists}" == "${IoTHubName}.azure-devices.net" ]
 then
     printf "${GREEN}Already exists\n${NC}"
 else
-    output=$( az iot dps linked-hub create --dps-name $DPSName -g $RGName --connection-string $IoTHubConnectionString --location $Location -o json 2>&1 >> build.log)
+    output=$( az iot dps linked-hub create --dps-name $DPSName -g $RGName --connection-string $IoTHubConnectionString --location $Location -o json >> build.log 2>&1)
     reportStatus $? "$output"
 fi
