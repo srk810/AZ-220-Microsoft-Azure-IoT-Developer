@@ -186,13 +186,11 @@ In this task, you will enable **Azure Defender for IoT** for your IoT Hub.
 
 #### Task 2: Log Analytics creation
 
-When Azure Defender for IoT is turned on, a default Azure Log Analytics workspace is created to store raw security events, alerts, and recommendations for your IoT devices, IoT Edge, and IoT Hub.
+When Azure Defender for IoT is turned on, an Azure Log Analytics workspace should be created to store raw security events, alerts, and recommendations for your IoT devices, IoT Edge, and IoT Hub.
 
 In this task, you will take a quick look at the workspace configuration of Log Analytics.
 
-1. If needed, open the Security Overview pane for your IoT Hub.
-
-1. At the top of the blade, to show the security settings, click **Settings**.
+1. In the left navigation area, under **Security**, click **Settings**..
 
     The **Settings Page** is displayed, listing the four areas that can be configured:
 
@@ -203,13 +201,35 @@ In this task, you will take a quick look at the workspace configuration of Log A
 
 1. To review the default **Data Collection** settings, click **Data Collection**.
 
+1. In the **Workspace configuration** section, under **Choose the Log Analytics workspace you wish to connect to:**, ensure the toggle button is set to **On**.
+
 1. In the **Subscription** dropdown, ensure the subscription you are using for this lab is selected.
 
-1. In the **Workspace** dropdown, the workspace that was automatically created should be displayed.
+1. Under the **Workspace** dropdown, click **Create New Workspace**.
 
-    > **Important**: At the time of writing, the **Workspace** value is not displayed, although the workspace has been created. To ensure the value is displayed, toggle the **Choose the Log Analytics workspace you wish to connect to:** field **off** and then back **on**. The **Workspace** value should now be displayed. As no actual change to data has ocurred, the **Save** button will not be enabled.
+1. On the **Log Analytics workspace** pane, under **Log Analytics Workspace**, enter **log-az220-training-{your-id}**.
 
-By default, turning on the Azure Defender for IoT solution automatically secures all IoT Hubs under your Azure subscription.
+1. Under **Subscription**, ensure that the Subscription you are using for this course is selected.
+
+1. In the **Resource group** dropdown, click **rg-az220**.
+
+1. In the **Location** dropdown, select the Azure Region closest to you, or the region where your Azure IoT Hub is provisioned.
+
+1. Under **Pricing tier**, ensure **Pay-as-you-go** is selected,
+
+1. To create the workspace, click **OK**.
+
+    After a few moments, the workspace will be created and the pane will close.
+
+1. Back on the **Settings | Data Collection** page, in the **Workspace** dropdown, select **log-az220-training-{your-id}**
+
+1. Ensure **Access to raw security data** is checked.
+
+1. Ensure **In-depth security recommendations and custom alert** is checked.
+
+1. Ensure **IP data collection** is checked.
+
+1. To save the Data Collection configuration, click **Save** and to close the page, click the **Close** button at the top-right of the page.
 
 ### Exercise 3: Create and Register a New Device
 
