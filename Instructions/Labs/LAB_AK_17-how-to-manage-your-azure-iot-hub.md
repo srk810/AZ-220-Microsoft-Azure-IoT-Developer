@@ -196,7 +196,7 @@ In this exercise, you will enable diagnostic logs and use them to check for erro
 
 1. On the **Diagnostic settings** blade, under **Category details**, click **Connections**, and then click **DeviceTelemetry**.
 
-1. For each of the Log Categories that you selected, in the **Retention (days)** field, enter **7** 
+1. For each of the Log Categories that you selected, in the **Retention (days)** field, enter **7**
 
 1. At the top of the blade, click **Save**, and then close the blade
 
@@ -226,7 +226,7 @@ In this task, you will set up various metrics to watch for when messages are sen
 
 1. Take a minute to examine the settings that are used to specify the chart Metrics.
 
-    Under the **Chart Title** and the toolbar for the chart, you will see an area to specify Metrics. 
+    Under the **Chart Title** and the toolbar for the chart, you will see an area to specify Metrics.
 
     * Notice that the **Scope** is already set to **iot-az220-training-{your-id}**.
     * Notice that **Metric Namespace** is already set to **IoT Hub standard metrics**.
@@ -273,9 +273,9 @@ Now that you have enabled logging and setup a chart to monitor metrics, it's a g
 
 ### Exercise 3: Configure an Alert
 
-Alerts are used to proactively notify you when important conditions are found in your monitoring data. They allow you to identify and address issues before the users of your system notice them. 
+Alerts are used to proactively notify you when important conditions are found in your monitoring data. They allow you to identify and address issues before the users of your system notice them.
 
-In your asset tracking scenario, you use sensors to track the containers that are being shipped to customers. Each time a sensor is added in a shipping container, it is auto-provisioned through DPS. 
+In your asset tracking scenario, you use sensors to track the containers that are being shipped to customers. Each time a sensor is added in a shipping container, it is auto-provisioned through DPS.
 
 For your upcoming proof-of-concept demonstration, you want to create an Alert that triggers when the number containers that are currently in transit approaches a capacity limit. To trigger the Alert, you will use the number of Device Connected events from IoT Hub.
 
@@ -323,7 +323,7 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
 1. Notice that the list of signals is immediately filtered based on your entry.
 
-1. Under **Signal name**, click **Connected devices (preview)**.
+1. Under **Signal name**, click **Connected devices**.
 
     The pane will update to display a chart that is similar to what you created for **Metrics**. The chart displays the values associated with the selected signal (in this case *Connected devices (preview)*).
 
@@ -347,6 +347,8 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     > **Note**: The **Condition preview** shows you the condition under which the display will refresh based on the Operator, Aggregation type, and Threshold value settings that you entered. Below the **Condition preview** is the **Evaluation based on** area. These values determine the historical time period that is aggregated using the **Aggregation type** selected above and how often the condition is evaluated.
 
+1. Under **Unit**, select **Count**.
+
 1. Under **Aggregation granularity (Period)**, ensure that **5 minutes** is selected.
 
 1. Under **Frequency of evaluation**, ensure that **Every 1 Minute** is selected.
@@ -359,13 +361,13 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     Next, you need to configure the action taken when the alert condition is met.
 
-1. Take a moment to review the **Action group** area. 
+1. Take a moment to review the **Action group** area.
 
-    Notice that no action group is selected. There is an option to **Select action group**. 
+    Notice that no action group is selected. There is an option to **Select action group**.
 
     > **Note**: An action group is a collection of notification preferences defined by the owner of an Azure subscription. An action group name must be unique within the Resource Group is is associated with. Azure Monitor and Service Health alerts use action groups to notify users that an alert has been triggered. Various alerts may use the same action group or different action groups depending on the user's requirements. You may configure up to 2,000 action groups in a subscription. You can learn more about creating and managing Action Groups [here](https://docs.microsoft.com/en-us/azure/azure-monitor/platform/action-groups).
 
-1. Under **Action group**, click **Select action group**.
+1. Under **Actions**, click **Add action groups**.
 
     The **Select an action group to attach to this alert rule** pane is displayed. If there are existing Action Groups available within the selected subscription, they will be listed here. Notice that you can change the subscription and filter the list. In this lab, we will create a new action group.
 
@@ -403,7 +405,7 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
     The **Email/SMS message/Push/Voice** pane opens.
 
-1. On the **Email/SMS message/Push/Voice** blade, click **Email**, and then enter an email address that you have easy access to. 
+1. On the **Email/SMS message/Push/Voice** blade, click **Email**, and then enter an email address that you have easy access to.
 
 1. Click **SMS**, and then enter the **Country code** and the **Phone number** for the phone that you wish to use to receive the SMS alert.
 
@@ -445,16 +447,11 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 
 1. In the **Save alert to resource group** field, ensure the expected resource group is selected - i.e. **rg-az220**.
 
-1. In the **Severity** field, ensure that **Sev 3** is selected.
+1. In the **Severity** field, ensure that **3 - Informational** is selected.
 
     In our scenario, this alert is *informational* and not indicative of any critical failure, therefore **Sev 3** is the correct choice.
 
-    > **Note**:  The severity level option are Sev 0 - Sev 4. Your business should have an established definition for each level. For example, Contoso may have defined these levels as follows:
-    >* Sev 0 = Critical
-    >* Sev 1 = Error
-    >* Sev 2 = Warning
-    >* Sev 3 = Informational
-    >* Sev 4 = Verbose
+    > **Note**:  The severity level option range between **0 - Critical** and **4 - Verbose**.
 
 1. For the **Enable alert rule upon creation** field, ensure that the checkbox is selected (checked).
 
@@ -463,6 +460,8 @@ In this exercise, you are going to add an alert that triggers when 5 or more dev
 1. At the bottom of the blade, click **Create alert rule**.
 
     The **Alerts** pane of your IoT Hub should now be displayed. A message in the middle of the should be telling you that you have no alerts, and you should see that a **Manage alert rules(1)** button has been added below that status message.
+
+    > **NOTE**: If the pane has not automatically updated, click **Refresh**.
 
 It is now time to configure the environment needed to trigger the alert.
 
@@ -485,13 +484,13 @@ In this exercise, you will verify the existing environment, perform any necessar
 1. With the **Certificates** pane open, follow these instructions:
 
     * If the certificates list is empty, move directly to Task 2 of this exercise - **Task 2: Verify OpenSSL**.
-    * If a certificate named **root-ca-cert** is listed, continue to the next step. 
+    * If a certificate named **root-ca-cert** is listed, continue to the next step.
 
-1. For the certificate listed, check the value under **Status**, and follow these instructions: 
+1. For the certificate listed, check the value under **Status**, and follow these instructions:
 
     * If the certificate status is **Unverified**:
-        * click the certificate to view the details, then click **Delete**. 
-        * Enter the **Certificate Name** to confirm the deletion and click **OK**. 
+        * click the certificate to view the details, then click **Delete**.
+        * Enter the **Certificate Name** to confirm the deletion and click **OK**.
         * Move directly to Task 2 of this exercise - **Task 2: Verify OpenSSL**.
     * If the certificate status is **Verified**, continue to the next step.
 
@@ -549,11 +548,11 @@ In the following steps you will verify that OpenSSL tools installed in an earlie
     chmod 700 certGen.sh
     ```
 
-### Task 4: Generate and Configure x.509 CA Certificates using OpenSSL
+#### Task 4: Generate and Configure x.509 CA Certificates using OpenSSL
 
 The first X.509 certificates needed are CA and intermediate certificates. These can be generated using the `certGen.sh` helper script by passing the `create_root_and_intermediate` option.
 
-1. In the cloud shell, ensure that you are in the **~/certificates** directory. 
+1. In the cloud shell, ensure that you are in the **~/certificates** directory.
 
 1. At the Cloud Shell command prompt, to generate the CA and intermediate certificates, enter the following command:
 
@@ -579,7 +578,7 @@ The first X.509 certificates needed are CA and intermediate certificates. These 
 
 1. On the **Add Certificate** pane, to the right of the **Certificate .pem or .cer file** field, click the folder icon.
 
-1. In the **Open** dialog, navigate to your downloads folder, click **azure-iot-test-only.root.ca.cert.pem**, and then click **Open**. 
+1. In the **Open** dialog, navigate to your downloads folder, click **azure-iot-test-only.root.ca.cert.pem**, and then click **Open**.
 
     This is the `azure-iot-test-only.root.ca.cert.pem` CA Certificate that you just created.
 
@@ -646,7 +645,7 @@ The first X.509 certificates needed are CA and intermediate certificates. These 
 1. On the left-side menu, under **Settings**, click **Manage enrollments**.
 
     There should not be any enrollment groups listed.
- 
+
 1. At the top of the blade, click **Add enrollment group**.
 
 1. On the **Add Enrollment Group** blade, in the **Group name** field, enter **simulated-devices**
@@ -706,7 +705,7 @@ You will now generate and download 9 device certificates.
 
     The button to open the Cloud Shell editor is the **{ }** icon, second from the right.
 
-1. Under **FILES**, to edit the contents of the gen-dev-certs.sh file, click **monitoring**, and then click **gen-dev-certs.sh** 
+1. Under **FILES**, to edit the contents of the gen-dev-certs.sh file, click **monitoring**, and then click **gen-dev-certs.sh**
 
     The **gen-dev-certs.sh** file is currently empty.
 
@@ -732,7 +731,7 @@ You will now generate and download 9 device certificates.
 
     This script will create and download 9 device certificates.
 
-1. To save the edited **gen-dev-certs.sh** file, press **CTRL-Q**. 
+1. To save the edited **gen-dev-certs.sh** file, press **CTRL-Q**.
 
     If prompted to save you changes before closing the editor, click **Save**.
 
@@ -742,7 +741,7 @@ You will now generate and download 9 device certificates.
     ./gen-dev-certs.sh
     ```
 
-    While the script runs, you will see the output from the certificate generator and then the browser should automatically download each certificate in turn. 
+    While the script runs, you will see the output from the certificate generator and then the browser should automatically download each certificate in turn.
 
     > **Note**: If your browsers asks what you want to do with the files, click **Save** for each file.
 
@@ -795,7 +794,7 @@ With these certificates available, you are ready to configure the device simulat
 1. In the **Open Folder** dialog, navigate to the lab 17 Starter folder, click **Starter**, and then click **Select Folder**.
 
     > **Note**: If Visual Studio Code suggested loading assets or performing a Restore, follow the suggestions.
- 
+
 1. In the **EXPLORER** pane, to open the Program.cs file, click **Program.cs**.
 
     You should also see the certificate files listed.
@@ -854,7 +853,7 @@ This app is very similar to the app used in the earlier lab **L06-Automatic Enro
     dotnet run
     ```
 
-    You should see output that shows the first device being connected via DPS and then telemetry being sent. Every 30 seconds thereafter, and additional device will be connected and commence sending telemetry until all 9 devices are connected and sending telemetry.
+    You should see output that shows the first device being connected via DPS and then telemetry being sent. Every 30 seconds thereafter, an additional device will be connected and commence sending telemetry until all 9 devices are connected and sending telemetry.
 
 1. Return to the DPS group enrollment in the Azure Portal.
 
@@ -894,7 +893,7 @@ In this exercise, you will examine some of the reporting and logging resources t
 
 To use the Azure Portal to review alerts, complete the following steps.
 
-1. In the Azure Portal, navigate back to you Dashboard.
+1. In the Azure Portal, navigate back to your Dashboard.
 
 1. On the Azure portal toolbar, in the search box, type **monitor**
 
@@ -914,13 +913,13 @@ To use the Azure Portal to review alerts, complete the following steps.
 
 1. In the **Time range** dropdown, click **Past hour**.
 
-    You should now see a summary of alerts for the last hour. Under **Total alert rules** you should see **1**, the alert you created earlier. Below this, you will see a list of the severity categories as well as the count of alerts per category. The alerts we are interested in are **Sev 3**. You should see at least one (if you have stopped and restarted the device simulator, you may have generated more that one alert).
+    You should now see a summary of alerts for the last hour. Under **Total alert rules** you should see **1**, the alert you created earlier. Below this, you will see a list of the severity categories as well as the count of alerts per category. The alerts we are interested in are **3 - Informational**. You should see at least one (if you have stopped and restarted the device simulator, you may have generated more that one alert).
 
-1. In the list of severities, click **Sev 3**.
+1. In the list of severities, click **3 - Informational**.
 
-    The **All Alerts** page will open. At the top of the page you will see a number of filter fields - these have been populated with the values from the preceding screen so that only the **Sev 3** alerts for the selected IoT hub are shown. It will show you the alerts that are active, and if there are any warnings.
+    The **All Alerts** page will open. At the top of the page you will see a number of filter fields - these have been populated with the values from the preceding screen so that only the **3 - Informational** alerts for the selected IoT hub are shown. It will show you the alerts that are active, and if there are any warnings.
 
-1. Under **Name**, to select your Sev 3 alert, click **Connected Devices Greater or Equal To 5**.
+1. Under **Name**, to select your 3 - Informational alert, click **Connected Devices Greater or Equal To 5**.
 
     A pane will open showing a **Summary** of the details for the alert. This includes a chart illustrating why the alert fired - a dash line shows the threshold value as well as the current values for the monitored metric. Below this are details of the **Criterion** and other details.
 
@@ -956,17 +955,17 @@ Earlier in this lab, you set up your diagnostic logs to be exported to blob stor
 
     The contents of the container will be listed to the right.
 
-    Logs are written to the container in a very nested fashion. You will need to open each subfolder in turn to navigate to the actual log data. The structure is similar to that show below:
+    Logs are written to the container in a very nested fashion. You will need to open each subfolder in turn to navigate to the actual log data. The structure is similar to that shown below:
 
     * **resourceId=**
       * **SUBSCRIPTIONS**
         * **<GUID>** - this is the ID for the subscription that generated the log
           * **RESOURCEGROUPS** - contains a folder for each resource group that generated a log
-            * "rg-az220" - the resource group that contains the IoT Hub
+            * "RG-AZ220" - the resource group that contains the IoT Hub
               * **PROVIDERS**
                 * **MICROSOFT.DEVICES**
                   * **IOTHUBS**
-                    * **iot-az220-training-{YOUR-INITIALS-AND-CURRENT-DATE}** - contains a folder for each year where a log was generated
+                    * **IOT-AZ220-TRAINING-{YOUR-INITIALS-AND-CURRENT-DATE}** - contains a folder for each year where a log was generated
                       * **Y=2019** - contains a folder for each month where a log was generated
                         * **m=12** - contains a folder for each day where a log was generated
                           * **d=15** - contains a folder for each hour where a log was generated
