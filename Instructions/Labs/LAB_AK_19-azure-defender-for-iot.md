@@ -241,13 +241,13 @@ In this task, you will create a Virtual Machine that will represent your IoT dev
 
 1. Login to [portal.azure.com](https://portal.azure.com) using your Azure account credentials.
 
-1. On the Azure portal menu, click **Create a resource**.
+1. In the **Search resources, services and docs** field, enter **Virtual machines**.
 
-1. On the **New** blade, in the Search the Marketplace textbox, type **Ubuntu Server 18.04 LTS** and then press **Enter**.
+1. In the search results, under **Services**, click **Virtual machines**.
 
-1. On the **Ubuntu Server 18.04 LTS** blade, click **Create**.
+1. On the **Virtual machines** page, click **+ Add** and select **Virtual machine**.
 
-1. On the **Create a virtual machine** blade, under **Subscription**, ensure that the Subscription you are using for this course is selected.
+1. On the **Create a virtual machine** blade, in the **Subscription** dropdown, ensure that the subscription you are using for this course is selected.
 
 1. In the **Resource group** dropdown, click **rg-az220vm**.
 
@@ -258,7 +258,7 @@ In this task, you will create a Virtual Machine that will represent your IoT dev
 
     > **Note**: You may encounter guidance that suggests creating a separate resource group for each of your VMs. Having a separate resource group for each VM can help you to manage any addition resources that you add to the VM. For the simple manner in which you use VMs in this course, having separate resource groups for each VM is not necessary or practical.
 
-1. In the **Virtual machine name** textbox, enter **vm-az220-training-edge0002-{your-id}**
+1. Under **Instance details**, in the **Virtual machine name** textbox, enter **vm-az220-training-edge0002-{your-id}**
 
 1. In the **Region** dropdown, select the Azure Region closest to you, or the region where your Azure IoT Hub is provisioned.
 
@@ -267,29 +267,33 @@ In this task, you will create a Virtual Machine that will represent your IoT dev
     > **Tip**:
     > Azure offers a range of options for managing availability and resiliency for your applications. Architect your solution to use replicated VMs in Availability Zones or Availability Sets to protect your apps and data from datacenter outages and maintenance events. In this lab, we don't required any high-availability features.
 
-1. In the **Image** dropdown, notice that **Ubuntu Server 18.04 LTS** is selected.
+1. In the **Image** field, select **Ubuntu Server 18.04 LTS - Gen1** image.
 
-1. For the **Azure Spot instance** field, ensure that **No** is selected.
+1. Leave **Azure Spot instance** field unchecked.
 
-    > **Tip**:
-    > Using Spot VMs allows you to take advantage of Azure unused capacity at a significant cost savings. At any point in time when Azure needs the capacity back, the Azure infrastructure will evict Spot VMs. Therefore, Spot VMs are great for workloads that can handle interruptions like batch processing jobs, dev/test environments, large compute workloads, and more. For this lab, we'll use a traditional VM.
+1. To the right of **Size**, click **Change size**.
+
+1. On the **Select a VM size** blade, under **VM Size**, click **Standard_B1ms**, and then click **Select**.
+
+    You may need to use the **Clear all filters** link to make this size available in the list.
+
+    > **Note**: Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
 1. Under **Administrator account**, to the right of **Authentication type**, click **Password**.
 
-1. For the Administrator **Username** and **Password** fields, enter values for the VM Administrator account.
+1. For the VM Administrator account, enter values for the **Username**, **Password**, and **Confirm password** fields.
 
-    > **Important**: Make a record of the VM Administrator username and password. In a production environment, you would need to keep these secure. For this lab it is okay to save the values to a text document so that you can find them later (in case you forget).
+    > **Important:** Do not lose/forget these values - you cannot connect to your VM without them.
 
-1. To the right of **Inbound port rules**, notice that **SSH (22)** is selected.
+1. Notice that the **Inbound port rules** are configured to enable inbound **SSH** access to the VM.
 
-    You will be using SSH to remote into the VM when you need to configure/manage the VM.
+    This will be used to remote into the VM to configure/manage it.
 
-1. At the bottom of the blade, click **Review + create**.
+1. Click **Review + create**.
 
-1. Once you see the "Validation passed" message, click **Create**.
+1. Wait for the **Validation passed** message to be displayed at the top of the blade, and then click **Create**.
 
-    > **Note**:
-    > Deployment can take approximately 5 minutes to complete. You can continue on to the next unit while it is deploying.
+    > **Note**:  Deployment can take as much as 5 minutes to complete. You can continue on to the next exercise while it is deploying.
 
 #### Task 2: Register New Devices
 
@@ -924,7 +928,7 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
     ![Devices with the most alerts tile](media/LAB_AK_19-devices-with-most-alerts-tile.png)
 
-    > **Note**: It can take between 10 and 15 minutes for alerts to be displayed on the dashboard.
+    > **Note**: It can take up to 30 minutes for alerts to be displayed on the dashboard.
 
 1. Under **Threat detection**, click the **Devices with the most alerts** tile.
 
