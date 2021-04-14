@@ -47,6 +47,38 @@ To ensure these resources are available, complete the following tasks.
 
     [![Deploy To Azure](media/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fbicep%2FAllfiles%2FBicep%2Flab04.json)
 
+1. If prompted, login to the **Azure Portal**.
+
+    The **Custom deployment** page will be displayed.
+
+1. Under **Project details**, in the **Subscription** dropdown, ensure that the Azure subscription that you intend to use for this course is selected.
+
+1. In the **Resource group** dropdown, select **rg-az220**.
+
+    > **NOTE**: If **rg-az220** is not listed:
+    >
+    > 1. Under the **Resource group** dropdown, click **Create new**.
+    > 1. Under **Name**, enter **rg-az220**.
+    > 1. Click **OK**.
+
+1. Under **Instance details**, in the **Region** dropdown, select the region closest to you.
+
+    > **NOTE**: If the **rg-az220** group already exists, the **Region** field is set to the region used by the resource group and is read-only.
+
+1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
+
+1. To validate the template, click **Review and create**.
+
+1. If validation passes, click **Create**.
+
+    The deployment will start.
+
+1. Once the deployment has completed, in the left navigation area, to review any output values from the template,  click **Outputs**.
+
+    Make a note of any outputs as necessary.
+
+The resources have now been created.
+
 ### Exercise 2: Create an Azure IoT Hub Device ID using the Azure portal
 
 During this course you will be using IoT Hub's capabilities to help you build a scalable, full-featured IoT solution for Contoso, but in this lab you are focused on using IoT Hub to establish reliable and secure bidirectional communications between IoT Hub and your IoT device(s).

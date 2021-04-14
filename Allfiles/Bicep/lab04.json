@@ -9,7 +9,7 @@
     }
   },
   "parameters": {
-    "yourId": {
+    "yourID": {
       "type": "string",
       "metadata": {
         "description": "Your unique ID - i.e. dm041221"
@@ -19,7 +19,7 @@
   "functions": [],
   "variables": {
     "location": "[resourceGroup().location]",
-    "iotHubName": "[concat('iot-az220-training-', parameters('yourId'))]"
+    "iotHubName": "[concat('iot-az220-training-', parameters('yourID'))]"
   },
   "resources": [
     {
