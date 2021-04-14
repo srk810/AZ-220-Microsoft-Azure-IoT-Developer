@@ -1,8 +1,7 @@
 @description('Your unique ID - i.e. dm041221')
 param yourId string
 
-@description('Specify the location of the resources.')
-param location string = resourceGroup().location
+var location = resourceGroup().location
 
 var iotHubName = concat('iot-az220-training-', yourId)
 
