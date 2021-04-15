@@ -22,7 +22,7 @@ resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     hub
   ]
   properties: {
-    azCliVersion: '2.21.0'
+    azCliVersion: '2.9.1'
     retentionInterval: 'P1D'
     arguments: '${iotHubName} ${deviceID}'
     primaryScriptUri: 'https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/Bicep/create-device.sh'

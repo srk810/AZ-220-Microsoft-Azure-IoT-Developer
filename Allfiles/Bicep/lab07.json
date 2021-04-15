@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.255.40792",
-      "templateHash": "7130056998702146096"
+      "templateHash": "17818040330525518805"
     }
   },
   "parameters": {
@@ -30,7 +30,7 @@
       "kind": "AzureCLI",
       "location": "[variables('location')]",
       "properties": {
-        "azCliVersion": "2.21.0",
+        "azCliVersion": "2.9.1",
         "retentionInterval": "P1D",
         "arguments": "[format('{0} {1}', variables('iotHubName'), variables('deviceID'))]",
         "primaryScriptUri": "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/Bicep/create-device.sh"
