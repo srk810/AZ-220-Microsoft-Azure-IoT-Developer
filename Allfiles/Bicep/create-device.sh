@@ -11,4 +11,4 @@ fi
 
 DeviceConnectionString=$( az iot hub device-identity connection-string show --hub-name $IoTHubName --device-id $DeviceID -o tsv )
 
-echo "{'DeviceConnectionString':'$DeviceConnectionString'}" > $AZ_SCRIPTS_OUTPUT_PATH
+echo "{'DeviceConnectionString':'${DeviceConnectionString}'}" > $AZ_SCRIPTS_OUTPUT_PATH
