@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.255.40792",
-      "templateHash": "14504268390514141854"
+      "templateHash": "8669018062091516266"
     }
   },
   "parameters": {
@@ -36,11 +36,14 @@
       "kind": "AzurePowerShell",
       "location": "[parameters('location')]",
       "properties": {
-        "azPowerShellVersion": "7",
+        "azPowerShellVersion": "5.6",
         "retentionInterval": "P1D",
         "arguments": "[format('-ioTHubName {0} -deviceID {1}', variables('iotHubName'), variables('deviceID'))]",
         "primaryScriptUri": "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/Bicep/create-device.ps1"
-      }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]"
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
@@ -54,12 +57,6 @@
         "parameters": {
           "iotHubName": {
             "value": "[variables('iotHubName')]"
-          },
-          "skuName": {
-            "value": "s1"
-          },
-          "skuUnits": {
-            "value": 1
           },
           "location": {
             "value": "[parameters('location')]"
