@@ -30,4 +30,4 @@ resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
 }
 
 output connectionString string = hub.outputs.connectionString
-output deviceConnectionString string = reference('createDevice').outputs.DeviceConnectionString
+output deviceConnectionString object = reference('createDevice').outputs

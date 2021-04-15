@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.3.255.40792",
-      "templateHash": "1567712117933057701"
+      "templateHash": "17648728037706556710"
     }
   },
   "parameters": {
@@ -126,8 +126,8 @@
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'hubDeploy'), '2019-10-01').outputs.connectionString.value]"
     },
     "deviceConnectionString": {
-      "type": "string",
-      "value": "[reference('createDevice').outputs.DeviceConnectionString]"
+      "type": "object",
+      "value": "[reference('createDevice').outputs]"
     }
   }
 }
