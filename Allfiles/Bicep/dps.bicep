@@ -5,10 +5,10 @@ param provisioningServiceName string
 param location string
 
 @description('The SKU to use for the IoT Hub.')
-param skuName string
+param skuName string = 'S1'
 
 @description('The number of IoT Hub units.')
-param skuUnits int
+param skuUnits int = 1
 
 @description('IoT Hub connection string.')
 param iotHubConnectionString string

@@ -42,108 +42,43 @@ This lab assumes that the following Azure resources are available:
 | IoT Hub | iot-az220-training-{your-id} |
 | Device Provisioning Service | dps-az220-training-{your-id} |
 
-If these resources are not available, you will need to run the **lab05-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+To ensure these resources are available, complete the following tasks.
 
-The **lab05-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+1. Select **Deploy to Azure**:
 
-1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+    [![Deploy To Azure](media/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fbicep%2FAllfiles%2FBicep%2Flab05.json)
 
-    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+1. If prompted, login to the **Azure Portal**.
 
-1. Verify that the Cloud Shell is using **Bash**.
+    The **Custom deployment** page will be displayed.
 
-    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+1. Under **Project details**, in the **Subscription** dropdown, ensure that the Azure subscription that you intend to use for this course is selected.
 
-1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. In the **Resource group** dropdown, select **rg-az220**.
 
-1. In the dropdown, click **Upload**.
+    > **NOTE**: If **rg-az220** is not listed:
+    >
+    > 1. Under the **Resource group** dropdown, click **Create new**.
+    > 1. Under **Name**, enter **rg-az220**.
+    > 1. Click **OK**.
 
-1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+1. Under **Instance details**, in the **Region** dropdown, select the region closest to you.
 
-    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+    > **NOTE**: If the **rg-az220** group already exists, the **Region** field is set to the region used by the resource group and is read-only.
 
-    * Allfiles
-      * Labs
-          * 05-Individual Enrollment of a Device in DPS
-            * Setup
+1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
 
-    The lab05-setup.azcli script file is located in the Setup folder for lab 5.
+1. To validate the template, click **Review and create**.
 
-1. Select the **lab05-setup.azcli** file, and then click **Open**.
+1. If validation passes, click **Create**.
 
-    A notification will appear when the file upload has completed.
+    The deployment will start.
 
-1. To verify that the correct file has uploaded, enter the following command:
+1. Once the deployment has completed, in the left navigation area, to review any output values from the template,  click **Outputs**.
 
-    ```bash
-    ls
-    ```
+    Make a note of any outputs as necessary.
 
-    The `ls` command lists the content of the current directory. You should see the lab05-setup.azcli file listed.
-
-1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
-
-    ```bash
-    mkdir lab5
-    mv lab05-setup.azcli lab5
-    cd lab5
-    ```
-
-    These commands will create a directory for this lab, move the **lab05-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
-
-1. To ensure the **lab05-setup.azcli** script has the execute permission, enter the following command:
-
-    ```bash
-    chmod +x lab05-setup.azcli
-    ```
-
-1. On the Cloud Shell toolbar, to enable access to the lab05-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
-
-1. In the **Files** list, to expand the lab5 folder and open the script file, click **lab5**, and then click **lab05-setup.azcli**.
-
-    The editor will now show the contents of the **lab05-setup.azcli** file.
-
-1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
-
-    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
-
-    ```bash
-    #!/bin/bash
-
-    # Change these values!
-    YourID="{your-id}"
-    Location="{your-location}"
-    ```
-
-    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
-
-    ```bash
-    az account list-locations -o Table
-
-    DisplayName           Latitude    Longitude    Name
-    --------------------  ----------  -----------  ------------------
-    East Asia             22.267      114.188      eastasia
-    Southeast Asia        1.283       103.833      southeastasia
-    Central US            41.5908     -93.6208     centralus
-    East US               37.3719     -79.8164     eastus
-    East US 2             36.6681     -78.3889     eastus2
-    ```
-
-1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
-
-    If prompted to save, click **Save** and the editor will close.
-
-    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
-
-1. To create the resources required for this lab, enter the following command:
-
-    ```bash
-    ./lab05-setup.azcli
-    ```
-
-    This will take a few minutes to run. You will see output as each step completes.
-
-    Once the script has completed, you will be ready to continue with the lab.
+The resources have now been created.
 
 ### Exercise 2: Create new individual enrollment (Symmetric keys) in DPS
 
@@ -192,7 +127,7 @@ In this exercise, you will create a new individual enrollment for a device withi
     As you only have one IoT Hub associated with the enrollment, this setting is somewhat unimportant.  In larger environments where you have multiple distributed hubs, this setting will control how to choose what IoT Hub should receive this device enrollment. There are four supported allocation policies:
 
     * **Lowest latency**: Devices are provisioned to an IoT hub based on the hub with the lowest latency to the device.
-    * **Evenly weighted distribution (default)**: Linked IoT hubs are equally likely to have devices provisioned to them. This is the default setting. If you are provisioning devices to only one IoT hub, you can keep this setting. 
+    * **Evenly weighted distribution (default)**: Linked IoT hubs are equally likely to have devices provisioned to them. This is the default setting. If you are provisioning devices to only one IoT hub, you can keep this setting.
     * **Static configuration via the enrollment list**: Specification of the desired IoT hub in the enrollment list takes priority over the Device Provisioning Service-level allocation policy.
     * **Custom (Use Azure Function)**: the device provisioning service calls your Azure Function code providing all relevant information about the device and the enrollment. Your function code is executed and returns the IoT hub information used to provisioning the device.
 
@@ -283,11 +218,11 @@ The simulated device that you create in this exercise represents an IoT device t
             * Starter
 
 1. In the **Open Folder** dialog, click **ContainerDevice**, and then click **Select Folder**.
- 
+
     The ContainerDevice folder is a sub-folder of the Lab 5 Starter folder. It contains a Program.cs file and a ContainerDevice.csproj file.
 
     > **Note**: If Visual Studio Code prompts you to load required assets, you can click **Yes** to load them.
- 
+
 1. On the **View** menu, click **Terminal**.
 
     Verify that the selected terminal shell is the windows command prompt.
@@ -320,7 +255,7 @@ The simulated device that you create in this exercise represents an IoT device t
 
 In this task, you will implement the code that provisions the device via DPS and creates a DeviceClient instance that can be used to connect to the IoT Hub.
 
-1. Take a minute to scan through the code in the **Program.cs** file. 
+1. Take a minute to scan through the code in the **Program.cs** file.
 
     The overall layout of the **ContainerDevice** application is similar to the **CaveDevice** application that you created in Lab 4. Notice that both applications include the following:
 
@@ -411,13 +346,13 @@ In this task, you will implement the code that provisions the device via DPS and
 
     * The **Program.ProvisionDevice** method contains the logic for registering the device via DPS.
     * The **Program.SendDeviceToCloudMessagesAsync** method sends the telemetry as Device-to-Cloud messages to Azure IoT Hub.
-    * The **EnvironmentSensor** class contains the logic for generating the simulated sensor readings for Temperature, Humidity, Pressure, Latitude, and Longitude. 
+    * The **EnvironmentSensor** class contains the logic for generating the simulated sensor readings for Temperature, Humidity, Pressure, Latitude, and Longitude.
 
 1. Locate the **SendDeviceToCloudMessagesAsync** method.
 
 1. At the bottom of the **SendDeviceToCloudMessagesAsync** method, notice the call to `Task.Delay()`.
 
-    `Task.Delay()` is used to "pause" the `while` loop for a period of time before creating and sending the next telemetry message. The **telemetryDelay** variable is used to define how many seconds to wait before sending the next telemetry message. Contoso is requiring that the delay time be configurable.  
+    `Task.Delay()` is used to "pause" the `while` loop for a period of time before creating and sending the next telemetry message. The **telemetryDelay** variable is used to define how many seconds to wait before sending the next telemetry message. Contoso is requiring that the delay time be configurable.
 
 1. Near the top of the **Program** class, locate the **telemetryDelay** variable declaration.
 
@@ -639,7 +574,7 @@ With the simulated device running, the `telemetryDelay` configuration can be upd
 
 In your Contoso scenario, when the shipping container arrives at it's final destination, the IoT device will be removed from the container and returned to a Contoso location. Contoso will need to deprovision the device before it can be tested and placed in inventory. In the future the device could be provisioned to the same IoT hub or an IoT hub in a different region. Complete device deprovisioning is an important step in the life cycle of IoT devices within an IoT solution.
 
-In this exercise, you will perform the tasks necessary to deprovision the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully deprovision an IoT device from an Azure IoT solution it must be removed from both of these services. 
+In this exercise, you will perform the tasks necessary to deprovision the device from both the Device Provisioning Service (DPS) and Azure IoT Hub. To fully deprovision an IoT device from an Azure IoT solution it must be removed from both of these services.
 
 #### Task 1: Disenroll the device from the DPS
 
