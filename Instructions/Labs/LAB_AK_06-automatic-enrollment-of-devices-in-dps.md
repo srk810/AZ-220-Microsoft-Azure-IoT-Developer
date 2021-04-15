@@ -38,106 +38,44 @@ This lab assumes that the following Azure resources are available:
 | IoT Hub | iot-az220-training-{your-id} |
 | Device Provisioning Service | dps-az220-training-{your-id} |
 
-If these resources are not available, you will need to run the **lab06-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+To ensure these resources are available, complete the following tasks.
 
-The **lab06-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+1. Select **Deploy to Azure**:
 
-1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+    [![Deploy To Azure](media/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fbicep%2FAllfiles%2FBicep%2Flab06.json)
 
-    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+1. If prompted, login to the **Azure Portal**.
 
-1. Verify that the Cloud Shell is using **Bash**.
+    The **Custom deployment** page will be displayed.
 
-    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+1. Under **Project details**, in the **Subscription** dropdown, ensure that the Azure subscription that you intend to use for this course is selected.
 
-1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. In the **Resource group** dropdown, select **rg-az220**.
 
-1. In the dropdown, click **Upload**.
+    > **NOTE**: If **rg-az220** is not listed:
+    >
+    > 1. Under the **Resource group** dropdown, click **Create new**.
+    > 1. Under **Name**, enter **rg-az220**.
+    > 1. Click **OK**.
 
-1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+1. Under **Instance details**, in the **Region** dropdown, select the region closest to you.
 
-    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+    > **NOTE**: If the **rg-az220** group already exists, the **Region** field is set to the region used by the resource group and is read-only.
 
-    * Allfiles
-      * Labs
-          * 06-Automatic Enrollment of Devices in DPS
-            * Setup
+1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
 
-    The lab06-setup.azcli script file is located in the Setup folder for lab 6.
+1. To validate the template, click **Review and create**.
 
-1. Select the **lab06-setup.azcli** file, and then click **Open**.
+1. If validation passes, click **Create**.
 
-    A notification will appear when the file upload has completed.
+    The deployment will start.
 
-1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
+1. Once the deployment has completed, in the left navigation area, to review any output values from the template,  click **Outputs**.
 
-    ```bash
-    ls
-    ```
+    Make a note of any outputs as necessary.
 
-    The `ls` command lists the content of the current directory. You should see the lab06-setup.azcli file listed.
+The resources have now been created.
 
-1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
-
-    ```bash
-    mkdir lab6
-    mv lab06-setup.azcli lab6
-    cd lab6
-    ```
-
-1. To ensure the **lab06-setup.azcli** script has the execute permission, enter the following command:
-
-    ```bash
-    chmod +x lab06-setup.azcli
-    ```
-
-1. On the Cloud Shell toolbar, to enable access to the lab06-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
-
-1. In the **Files** list, to expand the lab6 folder and open the script file, click **lab6**, and then click **lab06-setup.azcli**.
-
-    The editor will now show the contents of the **lab06-setup.azcli** file.
-
-1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
-
-    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
-
-    ```bash
-    #!/bin/bash
-
-    # Change these values!
-    YourID="{your-id}"
-    Location="{your-location}"
-    ```
-
-    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
-
-    ```bash
-    az account list-locations -o Table
-
-    DisplayName           Latitude    Longitude    Name
-    --------------------  ----------  -----------  ------------------
-    East Asia             22.267      114.188      eastasia
-    Southeast Asia        1.283       103.833      southeastasia
-    Central US            41.5908     -93.6208     centralus
-    East US               37.3719     -79.8164     eastus
-    East US 2             36.6681     -78.3889     eastus2
-    ```
-
-1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
-
-    If prompted to save, click **Save** and the editor will close.
-
-    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
-
-1. To create the resources required for this lab, enter the following command:
-
-    ```bash
-    ./lab06-setup.azcli
-    ```
-
-    This will take a few minutes to run. You will see output as each step completes.
-
-    Once the script has completed, you will be ready to continue with the lab.
 
 ### Exercise 2: Generate and Configure X.509 CA Certificates using OpenSSL
 

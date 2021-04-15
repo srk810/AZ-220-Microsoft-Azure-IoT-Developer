@@ -16,16 +16,19 @@ module hub './iotHub.bicep' = {
   }
 }
 
-resource script 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
-  name: 'deviceDeploy'
+var deviceID = 'sensor-v-3000'
+
+resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
+  name: 'createDevice'
   kind: 'AzurePowerShell'
   location: location
   properties: {
     azPowerShellVersion: '7'
     retentionInterval: 'P1D'
-    scriptContent:
+    arguments: '-ioTHubName ${iotHubName} -deviceID ${deviceID}'
+    primaryScriptUri: 'https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/Bicep/create-device.ps1'
   }
-
 }
 
 output connectionString string = hub.outputs.connectionString
+output deviceConnectionString string = reference('createDevice').outputs.deviceConnectionString

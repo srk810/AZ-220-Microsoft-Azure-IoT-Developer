@@ -19,7 +19,7 @@ The conveyor belt system is a critical link in this process and is visually moni
 * high vibration levels are known to accelerate wear-and-tear of the system
 * when vibration levels exceed a threshold limit, the conveyor belt must be stopped to allow for inspection (to avoid more serious failures)
 
-In addition to maximizing throughput, your automated IoT solution will implement a form of preventive maintenance based on vibration levels, which will be used to detect early warning signs before serious system damage occurs. 
+In addition to maximizing throughput, your automated IoT solution will implement a form of preventive maintenance based on vibration levels, which will be used to detect early warning signs before serious system damage occurs.
 
 > **Note**: **Preventive maintenance** (sometimes called preventative maintenance or predictive maintenance) is an equipment maintenance program that schedules maintenance activities to be performed while the equipment is operating normally. The intent of this approach is to avoid unexpected breakdowns that often incur costly disruptions.
 
@@ -57,114 +57,41 @@ This lab assumes that the following Azure resources are available:
 | IoT Hub | iot-az220-training-{your-id} |
 | Device ID | sensor-v-3000 |
 
-> **Important**: Run the setup script to create the required device.
+To ensure these resources are available, complete the following tasks.
 
-To create any missing resources and the new device you will need to run the **lab07-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+1. Select **Deploy to Azure**:
 
-The **lab07-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+    [![Deploy To Azure](media/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fbicep%2FAllfiles%2FBicep%2Flab07.json)
 
-1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+1. If prompted, login to the **Azure Portal**.
 
-    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+    The **Custom deployment** page will be displayed.
 
-1. Verify that the Cloud Shell is using **Bash**.
+1. Under **Project details**, in the **Subscription** dropdown, ensure that the Azure subscription that you intend to use for this course is selected.
 
-    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+1. In the **Resource group** dropdown, select **rg-az220**.
 
-1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
+    > **NOTE**: If **rg-az220** is not listed:
+    >
+    > 1. Under the **Resource group** dropdown, click **Create new**.
+    > 1. Under **Name**, enter **rg-az220**.
+    > 1. Click **OK**.
 
-1. In the dropdown, click **Upload**.
+1. Under **Instance details**, in the **Region** dropdown, select the region closest to you.
 
-1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+    > **NOTE**: If the **rg-az220** group already exists, the **Region** field is set to the region used by the resource group and is read-only.
 
-    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
 
-    * Allfiles
-      * Labs
-          * 07-Device Message Routing
-            * Setup
+1. To validate the template, click **Review and create**.
 
-    The lab07-setup.azcli script file is located in the Setup folder for lab 7.
+1. If validation passes, click **Create**.
 
-1. Select the **lab07-setup.azcli** file, and then click **Open**.
+    The deployment will start.
 
-    A notification will appear when the file upload has completed.
+1. Once the deployment has completed, in the left navigation area, to review any output values from the template,  click **Outputs**.
 
-1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
-
-    ```bash
-    ls
-    ```
-
-    The `ls` command lists the content of the current directory. You should see the lab07-setup.azcli file listed.
-
-1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
-
-    ```bash
-    mkdir lab7
-    mv lab07-setup.azcli lab7
-    cd lab7
-    ```
-
-1. To ensure that **lab07-setup.azcli** has the execute permission, enter the following command:
-
-    ```bash
-    chmod +x lab07-setup.azcli
-    ```
-
-1. On the Cloud Shell toolbar, to enable access to the lab07-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
-
-1. In the **FILES** list, to expand the lab7 folder and open the script file, click **lab7**, and then click **lab07-setup.azcli**.
-
-    The editor will now show the contents of the **lab07-setup.azcli** file.
-
-1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
-
-    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
-
-    ```bash
-    #!/bin/bash
-
-    # Change these values!
-    YourID="{your-id}"
-    Location="{your-location}"
-    ```
-
-    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
-
-    ```bash
-    az account list-locations -o Table
-
-    DisplayName           Latitude    Longitude    Name
-    --------------------  ----------  -----------  ------------------
-    East Asia             22.267      114.188      eastasia
-    Southeast Asia        1.283       103.833      southeastasia
-    Central US            41.5908     -93.6208     centralus
-    East US               37.3719     -79.8164     eastus
-    East US 2             36.6681     -78.3889     eastus2
-    ```
-
-1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
-
-    If prompted to save, click **Save** and the editor will close.
-
-    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
-
-1. To create the resources required for this lab, enter the following command:
-
-    ```bash
-    ./lab07-setup.azcli
-    ```
-
-    This script can take a few minutes to run. You will see output as each step completes.
-
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-v-3000** to the IoT hub and display the device connection string.
-
-1. Notice that, once the script has completed, the connection string for the device is displayed.
-
-    The connection string starts with "HostName="
-
-1. Copy the connection string into a text document, and note that it is for the **sensor-v-3000** device.
+1. Copy the **sensor-v-3000** output into a text document, and note that it is for the **sensor-v-3000** device.
 
     Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
 
@@ -207,7 +134,7 @@ In this exercise, you will:
     * VibrationDevice.csproj
 
     > **Note**: If you are prompted to load required assets, you can do that now.
- 
+
 1. In the **EXPLORER** pane, click **Program.cs**.
 
     A cursory glance will reveal that the **VibrationDevice** application is very similar to those used in the preceding labs. This version of the application uses symmetric Key authentication, sends both telemetry and logging messages to the IoT Hub, and has a more complex sensor implementation.
@@ -215,7 +142,7 @@ In this exercise, you will:
 1. On the **Terminal** menu, click **New Terminal**.
 
     Examine the directory path indicated as part of the command prompt to ensure that you are in the correct location. You do not want to start building this project within the folder structure of a previous lab project.
-  
+
 1. At the terminal command prompt, to verify that the application builds without errors, enter the following command:
 
     ```cmd
@@ -307,9 +234,9 @@ The simulated device app that you will build in this task simulates an IoT devic
     }
     ```
 
-    First off, notice that this method is being used to establish the infinite program loop, first taking a vibration reading and then sending messages at a defined time interval. 
+    First off, notice that this method is being used to establish the infinite program loop, first taking a vibration reading and then sending messages at a defined time interval.
 
-    A closer look reveals that the ConveyorBeltSimulator class is used to create a ConveyorBeltSimulator instance named `conveyor`. The `conveyor` object is first used to capture a vibration reading which is placed into a local `vibration` variable, and is then passed to the two create message methods along with the `vibration` value that was captured at the start of the interval. 
+    A closer look reveals that the ConveyorBeltSimulator class is used to create a ConveyorBeltSimulator instance named `conveyor`. The `conveyor` object is first used to capture a vibration reading which is placed into a local `vibration` variable, and is then passed to the two create message methods along with the `vibration` value that was captured at the start of the interval.
 
 1. Take a minute to review the **CreateTelemetryMessage** method.
 
@@ -422,7 +349,7 @@ In this task, you will use the Azure portal to verify that your IoT Hub is recei
 
 1. On the **Overview** pane, scroll down to view the metrics tiles.
 
-1. Adjacent to **Show data for last**, change the time range to one hour. 
+1. Adjacent to **Show data for last**, change the time range to one hour.
 
     The **Device to cloud messages** tile should be plotting some current activity. If no activity is shown, wait a short while, as there's some latency.
 
@@ -432,7 +359,7 @@ In this task, you will use the Azure portal to verify that your IoT Hub is recei
 
 IoT solutions often require that incoming message data be sent to multiple endpoint locations, either dependent upon the type of data or for business reasons. Azure IoT hub provides the _message routing_ feature to enable you to direct incoming data to locations required by your solution.
 
-The architecture of our system requires data be sent to two destinations: a storage location for archiving data, and a location for more immediate analysis. 
+The architecture of our system requires data be sent to two destinations: a storage location for archiving data, and a location for more immediate analysis.
 
 Contoso's vibration monitoring scenario requires you to create two message routes:
 
@@ -570,7 +497,7 @@ In this exercise, you will create and test the logging route.
 
 #### Task 4: Verify Data Archival
 
-1. Ensure that the device app you created in Visual Studio Code is still running. 
+1. Ensure that the device app you created in Visual Studio Code is still running.
 
     If not, run it in the Visual Studio Code terminal using `dotnet run`.
 
@@ -580,21 +507,21 @@ In this exercise, you will create and test the logging route.
 
 1. On the left-side menu of your **vibrationstore{your-id}** blade, click **Storage Explorer (preview)**.
 
-    You can use the Storage Explorer to verify that your data is being added to the storage account. 
+    You can use the Storage Explorer to verify that your data is being added to the storage account.
 
     > **Note**:  The Storage Explorer is currently in preview mode, so its exact mode of operation may change.
 
 1. In **Storage Explorer (preview)** pane, expand **BLOB CONTAINERS**, and then click **vibrationcontainer**.
 
-    To view the data, you will need to navigate down a hierarchy of folders. The first folder will be named for the IoT Hub. 
+    To view the data, you will need to navigate down a hierarchy of folders. The first folder will be named for the IoT Hub.
 
 1. In the right-hand pane, under **NAME**, double-click **iot-az220-training-{your-id}**, and then use double-clicks to navigate down into the hierarchy.
 
-    Under your IoT hub folder, you will see folders for the Partition, then numeric values for the Year, Month, and Day. The final folder represents the Hour, listed in UTC time. The Hour folder will contain a number of Block Blobs that contain your logging message data. 
+    Under your IoT hub folder, you will see folders for the Partition, then numeric values for the Year, Month, and Day. The final folder represents the Hour, listed in UTC time. The Hour folder will contain a number of Block Blobs that contain your logging message data.
 
 1. Double-click the Block Blob for the data with the earliest time stamp.
 
-    The URL link will open in a new browser tab. Although the data is not formatted in a way that is easy to read, you should be able to recognize it as your vibration messages. 
+    The URL link will open in a new browser tab. Although the data is not formatted in a way that is easy to read, you should be able to recognize it as your vibration messages.
 
 1. Close browser tab containing your data, and then navigate back to your Azure portal Dashboard.
 
@@ -747,7 +674,7 @@ This will enable you to verify that your route includes the following settings:
 
 Now for the fun part. Does the telemetry your device app is pumping out work its way along the route, and into the storage container?
 
-1. Ensure that the device app you created in Visual Studio Code is still running. 
+1. Ensure that the device app you created in Visual Studio Code is still running.
 
     If not, run it in the Visual Studio Code terminal using `dotnet run`.
 
@@ -771,13 +698,13 @@ Now for the fun part. Does the telemetry your device app is pumping out work its
 
 1. On the left-side menu, click **Storage Explorer (preview)**.
 
-    You can use Storage Explorer for additional reassurance that all of your data is getting to the storage account. 
+    You can use Storage Explorer for additional reassurance that all of your data is getting to the storage account.
 
     > **Note**:  The Storage Explorer is currently in preview mode, so its exact mode of operation may change.
 
 1. In **Storage Explorer (preview)**, under **BLOB CONTAINERS**, click **vibrationcontainer**.
 
-    To view the data, you will need to navigate down a hierarchy of folders. The first folder will be named for the IoT Hub, the next will be a partition, then year, month, day and finally hour. 
+    To view the data, you will need to navigate down a hierarchy of folders. The first folder will be named for the IoT Hub, the next will be a partition, then year, month, day and finally hour.
 
 1. In the right-hand pane, under **Name**, double-click the folder for your IoT hub, and then use double-clicks to navigate down into the hierarchy until you open the most recent hour folder.
 

@@ -5,10 +5,10 @@ param iotHubName string
 param location string
 
 @description('The SKU to use for the IoT Hub.')
-param skuName string
+param skuName string = 'S1'
 
 @description('The number of IoT Hub units.')
-param skuUnits int
+param skuUnits int = 1
 
 resource hub 'Microsoft.Devices/IotHubs@2020-08-31' = {
   name: iotHubName
