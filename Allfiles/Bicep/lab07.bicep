@@ -5,13 +5,10 @@ param yourId string
 param location string = resourceGroup().location
 
 var iotHubName = concat('iot-az220-training-', yourId)
-
 module hub './iotHub.bicep' = {
   name: 'hubDeploy'
   params: {
     iotHubName: iotHubName
-    skuName: 's1'
-    skuUnits: 1
     location: location
   }
 }
@@ -22,8 +19,11 @@ resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'createDevice'
   kind: 'AzurePowerShell'
   location: location
+  dependsOn: [
+    hub
+  ]
   properties: {
-    azPowerShellVersion: '7'
+    azPowerShellVersion: '5.6'
     retentionInterval: 'P1D'
     arguments: '-ioTHubName ${iotHubName} -deviceID ${deviceID}'
     primaryScriptUri: 'https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/Bicep/create-device.ps1'
