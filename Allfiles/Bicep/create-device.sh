@@ -1,6 +1,8 @@
 IoTHubName=$1
 DeviceID=$2
 
+az extension add --name azure-iot
+
 exists=$( az iot hub device-identity list  --hub-name $IoTHubName --query "[?contains(deviceId, '${DeviceID}')].deviceId" -o tsv )
 if [ "${exists}" == "${DeviceID}" ]
 then
