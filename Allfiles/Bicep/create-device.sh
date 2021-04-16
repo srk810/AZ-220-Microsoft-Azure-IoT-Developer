@@ -13,4 +13,4 @@ DeviceConnectionString=$( az iot hub device-identity connection-string show --hu
 
 echo $1
 echo $2
-echo "{'DeviceConnectionString':'${DeviceConnectionString}'}" > $AZ_SCRIPTS_OUTPUT_PATH
+echo "{'DeviceConnectionString':'${DeviceConnectionString}', 'Arg1': '$1', 'Arg2': '$2'}" > $AZ_SCRIPTS_OUTPUT_PATH
