@@ -738,7 +738,7 @@ To use the device twin properties (from Azure IoT Hub) on a device, you need to 
 
 In this exercise, you will make copies of your simulated device project, and then update your code to use the different device certificates that you created and added to the project folder.
 
-#### Task 1: Moke copies of your code project
+#### Task 1: Make copies of your code project
 
 1. Open Windows File Explorer.
 
@@ -1159,7 +1159,7 @@ In this task, you will delete your Enrollment Group, which will remove the enrol
 
 1. On the **Enrollment Group Details** blade, scroll down to locate the **Enable entry** field, and then click **Disable**.
 
-    Disabling the Group Enrollment within DPS allows you to temporarily disable devices within this Enrollment Group. This provides a temporary blacklist of the X.509 certificate used by these devices.
+    Disabling the Group Enrollment within DPS allows you to temporarily disable devices within this Enrollment Group. This provides a temporary list of the X.509 certificate that should not be used by these devices.
 
 1. At the top of the blade, click **Save**.
 
