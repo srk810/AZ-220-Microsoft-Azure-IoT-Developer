@@ -1,7 +1,7 @@
 ---
 lab:
     title: 'Lab 20: Build with IoT Central'
-    module: 'Module 11: Build with IoT Central'
+    module: 'Module 12: Build with IoT Central'
 ---
 
 # Create your first Azure IoT Central App
@@ -16,7 +16,7 @@ Contoso operates a fleet of refrigerated trucks that are used to deliver cheese 
 
 In order to make an informed decision, the driver and dispatcher need up-to-date information about the truck and the products that it is carrying. They need to know the location of each truck on a map, the status of the truck's cooling system, and the status of the truck's cargo.
 
-IoT Central provides everything that you will need to handle this scenario. 
+IoT Central provides everything that you will need to handle this scenario.
 
 The following resources will be created:
 
@@ -102,22 +102,22 @@ The data that will be communicated between a remote device and IoT Central is sp
 1. Under **Create a custom device template**, click **IoT device**.
 
 1. At the bottom of the page, click **Next: Customize**
-    
+
 1. In the **Enter a device template name** textbox, enter **RefrigeratedTruck** and then press **Enter**.
 
     > **Note**: do not select **Gateway device**.
-    
+
 1. At the bottom of the page, click **Next: Review**.
 
     Verify the **Basic Info** shown.
-    
+
 1. At the bottom of the **Review** page, click **Create**.
 
     Once the template has been created, the **RefrigeratedTruck** page will be displayed.
 
 1. On the **RefrigeratedTruck** page, under **Create a capability model**, click **Custom**.
 
-    You are now ready to add the specifics of the device template. 
+    You are now ready to add the specifics of the device template.
 
 #### Task 3: Add sensor telemetry
 
@@ -167,7 +167,7 @@ States are important, they let the operator know what is going on. A state in Io
 
 1. Under **Value schema**, notice the message informing you that **Complex type has to be defined**.
 
-    To simplify the lab scenario, you will define the truck's cargo state as one of the following: _empty_, _full_, or _melting_. 
+    To simplify the lab scenario, you will define the truck's cargo state as one of the following: _empty_, _full_, or _melting_.
 
 1. Under the **Complex type has to be defined** message, click **+**.
 
@@ -187,7 +187,7 @@ States are important, they let the operator know what is going on. A state in Io
 
 1. Carefully check each capability before moving on.
 
-    Now, to add some uncertainty to our simulation, let's add a failure state for the truck's cooling system. If the cooling system fails, as you'll see later in this lab, the chances of the contents "melting" increase considerably! You will add _on_, _off_ and _failed_ entries for the truck's cooling system. 
+    Now, to add some uncertainty to our simulation, let's add a failure state for the truck's cooling system. If the cooling system fails, as you'll see later in this lab, the chances of the contents "melting" increase considerably! You will add _on_, _off_ and _failed_ entries for the truck's cooling system.
 
 1. On the **RefrigeratedTruck** device template page, under **Capabilities**, click **+ Add capability**.
 
@@ -209,7 +209,7 @@ States are important, they let the operator know what is going on. A state in Io
 
     Make sure that the three state value options (on, off, failed) are repeated in all three **Display name**, **Name**, and **Value** fields.
 
-    The truck itself will need an even more complex state defined. If all goes well, a truck's normal routing might be: _ready_, _enroute_, _delivering_, _returning_, _loading_, and the back to _ready_ again. However, you will include a _dumping_ state to cater for when melted contents need to be taken back to the warehouse for inspection (and potentially disposed of). 
+    The truck itself will need an even more complex state defined. If all goes well, a truck's normal routing might be: _ready_, _enroute_, _delivering_, _returning_, _loading_, and the back to _ready_ again. However, you will include a _dumping_ state to cater for when melted contents need to be taken back to the warehouse for inspection (and potentially disposed of).
 
 1. Using the same process that you used to define the previous state capabilities, create a new capability as follows:
 
@@ -334,7 +334,7 @@ For refrigerated trucks, there are two commands you should add: a command to del
 
 1. Near the top of the page, click **Save**.
 
-    Before going any further carefully double check your interface. After an interface has been published, there are very limited editing options. It's important to get it right before publishing. 
+    Before going any further carefully double check your interface. After an interface has been published, there are very limited editing options. It's important to get it right before publishing.
 
     If you click on the name of the device template, in the menu that ends with the **Views** option, you'll get a summary of the capabilities.
 
@@ -366,7 +366,7 @@ To begin this exercise, you will create a dashboard showing all the capabilities
 
 1. Under **Telemetry**, click **Location**, an then click **Add tile**.
 
-    Dashboards are constructed using tiles, and the tiles that you choose can be arranged and resized. The Location tile will show the location of the truck on a map of the world, and by creating it first, there is plenty of room for you to resize the map. 
+    Dashboards are constructed using tiles, and the tiles that you choose can be arranged and resized. The Location tile will show the location of the truck on a map of the world, and by creating it first, there is plenty of room for you to resize the map.
 
 1. Hover your mouse pointer over the lower-right corner of the tile, and then drag the corner so that the tile height and width are about twice the default size.
 
@@ -388,13 +388,13 @@ To begin this exercise, you will create a dashboard showing all the capabilities
 
     Scroll around to view your dashboard. Examine the contents of the tiles and consider how you might use that information.
 
-1. Quickly arrange the position of the tiles. 
+1. Quickly arrange the position of the tiles.
 
     Don't spend too much time on this now, but notice that you can drag tiles around, and that the portal will try to rearrange them neatly.
 
 1. Click **Save**, and then click **Publish**.
 
-    Notice that the publish dialog now shows **Yes** next to **Views**. 
+    Notice that the publish dialog now shows **Yes** next to **Views**.
 
 1. On the publish dialog, click **Publish**.
 
@@ -410,7 +410,7 @@ IoT Central can be connected to physical devices with real sensors, or to simula
 
 1. On the **Devices** menu, under **All devices**, click **RefrigeratedTruck**
 
-    Notice that the screen refreshed and that the device template you selected is now shown in bold text. If you had a large number of device templates, this would help you to ensure that you're using the correct device template. 
+    Notice that the screen refreshed and that the device template you selected is now shown in bold text. If you had a large number of device templates, this would help you to ensure that you're using the correct device template.
 
 1. On the top menu, click **+ New**.
 
@@ -424,13 +424,13 @@ IoT Central can be connected to physical devices with real sensors, or to simula
 
 1. Under **Simulated**, ensure that **Off** is selected.
 
-    Recall that IoT Central treats the connection to physical and simulated devices in the same way. Both are remote apps, and both are real. You will be building a real truck here. Well, a simulated _real_ truck! 
+    Recall that IoT Central treats the connection to physical and simulated devices in the same way. Both are remote apps, and both are real. You will be building a real truck here. Well, a simulated _real_ truck!
 
     Setting this Simulated value to **On** would instruct IoT Central to pump out random values for your telemetry. These random values can be useful in validating a device template, but in this lab you will be simulating the telemetry with you own simulated device (truck).
 
 1. On the **Create new device** dialog, click **Create**.
 
-    Wait a few seconds, then your device list should be populated with a single entry. 
+    Wait a few seconds, then your device list should be populated with a single entry.
 
     Notice that the **Device status** is set to **Registered**. The IoT Central app will only accept a connection to a device when the **Device status** is **Provisioned**. Later in this lab there's a coding task that shows you how to provision a device.
 
@@ -556,7 +556,7 @@ Using Visual Studio Code, build the device sensor app.
 1. On the **View** menu, to open the integrated terminal, click **Terminal**.
 
     You should see RefrigeratedTruck folder listed in terminal command prompt. This is important because the following commands will run in the current folder.
- 
+
 1. At the Terminal command prompt, to create a new console app, enter the following command:
 
     ```cmd/sh
@@ -593,7 +593,7 @@ In this task, you will build the simulated device app for your Refrigerated Truc
 
 To make this process as simple as possible, each additional section of code should be appended to the end of the file, in the order listed here.
 
-> **Note**: 
+> **Note**:
 > If you would like to skip this task, and load all of the code into your app, then download and copy all of the contents of Program.cs from [MicrosoftDocs/mslearn-your-first-iot-central-app](https://github.com/MicrosoftDocs/mslearn-your-first-iot-central-app) into the Program.cs file of your project. If you copy this code (and replace the connection and subscription strings) then go straight to the next task, and start testing!
 
 1. In the Code Editor pane, to add the required `using` statements, enter the following code:
@@ -861,7 +861,7 @@ To make this process as simple as possible, each additional section of code shou
             }
     ```
 
-    > **Note**: 
+    > **Note**:
     > The key call within the code above is `var directions = azureMapsServices.GetRouteDirections(req).Result;`. The `directions` structure is complex. Consider setting a breakpoint in this method, and examining the contents of `directions`.
 
 1. In the Code Editor pane, to add the direct method to deliver to a customer, enter the following code:
@@ -929,7 +929,7 @@ To make this process as simple as possible, each additional section of code shou
         }
     ```
 
-    > **Note**: 
+    > **Note**:
     > The device responds with a conflict, if the device isn't in the correct state. The command itself is acknowledged at the end of the method. The recall command that follows in the next step handles things similarly.
 
 1. In the Code Editor pane, to add the recall direct method, enter the following code:
@@ -1140,7 +1140,7 @@ To make this process as simple as possible, each additional section of code shou
         }
     ```
 
-    > **Note**: 
+    > **Note**:
     > This function is called every time interval. The actual time interval is set at 5 seconds, though the _simulated time_ (the number of simulated seconds you specify that has passed each time this function is called) is set by the global `static double interval = 60`. Setting this value at 60 means the simulation runs at a rate of 60 divided by 5, or 12 times real time. To lower the simulated time, reduce `interval` to, say, 30 (for a simulation that runs at six times real-time). Setting `interval` at 5 would run the simulation in real-time. Though realistic, this speed would be a bit slow, given the real driving times to the customer destinations.
 
 1. In the Code Editor pane, to add the methods that will send truck telemetry (and send events too, if any have occurred), enter the following code:
@@ -1198,7 +1198,7 @@ To make this process as simple as possible, each additional section of code shou
         }
     ```
 
-    > **Note**: 
+    > **Note**:
     > The `SendTruckTelemetryAsync` is an important function, handling the sending of telemetry, states, and events to IoT Central. Note the use of JSON strings to send the data.
 
 1. In the Code Editor pane, to add the code that will handle settings and properties, enter the following code:
@@ -1236,7 +1236,7 @@ To make this process as simple as possible, each additional section of code shou
 
     You only have one setting and one property added to your app. If more are required, they are easily added.
 
-    > **Note**: 
+    > **Note**:
     > This section of code is generic to most C# apps that communicate with IoT Central. To add additional properties or settings, add to `reportedProperties`, or create a new setting string, and check on `desiredProperties`, respectively. No other code changes are usually needed.
 
 1. In the Code Editor pane, to add the `Main` function, enter the following code:
@@ -1317,7 +1317,7 @@ To make this process as simple as possible, each additional section of code shou
     }
     ```
 
-    > **Note**: 
+    > **Note**:
     > Direct methods are set in the client using statements such as `s_deviceClient.SetMethodHandlerAsync("cmdGoTo", CmdGoToCustomer, null).Wait();`.
 
 1. On the **File** menu, click **Save**.
@@ -1346,7 +1346,7 @@ To fully test the refrigerated truck device, it helps to break down the testing 
 
 In addition to this list, there are edge-cases you could also investigate. One such case is what happens when the truck's contents start to melt? This state is left up to chance in our simulation, with the use of random numbers in our code in the previous task.
 
-#### Task 1: Prepare IoT Central and Your Simulated Device 
+#### Task 1: Prepare IoT Central and Your Simulated Device
 
 1. Ensure that your Azure IoT Central app is open in a browser.
 
@@ -1380,7 +1380,7 @@ In addition to this list, there are edge-cases you could also investigate. One s
 
 #### Task 3: Confirm the telemetry functions send data on the specified interval
 
-1. Verify that telemetry data is being sent. 
+1. Verify that telemetry data is being sent.
 
     A console message should appear every five seconds, with the contents temperature.
 
@@ -1408,11 +1408,11 @@ In addition to this list, there are edge-cases you could also investigate. One s
 
 1. Verify that the temperatures being sent by the device app match the data being shown in the telemetry view of the IoT Central app.
 
-    Compare the most recent values in the Terminal pane of Visual Studio Code with the most recent values displayed on the "Contents temperature" graph. 
+    Compare the most recent values in the Terminal pane of Visual Studio Code with the most recent values displayed on the "Contents temperature" graph.
 
 1. To verify that the truck and its contents are in the expected state, check the state tiles: **Truck state**, **Cooling system state**, and **Contents state**.
 
-1. Check the **Location** map view for the device. 
+1. Check the **Location** map view for the device.
 
     A blue circle near Seattle, USA shows our truck ready to go. You may have to zoom out a bit.
 
@@ -1422,7 +1422,7 @@ In addition to this list, there are edge-cases you could also investigate. One s
 
 #### Task 5. Confirm the command to send the truck to a specified customer works as expected
 
-1. On your **RefrigeratedTruck - 1** dashboard, just below the dashboard title, click **Commands**. 
+1. On your **RefrigeratedTruck - 1** dashboard, just below the dashboard title, click **Commands**.
 
 1. Under **Customer ID**, enter **1**
 
@@ -1434,7 +1434,7 @@ In addition to this list, there are edge-cases you could also investigate. One s
 
     In the console for the device app, you should both see a **New customer** event, and a **Route found** message.
 
-   > **Note**: 
+   > **Note**:
    > If you see a message including the text **Access denied due to invalid subscription key**, then check your subscription key to Azure Maps.
 
 1. On the dashboard **Location** tile, verify that your truck is on its way.
@@ -1447,7 +1447,7 @@ In addition to this list, there are edge-cases you could also investigate. One s
 
 #### Task 6. Confirm the command to recall the truck works as expected
 
-1. Verify that when the truck returns to base and is reloaded with contents, that the Truck state is updated to **ready**. 
+1. Verify that when the truck returns to base and is reloaded with contents, that the Truck state is updated to **ready**.
 
     Try issuing another delivery command. Choose a different customer ID.
 
@@ -1459,7 +1459,7 @@ In addition to this list, there are edge-cases you could also investigate. One s
 
 To test a conflict event, you can send a command that you know doesn't make sense.
 
-1. With your truck at the base, issue a Recall command. 
+1. With your truck at the base, issue a Recall command.
 
 1. Verify that the truck responds with the "already at base" event.
 
@@ -1467,7 +1467,7 @@ To test a conflict event, you can send a command that you know doesn't make sens
 
 1. Verify that the **Truck ID** tile displays **Truck number 1**.
 
-    This Property is on of the simplest things to test. 
+    This Property is on of the simplest things to test.
 
     Testing a writable property is more complex, The **OptimalTemperature** property is a writable property, so that will be the next test.
 
@@ -1523,7 +1523,7 @@ In this exercise, you will complete the steps required to add multiple trucks to
 
 1. Under **Device name**, enter **RefrigeratedTruck - 2**
 
-1. At the bottom of the **Create new device** dialog, click **Create**. 
+1. At the bottom of the **Create new device** dialog, click **Create**.
 
     You can repeat the process above to additional trucks if you want.
 
@@ -1549,7 +1549,7 @@ In this exercise, you will complete the steps required to add multiple trucks to
 
 Each truck will be simulated by a separately running instance of your simulated device app. So, you need multiple versions of your app running at the same time.
 
-1. To create the new simulated device apps, repeat the **Create a programming project for a real device** task for each of the new trucks you created in your IoT Central app. 
+1. To create the new simulated device apps, repeat the **Create a programming project for a real device** task for each of the new trucks you created in your IoT Central app.
 
 1. Verify that you have replaced the **Device ID** and **Primary Key** with the values for the new truck.
 
@@ -1565,7 +1565,7 @@ Each truck will be simulated by a separately running instance of your simulated 
 
 1. Verify that the one dashboard you created works for all trucks.
 
-1. Using the dashboard for each truck, try ordering the trucks to different customers. 
+1. Using the dashboard for each truck, try ordering the trucks to different customers.
 
 1. Using the **Location** map on each dashboard, verify the trucks are heading in the right direction.
 

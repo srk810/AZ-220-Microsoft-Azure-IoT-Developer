@@ -1,6 +1,6 @@
 ---
 lab:
-    title: 'Lab 19: Detect if your IoT Device was Tampered with Azure Defender for IoT'
+    title: 'Lab 18: Detect if your IoT Device was Tampered with Azure Defender for IoT'
     module: 'Module 10: Azure Defender and IoT Security'
 ---
 
@@ -16,7 +16,7 @@ Contoso is also installing new connected Thermostats that will improve the abili
 
 The following resources will be created:
 
-![Lab 19 Architecture](media/LAB_AK_19-architecture.png)
+![Lab 18 Architecture](media/LAB_AK_18-architecture.png)
 
 > **TIP**: **Azure Defender for IoT** was previously referred to as **Azure Security Center for IoT**. You may find some inconsistencies in the online documentation, GitHub resources and in this content due to the phased rollout of the name change.
 
@@ -48,9 +48,9 @@ This lab assumes that the following Azure resources are available:
 | Resource Group | rg-az220 |
 | IoT Hub | iot-az220-training-{your-id} |
 
-If these resources are not available, you will need to run the **lab19-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+If these resources are not available, you will need to run the **lab18-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
 
-> **Note**: The **lab19-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+> **Note**: The **lab18-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
 
 1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
@@ -70,12 +70,12 @@ If these resources are not available, you will need to run the **lab19-setup.azc
 
     * Allfiles
       * Labs
-          * 19-Azure-security-center-for-iot
+          * 18-Azure-security-center-for-iot
             * Setup
 
-    The lab19-setup.azcli script file is located in the Setup folder for lab 19.
+    The lab18-setup.azcli script file is located in the Setup folder for Lab 18.
 
-1. Select the **lab19-setup.azcli** file, and then click **Open**.
+1. Select the **lab18-setup.azcli** file, and then click **Open**.
 
     A notification will appear when the file upload has completed.
 
@@ -85,29 +85,29 @@ If these resources are not available, you will need to run the **lab19-setup.azc
     ls
     ```
 
-    The `ls` command lists the content of the current directory. You should see the lab19-setup.azcli file listed.
+    The `ls` command lists the content of the current directory. You should see the lab18-setup.azcli file listed.
 
 1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
 
     ```bash
-    mkdir lab19
-    mv lab19-setup.azcli lab19
-    cd lab19
+    mkdir lab18
+    mv lab18-setup.azcli lab18
+    cd lab18
     ```
 
-    These commands will create a directory for this lab, move the **lab19-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
+    These commands will create a directory for this lab, move the **lab18-setup.azcli** file into that directory, and then change directory to make the new directory the current working directory.
 
-1. To ensure the **lab19-setup.azcli** has the execute permission, enter the following command:
+1. To ensure the **lab18-setup.azcli** has the execute permission, enter the following command:
 
     ```bash
-    chmod +x lab19-setup.azcli
+    chmod +x lab18-setup.azcli
     ```
 
-1. On the Cloud Shell toolbar, to enable access to the lab19-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
+1. On the Cloud Shell toolbar, to enable access to the lab18-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
 
-1. In the **Files** list, to expand the lab19 folder and open the script file, click **lab19**, and then click **lab19-setup.azcli**.
+1. In the **Files** list, to expand the lab18 folder and open the script file, click **lab18**, and then click **lab18-setup.azcli**.
 
-    The editor will now show the contents of the **lab19-setup.azcli** file.
+    The editor will now show the contents of the **lab18-setup.azcli** file.
 
 1. In the editor, update the values of the `{your-id}` and `{your-location}` variables.
 
@@ -144,7 +144,7 @@ If these resources are not available, you will need to run the **lab19-setup.azc
 1. To create the resources required for this lab, enter the following command:
 
     ```bash
-    ./lab19-setup.azcli
+    ./lab18-setup.azcli
     ```
 
     This will take a few minutes to run. You will see output as each step completes.
@@ -279,6 +279,14 @@ In this task, you will create a Virtual Machine that will represent your IoT dev
 
     > **Note**: Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
+1. To the right of **Size**, click **Change size**.
+
+1. On the **Select a VM size** blade, under **VM Size**, click **Standard_B1ms**, and then click **Select**.
+
+    You may need to use the **Clear all filters** link to make this size available in the list.
+
+    > **Note**: Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
+
 1. Under **Administrator account**, to the right of **Authentication type**, click **Password**.
 
 1. For the VM Administrator account, enter values for the **Username**, **Password**, and **Confirm password** fields.
@@ -352,13 +360,13 @@ In this task, you will be creating a security module twin manually.
 
     > **IMPORTANT**: The Module Identity must be called **azureiotsecurity** and not another unique name.
 
-    ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-module-identity.png)
+    ![Screenshot of Azure IoT Security Module](media/LAB_AK_18-module-identity.png)
 
 1. On the **vm-az220-training-edge0002-{your-id}** blade, to the right of **Primary Key**, click **Copy**, and then save the value for later.
 
     > **Note**: Make sure to copy the device's **Primary Key** and not the connection string.
 
-    ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-primary-key.png)
+    ![Screenshot of Azure IoT Security Module](media/LAB_AK_18-primary-key.png)
 
 1. Navigate back to your IoT Hub blade.
 
@@ -549,7 +557,7 @@ In this lab, you will be using the symmetric key as authentication and will need
 
 1. Under **Module Identities**, notice that your **azureiotsecurity** module is now in a **Connected** state.
 
-    ![Screenshot of Azure IoT Security Module Connected](media/LAB_AK_19-device-connected-agent.png)
+    ![Screenshot of Azure IoT Security Module Connected](media/LAB_AK_18-device-connected-agent.png)
 
 Now that your Azure Defender for IoT device agents are installed on your device, the agents will be able to collect, aggregate and analyze raw security events from your device.
 
@@ -609,7 +617,7 @@ You now have your the security agent installed on your device and your solution 
 
     You will see the health overview for your devices, hubs, and other resources appear on two charts. You can see the Built-in real-time monitoring, recommendations and alerts that were enabled right when you turn on your Azure IoT Defender.
 
-    ![Screenshot of Azure IoT Security Module](media/LAB_AK_19-security-dashboard.png)
+    ![Screenshot of Azure IoT Security Module](media/LAB_AK_18-security-dashboard.png)
 
 1. On the left-side menu, under **Security**, to view the monitored resources, click **Settings** and then click **Monitored Resources**
 
@@ -620,7 +628,7 @@ You now have your the security agent installed on your device and your solution 
 
     The image below shows the dashboard status once the security evaluation has been performed.
 
-    ![Updated Screenshot of Azure IoT Security Module](media/LAB_AK_19-updated-security-dashboard.png)
+    ![Updated Screenshot of Azure IoT Security Module](media/LAB_AK_18-updated-security-dashboard.png)
 
 ### Exercise 7: Introduce custom alerts
 
@@ -702,7 +710,7 @@ In this task, you will create a custom alert.
 
     You will be returned to the list of custom alerts. Below is an image that shows a number of custom alerts:
 
-    ![Many custom alerts](media/LAB_AK_19-many-custom-alerts.png)
+    ![Many custom alerts](media/LAB_AK_18-many-custom-alerts.png)
 
 ### Exercise 8: Configure the Device App
 
@@ -834,7 +842,7 @@ A device must be registered with your IoT hub before it can connect.
 
 1. On the **File** menu, click **Open Folder**
 
-1. In the Open Folder dialog, navigate to the lab 19 Starter folder.
+1. In the Open Folder dialog, navigate to the Lab 18 Starter folder.
 
 1. Click **CaveDevice**, and then click **Select Folder**.
 
@@ -922,11 +930,11 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
     Take a look at the **Threat detection** section. You should see one or more alerts displayed in the **Device security alerts** chart:
 
-    ![Device security alert chart](media/LAB_AK_19-device-security-alert-chart.png)
+    ![Device security alert chart](media/LAB_AK_18-device-security-alert-chart.png)
 
     You should also see an entry for the **sensor-th-0070** device in the **Devices with the most alerts** tile:
 
-    ![Devices with the most alerts tile](media/LAB_AK_19-devices-with-most-alerts-tile.png)
+    ![Devices with the most alerts tile](media/LAB_AK_18-devices-with-most-alerts-tile.png)
 
     > **Note**: It can take up to 30 minutes for alerts to be displayed on the dashboard.
 
@@ -936,7 +944,7 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
     You will see a list of Security Alerts:
 
-    ![Security Alert List](media/LAB_AK_19-security-alert-list.png)
+    ![Security Alert List](media/LAB_AK_18-security-alert-list.png)
 
     The latest alerts will be marked with a **NEW** label.
 
@@ -944,7 +952,7 @@ At this point, your console app will have sent enough telemetry to trigger the C
 
     A detail pane will open. The **General information** provides high-level information concerning the alert. Beneath this, the **Last 10 Affected Devices** should list the **sensor-th-0070** device.
 
-    ![Custom Alert Details Pane](media/LAB_AK_19-custom-alert-details-pane.png)
+    ![Custom Alert Details Pane](media/LAB_AK_18-custom-alert-details-pane.png)
 
 1. Return to Visual Studio Code and exit the device app.
 
