@@ -1410,7 +1410,7 @@ Similar to Models and Twins, relationships can be created in multiple ways.
     az dt twin relationship create -n adt-az220-training-{your-id} --relationship-id factory_1_has_cave_1 --relationship rel_has_caves --twin-id factory_1 --target cave_1
     ```
 
-    Ensure you replace the **{file-root}** with the folder the companion files for this lab are located, and replace **{your-id}** with your unique identifier.
+    Ensure you replace **{your-id}** with your unique identifier.
 
     If successful, the output of the command is similar to:
 
