@@ -279,14 +279,6 @@ In this task, you will create a Virtual Machine that will represent your IoT dev
 
     > **Note**: Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
 
-1. To the right of **Size**, click **Change size**.
-
-1. On the **Select a VM size** blade, under **VM Size**, click **Standard_B1ms**, and then click **Select**.
-
-    You may need to use the **Clear all filters** link to make this size available in the list.
-
-    > **Note**: Not all VM sizes are available in all regions. If, in a later step, you are unable to select the VM size, try a different region. For example, if **West US** doesn't have the sizes available, try **West US 2**.
-
 1. Under **Administrator account**, to the right of **Authentication type**, click **Password**.
 
 1. For the VM Administrator account, enter values for the **Username**, **Password**, and **Confirm password** fields.
