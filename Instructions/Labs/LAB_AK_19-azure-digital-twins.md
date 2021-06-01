@@ -1136,9 +1136,7 @@ ADT explorer is written as a single-page JavaScript application. You can run it 
 
     If node is installed, ensure that the version displayed is 10+. If not, [download and install node.js](https://nodejs.org/en/#home-downloadhead).
 
-1. Open a browser and navigate to [Azure Digital Twins (ADT) explorer](https://docs.microsoft.com/samples/azure-samples/digital-twins-explorer/digital-twins-explorer/).
-
-1. To download the application, click **Download ZIP**.
+1. To download the ADT Explorer source code, open a browser and click the following link [Azure Digital Twins (ADT) explorer Release zip](https://github.com/Azure-Samples/digital-twins-explorer/releases/download/235622/Azure_Digital_Twins__ADT__explorer.zip).
 
     The browser will download the **Azure_Digital_Twins__ADT__explorer.zip** file.
 
@@ -1146,7 +1144,7 @@ ADT explorer is written as a single-page JavaScript application. You can run it 
 
 1. In a command shell, navigate to the location where the **Azure_Digital_Twins__ADT__explorer.zip** was extracted.
 
-    This folder contains documentation as well as folders that contain the application.
+    This folder structure contains documentation as well as folders that contain the application.
 
 1. Navigate to the **client\src** folder.
 
