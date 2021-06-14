@@ -20,7 +20,7 @@ if ($Environment -eq "Prod") {
 }
 
 $portalUrl = 'https://portal.azure.com/#create/Microsoft.Template/'
-$githubUrl = "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/$($branchName)/Allfiles/Bicep/$($Lab).json"
+$githubUrl = "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/$($branchName)/Allfiles/ARM/$($Lab).json"
 
 $finalUrl = "$($portalUrl)$([System.Web.HttpUtility]::UrlEncode($githubUrl))"
 
