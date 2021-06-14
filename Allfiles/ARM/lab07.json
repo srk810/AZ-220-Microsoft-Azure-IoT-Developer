@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "15145464895113379437"
+      "templateHash": "260707618307183898"
     }
   },
   "parameters": {
@@ -40,7 +40,7 @@
         "retentionInterval": "P1D",
         "cleanupPreference": "OnExpiration",
         "arguments": "[format('{0} {1}', variables('iotHubName'), variables('deviceID'))]",
-        "primaryScriptUri": "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/Bicep/create-device.sh"
+        "primaryScriptUri": "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/ARM/create-device.sh"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]"

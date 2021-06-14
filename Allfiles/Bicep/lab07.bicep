@@ -27,7 +27,7 @@ resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     retentionInterval: 'P1D'
     cleanupPreference: 'OnExpiration'
     arguments: '${iotHubName} ${deviceID}'
-    primaryScriptUri: 'https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/Bicep/create-device.sh'
+    primaryScriptUri: 'https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/ARM/create-device.sh'
   }
 }
 
