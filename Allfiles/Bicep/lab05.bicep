@@ -1,9 +1,11 @@
 @description('Your unique ID - i.e. dm041221')
-param yourId string
+param yourID string
+@description('Course ID - i.e. az220')
+param courseID string
 
 var location = resourceGroup().location
-var iotHubName = concat('iot-az220-training-', yourId)
-var provisioningServiceName = concat('dps-az220-training-', yourId)
+var iotHubName = 'iot-${courseID}-training-${yourID}'
+var provisioningServiceName = 'dps-${courseID}-training-${yourID}'
 
 module hubAndDps './hubAndDps.bicep' = {
   name: 'iotHubAndDpsDeploy'

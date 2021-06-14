@@ -4,23 +4,29 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.3.255.40792",
-      "templateHash": "788219237972469874"
+      "version": "0.4.63.48766",
+      "templateHash": "10568617531098486522"
     }
   },
   "parameters": {
-    "yourId": {
+    "yourID": {
       "type": "string",
       "metadata": {
         "description": "Your unique ID - i.e. dm041221"
+      }
+    },
+    "courseID": {
+      "type": "string",
+      "metadata": {
+        "description": "Course ID - i.e. az220"
       }
     }
   },
   "functions": [],
   "variables": {
     "location": "[resourceGroup().location]",
-    "iotHubName": "[concat('iot-az220-training-', parameters('yourId'))]",
-    "provisioningServiceName": "[concat('dps-az220-training-', parameters('yourId'))]"
+    "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
+    "provisioningServiceName": "[format('dps-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]"
   },
   "resources": [
     {
@@ -55,8 +61,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.3.255.40792",
-              "templateHash": "17061490249858349834"
+              "version": "0.4.63.48766",
+              "templateHash": "14731201881754801090"
             }
           },
           "parameters": {
@@ -122,8 +128,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.3.255.40792",
-                      "templateHash": "6612811586581636796"
+                      "version": "0.4.63.48766",
+                      "templateHash": "12243660516307971687"
                     }
                   },
                   "parameters": {
@@ -211,8 +217,8 @@
                   "metadata": {
                     "_generator": {
                       "name": "bicep",
-                      "version": "0.3.255.40792",
-                      "templateHash": "15881771630313198111"
+                      "version": "0.4.63.48766",
+                      "templateHash": "16451121011065493845"
                     }
                   },
                   "parameters": {

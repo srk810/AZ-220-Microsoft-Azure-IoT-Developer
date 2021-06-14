@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.3.255.40792",
-      "templateHash": "8031481798339240951"
+      "version": "0.4.63.48766",
+      "templateHash": "15145464895113379437"
     }
   },
   "parameters": {
@@ -14,14 +14,38 @@
       "metadata": {
         "description": "Your unique ID - i.e. dm041221"
       }
+    },
+    "courseID": {
+      "type": "string",
+      "metadata": {
+        "description": "Course ID - i.e. az220"
+      }
     }
   },
   "functions": [],
   "variables": {
     "location": "[resourceGroup().location]",
-    "iotHubName": "[concat('iot-az220-training-', parameters('yourID'))]"
+    "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
+    "deviceID": "sensor-v-3000"
   },
   "resources": [
+    {
+      "type": "Microsoft.Resources/deploymentScripts",
+      "apiVersion": "2020-10-01",
+      "name": "createDevice",
+      "kind": "AzureCLI",
+      "location": "[variables('location')]",
+      "properties": {
+        "azCliVersion": "2.20.0",
+        "retentionInterval": "P1D",
+        "cleanupPreference": "OnExpiration",
+        "arguments": "[format('{0} {1}', variables('iotHubName'), variables('deviceID'))]",
+        "primaryScriptUri": "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/Bicep/create-device.sh"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]"
+      ]
+    },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
@@ -45,8 +69,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.3.255.40792",
-              "templateHash": "6612811586581636796"
+              "version": "0.4.63.48766",
+              "templateHash": "12243660516307971687"
             }
           },
           "parameters": {
@@ -107,6 +131,10 @@
     "connectionString": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'hubDeploy'), '2019-10-01').outputs.connectionString.value]"
+    },
+    "deviceConnectionString": {
+      "type": "object",
+      "value": "[reference('createDevice').outputs]"
     }
   }
 }
