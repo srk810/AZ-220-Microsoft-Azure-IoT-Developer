@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "260707618307183898"
+      "templateHash": "11975419221095195183"
     }
   },
   "parameters": {
@@ -38,9 +38,10 @@
       "properties": {
         "azCliVersion": "2.20.0",
         "retentionInterval": "P1D",
+        "timeout": "PT10M",
         "cleanupPreference": "OnExpiration",
         "arguments": "[format('{0} {1}', variables('iotHubName'), variables('deviceID'))]",
-        "primaryScriptUri": "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microsoft-Azure-IoT-Developer/bicep/Allfiles/ARM/create-device.sh"
+        "scriptContent": "    IoTHubName=$1\r\n    DeviceID=$2\r\n\r\n    az extension add --name azure-iot\r\n\r\n    exists=$( az iot hub device-identity list  --hub-name $IoTHubName --query \"[?contains(deviceId, '${DeviceID}')].deviceId\" -o tsv )\r\n    if [ \"${exists}\" == \"${DeviceID}\" ]\r\n    then\r\n        echo \"Already exists\"\r\n    else\r\n        output=$( az iot hub device-identity create --hub-name $IoTHubName --device-id $DeviceID -o json >> build.log 2>&1 )\r\n    fi\r\n\r\n    DeviceConnectionString=$( az iot hub device-identity connection-string show --hub-name $IoTHubName --device-id $DeviceID -o tsv )\r\n\r\n    printf '{\"DeviceConnectionString\":\"%s\", \"Arg1\": \"%s\", \"Arg2\": \"%s\"}\\n' $DeviceConnectionString $IoTHubName $DeviceID >  $AZ_SCRIPTS_OUTPUT_PATH\r\n    "
       },
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]"
