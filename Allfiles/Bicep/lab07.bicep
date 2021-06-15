@@ -16,10 +16,19 @@ module hub './iotHub.bicep' = {
 
 var deviceID = 'sensor-v-3000'
 
+resource uai 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
+  location: location
+  name: 'ID1'
+}
+
 resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'createDevice'
   kind:'AzurePowerShell'
   location: location
+  identity: {
+    type:'UserAssigned'
+    userAssignedIdentities: uai
+  }
   dependsOn: [
     hub
   ]

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "1715879088123189435"
+      "templateHash": "7053443026233693407"
     }
   },
   "parameters": {
@@ -31,11 +31,21 @@
   },
   "resources": [
     {
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2018-11-30",
+      "name": "ID1",
+      "location": "[variables('location')]"
+    },
+    {
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
       "name": "createDevice",
       "kind": "AzurePowerShell",
       "location": "[variables('location')]",
+      "identity": {
+        "type": "UserAssigned",
+        "userAssignedIdentities": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1'), '2018-11-30', 'full')]"
+      },
       "properties": {
         "azPowerShellVersion": "6.0",
         "retentionInterval": "P1D",
@@ -45,7 +55,8 @@
         "scriptContent": "param(\r\n    [Parameter(Mandatory=$true)]\r\n    [string]\r\n    $resourceGroup,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $iotHub,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $deviceName\r\n)\r\n\r\n$output = \"Adding $($deviceName) to $($iotHub)\"\r\nWrite-Output $output\r\n\r\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\r\n\r\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\r\n\r\n$DeploymentScriptOutputs = @{}\r\n$DeploymentScriptOutputs['text'] = $output\r\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\r\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\r\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\r\n"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]"
+        "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]",
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]"
       ]
     },
     {
