@@ -58,6 +58,8 @@ param(
 $output = "Adding $($deviceName) to $($iotHub)"
 Write-Output $output
 
+Connect-AzAccount -Identity
+
 Add-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod "shared_private_key"
 
 $deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)
@@ -72,4 +74,4 @@ $DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString
 }
 
 output connectionString string = hub.outputs.connectionString
-output deviceConnectionString object = reference('createDevice').outputs
+output deviceConnectionString object = reference('createDevice').outputs.connectionString

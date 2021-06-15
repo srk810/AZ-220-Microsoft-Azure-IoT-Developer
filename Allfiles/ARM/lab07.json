@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "14671344005023617578"
+      "templateHash": "6626748619029248958"
     }
   },
   "parameters": {
@@ -54,7 +54,7 @@
         "timeout": "PT10M",
         "cleanupPreference": "OnExpiration",
         "arguments": "[format('{0} {1} {2}', variables('groupName'), variables('iotHubName'), variables('deviceID'))]",
-        "scriptContent": "param(\r\n    [Parameter(Mandatory=$true)]\r\n    [string]\r\n    $resourceGroup,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $iotHub,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $deviceName\r\n)\r\n\r\n$output = \"Adding $($deviceName) to $($iotHub)\"\r\nWrite-Output $output\r\n\r\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\r\n\r\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\r\n\r\n$DeploymentScriptOutputs = @{}\r\n$DeploymentScriptOutputs['text'] = $output\r\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\r\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\r\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\r\n"
+        "scriptContent": "param(\r\n    [Parameter(Mandatory=$true)]\r\n    [string]\r\n    $resourceGroup,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $iotHub,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $deviceName\r\n)\r\n\r\n$output = \"Adding $($deviceName) to $($iotHub)\"\r\nWrite-Output $output\r\n\r\nConnect-AzAccount -Identity\r\n\r\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\r\n\r\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\r\n\r\n$DeploymentScriptOutputs = @{}\r\n$DeploymentScriptOutputs['text'] = $output\r\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\r\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\r\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\r\n"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]",
@@ -149,7 +149,7 @@
     },
     "deviceConnectionString": {
       "type": "object",
-      "value": "[reference('createDevice').outputs]"
+      "value": "[reference('createDevice').outputs.connectionString]"
     }
   }
 }
