@@ -23,17 +23,19 @@ resource uai 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
 
 resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'createDevice'
-  kind:'AzurePowerShell'
+  kind: 'AzurePowerShell'
   location: location
   identity: {
-    type:'UserAssigned'
-    userAssignedIdentities: uai
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${uai.id}': {}
+    }
   }
   dependsOn: [
     hub
   ]
   properties: {
-    azPowerShellVersion:'6.0'
+    azPowerShellVersion: '6.0'
     retentionInterval: 'P1D'
     timeout: 'PT10M'
     cleanupPreference: 'OnExpiration'

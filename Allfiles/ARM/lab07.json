@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "7053443026233693407"
+      "templateHash": "14671344005023617578"
     }
   },
   "parameters": {
@@ -44,7 +44,9 @@
       "location": "[variables('location')]",
       "identity": {
         "type": "UserAssigned",
-        "userAssignedIdentities": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1'), '2018-11-30', 'full')]"
+        "userAssignedIdentities": {
+          "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]": {}
+        }
       },
       "properties": {
         "azPowerShellVersion": "6.0",
