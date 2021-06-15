@@ -33,6 +33,7 @@ resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   }
   dependsOn: [
     hub
+    uai
   ]
   properties: {
     azPowerShellVersion: '6.0'
@@ -58,7 +59,7 @@ param(
 $output = "Adding $($deviceName) to $($iotHub)"
 Write-Output $output
 
-Connect-AzAccount -Identity
+Get-AzContext
 
 Add-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod "shared_private_key"
 
