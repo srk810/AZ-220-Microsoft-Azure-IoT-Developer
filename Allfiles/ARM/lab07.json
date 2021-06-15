@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "11975419221095195183"
+      "templateHash": "1715879088123189435"
     }
   },
   "parameters": {
@@ -25,6 +25,7 @@
   "functions": [],
   "variables": {
     "location": "[resourceGroup().location]",
+    "groupName": "[resourceGroup().name]",
     "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
     "deviceID": "sensor-v-3000"
   },
@@ -33,15 +34,15 @@
       "type": "Microsoft.Resources/deploymentScripts",
       "apiVersion": "2020-10-01",
       "name": "createDevice",
-      "kind": "AzureCLI",
+      "kind": "AzurePowerShell",
       "location": "[variables('location')]",
       "properties": {
-        "azCliVersion": "2.20.0",
+        "azPowerShellVersion": "6.0",
         "retentionInterval": "P1D",
         "timeout": "PT10M",
         "cleanupPreference": "OnExpiration",
-        "arguments": "[format('{0} {1}', variables('iotHubName'), variables('deviceID'))]",
-        "scriptContent": "    IoTHubName=$1\r\n    DeviceID=$2\r\n\r\n    az extension add --name azure-iot\r\n\r\n    exists=$( az iot hub device-identity list  --hub-name $IoTHubName --query \"[?contains(deviceId, '${DeviceID}')].deviceId\" -o tsv )\r\n    if [ \"${exists}\" == \"${DeviceID}\" ]\r\n    then\r\n        echo \"Already exists\"\r\n    else\r\n        output=$( az iot hub device-identity create --hub-name $IoTHubName --device-id $DeviceID -o json >> build.log 2>&1 )\r\n    fi\r\n\r\n    DeviceConnectionString=$( az iot hub device-identity connection-string show --hub-name $IoTHubName --device-id $DeviceID -o tsv )\r\n\r\n    printf '{\"DeviceConnectionString\":\"%s\", \"Arg1\": \"%s\", \"Arg2\": \"%s\"}\\n' $DeviceConnectionString $IoTHubName $DeviceID >  $AZ_SCRIPTS_OUTPUT_PATH\r\n    "
+        "arguments": "[format('{0} {1} {2}', variables('groupName'), variables('iotHubName'), variables('deviceID'))]",
+        "scriptContent": "param(\r\n    [Parameter(Mandatory=$true)]\r\n    [string]\r\n    $resourceGroup,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $iotHub,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $deviceName\r\n)\r\n\r\n$output = \"Adding $($deviceName) to $($iotHub)\"\r\nWrite-Output $output\r\n\r\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\r\n\r\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\r\n\r\n$DeploymentScriptOutputs = @{}\r\n$DeploymentScriptOutputs['text'] = $output\r\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\r\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\r\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\r\n"
       },
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]"

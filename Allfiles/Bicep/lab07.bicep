@@ -4,6 +4,7 @@ param yourID string
 param courseID string
 
 var location = resourceGroup().location
+var groupName = resourceGroup().name
 var iotHubName = 'iot-${courseID}-training-${yourID}'
 module hub './iotHub.bicep' = {
   name: 'hubDeploy'
@@ -17,35 +18,45 @@ var deviceID = 'sensor-v-3000'
 
 resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'createDevice'
-  kind:'AzureCLI'
+  kind:'AzurePowerShell'
   location: location
   dependsOn: [
     hub
   ]
   properties: {
-    azCliVersion: '2.20.0'
+    azPowerShellVersion:'6.0'
     retentionInterval: 'P1D'
     timeout: 'PT10M'
     cleanupPreference: 'OnExpiration'
-    arguments: '${iotHubName} ${deviceID}'
+    arguments: '${groupName} ${iotHubName} ${deviceID}'
     scriptContent: '''
-    IoTHubName=$1
-    DeviceID=$2
+param(
+    [Parameter(Mandatory=$true)]
+    [string]
+    $resourceGroup,
 
-    az extension add --name azure-iot
+    [Parameter(Mandatory = $true)]
+    [string]
+    $iotHub,
 
-    exists=$( az iot hub device-identity list  --hub-name $IoTHubName --query "[?contains(deviceId, '${DeviceID}')].deviceId" -o tsv )
-    if [ "${exists}" == "${DeviceID}" ]
-    then
-        echo "Already exists"
-    else
-        output=$( az iot hub device-identity create --hub-name $IoTHubName --device-id $DeviceID -o json >> build.log 2>&1 )
-    fi
+    [Parameter(Mandatory = $true)]
+    [string]
+    $deviceName
+)
 
-    DeviceConnectionString=$( az iot hub device-identity connection-string show --hub-name $IoTHubName --device-id $DeviceID -o tsv )
+$output = "Adding $($deviceName) to $($iotHub)"
+Write-Output $output
 
-    printf '{"DeviceConnectionString":"%s", "Arg1": "%s", "Arg2": "%s"}\n' $DeviceConnectionString $IoTHubName $DeviceID >  $AZ_SCRIPTS_OUTPUT_PATH
-    '''
+Add-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod "shared_private_key"
+
+$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)
+
+$DeploymentScriptOutputs = @{}
+$DeploymentScriptOutputs['text'] = $output
+$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()
+$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId
+$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString
+'''
   }
 }
 
