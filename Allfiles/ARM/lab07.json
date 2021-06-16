@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "2140742819706403312"
+      "templateHash": "9741423356718320961"
     }
   },
   "parameters": {
@@ -27,6 +27,7 @@
     "location": "[resourceGroup().location]",
     "groupName": "[resourceGroup().name]",
     "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
+    "contributorRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c', subscription().subscriptionId)]",
     "deviceID": "sensor-v-3000"
   },
   "resources": [
@@ -35,6 +36,19 @@
       "apiVersion": "2018-11-30",
       "name": "ID1",
       "location": "[variables('location')]"
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2018-01-01-preview",
+      "name": "ID1-ROLE",
+      "properties": {
+        "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
+        "principalId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]",
+        "canDelegate": true
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]"
+      ]
     },
     {
       "type": "Microsoft.Resources/deploymentScripts",
@@ -58,7 +72,8 @@
       },
       "dependsOn": [
         "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]",
-        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]"
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]",
+        "[resourceId('Microsoft.Authorization/roleAssignments', 'ID1-ROLE')]"
       ]
     },
     {

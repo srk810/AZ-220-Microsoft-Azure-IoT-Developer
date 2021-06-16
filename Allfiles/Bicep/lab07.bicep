@@ -6,6 +6,7 @@ param courseID string
 var location = resourceGroup().location
 var groupName = resourceGroup().name
 var iotHubName = 'iot-${courseID}-training-${yourID}'
+var contributorRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
 module hub './iotHub.bicep' = {
   name: 'hubDeploy'
   params: {
@@ -21,6 +22,18 @@ resource uai 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name: 'ID1'
 }
 
+resource uaiRole 'Microsoft.Authorization/roleAssignments@2018-01-01-preview' = {
+  name: 'ID1-ROLE'
+  dependsOn: [
+    uai
+  ]
+  properties: {
+    roleDefinitionId: contributorRoleDefinitionId
+    principalId: uai.id
+    canDelegate:true
+  }
+}
+
 resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'createDevice'
   kind: 'AzurePowerShell'
@@ -34,6 +47,7 @@ resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   dependsOn: [
     hub
     uai
+    uaiRole
   ]
   properties: {
     azPowerShellVersion: '6.0'
