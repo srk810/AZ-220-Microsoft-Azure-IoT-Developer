@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "11883066762965427333"
+      "templateHash": "9445247949895720177"
     }
   },
   "parameters": {
@@ -44,7 +44,7 @@
       "properties": {
         "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
         "principalId": "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]",
-        "canDelegate": true
+        "canDelegate": false
       },
       "dependsOn": [
         "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]"
