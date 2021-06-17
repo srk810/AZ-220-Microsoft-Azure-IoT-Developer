@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "15293764696462734776"
+      "templateHash": "5226822930544715412"
     }
   },
   "parameters": {
@@ -229,7 +229,9 @@
         }
       },
       "dependsOn": [
-        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
+        "[resourceId('Microsoft.Resources/deployments', 'deployHub')]",
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]",
+        "[resourceId('Microsoft.Authorization/roleAssignments', guid(subscription().subscriptionId, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))))]"
       ]
     }
   ],

@@ -47,6 +47,10 @@ var scriptIdentity = {
 
 module createDevice './modules/device.bicep' = {
   name: 'createDevice'
+  dependsOn: [
+    hub
+    uaiRole
+  ]
   params: {
     iotHubName: iotHubName
     deviceID: deviceID
