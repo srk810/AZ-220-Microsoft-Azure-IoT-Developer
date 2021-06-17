@@ -88,5 +88,7 @@ $DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString
   }
 }
 
+
 output connectionString string = hub.outputs.connectionString
-output deviceConnectionString object = reference('createDevice').outputs.connectionString
+output outputs object = reference('createDevice').outputs
+output deviceConnectionString string = reference('createDevice').outputs.connectionString
