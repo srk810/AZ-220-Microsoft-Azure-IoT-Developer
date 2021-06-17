@@ -29,7 +29,7 @@ resource uaiRole 'Microsoft.Authorization/roleAssignments@2018-01-01-preview' = 
   ]
   properties: {
     roleDefinitionId: contributorRoleDefinitionId
-    principalId: uai.id
+    principalId: reference(uai.id, '2018-11-30', 'Full').properties.principalId
     canDelegate:false
   }
 }
