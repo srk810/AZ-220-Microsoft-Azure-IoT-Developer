@@ -5,7 +5,7 @@ param iotHubName string
 param provisioningServiceName string
 
 @description('Specify the location of the resources.')
-param location string
+param location string = resourceGroup().location
 
 @description('The SKU to use for the IoT Hub.')
 param skuName string

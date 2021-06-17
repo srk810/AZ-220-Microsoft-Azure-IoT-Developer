@@ -7,7 +7,7 @@ var location = resourceGroup().location
 var iotHubName = 'iot-${courseID}-training-${yourID}'
 var provisioningServiceName = 'dps-${courseID}-training-${yourID}'
 
-module hubAndDps './hubAndDps.bicep' = {
+module hubAndDps './modules/hubAndDps.bicep' = {
   name: 'iotHubAndDpsDeploy'
   params: {
     iotHubName: iotHubName

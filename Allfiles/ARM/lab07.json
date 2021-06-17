@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "430951633750436098"
+      "templateHash": "15293764696462734776"
     }
   },
   "parameters": {
@@ -25,61 +25,41 @@
   "functions": [],
   "variables": {
     "location": "[resourceGroup().location]",
-    "groupName": "[resourceGroup().name]",
     "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
+    "identityName": "[format('{0}ID', parameters('courseID'))]",
     "contributorRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c', subscription().subscriptionId)]",
-    "deviceID": "sensor-v-3000"
+    "deviceID": "sensor-v-3000",
+    "scriptIdentity": {
+      "type": "UserAssigned",
+      "userAssignedIdentities": {
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]": {}
+      }
+    }
   },
   "resources": [
     {
       "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
       "apiVersion": "2018-11-30",
-      "name": "ID1",
+      "name": "[variables('identityName')]",
       "location": "[variables('location')]"
     },
     {
       "type": "Microsoft.Authorization/roleAssignments",
       "apiVersion": "2018-09-01-preview",
-      "name": "[guid(subscription().subscriptionId, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1'))]",
+      "name": "[guid(subscription().subscriptionId, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')))]",
       "properties": {
         "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
-        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1'), '2018-11-30', 'Full').properties.principalId]",
+        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2018-11-30', 'Full').properties.principalId]",
         "principalType": "ServicePrincipal"
       },
       "dependsOn": [
-        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]"
-      ]
-    },
-    {
-      "type": "Microsoft.Resources/deploymentScripts",
-      "apiVersion": "2020-10-01",
-      "name": "createDevice",
-      "kind": "AzurePowerShell",
-      "location": "[variables('location')]",
-      "identity": {
-        "type": "UserAssigned",
-        "userAssignedIdentities": {
-          "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]": {}
-        }
-      },
-      "properties": {
-        "azPowerShellVersion": "6.0",
-        "retentionInterval": "P1D",
-        "timeout": "PT10M",
-        "cleanupPreference": "OnExpiration",
-        "arguments": "[format('{0} {1} {2}', variables('groupName'), variables('iotHubName'), variables('deviceID'))]",
-        "scriptContent": "param(\r\n    [Parameter(Mandatory=$true)]\r\n    [string]\r\n    $resourceGroup,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $iotHub,\r\n\r\n    [Parameter(Mandatory = $true)]\r\n    [string]\r\n    $deviceName\r\n)\r\n\r\n$output = \"Adding $($deviceName) to $($iotHub)\"\r\nWrite-Output $output\r\n\r\nGet-AzContext\r\n\r\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\r\n\r\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\r\n\r\n$DeploymentScriptOutputs = @{}\r\n$DeploymentScriptOutputs['text'] = $output\r\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\r\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\r\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\r\n"
-      },
-      "dependsOn": [
-        "[resourceId('Microsoft.Resources/deployments', 'hubDeploy')]",
-        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]",
-        "[resourceId('Microsoft.Authorization/roleAssignments', guid(subscription().subscriptionId, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')))]"
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
       ]
     },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
-      "name": "hubDeploy",
+      "name": "deployHub",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -100,7 +80,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.63.48766",
-              "templateHash": "12243660516307971687"
+              "templateHash": "1876739880227180780"
             }
           },
           "parameters": {
@@ -112,6 +92,7 @@
             },
             "location": {
               "type": "string",
+              "defaultValue": "[resourceGroup().location]",
               "metadata": {
                 "description": "Specify the location of the resources."
               }
@@ -155,20 +136,111 @@
           }
         }
       }
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "createDevice",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "iotHubName": {
+            "value": "[variables('iotHubName')]"
+          },
+          "deviceID": {
+            "value": "[variables('deviceID')]"
+          },
+          "scriptIdentity": {
+            "value": "[variables('scriptIdentity')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.63.48766",
+              "templateHash": "13474514948233554184"
+            }
+          },
+          "parameters": {
+            "iotHubName": {
+              "type": "string",
+              "metadata": {
+                "description": "The IoT Hub name"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Specify the location of the resources."
+              }
+            },
+            "groupName": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().name]",
+              "metadata": {
+                "description": "Specify the Group Name."
+              }
+            },
+            "scriptIdentity": {
+              "type": "object",
+              "metadata": {
+                "description": "The SKU to use for the IoT Hub."
+              }
+            },
+            "deviceID": {
+              "type": "string",
+              "metadata": {
+                "description": "The Device ID"
+              }
+            }
+          },
+          "functions": [],
+          "resources": [
+            {
+              "type": "Microsoft.Resources/deploymentScripts",
+              "apiVersion": "2020-10-01",
+              "name": "createDevice",
+              "kind": "AzurePowerShell",
+              "location": "[parameters('location')]",
+              "identity": "[parameters('scriptIdentity')]",
+              "properties": {
+                "azPowerShellVersion": "6.0",
+                "retentionInterval": "P1D",
+                "timeout": "PT10M",
+                "cleanupPreference": "OnExpiration",
+                "arguments": "[format('{0} {1} {2}', parameters('groupName'), parameters('iotHubName'), parameters('deviceID'))]",
+                "scriptContent": "param(\n    [Parameter(Mandatory=$true)]\n    [string]\n    $resourceGroup,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $iotHub,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $deviceName\n)\n\n$output = \"Adding $($deviceName) to $($iotHub)\"\nWrite-Output $output\n\nGet-AzContext\n\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\n\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\n\n$DeploymentScriptOutputs = @{}\n$DeploymentScriptOutputs['text'] = $output\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\n"
+              }
+            }
+          ],
+          "outputs": {
+            "deviceConnectionString": {
+              "type": "string",
+              "value": "[reference('createDevice').outputs.connectionString]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
+      ]
     }
   ],
   "outputs": {
     "connectionString": {
       "type": "string",
-      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'hubDeploy'), '2019-10-01').outputs.connectionString.value]"
-    },
-    "outputs": {
-      "type": "object",
-      "value": "[reference('createDevice').outputs]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deployHub'), '2019-10-01').outputs.connectionString.value]"
     },
     "deviceConnectionString": {
       "type": "string",
-      "value": "[reference('createDevice').outputs.connectionString]"
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'createDevice'), '2019-10-01').outputs.deviceConnectionString.value]"
     }
   }
 }

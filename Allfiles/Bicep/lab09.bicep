@@ -3,15 +3,11 @@ param yourID string
 @description('Course ID - i.e. az220')
 param courseID string
 
-var location = resourceGroup().location
 var iotHubName = 'iot-${courseID}-training-${yourID}'
 
 module hub './modules/iotHub.bicep' = {
-  name: 'hubDeploy'
+  name: 'deployHub'
   params: {
     iotHubName: iotHubName
-    location: location
   }
 }
-
-output connectionString string = hub.outputs.connectionString

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "7554811192785074461"
+      "templateHash": "1465920423405582428"
     }
   },
   "parameters": {
@@ -24,14 +24,13 @@
   },
   "functions": [],
   "variables": {
-    "location": "[resourceGroup().location]",
     "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]"
   },
   "resources": [
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
-      "name": "hubDeploy",
+      "name": "deployHub",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -40,9 +39,6 @@
         "parameters": {
           "iotHubName": {
             "value": "[variables('iotHubName')]"
-          },
-          "location": {
-            "value": "[variables('location')]"
           }
         },
         "template": {
@@ -109,11 +105,5 @@
         }
       }
     }
-  ],
-  "outputs": {
-    "connectionString": {
-      "type": "string",
-      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'hubDeploy'), '2019-10-01').outputs.connectionString.value]"
-    }
-  }
+  ]
 }
