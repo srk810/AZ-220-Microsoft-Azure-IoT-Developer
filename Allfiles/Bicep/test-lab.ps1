@@ -24,10 +24,6 @@ $githubUrl = "https://raw.githubusercontent.com/MicrosoftLearning/AZ-220-Microso
 
 $finalUrl = "$($portalUrl)$([System.Web.HttpUtility]::UrlEncode($githubUrl))"
 
-Write-Host $bicepPath
-$exists = Test-Path $jsonPath
-Write-Host $exists
-Write-Host $Environment
+Write-Host "Running $($bicepPath) in $($Environment)" -ForegroundColor Green
 Write-Host $finalUrl
-
 Start-Process $finalUrl

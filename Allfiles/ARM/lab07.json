@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "18270839783440731357"
+      "templateHash": "8603724909180404500"
     }
   },
   "parameters": {
@@ -39,12 +39,12 @@
     },
     {
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2018-01-01-preview",
+      "apiVersion": "2020-10-01-preview",
       "name": "[guid(subscription().subscriptionId, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1'))]",
       "properties": {
         "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
         "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1'), '2018-11-30', 'Full').properties.principalId]",
-        "canDelegate": false
+        "principalType": "ServicePrincipal"
       },
       "dependsOn": [
         "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1')]"

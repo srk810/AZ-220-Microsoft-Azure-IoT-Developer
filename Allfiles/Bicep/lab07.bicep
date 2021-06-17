@@ -22,7 +22,7 @@ resource uai 'Microsoft.ManagedIdentity/userAssignedIdentities@2018-11-30' = {
   name: 'ID1'
 }
 
-resource uaiRole 'Microsoft.Authorization/roleAssignments@2018-01-01-preview' = {
+resource uaiRole 'Microsoft.Authorization/roleAssignments@2020-10-01-preview' = {
   name: guid(subscription().subscriptionId, uai.id)
   dependsOn: [
     uai
@@ -30,7 +30,7 @@ resource uaiRole 'Microsoft.Authorization/roleAssignments@2018-01-01-preview' = 
   properties: {
     roleDefinitionId: contributorRoleDefinitionId
     principalId: reference(uai.id, '2018-11-30', 'Full').properties.principalId
-    canDelegate:false
+    principalType:'ServicePrincipal'
   }
 }
 
