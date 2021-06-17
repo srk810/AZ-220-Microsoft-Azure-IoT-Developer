@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "8603724909180404500"
+      "templateHash": "430951633750436098"
     }
   },
   "parameters": {
@@ -39,7 +39,7 @@
     },
     {
       "type": "Microsoft.Authorization/roleAssignments",
-      "apiVersion": "2020-10-01-preview",
+      "apiVersion": "2018-09-01-preview",
       "name": "[guid(subscription().subscriptionId, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', 'ID1'))]",
       "properties": {
         "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
