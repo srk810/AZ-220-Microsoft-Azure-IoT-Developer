@@ -50,6 +50,7 @@ var scriptIdentity = {
   }
 }
 
+@batchSize(1)
 module createDevice './modules/device.bicep' = [for deviceId in deviceIDs: {
   name: 'createDevice-${deviceId}'
   dependsOn: [

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "1380503702854335817"
+      "templateHash": "8243437486649643349"
     }
   },
   "parameters": {
@@ -144,7 +144,9 @@
     {
       "copy": {
         "name": "createDevice",
-        "count": "[length(variables('deviceIDs'))]"
+        "count": "[length(variables('deviceIDs'))]",
+        "mode": "serial",
+        "batchSize": 1
       },
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
