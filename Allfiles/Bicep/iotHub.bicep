@@ -26,6 +26,6 @@ var iotHubConnectionString = 'HostName=${hub.properties.hostName};SharedAccessKe
 output connectionString string = iotHubConnectionString
 output eventHubEndPoint string = hub.properties.eventHubEndpoints.events.endpoint
 output eventHubPath string = hub.properties.eventHubEndpoints.events.path
-output pk string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'iothubowner'), '2020-03-01')
-output sk string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'service'), '2020-03-01')
-output dk string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'device'), '2020-03-01')
+output iothubownerKey string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'iothubowner'), '2020-03-01').primarykey
+output serviceKey string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'service'), '2020-03-01').primarykey
+output deviceKey string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'device'), '2020-03-01').primarykey
