@@ -19,3 +19,4 @@ module hubAndDps './modules/hubAndDps.bicep' = {
 }
 
 output connectionString string = hubAndDps.outputs.iotHubConnectionString
+output dpsScopeId string = hubAndDps.outputs.dpsScopeId

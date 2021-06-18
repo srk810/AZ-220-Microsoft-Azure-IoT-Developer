@@ -29,3 +29,5 @@ resource provisioningServiceName_resource 'Microsoft.Devices/provisioningService
     ]
   }
 }
+
+output scopeId string = provisioningServiceName_resource.properties.idScope

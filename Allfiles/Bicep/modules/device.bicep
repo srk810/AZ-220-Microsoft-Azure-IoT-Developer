@@ -53,8 +53,16 @@ $DeploymentScriptOutputs['text'] = $output
 $DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()
 $DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId
 $DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString
+# primary key
+$DeploymentScriptOutputs['primaryKey'] = ($deviceDetails.ConnectionString -replace ';', "`r`n" | ConvertFrom-StringData).SharedAccessKey
+
+# secondary key
+$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName -KeyType secondary $iotHub -DeviceId $deviceName)
+$DeploymentScriptOutputs[secondaryKey'] = ($deviceDetails.ConnectionString -replace ';', "`r`n" | ConvertFrom-StringData).SharedAccessKey
 '''
   }
 }
 
 output deviceConnectionString string = reference('createDevice').outputs.connectionString
+output primaryKey string = reference('createDevice').outputs.primaryKey
+output secondaryKey string = reference('createDevice').outputs.secondaryKey

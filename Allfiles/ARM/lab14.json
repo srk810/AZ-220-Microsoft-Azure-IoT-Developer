@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "4976568944716311689"
+      "templateHash": "16867050872778204231"
     }
   },
   "parameters": {
@@ -80,7 +80,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.63.48766",
-              "templateHash": "6034077069108087034"
+              "templateHash": "16045339592086363692"
             }
           },
           "parameters": {
@@ -141,9 +141,17 @@
               "type": "string",
               "value": "[reference(resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))).eventHubEndpoints.events.path]"
             },
+            "iothubownerKey": {
+              "type": "string",
+              "value": "[listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'iothubowner'), '2020-03-01').primarykey]"
+            },
             "serviceKey": {
               "type": "string",
-              "value": "[listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'service'), '2020-03-01')]"
+              "value": "[listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'service'), '2020-03-01').primarykey]"
+            },
+            "deviceKey": {
+              "type": "string",
+              "value": "[listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'device'), '2020-03-01').primarykey]"
             }
           }
         }
@@ -176,7 +184,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.63.48766",
-              "templateHash": "13474514948233554184"
+              "templateHash": "5953812710855100812"
             }
           },
           "parameters": {
@@ -228,7 +236,7 @@
                 "timeout": "PT10M",
                 "cleanupPreference": "OnExpiration",
                 "arguments": "[format('{0} {1} {2}', parameters('groupName'), parameters('iotHubName'), parameters('deviceID'))]",
-                "scriptContent": "param(\n    [Parameter(Mandatory=$true)]\n    [string]\n    $resourceGroup,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $iotHub,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $deviceName\n)\n\n$output = \"Adding $($deviceName) to $($iotHub)\"\nWrite-Output $output\n\nGet-AzContext\n\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\n\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\n\n$DeploymentScriptOutputs = @{}\n$DeploymentScriptOutputs['text'] = $output\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\n"
+                "scriptContent": "param(\n    [Parameter(Mandatory=$true)]\n    [string]\n    $resourceGroup,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $iotHub,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $deviceName\n)\n\n$output = \"Adding $($deviceName) to $($iotHub)\"\nWrite-Output $output\n\nGet-AzContext\n\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\n\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\n\n$DeploymentScriptOutputs = @{}\n$DeploymentScriptOutputs['text'] = $output\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\n# primary key\n$DeploymentScriptOutputs['primaryKey'] = ($deviceDetails.ConnectionString -replace ';', \"`r`n\" | ConvertFrom-StringData).SharedAccessKey\n\n# secondary key\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName -KeyType secondary $iotHub -DeviceId $deviceName)\n$DeploymentScriptOutputs[secondaryKey'] = ($deviceDetails.ConnectionString -replace ';', \"`r`n\" | ConvertFrom-StringData).SharedAccessKey\n"
               }
             }
           ],
@@ -236,6 +244,14 @@
             "deviceConnectionString": {
               "type": "string",
               "value": "[reference('createDevice').outputs.connectionString]"
+            },
+            "primaryKey": {
+              "type": "string",
+              "value": "[reference('createDevice').outputs.primaryKey]"
+            },
+            "secondaryKey": {
+              "type": "string",
+              "value": "[reference('createDevice').outputs.secondaryKey]"
             }
           }
         }
@@ -255,6 +271,10 @@
     "deviceConnectionString": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'createDevice'), '2019-10-01').outputs.deviceConnectionString.value]"
+    },
+    "devicePrimaryKey": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'createDevice'), '2019-10-01').outputs.primaryKey.value]"
     }
   }
 }

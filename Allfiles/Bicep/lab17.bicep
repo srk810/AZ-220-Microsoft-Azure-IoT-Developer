@@ -5,6 +5,7 @@ param courseID string
 
 var location = resourceGroup().location
 var iotHubName = 'iot-${courseID}-training-${yourID}'
+var storageName = 'sta${courseID}training${yourID}'
 var provisioningServiceName = 'dps-${courseID}-training-${yourID}'
 
 module hubAndDps './modules/hubAndDps.bicep' = {
@@ -18,6 +19,17 @@ module hubAndDps './modules/hubAndDps.bicep' = {
   }
 }
 
+resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
+  name: storageName
+  sku: {
+    name: 'Standard_LRS'
+    tier: 'Standard'
+  }
+  kind: 'StorageV2'
+  location: location
+}
+
 output connectionString string = hubAndDps.outputs.iotHubConnectionString
 output dpsScopeId string = hubAndDps.outputs.dpsScopeId
 
+// note - lab requires "Microsoft.Insights" provider

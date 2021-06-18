@@ -11,3 +11,5 @@ module hub './modules/iotHub.bicep' = {
     iotHubName: iotHubName
   }
 }
+
+output connectionString string = hub.outputs.connectionString

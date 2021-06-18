@@ -9,7 +9,7 @@ var iotHubName = 'iot-${courseID}-training-${yourID}'
 var identityName = '${courseID}ID'
 // b24988ac-6180-42a0-ab88-20f7382dd24c is the Contributer role ID
 var contributorRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
-var deviceID = 'sensor-th-0055'
+var deviceID = 'sensor-th-0155'
 
 module hub './modules/iotHub.bicep' = {
   name: 'deployHub'
@@ -61,6 +61,3 @@ module createDevice './modules/device.bicep' = {
 output connectionString string = hub.outputs.connectionString
 output deviceConnectionString string = createDevice.outputs.deviceConnectionString
 output devicePrimaryKey string = createDevice.outputs.primaryKey
-output eventHubEndPoint string = hub.outputs.eventHubEndPoint
-output eventHubPath string = hub.outputs.eventHubPath
-output serviceKey string = hub.outputs.serviceKey

@@ -60,3 +60,4 @@ module createDevice './modules/device.bicep' = {
 
 output connectionString string = hub.outputs.connectionString
 output deviceConnectionString string = createDevice.outputs.deviceConnectionString
+output devicePrimaryKey string = createDevice.outputs.primaryKey

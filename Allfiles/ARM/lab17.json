@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "4971655091889505188"
+      "templateHash": "10527304315116180512"
     }
   },
   "parameters": {
@@ -26,9 +26,21 @@
   "variables": {
     "location": "[resourceGroup().location]",
     "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
+    "storageName": "[format('sta{0}training{1}', parameters('courseID'), parameters('yourID'))]",
     "provisioningServiceName": "[format('dps-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]"
   },
   "resources": [
+    {
+      "type": "Microsoft.Storage/storageAccounts",
+      "apiVersion": "2021-02-01",
+      "name": "[variables('storageName')]",
+      "sku": {
+        "name": "Standard_LRS",
+        "tier": "Standard"
+      },
+      "kind": "StorageV2",
+      "location": "[variables('location')]"
+    },
     {
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
