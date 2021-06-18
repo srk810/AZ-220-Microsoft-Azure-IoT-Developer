@@ -9,7 +9,12 @@ var iotHubName = 'iot-${courseID}-training-${yourID}'
 var identityName = '${courseID}ID'
 // b24988ac-6180-42a0-ab88-20f7382dd24c is the Contributer role ID
 var contributorRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
-var deviceID = 'sensor-v-3000'
+
+var deviceIDs = [
+  'sensor-thl-truck0001'
+  'sensor-thl-airplane0001'
+  'sensor-thl-container0001'
+]
 
 module hub './modules/iotHub.bicep' = {
   name: 'deployHub'
@@ -45,18 +50,22 @@ var scriptIdentity = {
   }
 }
 
-module createDevice './modules/device.bicep' = {
-  name: 'createDevice'
+module createDevice './modules/device.bicep' = [for deviceId in deviceIDs: {
+  name: 'createDevice-${deviceId}'
   dependsOn: [
     hub
     uaiRole
   ]
   params: {
     iotHubName: iotHubName
-    deviceID: deviceID
+    deviceID: deviceId
     scriptIdentity: scriptIdentity
   }
-}
+}]
 
 output connectionString string = hub.outputs.connectionString
-output deviceConnectionString string = createDevice.outputs.deviceConnectionString
+
+output deviceIDs array = [for (id, i) in deviceIDs: {
+  name: createDevice[i].name
+  resourceId: createDevice[i].outputs.deviceConnectionString
+}]

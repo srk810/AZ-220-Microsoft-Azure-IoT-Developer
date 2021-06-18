@@ -1,0 +1,262 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.4.63.48766",
+      "templateHash": "1380503702854335817"
+    }
+  },
+  "parameters": {
+    "yourID": {
+      "type": "string",
+      "metadata": {
+        "description": "Your unique ID - i.e. dm041221"
+      }
+    },
+    "courseID": {
+      "type": "string",
+      "metadata": {
+        "description": "Course ID - i.e. az220"
+      }
+    }
+  },
+  "functions": [],
+  "variables": {
+    "location": "[resourceGroup().location]",
+    "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
+    "identityName": "[format('{0}ID', parameters('courseID'))]",
+    "contributorRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c', subscription().subscriptionId)]",
+    "deviceIDs": [
+      "sensor-thl-truck0001",
+      "sensor-thl-airplane0001",
+      "sensor-thl-container0001"
+    ],
+    "scriptIdentity": {
+      "type": "UserAssigned",
+      "userAssignedIdentities": {
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]": {}
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+      "apiVersion": "2018-11-30",
+      "name": "[variables('identityName')]",
+      "location": "[variables('location')]"
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2018-09-01-preview",
+      "name": "[guid(subscription().subscriptionId, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')))]",
+      "properties": {
+        "roleDefinitionId": "[variables('contributorRoleDefinitionId')]",
+        "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName')), '2018-11-30', 'Full').properties.principalId]",
+        "principalType": "ServicePrincipal"
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "deployHub",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "iotHubName": {
+            "value": "[variables('iotHubName')]"
+          },
+          "location": {
+            "value": "[variables('location')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.63.48766",
+              "templateHash": "1876739880227180780"
+            }
+          },
+          "parameters": {
+            "iotHubName": {
+              "type": "string",
+              "metadata": {
+                "description": "The IoT Hub name"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Specify the location of the resources."
+              }
+            },
+            "skuName": {
+              "type": "string",
+              "defaultValue": "S1",
+              "metadata": {
+                "description": "The SKU to use for the IoT Hub."
+              }
+            },
+            "skuUnits": {
+              "type": "int",
+              "defaultValue": 1,
+              "metadata": {
+                "description": "The number of IoT Hub units."
+              }
+            }
+          },
+          "functions": [],
+          "variables": {
+            "iotHubKeyName": "iothubowner"
+          },
+          "resources": [
+            {
+              "type": "Microsoft.Devices/IotHubs",
+              "apiVersion": "2020-08-31",
+              "name": "[parameters('iotHubName')]",
+              "location": "[parameters('location')]",
+              "sku": {
+                "name": "[parameters('skuName')]",
+                "capacity": "[parameters('skuUnits')]"
+              }
+            }
+          ],
+          "outputs": {
+            "connectionString": {
+              "type": "string",
+              "value": "[format('HostName={0};SharedAccessKeyName={1};SharedAccessKey={2}', reference(resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))).hostName, variables('iotHubKeyName'), listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('iotHubKeyName')), '2020-03-01').primaryKey)]"
+            }
+          }
+        }
+      }
+    },
+    {
+      "copy": {
+        "name": "createDevice",
+        "count": "[length(variables('deviceIDs'))]"
+      },
+      "type": "Microsoft.Resources/deployments",
+      "apiVersion": "2019-10-01",
+      "name": "[format('createDevice-{0}', variables('deviceIDs')[copyIndex()])]",
+      "properties": {
+        "expressionEvaluationOptions": {
+          "scope": "inner"
+        },
+        "mode": "Incremental",
+        "parameters": {
+          "iotHubName": {
+            "value": "[variables('iotHubName')]"
+          },
+          "deviceID": {
+            "value": "[variables('deviceIDs')[copyIndex()]]"
+          },
+          "scriptIdentity": {
+            "value": "[variables('scriptIdentity')]"
+          }
+        },
+        "template": {
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+          "contentVersion": "1.0.0.0",
+          "metadata": {
+            "_generator": {
+              "name": "bicep",
+              "version": "0.4.63.48766",
+              "templateHash": "13474514948233554184"
+            }
+          },
+          "parameters": {
+            "iotHubName": {
+              "type": "string",
+              "metadata": {
+                "description": "The IoT Hub name"
+              }
+            },
+            "location": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().location]",
+              "metadata": {
+                "description": "Specify the location of the resources."
+              }
+            },
+            "groupName": {
+              "type": "string",
+              "defaultValue": "[resourceGroup().name]",
+              "metadata": {
+                "description": "Specify the Group Name."
+              }
+            },
+            "scriptIdentity": {
+              "type": "object",
+              "metadata": {
+                "description": "The SKU to use for the IoT Hub."
+              }
+            },
+            "deviceID": {
+              "type": "string",
+              "metadata": {
+                "description": "The Device ID"
+              }
+            }
+          },
+          "functions": [],
+          "resources": [
+            {
+              "type": "Microsoft.Resources/deploymentScripts",
+              "apiVersion": "2020-10-01",
+              "name": "createDevice",
+              "kind": "AzurePowerShell",
+              "location": "[parameters('location')]",
+              "identity": "[parameters('scriptIdentity')]",
+              "properties": {
+                "azPowerShellVersion": "6.0",
+                "retentionInterval": "P1D",
+                "timeout": "PT10M",
+                "cleanupPreference": "OnExpiration",
+                "arguments": "[format('{0} {1} {2}', parameters('groupName'), parameters('iotHubName'), parameters('deviceID'))]",
+                "scriptContent": "param(\n    [Parameter(Mandatory=$true)]\n    [string]\n    $resourceGroup,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $iotHub,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $deviceName\n)\n\n$output = \"Adding $($deviceName) to $($iotHub)\"\nWrite-Output $output\n\nGet-AzContext\n\nAdd-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\n\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\n\n$DeploymentScriptOutputs = @{}\n$DeploymentScriptOutputs['text'] = $output\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\n"
+              }
+            }
+          ],
+          "outputs": {
+            "deviceConnectionString": {
+              "type": "string",
+              "value": "[reference('createDevice').outputs.connectionString]"
+            }
+          }
+        }
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Resources/deployments', 'deployHub')]",
+        "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))]",
+        "[resourceId('Microsoft.Authorization/roleAssignments', guid(subscription().subscriptionId, resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('identityName'))))]"
+      ]
+    }
+  ],
+  "outputs": {
+    "connectionString": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deployHub'), '2019-10-01').outputs.connectionString.value]"
+    },
+    "deviceIDs": {
+      "type": "array",
+      "copy": {
+        "count": "[length(variables('deviceIDs'))]",
+        "input": {
+          "name": "[format('createDevice-{0}', variables('deviceIDs')[copyIndex()])]",
+          "resourceId": "[reference(resourceId('Microsoft.Resources/deployments', format('createDevice-{0}', variables('deviceIDs')[copyIndex()])), '2019-10-01').outputs.deviceConnectionString.value]"
+        }
+      }
+    }
+  }
+}
