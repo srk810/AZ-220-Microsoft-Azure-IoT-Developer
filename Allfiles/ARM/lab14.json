@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "6591303776044261395"
+      "templateHash": "4976568944716311689"
     }
   },
   "parameters": {
@@ -28,11 +28,7 @@
     "iotHubName": "[format('iot-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
     "identityName": "[format('{0}ID', parameters('courseID'))]",
     "contributorRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c', subscription().subscriptionId)]",
-    "deviceIDs": [
-      "sensor-thl-truck0001",
-      "sensor-thl-airplane0001",
-      "sensor-thl-container0001"
-    ],
+    "deviceID": "sensor-th-0050",
     "scriptIdentity": {
       "type": "UserAssigned",
       "userAssignedIdentities": {
@@ -154,15 +150,9 @@
       }
     },
     {
-      "copy": {
-        "name": "createDevice",
-        "count": "[length(variables('deviceIDs'))]",
-        "mode": "serial",
-        "batchSize": 1
-      },
       "type": "Microsoft.Resources/deployments",
       "apiVersion": "2019-10-01",
-      "name": "[format('createDevice-{0}', variables('deviceIDs')[copyIndex()])]",
+      "name": "createDevice",
       "properties": {
         "expressionEvaluationOptions": {
           "scope": "inner"
@@ -173,7 +163,7 @@
             "value": "[variables('iotHubName')]"
           },
           "deviceID": {
-            "value": "[variables('deviceIDs')[copyIndex()]]"
+            "value": "[variables('deviceID')]"
           },
           "scriptIdentity": {
             "value": "[variables('scriptIdentity')]"
@@ -262,15 +252,9 @@
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deployHub'), '2019-10-01').outputs.connectionString.value]"
     },
-    "deviceIDs": {
-      "type": "array",
-      "copy": {
-        "count": "[length(variables('deviceIDs'))]",
-        "input": {
-          "name": "[format('createDevice-{0}', variables('deviceIDs')[copyIndex()])]",
-          "connectionString": "[reference(resourceId('Microsoft.Resources/deployments', format('createDevice-{0}', variables('deviceIDs')[copyIndex()])), '2019-10-01').outputs.deviceConnectionString.value]"
-        }
-      }
+    "deviceConnectionString": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'createDevice'), '2019-10-01').outputs.deviceConnectionString.value]"
     }
   }
 }

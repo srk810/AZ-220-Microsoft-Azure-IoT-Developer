@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "5226822930544715412"
+      "templateHash": "1402523279860929409"
     }
   },
   "parameters": {
@@ -80,7 +80,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.63.48766",
-              "templateHash": "1876739880227180780"
+              "templateHash": "6034077069108087034"
             }
           },
           "parameters": {
@@ -132,6 +132,18 @@
             "connectionString": {
               "type": "string",
               "value": "[format('HostName={0};SharedAccessKeyName={1};SharedAccessKey={2}', reference(resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))).hostName, variables('iotHubKeyName'), listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), variables('iotHubKeyName')), '2020-03-01').primaryKey)]"
+            },
+            "eventHubEndPoint": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))).eventHubEndpoints.events.endpoint]"
+            },
+            "eventHubPath": {
+              "type": "string",
+              "value": "[reference(resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))).eventHubEndpoints.events.path]"
+            },
+            "serviceKey": {
+              "type": "string",
+              "value": "[listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'service'), '2020-03-01')]"
             }
           }
         }
