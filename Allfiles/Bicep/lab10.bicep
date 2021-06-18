@@ -50,6 +50,7 @@ var scriptIdentity = {
   }
 }
 
+// Ensures the devices are created one at a time
 @batchSize(1)
 module createDevice './modules/device.bicep' = [for deviceId in deviceIDs: {
   name: 'createDevice-${deviceId}'
@@ -68,5 +69,5 @@ output connectionString string = hub.outputs.connectionString
 
 output deviceIDs array = [for (id, i) in deviceIDs: {
   name: createDevice[i].name
-  resourceId: createDevice[i].outputs.deviceConnectionString
+  connectionString: createDevice[i].outputs.deviceConnectionString
 }]

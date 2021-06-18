@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "8243437486649643349"
+      "templateHash": "16327473998685803062"
     }
   },
   "parameters": {
@@ -256,7 +256,7 @@
         "count": "[length(variables('deviceIDs'))]",
         "input": {
           "name": "[format('createDevice-{0}', variables('deviceIDs')[copyIndex()])]",
-          "resourceId": "[reference(resourceId('Microsoft.Resources/deployments', format('createDevice-{0}', variables('deviceIDs')[copyIndex()])), '2019-10-01').outputs.deviceConnectionString.value]"
+          "connectionString": "[reference(resourceId('Microsoft.Resources/deployments', format('createDevice-{0}', variables('deviceIDs')[copyIndex()])), '2019-10-01').outputs.deviceConnectionString.value]"
         }
       }
     }
