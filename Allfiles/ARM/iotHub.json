@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "16888028694796410983"
+      "templateHash": "2808824401332879612"
     }
   },
   "parameters": {
@@ -65,6 +65,18 @@
     "eventHubPath": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Devices/IotHubs', parameters('iotHubName'))).eventHubEndpoints.events.path]"
+    },
+    "pk": {
+      "type": "string",
+      "value": "[listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'iothubowner'), '2020-03-01')]"
+    },
+    "sk": {
+      "type": "string",
+      "value": "[listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'service'), '2020-03-01')]"
+    },
+    "dk": {
+      "type": "string",
+      "value": "[listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', parameters('iotHubName'), 'device'), '2020-03-01')]"
     }
   }
 }
