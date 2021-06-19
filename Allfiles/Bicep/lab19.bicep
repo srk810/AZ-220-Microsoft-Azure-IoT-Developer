@@ -95,7 +95,7 @@ resource tsi 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
 }
 
 resource tsiAccess 'Microsoft.TimeSeriesInsights/environments/accessPolicies@2020-05-15' = {
-  name: '${tsiName}/access1'
+  name: '${tsiName}/access'
   dependsOn: [
     tsi
   ]

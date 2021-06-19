@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "11994028643952136874"
+      "templateHash": "7956727414181585136"
     }
   },
   "parameters": {
@@ -104,7 +104,7 @@
     {
       "type": "Microsoft.TimeSeriesInsights/environments/accessPolicies",
       "apiVersion": "2020-05-15",
-      "name": "[format('{0}/access1', variables('tsiName'))]",
+      "name": "[format('{0}/access', variables('tsiName'))]",
       "properties": {
         "principalObjectId": "[parameters('objectID')]",
         "description": "ADT Access Policy",
