@@ -2,6 +2,8 @@
 param yourID string
 @description('Course ID - i.e. az220')
 param courseID string
+@description('Current User Object ID - run "az ad signed-in-user show --query objectId -o tsv" in cloud shell')
+param objectID string
 
 var location = resourceGroup().location
 // var groupName = resourceGroup().name
@@ -11,6 +13,7 @@ var identityName = '${courseID}ID'
 var contributorRoleDefinitionId = '/subscriptions/${subscription().subscriptionId}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c'
 var deviceID = 'sensor-th-0055'
 var storageName = 'sta${courseID}training${yourID}'
+var tsiName= 'tsi-${courseID}-training-${yourID}'
 
 module hub './modules/iotHub.bicep' = {
   name: 'deployHub'
@@ -69,6 +72,45 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
   location: location
 }
 
+resource tsi 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
+  kind: 'Gen2'
+  location: location
+  name: tsiName
+  sku: {
+    capacity: 1
+    name: 'L1'
+  }
+  properties: {
+    storageConfiguration: {
+      accountName: storage.name
+      managementKey: listkeys(storage.id, storage.apiVersion).keys[0].value
+    }
+    timeSeriesIdProperties: [
+      {
+        name: '$dtId'
+        type: 'String'
+      }
+    ]
+  }
+}
+
+resource tsiAccess 'Microsoft.TimeSeriesInsights/environments/accessPolicies@2020-05-15' = {
+  name: '/access1'
+  dependsOn: [
+    tsi
+  ]
+  properties: {
+    principalObjectId: objectID
+    description: 'ADT Access Policy'
+    roles: [
+      'Contributor'
+      'Reader'
+    ]
+  }
+
+}
+
 output connectionString string = hub.outputs.connectionString
 output deviceConnectionString string = createDevice.outputs.deviceConnectionString
 output devicePrimaryKey string = createDevice.outputs.primaryKey
+output storageAccountName string = storageName

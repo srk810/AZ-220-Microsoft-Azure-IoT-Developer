@@ -31,5 +31,6 @@ resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
 
 output connectionString string = hubAndDps.outputs.iotHubConnectionString
 output dpsScopeId string = hubAndDps.outputs.dpsScopeId
+output storageAccountName string = storageName
 
 // note - lab requires "Microsoft.Insights" provider

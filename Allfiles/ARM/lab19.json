@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "17340378903483057378"
+      "templateHash": "2578640309816235950"
     }
   },
   "parameters": {
@@ -20,6 +20,12 @@
       "metadata": {
         "description": "Course ID - i.e. az220"
       }
+    },
+    "objectID": {
+      "type": "string",
+      "metadata": {
+        "description": "Current User Object ID - run \"az ad signed-in-user show --query objectId -o tsv\" in cloud shell"
+      }
     }
   },
   "functions": [],
@@ -30,6 +36,7 @@
     "contributorRoleDefinitionId": "[format('/subscriptions/{0}/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c', subscription().subscriptionId)]",
     "deviceID": "sensor-th-0055",
     "storageName": "[format('sta{0}training{1}', parameters('courseID'), parameters('yourID'))]",
+    "tsiName": "[format('tsi-{0}-training-{1}', parameters('courseID'), parameters('yourID'))]",
     "scriptIdentity": {
       "type": "UserAssigned",
       "userAssignedIdentities": {
@@ -67,6 +74,48 @@
       },
       "kind": "StorageV2",
       "location": "[variables('location')]"
+    },
+    {
+      "type": "Microsoft.TimeSeriesInsights/environments",
+      "apiVersion": "2020-05-15",
+      "name": "[variables('tsiName')]",
+      "kind": "Gen2",
+      "location": "[variables('location')]",
+      "sku": {
+        "capacity": 1,
+        "name": "L1"
+      },
+      "properties": {
+        "storageConfiguration": {
+          "accountName": "[variables('storageName')]",
+          "managementKey": "[listkeys(resourceId('Microsoft.Storage/storageAccounts', variables('storageName')), '2021-02-01').keys[0].value]"
+        },
+        "timeSeriesIdProperties": [
+          {
+            "name": "$dtId",
+            "type": "String"
+          }
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts', variables('storageName'))]"
+      ]
+    },
+    {
+      "type": "Microsoft.TimeSeriesInsights/environments/accessPolicies",
+      "apiVersion": "2020-05-15",
+      "name": "/access1",
+      "properties": {
+        "principalObjectId": "[parameters('objectID')]",
+        "description": "ADT Access Policy",
+        "roles": [
+          "Contributor",
+          "Reader"
+        ]
+      },
+      "dependsOn": [
+        "[resourceId('Microsoft.TimeSeriesInsights/environments', variables('tsiName'))]"
+      ]
     },
     {
       "type": "Microsoft.Resources/deployments",
@@ -287,6 +336,10 @@
     "devicePrimaryKey": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'createDevice'), '2019-10-01').outputs.primaryKey.value]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "value": "[variables('storageName')]"
     }
   }
 }

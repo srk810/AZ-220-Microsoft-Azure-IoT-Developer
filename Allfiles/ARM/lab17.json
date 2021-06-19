@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "10527304315116180512"
+      "templateHash": "9412696185708584679"
     }
   },
   "parameters": {
@@ -366,6 +366,10 @@
     "dpsScopeId": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'iotHubAndDpsDeploy'), '2019-10-01').outputs.dpsScopeId.value]"
+    },
+    "storageAccountName": {
+      "type": "string",
+      "value": "[variables('storageName')]"
     }
   }
 }
