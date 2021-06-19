@@ -36,7 +36,7 @@ resource uaiRole 'Microsoft.Authorization/roleAssignments@2018-09-01-preview' = 
   ]
   properties: {
     roleDefinitionId: contributorRoleDefinitionId
-    principalId: reference(uai.id, '2018-11-30', 'Full').properties.principalId
+    principalId: reference(uai.id, uai.apiVersion, 'Full').properties.principalId
     principalType:'ServicePrincipal'
   }
 }
@@ -95,7 +95,7 @@ resource tsi 'Microsoft.TimeSeriesInsights/environments@2020-05-15' = {
 }
 
 resource tsiAccess 'Microsoft.TimeSeriesInsights/environments/accessPolicies@2020-05-15' = {
-  name: '/access1'
+  name: '${tsiName}/access1'
   dependsOn: [
     tsi
   ]
@@ -114,3 +114,8 @@ output connectionString string = hub.outputs.connectionString
 output deviceConnectionString string = createDevice.outputs.deviceConnectionString
 output devicePrimaryKey string = createDevice.outputs.primaryKey
 output storageAccountName string = storageName
+
+// lab requires the following resource providers
+// az provider register --namespace "Microsoft.EventGrid" --accept-terms
+// az provider register --namespace "Microsoft.EventHub" --accept-terms
+// az provider register --namespace "Microsoft.TimeSeriesInsights" --accept-terms
