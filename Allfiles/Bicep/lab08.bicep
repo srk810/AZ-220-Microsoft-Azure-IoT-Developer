@@ -142,6 +142,10 @@ resource streamingjob 'Microsoft.StreamAnalytics/streamingjobs@2017-04-01-previe
     contentStoragePolicy: 'SystemAccount'
     jobType: 'Cloud'
   }
+  dependsOn: [
+    hub
+    storageContainer
+  ]
 }
 
 resource streamingjobsInput 'Microsoft.StreamAnalytics/streamingjobs/inputs@2017-04-01-preview' = {
@@ -153,6 +157,7 @@ resource streamingjobsInput 'Microsoft.StreamAnalytics/streamingjobs/inputs@2017
       type: 'Microsoft.Devices/IotHubs'
       properties: {
         iotHubNamespace: iotHubName
+        sharedAccessPolicyKey: hub.outputs.iothubownerKey
         sharedAccessPolicyName: 'iothubowner'
         endpoint: 'messages/events'
         consumerGroupName: '$Default'
@@ -168,6 +173,9 @@ resource streamingjobsInput 'Microsoft.StreamAnalytics/streamingjobs/inputs@2017
       }
     }
   }
+  dependsOn: [
+    streamingjob
+  ]
 }
 
 resource streamingjobsOutput 'Microsoft.StreamAnalytics/streamingjobs/outputs@2017-04-01-preview' = {
@@ -179,6 +187,7 @@ resource streamingjobsOutput 'Microsoft.StreamAnalytics/streamingjobs/outputs@20
       properties: {
         storageAccounts: [
           {
+            accountKey: listkeys(storage.id, storage.apiVersion).keys[0].value
             accountName: storageAccountName
           }
         ]
@@ -196,6 +205,9 @@ resource streamingjobsOutput 'Microsoft.StreamAnalytics/streamingjobs/outputs@20
       }
     }
   }
+  dependsOn: [
+    streamingjob
+  ]
 }
 
 resource streamingJobTransformation 'Microsoft.StreamAnalytics/streamingjobs/transformations@2016-03-01' = {
