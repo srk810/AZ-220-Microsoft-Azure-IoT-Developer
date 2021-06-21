@@ -1,39 +1,8 @@
-@description('Your unique ID - i.e. dm041221')
-param yourID string
-@description('Course ID - i.e. az220')
-param courseID string
-
-var location = resourceGroup().location
-var iotHubName = 'iot-${courseID}-training-${yourID}'
-var storageName = 'sta${courseID}training${yourID}'
-var provisioningServiceName = 'dps-${courseID}-training-${yourID}'
-var streamingjobs_vibrationJob_name = 'vibrationJob'
-
-module hubAndDps './modules/hubAndDps.bicep' = {
-  name: 'iotHubAndDpsDeploy'
-  params: {
-    iotHubName: iotHubName
-    provisioningServiceName: provisioningServiceName
-    skuName: 'S1'
-    skuUnits: 1
-    location: location
-  }
-}
-
-resource storage 'Microsoft.Storage/storageAccounts@2021-02-01' = {
-  name: storageName
-  sku: {
-    name: 'Standard_LRS'
-    tier: 'Standard'
-  }
-  kind: 'StorageV2'
-  location: location
-}
-
+param streamingjobs_vibrationJob_name string = 'vibrationJob'
 
 resource streamingjobs_vibrationJob_name_resource 'Microsoft.StreamAnalytics/streamingjobs@2017-04-01-preview' = {
   name: streamingjobs_vibrationJob_name
-  location: location
+  location: 'East US'
   properties: {
     sku: {
       name: 'Standard'
@@ -57,7 +26,7 @@ resource streamingjobs_vibrationJob_name_vibrationInput 'Microsoft.StreamAnalyti
     datasource: {
       type: 'Microsoft.Devices/IotHubs'
       properties: {
-        iotHubNamespace: iotHubName
+        iotHubNamespace: 'iot-az220-training-dm062121'
         sharedAccessPolicyName: 'iothubowner'
         endpoint: 'messages/events'
         consumerGroupName: '$Default'
@@ -103,9 +72,3 @@ resource streamingjobs_vibrationJob_name_vibrationOutput 'Microsoft.StreamAnalyt
     }
   }
 }
-
-output connectionString string = hubAndDps.outputs.iotHubConnectionString
-output dpsScopeId string = hubAndDps.outputs.dpsScopeId
-output storageAccountName string = storageName
-
-// note - lab requires "Microsoft.Insights" provider
