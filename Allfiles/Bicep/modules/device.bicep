@@ -16,8 +16,10 @@ param deviceID string
 @description('Used to uniquely identify the script instance')
 param utcValue string = utcNow()
 
+var scriptName = 'createDevice${utcValue}'
+
 resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
-  name: 'createDevice${utcValue}'
+  name: scriptName
   kind: 'AzurePowerShell'
   location: location
   identity: scriptIdentity
@@ -64,6 +66,6 @@ $DeploymentScriptOutputs[secondaryKey'] = ($deviceDetails.ConnectionString -repl
   }
 }
 
-output deviceConnectionString string = reference('createDevice').outputs.connectionString
-output primaryKey string = reference('createDevice').outputs.primaryKey
-output secondaryKey string = reference('createDevice').outputs.secondaryKey
+output deviceConnectionString string = reference(scriptName).outputs.connectionString
+output primaryKey string = reference(scriptName).outputs.primaryKey
+output secondaryKey string = reference(scriptName).outputs.secondaryKey

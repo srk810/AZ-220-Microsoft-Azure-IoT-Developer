@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "1331211099174429880"
+      "templateHash": "10650685795720131557"
     }
   },
   "parameters": {
@@ -184,7 +184,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.63.48766",
-              "templateHash": "936609807146881334"
+              "templateHash": "4642706094549054471"
             }
           },
           "parameters": {
@@ -229,11 +229,14 @@
             }
           },
           "functions": [],
+          "variables": {
+            "scriptName": "[format('createDevice{0}', parameters('utcValue'))]"
+          },
           "resources": [
             {
               "type": "Microsoft.Resources/deploymentScripts",
               "apiVersion": "2020-10-01",
-              "name": "[format('createDevice{0}', parameters('utcValue'))]",
+              "name": "[variables('scriptName')]",
               "kind": "AzurePowerShell",
               "location": "[parameters('location')]",
               "identity": "[parameters('scriptIdentity')]",
@@ -250,15 +253,15 @@
           "outputs": {
             "deviceConnectionString": {
               "type": "string",
-              "value": "[reference('createDevice').outputs.connectionString]"
+              "value": "[reference(variables('scriptName')).outputs.connectionString]"
             },
             "primaryKey": {
               "type": "string",
-              "value": "[reference('createDevice').outputs.primaryKey]"
+              "value": "[reference(variables('scriptName')).outputs.primaryKey]"
             },
             "secondaryKey": {
               "type": "string",
-              "value": "[reference('createDevice').outputs.secondaryKey]"
+              "value": "[reference(variables('scriptName')).outputs.secondaryKey]"
             }
           }
         }
