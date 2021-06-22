@@ -61,7 +61,7 @@ $DeploymentScriptOutputs['primaryKey'] = ($deviceDetails.ConnectionString -repla
 
 # secondary key
 $deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName -KeyType secondary $iotHub -DeviceId $deviceName)
-$DeploymentScriptOutputs[secondaryKey'] = ($deviceDetails.ConnectionString -replace ';', "`r`n" | ConvertFrom-StringData).SharedAccessKey
+$DeploymentScriptOutputs['secondaryKey'] = ($deviceDetails.ConnectionString -replace ';', "`r`n" | ConvertFrom-StringData).SharedAccessKey
 '''
   }
 }
