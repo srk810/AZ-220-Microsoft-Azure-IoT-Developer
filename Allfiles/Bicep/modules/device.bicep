@@ -42,8 +42,6 @@ param(
 $output = "Adding $($deviceName) to $($iotHub)"
 Write-Output $output
 
-Get-AzContext
-
 Add-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod "shared_private_key"
 
 $deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)
