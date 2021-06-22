@@ -13,6 +13,9 @@ param scriptIdentity object
 @description('The Device ID')
 param deviceID string
 
+@description('Used to uniquely identify the script instance')
+param utcValue string = utcNow()
+
 resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: 'createDevice'
   kind: 'AzurePowerShell'
@@ -21,6 +24,7 @@ resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   properties: {
     azPowerShellVersion: '6.0'
     retentionInterval: 'PT1H'
+    forceUpdateTag: utcValue
     timeout: 'PT10M'
     arguments: '${groupName} ${iotHubName} ${deviceID}'
     scriptContent: '''
