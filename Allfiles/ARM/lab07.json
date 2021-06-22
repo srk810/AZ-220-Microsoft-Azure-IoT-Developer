@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "15484919592748228604"
+      "templateHash": "14592180178015664945"
     }
   },
   "parameters": {
@@ -184,7 +184,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.63.48766",
-              "templateHash": "11576381078249076700"
+              "templateHash": "936609807146881334"
             }
           },
           "parameters": {
@@ -233,7 +233,7 @@
             {
               "type": "Microsoft.Resources/deploymentScripts",
               "apiVersion": "2020-10-01",
-              "name": "createDevice",
+              "name": "[format('createDevice{0}', parameters('utcValue'))]",
               "kind": "AzurePowerShell",
               "location": "[parameters('location')]",
               "identity": "[parameters('scriptIdentity')]",

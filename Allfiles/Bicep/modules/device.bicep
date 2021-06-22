@@ -17,7 +17,7 @@ param deviceID string
 param utcValue string = utcNow()
 
 resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
-  name: 'createDevice'
+  name: 'createDevice${utcValue}'
   kind: 'AzurePowerShell'
   location: location
   identity: scriptIdentity
