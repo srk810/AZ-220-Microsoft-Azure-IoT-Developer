@@ -22,7 +22,7 @@ resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
     azPowerShellVersion: '6.0'
     retentionInterval: 'P1D'
     timeout: 'PT10M'
-    cleanupPreference: 'OnExpiration'
+    cleanupPreference: 'Always'
     arguments: '${groupName} ${iotHubName} ${deviceID}'
     scriptContent: '''
 param(
