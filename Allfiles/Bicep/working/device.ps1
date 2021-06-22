@@ -25,8 +25,6 @@ else {
     Write-Output 'Device exists'
 }
 
-Write-Output $deviceDetails
-
 $DeploymentScriptOutputs = @{}
 $DeploymentScriptOutputs['text'] = $output
 $DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()
@@ -37,4 +35,4 @@ $DeploymentScriptOutputs['primaryKey'] = ($deviceDetails.ConnectionString -repla
 
 # secondary key
 $deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -KeyType secondary -DeviceId $deviceName)
-$DeploymentScriptOutputs['secondaryKey'] = ($deviceDetails.ConnectionString -replace '; ', "`r`n" | ConvertFrom-StringData).SharedAccessKey
+$DeploymentScriptOutputs['secondaryKey'] = ($deviceDetails.ConnectionString -replace ';', "`r`n" | ConvertFrom-StringData).SharedAccessKey

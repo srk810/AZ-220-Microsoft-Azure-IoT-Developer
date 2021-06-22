@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "9143554903915102239"
+      "templateHash": "3342490741644608103"
     }
   },
   "parameters": {
@@ -184,7 +184,7 @@
             "_generator": {
               "name": "bicep",
               "version": "0.4.63.48766",
-              "templateHash": "14835482942132939009"
+              "templateHash": "4749336967160328518"
             }
           },
           "parameters": {
@@ -246,7 +246,7 @@
                 "forceUpdateTag": "[parameters('utcValue')]",
                 "timeout": "PT10M",
                 "arguments": "[format('{0} {1} {2}', parameters('groupName'), parameters('iotHubName'), parameters('deviceID'))]",
-                "scriptContent": "param(\n    [Parameter(Mandatory = $true)]\n    [string]\n    $resourceGroup,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $iotHub,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $deviceName\n)\n\n$output = \"Adding $($deviceName) to $($iotHub)\"\nWrite-Output $output\n\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\n\nif ($null -eq $deviceDetails) {\n    Add-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\n    $deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\n}\nelse {\n    Write-Output 'Device exists'\n}\n\nWrite-Output $deviceDetails\n\n$DeploymentScriptOutputs = @{}\n$DeploymentScriptOutputs['text'] = $output\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\n# primary key\n$DeploymentScriptOutputs['primaryKey'] = ($deviceDetails.ConnectionString -replace ';', \"`r`n\" | ConvertFrom-StringData).SharedAccessKey\n\n# secondary key\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -KeyType secondary -DeviceId $deviceName)\n$DeploymentScriptOutputs['secondaryKey'] = ($deviceDetails.ConnectionString -replace '; ', \"`r`n\" | ConvertFrom-StringData).SharedAccessKey\n"
+                "scriptContent": "param(\n    [Parameter(Mandatory = $true)]\n    [string]\n    $resourceGroup,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $iotHub,\n\n    [Parameter(Mandatory = $true)]\n    [string]\n    $deviceName\n)\n\n$output = \"Adding $($deviceName) to $($iotHub)\"\nWrite-Output $output\n\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\n\nif ($null -eq $deviceDetails)\n{\n    Add-AzIotHubDevice -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName -AuthMethod \"shared_private_key\"\n    $deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -DeviceId $deviceName)\n}\nelse\n{\n    Write-Output 'Device exists'\n}\n\n$DeploymentScriptOutputs = @{}\n$DeploymentScriptOutputs['text'] = $output\n$DeploymentScriptOutputs['date'] = (get-date -Format FileDate).toString()\n$DeploymentScriptOutputs['deviceId'] = $deviceDetails.DeviceId\n$DeploymentScriptOutputs['connectionString'] = $deviceDetails.ConnectionString\n# primary key\n$DeploymentScriptOutputs['primaryKey'] = ($deviceDetails.ConnectionString -replace ';', \"`r`n\" | ConvertFrom-StringData).SharedAccessKey\n\n# secondary key\n$deviceDetails = (Get-AzIotHubDeviceConnectionString -ResourceGroupName $resourceGroup -IotHubName $iotHub -KeyType secondary -DeviceId $deviceName)\n$DeploymentScriptOutputs['secondaryKey'] = ($deviceDetails.ConnectionString -replace ';', \"`r`n\" | ConvertFrom-StringData).SharedAccessKey\n"
               }
             }
           ],
