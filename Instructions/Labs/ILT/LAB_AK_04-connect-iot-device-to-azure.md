@@ -219,7 +219,7 @@ In this exercise, you will create a simulated device application using Visual St
     * CaveDevice.csproj
     * Program.cs
 
-    > **Note**: If you see a message **Required assets to build and debug are missing from `CaveDevice`. Add them?**, you may click **Yes** to proceed.
+    > **Note**: If you see a message **Required assets to build and debug are missing from CaveDevice. Add them?**, you may click **Yes** to proceed.
 
 #### Task 2: Explore the application
 
