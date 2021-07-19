@@ -28,4 +28,5 @@ output eventHubEndPoint string = hub.properties.eventHubEndpoints.events.endpoin
 output eventHubPath string = hub.properties.eventHubEndpoints.events.path
 output iothubownerKey string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'iothubowner'), '2020-03-01').primarykey
 output serviceKey string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'service'), '2020-03-01').primarykey
+// not presently used - exposed just in case
 output deviceKey string = listkeys(resourceId('Microsoft.Devices/Iothubs/Iothubkeys', iotHubName, 'device'), '2020-03-01').primarykey

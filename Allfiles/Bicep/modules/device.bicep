@@ -20,12 +20,16 @@ var scriptName = 'createDevice${utcValue}'
 
 resource devices 'Microsoft.Resources/deploymentScripts@2020-10-01' = {
   name: scriptName
+  // Prefer PowerShell over CLI - more reliable
   kind: 'AzurePowerShell'
   location: location
   identity: scriptIdentity
   properties: {
+    // Stick with an older version of PowerShell to ensure runtime image is available in all locations
+    // It takes "at least" 1 month for new images to be published
     azPowerShellVersion: '6.0'
     retentionInterval: 'PT1H'
+    cleanupPreference: 'Always'
     forceUpdateTag: utcValue
     timeout: 'PT10M'
     arguments: '${groupName} ${iotHubName} ${deviceID}'

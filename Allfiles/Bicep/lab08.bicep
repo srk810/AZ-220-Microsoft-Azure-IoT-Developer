@@ -4,7 +4,6 @@ param yourID string
 param courseID string
 
 var location = resourceGroup().location
-// var groupName = resourceGroup().name
 var iotHubName = 'iot-${courseID}-training-${yourID}'
 var identityName = '${courseID}ID2'
 // b24988ac-6180-42a0-ab88-20f7382dd24c is the Contributer role ID
@@ -42,6 +41,8 @@ resource uaiRole 'Microsoft.Authorization/roleAssignments@2018-09-01-preview' = 
   properties: {
     roleDefinitionId: contributorRoleDefinitionId
     principalId: reference(uai.id, '2018-11-30', 'Full').properties.principalId
+    // this ensures the role assignment is performed on the same AD node as the
+    // identity creation - meaning it will always succeed
     principalType:'ServicePrincipal'
   }
 }
