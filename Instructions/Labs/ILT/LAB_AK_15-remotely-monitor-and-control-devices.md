@@ -714,7 +714,7 @@ In this Exercise, you will update your device app by adding the code for a direc
 
 1. Ensure that **Program.cs** is open in the code editor.
 
-1. Locate the `INSERT register direct method code below here` comment.
+1. Locate the `UNCOMMENT register direct method code below here` comment.
 
 1. To register the direct method, enter the following code:
 
