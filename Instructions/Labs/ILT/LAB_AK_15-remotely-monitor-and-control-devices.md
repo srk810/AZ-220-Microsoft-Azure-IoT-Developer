@@ -81,6 +81,12 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 > az iot hub device-identity connection-string show --hub-name iot-az220-training-{your-id} --device-id sensor-th-0055 -o tsv
 > ```
 
+> **TODO** Update setup
+
+1. Select **Deploy to Azure**:
+
+    [![Deploy To Azure](media/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fbicep%2FAllfiles%2FARM%2Flab15.json)
+
 1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
 
     If you are prompted about setting up storage for Cloud Shell, accept the defaults.
@@ -205,9 +211,9 @@ The **lab15-setup.azcli** script is written to run in a **bash** shell environme
 
     Once you have saved the information to a location where you can find it easily, you will be ready to continue with the lab.
 
-### Exercise 2: Write Code to Send and Receive Telemetry
+### Exercise 2: Review Code to Send and Receive Telemetry
 
-In this exercise, you will be creating the simulated device app (for the sensor-th-0055 device) that sends telemetry to your IoT Hub.
+In this exercise, you will be completing the simulated device app (for the sensor-th-0055 device) that sends telemetry to your IoT Hub.
 
 #### Task 1: Open a simulated device that generates telemetry
 
@@ -294,27 +300,7 @@ The simulated device app that you will build in this task simulates an IoT devic
       * CheeseCaveSimulator class - (replaces EnvironmentSensor) rather than just generating telemetry, this class also simulates a running cheese cave environment that is impacted by the operation of a cooling fan.
       * ConsoleHelper - a class that encapsulates writing different colored text to the console
 
-1. Review the **Main** method:
-
-    ```csharp
-    private static void Main(string[] args)
-    {
-        ConsoleHelper.WriteColorMessage("Cheese Cave device app.\n", ConsoleColor.Yellow);
-
-        // Connect to the IoT hub using the MQTT protocol.
-        deviceClient = DeviceClient.CreateFromConnectionString(deviceConnectionString, TransportType.Mqtt);
-
-        // Create an instance of the Cheese Cave Simulator
-        cheeseCave = new CheeseCaveSimulator();
-
-        // INSERT register direct method code below here
-
-        // INSERT register desired property changed handler code below here
-
-        SendDeviceToCloudMessagesAsync();
-        Console.ReadLine();
-    }
-    ```
+1. Review the **Main** method.
 
     As in earlier labs, the **Main** method is used to establish a connection to your IoT hub. You may have noticed that it will be used to integrate the device twin property changes, and in this case, you will also be integrating a direct method.
 
@@ -350,11 +336,11 @@ The simulated device app that you will build in this task simulates an IoT devic
 
     You need to be sending telemetry to IoT Hub later in this lab.
 
-### Exercise 3: Create a Second App to Receive Telemetry
+### Exercise 3: Complete a Second App to Receive Telemetry
 
-Now that you have your (simulated) cheese cave device sending telemetry to your IoT Hub, you need to create a back-end app that can connect to IoT Hub and "listen" for that telemetry. Eventually, this back-end app will be used to automate the control of the temperature in the cheese cave.
+Now that you have your (simulated) cheese cave device sending telemetry to your IoT Hub, you need to complete a back-end app that can connect to IoT Hub and "listen" for that telemetry. Eventually, this back-end app will be used to automate the control of the temperature in the cheese cave.
 
-#### Task 1: Create an app to receive telemetry
+#### Task 1: Complete an app to receive telemetry
 
 In this task, you will begin work on the back-end app that will be used to receive telemetry from the IoT Hub Event Hub endpoint.
 
@@ -604,7 +590,7 @@ In this task, you will begin work on the back-end app that will be used to recei
 
 1. Locate the `INSERT ReceiveMessagesFromDeviceAsync method below here` comment.
 
-1. To implement the **ReceiveMessagesFromDeviceAsync** method, enter the following code:
+1. To implement the **ReceiveMessagesFromDeviceAsync** method, uncomment the following code:
 
     ```csharp
     // Asynchronously create a PartitionReceiver for a partition and then start reading any messages sent from the simulated client.
@@ -716,16 +702,15 @@ In this Exercise, you will update your device app by adding the code for a direc
 
 1. Locate the `UNCOMMENT register direct method code below here` comment.
 
-1. To register the direct method, enter the following code:
+1. To register the direct method, uncomment the following code:
 
     ```csharp
-    // Create a handler for the direct method call
     deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null).Wait();
     ```
 
     Notice that the **SetFanState** direct method handler is also set up by this code. As you can see, the **SetMethodHandlerAsync** method of deviceClient takes the remote method name `"SetFanState"` as an argument, along with the actual local method to call, and a user context object (in this case null).
 
-1. Locate the `INSERT SetFanState method below here` comment.
+1. Locate the `UNCOMMENT SetFanState method below here` comment
 
 1. To implement the **SetFanState** direct method, enter the following code:
 

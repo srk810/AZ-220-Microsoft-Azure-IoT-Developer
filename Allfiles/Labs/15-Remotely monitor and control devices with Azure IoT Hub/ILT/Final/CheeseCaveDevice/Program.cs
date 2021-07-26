@@ -52,7 +52,9 @@ namespace CheeseCaveDevice
             // method of deviceClient takes the remote method name `"SetFanState"`
             // as an argument, along with the actual local method to call, and a
             // user context object (in this case null)
-            await deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null);
+
+            // UNCOMMENT register direct method code below here
+            //await deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null);
 
             // Get the device twin to report the initial desired properties.
             Twin deviceTwin = await deviceClient.GetTwinAsync();
@@ -106,24 +108,46 @@ namespace CheeseCaveDevice
             }
         }
 
-        // INSERT SetFanState method below here
-        // Handle the direct method call
+        // Uncomment SetFanState method below here
+        // This method that runs on the device when the associated remote method,
+        // also called SetFanState, is invoked via IoT Hub. Notice that in
+        // addition to receiving a MethodRequest instance, it also receives the
+        // userContext object that was defined when the direct message callback
+        // was registered (in this case it will be null)
         private static Task<MethodResponse> SetFanState(MethodRequest methodRequest, object userContext)
         {
+            // The first line of this method determines whether the cheese cave
+            // fan is currently in a Failed state - the assumption made by the
+            // cheese cave simulator is that once the fan has failed, any
+            // subsequent command will automatically fail.
             if (cheeseCave.FanState == StateEnum.Failed)
             {
                 // Acknowledge the direct method call with a 400 error message.
+                // a JSON string is created with the result property set to Fan
+                // Failed
                 string result = "{\"result\":\"Fan failed\"}";
+                // A new MethodResponse object is then constructed, with the
+                // result string encoded into a byte array and an HTTP status
+                // code - in this instance, 400 is used which, in the context of
+                // a REST API means a generic client-side error has occurred.
                 ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
+                // As direct method callbacks are required to return a
+                // Task<MethodResponse>, a new task is created and returned.
                 return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
             }
             else
             {
+                // If the fan state is not Failed, the code then proceeds to
+                // process the data sent as part of the method request.
                 try
                 {
+                    // The methodRequest.Data property contains the data in the
+                    // form of a byte array, so it is first converted to a string.
                     var data = Encoding.UTF8.GetString(methodRequest.Data);
 
-                    // Remove quotes from data.
+                    // In order to parse the data, the quotes must first be
+                    // removed and then the Enum.Parse method is used to find a
+                    // matching enum value.
                     data = data.Replace("\"", "");
 
                     // Parse the payload, and trigger an exception if it's not valid.
@@ -137,6 +161,9 @@ namespace CheeseCaveDevice
                 catch
                 {
                     // Acknowledge the direct method call with a 400 error message.
+                    // Notice that the exception handler creates and returns a
+                    // similar error method response to the one created for the
+                    // fan failed state.
                     string result = "{\"result\":\"Invalid parameter\"}";
                     ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
                     return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
