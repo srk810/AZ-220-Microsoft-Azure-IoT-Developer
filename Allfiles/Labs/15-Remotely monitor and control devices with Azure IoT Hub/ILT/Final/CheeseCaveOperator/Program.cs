@@ -9,6 +9,7 @@
 // The app will be used to automate the control of the temperature in the cheese
 // cave.
 
+// UNCOMMENT using statements below here
 using System;
 using System.Threading.Tasks;
 using System.Text;
@@ -17,7 +18,6 @@ using System.Linq;
 
 using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
-using Azure.Messaging.EventHubs.Producer;
 
 using Microsoft.Azure.Devices;
 using Newtonsoft.Json;
@@ -55,7 +55,6 @@ namespace CheeseCaveOperator
         // the device ID used by the CheeseCaveDevice application.
         private readonly static string deviceId = "sensor-th-0055";
 
-        // INSERT Main method below here
         public static async Task Main(string[] args)
         {
             ConsoleHelper.WriteColorMessage("Cheese Cave Operator\n", ConsoleColor.Yellow);

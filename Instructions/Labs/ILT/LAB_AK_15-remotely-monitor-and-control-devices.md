@@ -69,147 +69,43 @@ This lab assumes the following Azure resources are available:
 | IoT Hub | iot-az220-training-{your-id} |
 | IoT Device | sensor-th-0055 |
 
-> **Important**: Run the setup script to create the required device.
-
-To create any missing resources and the new device you will need to run the **lab15-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
-
-The **lab15-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
-
->**Note:** You will need the connection string for the **sensor-th-0055** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
->
-> ```bash
-> az iot hub device-identity connection-string show --hub-name iot-az220-training-{your-id} --device-id sensor-th-0055 -o tsv
-> ```
-
-> **TODO** Update setup
+To ensure these resources are available, complete the following tasks.
 
 1. Select **Deploy to Azure**:
 
     [![Deploy To Azure](media/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fbicep%2FAllfiles%2FARM%2Flab15.json)
 
-1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+1. If prompted, login to the **Azure Portal**.
 
-    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+    The **Custom deployment** page will be displayed.
 
-1. Verify that the Cloud Shell is using **Bash**.
+1. Under **Project details**, in the **Subscription** dropdown, ensure that the Azure subscription that you intend to use for this course is selected.
 
-    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+1. In the **Resource group** dropdown, select **rg-az220**.
 
-1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
+    > **NOTE**: If **rg-az220** is not listed:
+    >
+    > 1. Under the **Resource group** dropdown, click **Create new**.
+    > 1. Under **Name**, enter **rg-az220**.
+    > 1. Click **OK**.
 
-1. In the dropdown, click **Upload**.
+1. Under **Instance details**, in the **Region** dropdown, select the region closest to you.
 
-1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+    > **NOTE**: If the **rg-az220** group already exists, the **Region** field is set to the region used by the resource group and is read-only.
 
-    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
 
-    * Allfiles
-      * Labs
-          * 15-Remotely monitor and control devices with Azure IoT Hub
-            * Setup
+1. To validate the template, click **Review and create**.
 
-    The lab15-setup.azcli script file is located in the Setup folder for lab 15.
+1. If validation passes, click **Create**.
 
-1. Select the **lab15-setup.azcli** file, and then click **Open**.
+    The deployment will start.
 
-    A notification will appear when the file upload has completed.
+1. Once the deployment has completed, in the left navigation area, to review any output values from the template,  click **Outputs**.
 
-1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
+    Make a note of any outputs as necessary.
 
-    ```bash
-    ls
-    ```
-
-    The `ls` command lists the content of the current directory. You should see the lab15-setup.azcli file listed.
-
-1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
-
-    ```bash
-    mkdir lab15
-    mv lab15-setup.azcli lab15
-    cd lab15
-    ```
-
-1. To ensure that **lab15-setup.azcli** has the execute permission, enter the following command:
-
-    ```bash
-    chmod +x lab15-setup.azcli
-    ```
-
-1. On the Cloud Shell toolbar, to enable access to the lab15-setup.azcli file, click **Open editor** (second button from the right - **{ }**).
-
-1. In the **FILES** list, to expand the lab15 folder and open the script file, click **lab15**, and then click **lab15-setup.azcli**.
-
-    The editor will now show the contents of the **lab15-setup.azcli** file.
-
-1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
-
-    Referencing the sample below as an example, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
-
-    ```bash
-    #!/bin/bash
-
-    # Change these values!
-    YourID="{your-id}"
-    Location="{your-location}"
-    ```
-
-    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
-
-    ```bash
-    az account list-locations -o Table
-
-    DisplayName           Latitude    Longitude    Name
-    --------------------  ----------  -----------  ------------------
-    East Asia             22.267      114.188      eastasia
-    Southeast Asia        1.283       103.833      southeastasia
-    Central US            41.5908     -93.6208     centralus
-    East US               37.3719     -79.8164     eastus
-    East US 2             36.6681     -78.3889     eastus2
-    ```
-
-1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
-
-    If prompted to save, click **Save** and the editor will close.
-
-    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
-
-1. To create the resources required for this lab, enter the following command:
-
-    ```bash
-    ./lab15-setup.azcli
-    ```
-
-    This script can take a few minutes to run. You will see output as each step completes.
-
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0055** to the IoT hub and display the device connection string.
-
-1. Notice that, once the script has completed, information pertaining to your IoT Hub and device is displayed.
-
-    The script will display information similar to the following:
-
-    ```text
-    Configuration Data:
-    ------------------------------------------------
-    iot-az220-training-{your-id} Service connectionstring:
-    HostName=iot-az220-training-{your-id}.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=nV9WdF3Xk0jYY2Da/pz2i63/3lSeu9tkW831J4aKV2o=
-
-    sensor-th-0055 device connection string:
-    HostName=iot-az220-training-{your-id}.azure-devices.net;DeviceId=sensor-th-0055;SharedAccessKey=TzAzgTYbEkLW4nWo51jtgvlKK7CUaAV+YBrc0qj9rD8=
-
-    iot-az220-training-{your-id} eventhub endpoint:
-    sb://iothub-ns-iot-az220-training-2610348-5a463f1b56.servicebus.windows.net/
-
-    iot-az220-training-{your-id} eventhub path:
-    iot-az220-training-{your-id}
-
-    iot-az220-training-{your-id} eventhub SaS primarykey:
-    tGEwDqI+kWoZroH6lKuIFOI7XqyetQHf7xmoSf1t+zQ=
-    ```
-
-1. Copy the output displayed by the script into a text document for use later in this lab.
-
-    Once you have saved the information to a location where you can find it easily, you will be ready to continue with the lab.
+The resources have now been created.
 
 ### Exercise 2: Review Code to Send and Receive Telemetry
 
@@ -228,7 +124,7 @@ In this exercise, you will be completing the simulated device app (for the senso
     * Allfiles
         * Labs
             * 15-Remotely monitor and control devices with Azure IoT Hub
-                * Starter
+                * Final
                     * cheesecavedevice
                     * CheeseCaveOperator
 
@@ -356,99 +252,11 @@ In this task, you will begin work on the back-end app that will be used to recei
 
     The CheeseCaveOperator application that has been prepared for you is a simple console application that includes a couple of NuGet package libraries and some comments that will be used guide you through the process of building your code. You will need to add code blocks to the project before you are able to run the application.
 
-1. In the **EXPLORER** pane, to open the application project file, click **CheeseCaveOperator.csproj**.
-
-    The **CheeseCaveOperator.csproj** file should now be opened in the code editor pane.
-
-1. Take a minute to review the contents of the **CaveDevice.csproj** file.
-
-    Your file contents should be similar to the following:
-
-    ```xml
-    <Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <OutputType>Exe</OutputType>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Azure.Devices" Version="1.*" />
-        <PackageReference Include="Microsoft.Azure.EventHubs" Version="4.*" />
-    </ItemGroup>
-
-    </Project>
-    ```
-
-    > **Note**: If package version numbers in your file are later than those shown above, that's okay.
-
-    The project file (.csproj) is an XML document that specifies the type of project that you are working on. In this case, the project is an **Sdk** style project.
-
-    As you can see, the project definition contains two sections - a **PropertyGroup** and an **ItemGroup**.
-
-    The **PropertyGroup** defines the type of output that building this project will produce. In this case you will be building an executable file that targets .NET Core 3.1.
-
-    The **ItemGroup** specifies any external libraries that are required for the application. These particular references are for NuGet packages, and each package reference specifies the package name and the version.
-
-    > **Note**: You can add NuGet libraries (such as the ones listed in ItemGroup above) to the project file manually by entering the command `dotnet add package` at a command prompt (such as the Visual Studio Code Terminal command prompt). Enter the `dotnet restore` command will ensure that all of the dependencies are downloaded. For example, to load the libraries above and to ensure that they are available in your code project, you could enter the following commands:
-    >
-    >   dotnet add package Microsoft.Azure.EventHubs
-    >   dotnet add package Microsoft.Azure.Devices
-    >   dotnet restore
-    >
-    > **Information**: You can learn more about NuGet [here](https://docs.microsoft.com/en-us/nuget/what-is-nuget).
-
-#### Task 3: Add the telemetry receiver code
+#### Task 3: Enable the telemetry receiver code
 
 1. In the **EXPLORER** pane, click **Program.cs**.
 
-    The **Program.cs** file should look similar to the following:
-
-    ```csharp
-    // Copyright (c) Microsoft. All rights reserved.
-    // Licensed under the MIT license. See LICENSE file in the project root for full license information.
-
-    // INSERT using statements below here
-
-    namespace CheeseCaveOperator
-    {
-        class Program
-        {
-            // INSERT variables below here
-
-            // INSERT Main method below here
-
-            // INSERT ReceiveMessagesFromDeviceAsync method below here
-
-            // INSERT InvokeMethod method below here
-
-            // INSERT Device twins section below here
-        }
-
-        internal static class ConsoleHelper
-        {
-            internal static void WriteColorMessage(string text, ConsoleColor clr)
-            {
-                Console.ForegroundColor = clr;
-                Console.WriteLine(text);
-                Console.ResetColor();
-            }
-            internal static void WriteGreenMessage(string text)
-            {
-                WriteColorMessage(text, ConsoleColor.Green);
-            }
-
-            internal static void WriteRedMessage(string text)
-            {
-                WriteColorMessage(text, ConsoleColor.Red);
-            }
-        }
-    }
-    ```
-
-    This code outlines the structure of the operator app.
-
-1. Locate the `// INSERT using statements below here` comment.
+1. Locate the `// UNCOMMENT using statements below here` comment and review the statements.
 
 1. To specify the namespaces that the application code will be using, enter the following code:
 
@@ -459,7 +267,9 @@ In this task, you will begin work on the back-end app that will be used to recei
     using System.Collections.Generic;
     using System.Linq;
 
-    using Microsoft.Azure.EventHubs;
+    using Azure.Messaging.EventHubs;
+    using Azure.Messaging.EventHubs.Consumer;
+
     using Microsoft.Azure.Devices;
     using Newtonsoft.Json;
     ```
@@ -468,30 +278,7 @@ In this task, you will begin work on the back-end app that will be used to recei
 
     > **Tip**: When inserting code, the code layout may not be ideal. You can have Visual Studio Code format the document for you by right-clicking in the code editor pane and then clicking **Format Document**. You can achieve the same result by opening the **Task** pane (press **F1**) and typing **Format Document** and then pressing **Enter**. And on Windows, the shortcut for this task is **SHIFT+ALT+F**.
 
-1. Locate the `// INSERT variables below here` comment.
-
-1. To specify the variables that the program is using, enter the following code:
-
-    ```csharp
-    // Global variables.
-    // The Event Hub-compatible endpoint.
-    private readonly static string eventHubsCompatibleEndpoint = "<your event hub endpoint>";
-
-    // The Event Hub-compatible name.
-    private readonly static string eventHubsCompatiblePath = "<your event hub path>";
-    private readonly static string iotHubSasKey = "<your event hub SaS key>";
-    private readonly static string iotHubSasKeyName = "service";
-    private static EventHubClient eventHubClient;
-
-    // INSERT service client variable below here
-
-    // INSERT registry manager variable below here
-
-    // Connection string for your IoT Hub.
-    private readonly static string serviceConnectionString = "<your service connection string>";
-
-    private readonly static string deviceId = "sensor-th-0055";
-    ```
+1. Locate the `// Global variables.` comment.
 
 1. Take a moment to review the code (and code comments) that you just entered.
 
@@ -509,7 +296,7 @@ In this task, you will begin work on the back-end app that will be used to recei
 
     The **serviceConnectionString** variable will contain the connection string that will enable the operator app to connect to the IoT Hub.
 
-    The **deviceId** variable contains the device ID used by the **CheeseCaveDevice** application.
+    The **deviceId** variable contains the device ID (`"sensor-th-0055"`) used by the **CheeseCaveDevice** application.
 
 1. Locate the code line used to assign the service connection string
 
@@ -519,7 +306,7 @@ In this task, you will begin work on the back-end app that will be used to recei
 
 1. Replace **\<your service connection string\>** with the IoT Hub Service connection string that you saved earlier in this lab.
 
-    You should have saved the iothubowner shared access policy primary connection string generated by the lab15-setup.azcli setup script that you ran during Exercise 1.
+    You should have saved the iothubowner shared access policy primary connection string generated by the ARM Template that you ran during Exercise 1.
 
     > **Note**: You may be curious as to why the **iothubowner** shared policy is used rather than the **service** shared policy. The answer is related to the IoT Hub permissions assigned to each policy. The **service** policy has the **ServiceConnect** permission and is usually used by back-end cloud services. It confers the following rights:
     >
@@ -538,91 +325,56 @@ In this task, you will begin work on the back-end app that will be used to recei
 
 1. Replace the **\<your event hub endpoint\>**, **\<your event hub path\>**, and the **\<your event hub SaS key\>** with the values that you saved earlier in this lab.
 
-1. Locate the `// INSERT Main method below here` comment.
+1. Locate the `UNCOMMENT Main method below here` comment and uncomment the **Main** method.
 
-1. To implement the **Main** method, enter the following code:
+1. Take a moment to review the code (and code comments).
 
-    ```csharp
-    public static void Main(string[] args)
-    {
-        ConsoleHelper.WriteColorMessage("Cheese Cave Operator\n", ConsoleColor.Yellow);
+    Notice how the connection string is constructed from the values you entered earlier. This, along with the default consumer group is then used to create and configure an instance of the **EventHubConsumerClient**. This class is used to read values from an **EventHub**, in this case, the built-in Event Hub endpoint of the IoT Hub.
 
-        // Create an EventHubClient instance to connect to the IoT Hub Event Hubs-compatible endpoint.
-        var connectionString = new EventHubsConnectionStringBuilder(new Uri(eventHubsCompatibleEndpoint), eventHubsCompatiblePath, iotHubSasKeyName, iotHubSasKey);
-        eventHubClient = EventHubClient.CreateFromConnectionString(connectionString.ToString());
-
-        // Create a PartitionReceiver for each partition on the hub.
-        var runtimeInfo = eventHubClient.GetRuntimeInformationAsync().GetAwaiter().GetResult();
-        var d2cPartitions = runtimeInfo.PartitionIds;
-
-        // INSERT register desired property changed handler code below here
-
-        // INSERT create service client instance below here
-
-        // Create receivers to listen for messages.
-        var tasks = new List<Task>();
-        foreach (string partition in d2cPartitions)
-        {
-            tasks.Add(ReceiveMessagesFromDeviceAsync(partition));
-        }
-
-        // Wait for all the PartitionReceivers to finish.
-        Task.WaitAll(tasks.ToArray());
-    }
-    ```
-
-1. Take a moment to review the code (and code comments) that you just entered.
-
-    Notice the use of the **EventHubsConnectionStringBuilder** class to construct the **EventHubClient** connection string - this is effectively a helper class that concatenates the various values into the correct format. This is then used to connect to the event hub endpoint and populate the **eventHubClient** variable.
-
-    The **eventHubClient** is then used to retrieve the run time information for the event hub. This information contains:
-
-    * **CreatedAt** - the Date/Time the Event Hub was created
-    * **PartitionCount** - the number of partitions (most IoT Hubs are configured with 4 partitions)
-    * **PartitionIds** - a string array containing the partition IDs
-    * **Path** - the event hub entity path
-
-    The array of partition IDs is stored in **d2cPartitions** variable, where it will be shortly used to create a list of tasks that will receive messages from each partition.
+    The **EventHubConsumerClient** is then used to retrieve the array of partition IDs which are then stored in **d2cPartitions** variable. This array will be used to create a list of tasks that will receive messages from each partition.
 
     > **Information**: You can learn more about the purpose of partitions [here](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling#partitions).
 
     As messages sent from devices to an IoT Hub may be handled by any of the partitions, the app has to retrieve messages from each. The next section of code creates a list of asynchronous tasks - each task will receive messages from a specific partition. The final line will wait for all tasks to complete - as each task is going to be in an infinite loop, this line prevents the application from exiting.
 
-1. Locate the `INSERT ReceiveMessagesFromDeviceAsync method below here` comment.
+1. Locate the `UNCOMMENT ReceiveMessagesFromDeviceAsync method below here` and uncomment the **ReceiveMessagesFromDeviceAsync** method.
 
-1. To implement the **ReceiveMessagesFromDeviceAsync** method, uncomment the following code:
+1. Review the **ReceiveMessagesFromDeviceAsync** method:
 
     ```csharp
-    // Asynchronously create a PartitionReceiver for a partition and then start reading any messages sent from the simulated client.
     private static async Task ReceiveMessagesFromDeviceAsync(string partition)
     {
-        // Create the receiver using the default consumer group.
-        var eventHubReceiver = eventHubClient.CreateReceiver("$Default", partition, EventPosition.FromEnqueuedTime(DateTime.Now));
-        Console.WriteLine("Created receiver on partition: " + partition);
+        EventPosition startingPosition = EventPosition.Earliest;
 
-        while (true)
+        // Reads events from the requested partition as an asynchronous
+        // enumerable, allowing events to be iterated as they become available
+        // on the partition, waiting as necessary should there be no events
+        // available.
+        await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
+            partition,
+            startingPosition))
         {
-            // Check for EventData - this methods times out if there is nothing to retrieve.
-            var events = await eventHubReceiver.ReceiveAsync(100);
+            string readFromPartition = partitionEvent.Partition.PartitionId;
 
-            // If there is data in the batch, process it.
-            if (events == null) continue;
+            // Each event data body is converted from BinaryData to a byte
+            // array, and from there, to a string and written to the
+            // console for logging purposes.
+            ReadOnlyMemory<byte> eventBodyBytes = partitionEvent.Data.EventBody.ToMemory();
+            string data = Encoding.UTF8.GetString(eventBodyBytes.ToArray());
+            ConsoleHelper.WriteGreenMessage("Telemetry received: " + data);
 
-            foreach (EventData eventData in events)
+            // The event data properties are then iterated and, in this
+            // case, checked to see if a value is true - in the current
+            // scenario, this represents an alert. Should an alert be
+            // found, it is written to the console.
+            foreach (var prop in partitionEvent.Data.Properties)
             {
-                string data = Encoding.UTF8.GetString(eventData.Body.Array);
-
-                ConsoleHelper.WriteGreenMessage("Telemetry received: " + data);
-
-                foreach (var prop in eventData.Properties)
+                if (prop.Value.ToString() == "true")
                 {
-                    if (prop.Value.ToString() == "true")
-                    {
-                        ConsoleHelper.WriteRedMessage(prop.Key);
-                    }
+                    ConsoleHelper.WriteRedMessage(prop.Key);
                 }
-                Console.WriteLine();
             }
+            Console.WriteLine();
         }
     }
     ```

@@ -5,7 +5,7 @@
     "_generator": {
       "name": "bicep",
       "version": "0.4.63.48766",
-      "templateHash": "5909646250485109767"
+      "templateHash": "3798337222914780158"
     }
   },
   "parameters": {
@@ -275,10 +275,6 @@
     }
   ],
   "outputs": {
-    "connectionString": {
-      "type": "string",
-      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deployHub'), '2019-10-01').outputs.connectionString.value]"
-    },
     "deviceConnectionString": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'createDevice'), '2019-10-01').outputs.deviceConnectionString.value]"
@@ -287,17 +283,21 @@
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'createDevice'), '2019-10-01').outputs.primaryKey.value]"
     },
-    "eventHubEndPoint": {
+    "eventHubsCompatibleEndpoint": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deployHub'), '2019-10-01').outputs.eventHubEndPoint.value]"
     },
-    "eventHubPath": {
+    "eventHubsCompatiblePath": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deployHub'), '2019-10-01').outputs.eventHubPath.value]"
     },
-    "serviceKey": {
+    "iotHubSasKey": {
       "type": "string",
       "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deployHub'), '2019-10-01').outputs.serviceKey.value]"
+    },
+    "serviceConnectionString": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Resources/deployments', 'deployHub'), '2019-10-01').outputs.connectionString.value]"
     }
   }
 }
