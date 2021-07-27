@@ -49,8 +49,8 @@ In this lab, you will complete the following activities:
 
 * Verify that the lab prerequisites are met (that you have the required Azure resources)
 
-    * The script will create an IoT Hub if needed.
-    * The script will create a new device identity needed for this lab.
+  * The script will create an IoT Hub if needed.
+  * The script will create a new device identity needed for this lab.
 
 * Create a simulated device app to send device telemetry to the IoT Hub
 * Create a back-end service app to listen for the telemetry
@@ -124,8 +124,8 @@ In this exercise, you will be completing the simulated device app (for the senso
     * Allfiles
         * Labs
             * 15-Remotely monitor and control devices with Azure IoT Hub
-                * Final
-                    * cheesecavedevice
+                * Starter
+                    * CheeseCaveDevice
                     * CheeseCaveOperator
 
 1. Click **cheesecavedevice**, and then click **Select Folder**.
@@ -256,31 +256,21 @@ In this task, you will begin work on the back-end app that will be used to recei
 
 1. In the **EXPLORER** pane, click **Program.cs**.
 
-1. Locate the `// UNCOMMENT using statements below here` comment and review the statements.
-
-1. To specify the namespaces that the application code will be using, enter the following code:
+1. Locate and review the using statements - most have been used in earlier labs. However, two new namespaces have been added:
 
     ```csharp
-    using System;
-    using System.Threading.Tasks;
-    using System.Text;
-    using System.Collections.Generic;
-    using System.Linq;
-
     using Azure.Messaging.EventHubs;
     using Azure.Messaging.EventHubs.Consumer;
-
-    using Microsoft.Azure.Devices;
-    using Newtonsoft.Json;
     ```
 
-    Notice that as well as specifying **System**, you are also declaring other namespaces that the code will be using, such as **System.Text** for encoding strings, **System.Threading.Tasks** for asynchronous tasks, and the namespaces for the two packages you added earlier.
+    Both of these namespaces originate from the [**Azure.Messaging.EventHubs** NuGet package](https://www.nuget.org/packages/Azure.Messaging.EventHubs/). This client library allows for both publishing and consuming events using Azure Event Hubs. In this lab, the library will be configured to connect to the IoT Hub built-in EventHub compatible endpoint.
 
-    > **Tip**: When inserting code, the code layout may not be ideal. You can have Visual Studio Code format the document for you by right-clicking in the code editor pane and then clicking **Format Document**. You can achieve the same result by opening the **Task** pane (press **F1**) and typing **Format Document** and then pressing **Enter**. And on Windows, the shortcut for this task is **SHIFT+ALT+F**.
+    > **Note**: The NuGet package can be installed with the following command: `dotnet add package Azure.Messaging.EventHubs` and further information can be found at the link below:
+    > * [Azure Event Hubs client library for .NET - Version 5.5.0](https://docs.microsoft.com/en-us/dotnet/api/overview/azure/messaging.eventhubs-readme?view=azure-dotnet)
 
-1. Locate the `// Global variables.` comment.
+1. Locate the `Global variables.` comment.
 
-1. Take a moment to review the code (and code comments) that you just entered.
+1. Take a moment to review the global variables.
 
     The **eventHubsCompatibleEndpoint** variable is used to store the URI for the IoT Hub built-in service-facing endpoint (messages/events) that is compatible with Event Hubs.
 
@@ -325,71 +315,35 @@ In this task, you will begin work on the back-end app that will be used to recei
 
 1. Replace the **\<your event hub endpoint\>**, **\<your event hub path\>**, and the **\<your event hub SaS key\>** with the values that you saved earlier in this lab.
 
-1. Locate the `UNCOMMENT Main method below here` comment and uncomment the **Main** method.
+1. Locate the **Main** method and take a moment to review the code (and code comments).
 
-1. Take a moment to review the code (and code comments).
+    Notice how the connection string is constructed from the values you entered earlier. This, along with the default consumer group is then used to create and configure an instance of the **EventHubConsumerClient**.
 
-    Notice how the connection string is constructed from the values you entered earlier. This, along with the default consumer group is then used to create and configure an instance of the **EventHubConsumerClient**. This class is used to read values from an **EventHub**, in this case, the built-in Event Hub endpoint of the IoT Hub.
+    > **Note**: The code `var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;` assigns the string `"$Default` to the **consumerGroup**. It is common to create a custom consumer group, in which case the name of the consumer group would be used here instead.
 
-    The **EventHubConsumerClient** is then used to retrieve the array of partition IDs which are then stored in **d2cPartitions** variable. This array will be used to create a list of tasks that will receive messages from each partition.
+    > **Information**: You can learn more about consumer groups [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-features#consumer-groups)
+
+    This **EventHubConsumerClient** class is used to read values from an **EventHub**, in this case, the built-in Event Hub endpoint of the IoT Hub.
+
+    The **EventHubConsumerClient** reference is stored in the **consumer** variable. Next, the consumer is used to retrieve an array of partition ID strings which are then stored in **d2cPartitions** variable. This array will be used to create a list of tasks that will receive messages from each partition.
 
     > **Information**: You can learn more about the purpose of partitions [here](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-scaling#partitions).
 
     As messages sent from devices to an IoT Hub may be handled by any of the partitions, the app has to retrieve messages from each. The next section of code creates a list of asynchronous tasks - each task will receive messages from a specific partition. The final line will wait for all tasks to complete - as each task is going to be in an infinite loop, this line prevents the application from exiting.
 
-1. Locate the `UNCOMMENT ReceiveMessagesFromDeviceAsync method below here` and uncomment the **ReceiveMessagesFromDeviceAsync** method.
+1. Locate and review the **ReceiveMessagesFromDeviceAsync** method.
 
-1. Review the **ReceiveMessagesFromDeviceAsync** method:
+    This method is supplied with an argument that defines the target partition. Recall that the default configuration specifies 4 partitions - therefore, this method is called 4 times, each running asynchronously and in parallel, one for each partition.
 
-    ```csharp
-    private static async Task ReceiveMessagesFromDeviceAsync(string partition)
-    {
-        EventPosition startingPosition = EventPosition.Earliest;
+    Next, the starting position for the first event present in the partition is specified.
 
-        // Reads events from the requested partition as an asynchronous
-        // enumerable, allowing events to be iterated as they become available
-        // on the partition, waiting as necessary should there be no events
-        // available.
-        await foreach (PartitionEvent partitionEvent in consumer.ReadEventsFromPartitionAsync(
-            partition,
-            startingPosition))
-        {
-            string readFromPartition = partitionEvent.Partition.PartitionId;
+    > **Information**: Although `EventPosition.Earliest` may look like it is an enum, `EventPosition` is actually a struct that not only provides definitions for `Earliest` and `Latest`, but also methods that return event positions calculated from enqueued time, offset and sequence number. You can learn more about the **EventPosition Struct** [here](https://docs.microsoft.com/dotnet/api/azure.messaging.eventhubs.consumer.eventposition?view=azure-dotnet).
 
-            // Each event data body is converted from BinaryData to a byte
-            // array, and from there, to a string and written to the
-            // console for logging purposes.
-            ReadOnlyMemory<byte> eventBodyBytes = partitionEvent.Data.EventBody.ToMemory();
-            string data = Encoding.UTF8.GetString(eventBodyBytes.ToArray());
-            ConsoleHelper.WriteGreenMessage("Telemetry received: " + data);
+    The next section reads events from the requested partition as an asynchronous enumerable, allowing events to be iterated as they become available on the partition, waiting as necessary should there be no events available.
 
-            // The event data properties are then iterated and, in this
-            // case, checked to see if a value is true - in the current
-            // scenario, this represents an alert. Should an alert be
-            // found, it is written to the console.
-            foreach (var prop in partitionEvent.Data.Properties)
-            {
-                if (prop.Value.ToString() == "true")
-                {
-                    ConsoleHelper.WriteRedMessage(prop.Key);
-                }
-            }
-            Console.WriteLine();
-        }
-    }
-    ```
+    > **Information**: You can learn more about asynchronous streams [here](https://docs.microsoft.com/dotnet/csharp/whats-new/csharp-8#asynchronous-streams)
 
-    As you can see, this method is supplied with an argument that defines the target partition. Recall that for the default configuration where 4 partitions are specified, this method is called 4 times, each running asynchronously and in parallel, one for each partition.
-
-    The first part of this method creates an event hub receiver. The code specifies that the **$Default** consumer group is used, (although it is common to create a custom consumer group), the partition, and finally at what position in the event partition's data to start receiving from. In this case, the receiver will only be interested in messages enqueued from the current time onwards - there are other options that allow the start of the data stream, the end of the data stream, or a specific offset to be provided.
-
-    > **Information**: You can learn more about consumer groups [here](https://docs.microsoft.com/en-us/azure/event-hubs/event-hubs-features#consumer-groups)
-
-    Once the receiver is created, the app enters an infinite loop and waits to receive events.
-
-    > **Note**: The `eventHubReceiver.ReceiveAsync(100)` code specifies the maximum number of events that can be received in one go, however, it does not wait for that many - it will return as soon as at least one is available. If no events are returned (due to a timeout), then the loop continues and the code waits for more events.
-
-    If one or more events are received, then each event data body is converted from a byte array to a string and written to the console. The event data properties are then iterated and, in this case, checked to see if a value is true - in the current scenario, this represents an alert. Should an alert be found, it is written to the console.
+    If an event is received, then binary body data is converted to a string and written to the console - of course, in the "real-world" the JSON would likely be deserialized and so on. The event data properties are then iterated and, in this case, checked to see if a value is true - in the current scenario, this represents an alert. Should an alert be found, it is written to the console.
 
 1. On the **File** menu, to save your changes to the Program.cs file, click **Save**.
 
@@ -430,7 +384,7 @@ This test is important, checking whether your back-end app is picking up the tel
 
 You now have an app sending telemetry from a device, and a back-end app acknowledging receipt of the data. In the next Exercise you will begin work on the steps that handle the control side - what to do when issues arise with the data.
 
-### Exercise 4: Write Code to Invoke a Direct Method
+### Exercise 4: Include Code to Invoke a Direct Method
 
 Calls from the back-end app to invoke direct methods can include multiple parameters as part of the payload. Direct methods are typically used to turn features of the device off and on, or specify settings for the device.
 
@@ -444,7 +398,7 @@ The device app contains the functional code for the direct method. The function 
 
 In this Exercise, you will update your device app by adding the code for a direct method that will simulate turning on the fan in the cheese cave. Next, you will add code to the back-end service app to invoke this direct method.
 
-#### Task 1: Add Code to Define a Direct Method in the Device App
+#### Task 1: Enable Code to Define a Direct Method in the Device App
 
 1. Return to the Visual Studio Code instance that contains your **cheesecavedevice** application.
 
@@ -462,50 +416,11 @@ In this Exercise, you will update your device app by adding the code for a direc
 
     Notice that the **SetFanState** direct method handler is also set up by this code. As you can see, the **SetMethodHandlerAsync** method of deviceClient takes the remote method name `"SetFanState"` as an argument, along with the actual local method to call, and a user context object (in this case null).
 
-1. Locate the `UNCOMMENT SetFanState method below here` comment
+1. Locate the `UNCOMMENT SetFanState method below here` comment.
 
-1. To implement the **SetFanState** direct method, enter the following code:
+1. Uncomment the **SetFanState** direct method, and review the code and comments.
 
-    ```csharp
-    // Handle the direct method call
-    private static Task<MethodResponse> SetFanState(MethodRequest methodRequest, object userContext)
-    {
-        if (cheeseCave.FanState == StateEnum.Failed)
-        {
-            // Acknowledge the direct method call with a 400 error message.
-            string result = "{\"result\":\"Fan failed\"}";
-            ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
-            return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
-        }
-        else
-        {
-            try
-            {
-                var data = Encoding.UTF8.GetString(methodRequest.Data);
-
-                // Remove quotes from data.
-                data = data.Replace("\"", "");
-
-                // Parse the payload, and trigger an exception if it's not valid.
-                cheeseCave.UpdateFan((StateEnum)Enum.Parse(typeof(StateEnum), data));
-                ConsoleHelper.WriteGreenMessage("Fan set to: " + data);
-
-                // Acknowledge the direct method call with a 200 success message.
-                string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
-                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 200));
-            }
-            catch
-            {
-                // Acknowledge the direct method call with a 400 error message.
-                string result = "{\"result\":\"Invalid parameter\"}";
-                ConsoleHelper.WriteRedMessage("Direct method failed: " + result);
-                return Task.FromResult(new MethodResponse(Encoding.UTF8.GetBytes(result), 400));
-            }
-        }
-    }
-    ```
-
-    This is the method that runs on the device when the associated remote method, also called **SetFanState**, is invoked via IoT Hub. Notice that in addition to receiving a **MethodRequest** instance, it also receives the **userContext** object that was defined when the direct message callback was registered (in this case it will be null).
+    This is the method that runs on the device when the associated remote method, also called **SetFanState**, is invoked via the IoT Hub. Notice that in addition to receiving a **MethodRequest** instance, it also receives the **userContext** object that was defined when the direct message callback was registered (in this case it will be null).
 
     The first line of this method determines whether the cheese cave fan is currently in a **Failed** state - the assumption made by the cheese cave simulator is that once the fan has failed, any subsequent command will automatically fail. Therefore, a JSON string is created with the **result** property set to **Fan Failed**. A new **MethodResponse** object is then constructed, with the result string encoded into a byte array and an HTTP status code - in this instance, **400** is used which, in the context of a REST API means a generic client-side error has occurred. As direct method callbacks are required to return a **Task\<MethodResponse\>**, a new task is created and returned.
 
@@ -543,57 +458,38 @@ You have now completed the coding that is required on the device side. Next, you
 
 1. Ensure that **Program.cs** is open in the code editor.
 
-1. Locate the `INSERT service client variable below here` comment.
-
-1. To add a global variable to hold the service client instance, enter the following code:
+1. The application defines a global variable to hold a service client instance:
 
     ```csharp
     private static ServiceClient serviceClient;
     ```
 
-1. Locate the `INSERT create service client instance below here` comment.
+    The **ServiceClient** is used to send messages to devices.
 
-1. To add the code that creates a service client instance and invokes the direct method, enter the following code:
+1. Locate the `UNCOMMENT create service client instance below here` comment.
+
+1. Uncomment the following code:
 
     ```csharp
-    // Create a ServiceClient to communicate with service-facing endpoint on your hub.
+    // Create a ServiceClient to communicate with service-facing endpoint
+    // on your hub.
     serviceClient = ServiceClient.CreateFromConnectionString(serviceConnectionString);
-    InvokeMethod().GetAwaiter().GetResult();
+    // Invokes a Direct Method on the device
+    await InvokeMethod();
     ```
 
-1. Locate the `INSERT InvokeMethod method below here` comment.
+    Notice how the **ServiceClient** connects using the **serviceConnectionString** defined earlier. The **InvokeMethod** is then called.
 
-1. To add the code that invokes the direct method, enter the following code:
+1. Locate the `UNCOMMENT InvokeMethod method below here` comment.
 
-    ```csharp
-    // Handle invoking a direct method.
-    private static async Task InvokeMethod()
-    {
-        try
-        {
-            var methodInvocation = new CloudToDeviceMethod("SetFanState") { ResponseTimeout = TimeSpan.FromSeconds(30) };
-            string payload = JsonConvert.SerializeObject("On");
+1. Uncomment and review the code that invokes the direct method.
 
-            methodInvocation.SetPayloadJson(payload);
+    The **CloudToDeviceMethod** class encapsulates the information regarding the direct method - the method name, timeout, and payload. The **ServiceClient** instance created earlier is then used to invoke the direct method via the IoT Hub, returning a response object. A `response.Status` property value of `200` indicates success.
 
-            // Invoke the direct method asynchronously and get the response from the simulated device.
-            var response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
-
-            if (response.Status == 200)
-            {
-                ConsoleHelper.WriteGreenMessage("Direct method invoked: " + response.GetPayloadAsJson());
-            }
-            else
-            {
-                ConsoleHelper.WriteRedMessage("Direct method failed: " + response.GetPayloadAsJson());
-            }
-        }
-        catch
-        {
-            ConsoleHelper.WriteRedMessage("Direct method failed: timed-out");
-        }
-    }
-    ```
+    > **Information**: The **ServiceClient** class encapsulates interaction with the underlying Azure REST APIs. You can learn more about the underlying REST API for invoking direct methods here - [Understand and invoke direct methods from IoT Hub](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-devguide-direct-methods). You can also find the additional status codes documented:
+    > * 200 indicates successful execution of direct method;
+    > * 404 indicates that either device ID is invalid, or that the device was not online upon invocation of a direct method and for connectTimeoutInSeconds thereafter (use accompanied error message to understand the root cause);
+    > * 504 indicates gateway timeout caused by device not responding to a direct method call within responseTimeoutInSeconds.
 
     This code is used to invoke the **SetFanState** direct method on the device app.
 
@@ -644,9 +540,9 @@ Device twins, which are managed through IoT Hub, are designed for querying, and 
 
 There is some overlap between the functionality of device twins and direct methods. You could set device properties using direct methods, which might seem an intuitive way of doing things. However, using direct methods would require the back-end app to record those settings explicitly, if they ever needed to be accessed. Using device twins, this information is stored and maintained by default.
 
-In this exercise, you will add some code to both the device app and back-end service app, to show device twin synchronization in operation.
+In this exercise, you will enable some code in the back-end service app, to show device twin synchronization in operation (the device code for twin synchronization is already added and has been covered in earlier labs).
 
-#### Task 1: Add Code To Use Device Twins To Synchronize Device Properties
+#### Task 1: Enable Code To Use Device Twins To Synchronize Device Properties
 
 1. Return to the Visual Studio Code instance that is running the **CheeseCaveOperator** back-end app.
 
@@ -654,7 +550,15 @@ In this exercise, you will add some code to both the device app and back-end ser
 
 1. Ensure that the **Program.cs** is open.
 
-1. Locate the `INSERT registry manager variable below here` comment.
+1. A global variable for a **RegistryManager** instance is already defined:
+
+    ```csharp
+    private static RegistryManager registryManager;
+    ```
+
+    The **RegistryManager** class encapsulates some of the IoT Hub Service REST APIs that include operations on the device identity registry, querying device twins, and import/export jobs. In this exercise, it will be used to update a device twin.
+
+1. Locate the `UNCOMMENT registry manager variable below here` comment.
 
 1. To insert the registry manager variable, enter the following code:
 
@@ -662,55 +566,28 @@ In this exercise, you will add some code to both the device app and back-end ser
     private static RegistryManager registryManager;
     ```
 
-1. Locate the `INSERT register desired property changed handler code below here` comment.
+1. Locate the `UNCOMMENT device twin management below here` comment.
 
 1. To add the functionality that creates the registry manager instance and sets the twin properties, enter the following code:
 
     ```csharp
     // A registry manager is used to access the digital twins.
-    registryManager = RegistryManager.CreateFromConnectionString(serviceConnectionString);
-    SetTwinProperties().Wait();
+    registryManager = RegistryManager
+        .CreateFromConnectionString(serviceConnectionString);
+    await SetTwinProperties();
     ```
 
-1. Locate the `INSERT Device twins section below here` comment.
+    Notice that the **serviceConnectionString** value is used to connect to the IoT Hub with the appropriate access level. The **SetTwinProperties** is then called.
 
-1. To add the functionality that updates device twin desired properties, enter the following code:
+1. Locate the `UNCOMMENT Device twins section below here` comment.
 
-    ```csharp
-    // Device twins section.
+1. To add the functionality that updates device twin desired properties, uncomment the **SetTwinProperties** and review the code and comments:
 
-    private static async Task SetTwinProperties()
-    {
-        var twin = await registryManager.GetTwinAsync(deviceId);
-        var patch =
-            @"{
-                tags: {
-                    customerID: 'Customer1',
-                    cheeseCave: 'CheeseCave1'
-                },
-                properties: {
-                    desired: {
-                        patchId: 'set values',
-                        temperature: '50',
-                        humidity: '85'
-                    }
-                }
-            }";
-        await registryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
-
-        var query = registryManager.CreateQuery(
-            "SELECT * FROM devices WHERE tags.cheeseCave = 'CheeseCave1'", 100);
-        var twinsInCheeseCave1 = await query.GetNextAsTwinAsync();
-        Console.WriteLine("Devices in CheeseCave1: {0}",
-            string.Join(", ", twinsInCheeseCave1.Select(t => t.DeviceId)));
-    }
-    ```
-
-    > **Note**:  The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates the twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cheeseCave** tag is set to "CheeseCave1". This query requires that the connection has the **Registry read** permission.
+    The **SetTwinProperties** method creates a piece of JSON that defines tags and properties that will be added to the device twin, and then updates the twin. The next part of the method demonstrates how a query can be performed to list the devices where the **cheeseCave** tag is set to "CheeseCave1". This query requires that the connection has the **Registry read** permission.
 
 1. On the **File** menu, to save the Program.cs file, click **Save**.
 
-#### Task 2: Add Code to Synchronize Device Twin Settings for the Device
+#### Task 2: Enable Code to Synchronize Device Twin Settings for the Device
 
 1. Return to the Visual Studio Code instance that contains the **cheesecavedevice** app.
 
@@ -718,49 +595,22 @@ In this exercise, you will add some code to both the device app and back-end ser
 
 1. Ensure that the **Program.cs** file is open in the Code Editor pane.
 
-1. Locate the `INSERT register desired property changed handler code below here` comment.
+1. Locate the `UNCOMMENT register desired property changed handler code below here` comment.
 
-1. To register the desired property changed handler, add the following code:
+1. To register the desired property changed handler, uncomment the following code:
 
     ```csharp
     // Get the device twin to report the initial desired properties.
-    Twin deviceTwin = deviceClient.GetTwinAsync().GetAwaiter().GetResult();
+    Twin deviceTwin = await deviceClient.GetTwinAsync();
     ConsoleHelper.WriteGreenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
 
     // Set the device twin update callback.
-    deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null).Wait();
+    await deviceClient.SetDesiredPropertyUpdateCallbackAsync(OnDesiredPropertyChanged, null);
     ```
 
-1. Locate the `INSERT OnDesiredPropertyChanged method below here` comment.
+1. Locate the `UNCOMMENT OnDesiredPropertyChanged method below here` comment.
 
-1. To add the code that responds to a device twin property change, enter the following code:
-
-    ```csharp
-    private static async Task OnDesiredPropertyChanged(TwinCollection desiredProperties, object userContext)
-    {
-        try
-        {
-            // Update the Cheese Cave Simulator properties
-            cheeseCave.DesiredHumidity = desiredProperties["humidity"];
-            cheeseCave.DesiredTemperature = desiredProperties["temperature"];
-            ConsoleHelper.WriteGreenMessage("Setting desired humidity to " + desiredProperties["humidity"]);
-            ConsoleHelper.WriteGreenMessage("Setting desired temperature to " + desiredProperties["temperature"]);
-
-            // Report the properties back to the IoT Hub.
-            var reportedProperties = new TwinCollection();
-            reportedProperties["fanstate"] = cheeseCave.FanState.ToString();
-            reportedProperties["humidity"] = cheeseCave.DesiredHumidity;
-            reportedProperties["temperature"] = cheeseCave.DesiredTemperature;
-            await deviceClient.UpdateReportedPropertiesAsync(reportedProperties);
-
-            ConsoleHelper.WriteGreenMessage("\nTwin state reported: " + reportedProperties.ToJson());
-        }
-        catch
-        {
-            ConsoleHelper.WriteRedMessage("Failed to update device twin");
-        }
-    }
-    ```
+1. To enable the code that responds to a device twin property change, uncomment the **OnDesiredPropertyChanged** method and review the code:
 
     This code defines the handler that is invoked when a desired property changes in the device twin. Notice that new values are then reported back to the IoT Hub to confirm the change.
 

@@ -9,7 +9,6 @@
 // The app will be used to automate the control of the temperature in the cheese
 // cave.
 
-// UNCOMMENT using statements below here
 using System;
 using System.Threading.Tasks;
 using System.Text;
@@ -65,6 +64,7 @@ namespace CheeseCaveOperator
                 $"SharedAccessKey={iotHubSasKey};" +
                 $"EntityPath={eventHubsCompatiblePath}";
 
+            // Assigns the value "$Default"
             var consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
 
             // The EventHubConsumerClient class is used to consume events from
@@ -78,18 +78,18 @@ namespace CheeseCaveOperator
             // receive messages from each partition.
             var d2cPartitions = await consumer.GetPartitionIdsAsync();
 
-            // A registry manager is used to access the digital twins.
-            registryManager = RegistryManager
-                .CreateFromConnectionString(serviceConnectionString);
-            await SetTwinProperties();
+            // UNCOMMENT device twin management below here
+            // // A registry manager is used to access the digital twins.
+            // registryManager = RegistryManager
+            //     .CreateFromConnectionString(serviceConnectionString);
+            // await SetTwinProperties();
 
-            // Create a ServiceClient to communicate with service-facing endpoint
-            // on your hub.
-            serviceClient = ServiceClient
-                .CreateFromConnectionString(serviceConnectionString);
-
-            // Invokes a Direct Method on the device
-            await InvokeMethod();
+            // // Create a ServiceClient to communicate with service-facing endpoint
+            // // on your hub.
+            // serviceClient = ServiceClient
+            //    .CreateFromConnectionString(serviceConnectionString);
+            // // Invokes a Direct Method on the device
+            // await InvokeMethod();
 
             // Create receivers to listen for messages.
             // As messages sent from devices to an IoT Hub may be handled by any
@@ -151,61 +151,61 @@ namespace CheeseCaveOperator
             }
         }
 
-        // INSERT InvokeMethod method below here
+        // UNCOMMENT InvokeMethod method below here
         // Handle invoking a direct method.
-        private static async Task InvokeMethod()
-        {
-            try
-            {
-                var methodInvocation = new CloudToDeviceMethod("SetFanState") { ResponseTimeout = TimeSpan.FromSeconds(30) };
-                string payload = JsonConvert.SerializeObject("On");
+        // private static async Task InvokeMethod()
+        // {
+        //     try
+        //     {
+        //         var methodInvocation = new CloudToDeviceMethod("SetFanState") { ResponseTimeout = TimeSpan.FromSeconds(30) };
+        //         string payload = JsonConvert.SerializeObject("On");
 
-                methodInvocation.SetPayloadJson(payload);
+        //         methodInvocation.SetPayloadJson(payload);
 
-                // Invoke the direct method asynchronously and get the response from the simulated device.
-                var response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
+        //         // Invoke the direct method asynchronously and get the response from the simulated device.
+        //         var response = await serviceClient.InvokeDeviceMethodAsync(deviceId, methodInvocation);
 
-                if (response.Status == 200)
-                {
-                    ConsoleHelper.WriteGreenMessage("Direct method invoked: " + response.GetPayloadAsJson());
-                }
-                else
-                {
-                    ConsoleHelper.WriteRedMessage("Direct method failed: " + response.GetPayloadAsJson());
-                }
-            }
-            catch
-            {
-                ConsoleHelper.WriteRedMessage("Direct method failed: timed-out");
-            }
-        }
+        //         if (response.Status == 200)
+        //         {
+        //             ConsoleHelper.WriteGreenMessage("Direct method invoked: " + response.GetPayloadAsJson());
+        //         }
+        //         else
+        //         {
+        //             ConsoleHelper.WriteRedMessage("Direct method failed: " + response.GetPayloadAsJson());
+        //         }
+        //     }
+        //     catch
+        //     {
+        //         ConsoleHelper.WriteRedMessage("Direct method failed: timed-out");
+        //     }
+        // }
 
-        // INSERT Device twins section below here
-        private static async Task SetTwinProperties()
-        {
-            var twin = await registryManager.GetTwinAsync(deviceId);
-            var patch =
-                @"{
-                tags: {
-                    customerID: 'Customer1',
-                    cheeseCave: 'CheeseCave1'
-                },
-                properties: {
-                    desired: {
-                        patchId: 'set values',
-                        temperature: '50',
-                        humidity: '85'
-                    }
-                }
-            }";
-            await registryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
+        // UNCOMMENT Device twins section below here
+        // private static async Task SetTwinProperties()
+        // {
+        //     var twin = await registryManager.GetTwinAsync(deviceId);
+        //     var patch =
+        //         @"{
+        //         tags: {
+        //             customerID: 'Customer1',
+        //             cheeseCave: 'CheeseCave1'
+        //         },
+        //         properties: {
+        //             desired: {
+        //                 patchId: 'set values',
+        //                 temperature: '50',
+        //                 humidity: '85'
+        //             }
+        //         }
+        //     }";
+        //     await registryManager.UpdateTwinAsync(twin.DeviceId, patch, twin.ETag);
 
-            var query = registryManager.CreateQuery(
-                "SELECT * FROM devices WHERE tags.cheeseCave = 'CheeseCave1'", 100);
-            var twinsInCheeseCave1 = await query.GetNextAsTwinAsync();
-            Console.WriteLine("Devices in CheeseCave1: {0}",
-                string.Join(", ", twinsInCheeseCave1.Select(t => t.DeviceId)));
-        }
+        //     var query = registryManager.CreateQuery(
+        //         "SELECT * FROM devices WHERE tags.cheeseCave = 'CheeseCave1'", 100);
+        //     var twinsInCheeseCave1 = await query.GetNextAsTwinAsync();
+        //     Console.WriteLine("Devices in CheeseCave1: {0}",
+        //         string.Join(", ", twinsInCheeseCave1.Select(t => t.DeviceId)));
+        // }
     }
 
     internal static class ConsoleHelper

@@ -54,8 +54,9 @@ namespace CheeseCaveDevice
             // user context object (in this case null)
 
             // UNCOMMENT register direct method code below here
-            //await deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null);
+            await deviceClient.SetMethodHandlerAsync("SetFanState", SetFanState, null);
 
+            // UNCOMMENT register desired property changed handler code below here
             // Get the device twin to report the initial desired properties.
             Twin deviceTwin = await deviceClient.GetTwinAsync();
             ConsoleHelper.WriteGreenMessage("Initial twin desired properties: " + deviceTwin.Properties.Desired.ToJson());
@@ -108,7 +109,7 @@ namespace CheeseCaveDevice
             }
         }
 
-        // Uncomment SetFanState method below here
+        // UNCOMMENT SetFanState method below here
         // This method that runs on the device when the associated remote method,
         // also called SetFanState, is invoked via IoT Hub. Notice that in
         // addition to receiving a MethodRequest instance, it also receives the
@@ -171,7 +172,7 @@ namespace CheeseCaveDevice
             }
         }
 
-        // INSERT OnDesiredPropertyChanged method below here
+        // UNCOMMENT OnDesiredPropertyChanged method below here
         private static async Task OnDesiredPropertyChanged(
             TwinCollection desiredProperties,
             object userContext)
