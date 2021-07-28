@@ -65,122 +65,49 @@ This lab assumes the following Azure resources are available:
 | IoT Hub | iot-az220-training-{your-id} |
 | IoT Device | sensor-th-0155 |
 
-> **Important**: Run the setup script to create the required device.
+To ensure these resources are available, complete the following tasks.
 
-To create any missing resources and the new device you will need to run the **lab16-setup.azcli** script as instructed below before moving on to Exercise 2. The script file is included in the GitHub repository that you cloned locally as part of the dev environment configuration (lab 3).
+1. Select **Deploy to Azure**:
 
->**Note:** You will need the connection string for the **sensor-th-0155** device. If you already have this device registered with Azure IoT Hub, you can obtain the connection string by running the following command in the Azure Cloud Shell"
->
-> ```bash
-> az iot hub device-identity connection-string show --hub-name iot-az220-training-{your-id} --device-id sensor-th-0050 -o tsv
-> ```
+    [![Deploy To Azure](media/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2FMicrosoftLearning%2FAZ-220-Microsoft-Azure-IoT-Developer%2Fbicep%2FAllfiles%2FARM%2Flab16.json)
 
-The **lab16-setup.azcli** script is written to run in a **bash** shell environment - the easiest way to execute this is in the Azure Cloud Shell.
+1. If prompted, login to the **Azure Portal**.
 
-1. Using a browser, open the [Azure Cloud Shell](https://shell.azure.com/) and login with the Azure subscription you are using for this course.
+    The **Custom deployment** page will be displayed.
 
-    If you are prompted about setting up storage for Cloud Shell, accept the defaults.
+1. Under **Project details**, in the **Subscription** dropdown, ensure that the Azure subscription that you intend to use for this course is selected.
 
-1. Verify that the Cloud Shell is using **Bash**.
+1. In the **Resource group** dropdown, select **rg-az220**.
 
-    The dropdown in the top-left corner of the Azure Cloud Shell page is used to select the environment. Verify that the selected dropdown value is **Bash**.
+    > **NOTE**: If **rg-az220** is not listed:
+    >
+    > 1. Under the **Resource group** dropdown, click **Create new**.
+    > 1. Under **Name**, enter **rg-az220**.
+    > 1. Click **OK**.
 
-1. On the Cloud Shell toolbar, click **Upload/Download files** (fourth button from the right).
+1. Under **Instance details**, in the **Region** dropdown, select the region closest to you.
 
-1. In the dropdown, click **Upload**.
+    > **NOTE**: If the **rg-az220** group already exists, the **Region** field is set to the region used by the resource group and is read-only.
 
-1. In the file selection dialog, navigate to the folder location of the GitHub lab files that you downloaded when you configured your development environment.
+1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
 
-    In _Lab 3: Setup the Development Environment_, you cloned the GitHub repository containing lab resources by downloading a ZIP file and extracting the contents locally. The extracted folder structure includes the following folder path:
+1. In the **Course ID** field, enter **az220**.
 
-    * Allfiles
-      * Labs
-          * 16-Automate IoT Device Management with Azure IoT Hub
-            * Setup
+1. To validate the template, click **Review and create**.
 
-    The lab16-setup.azcli script file is located in the Setup folder for lab 16.
+1. If validation passes, click **Create**.
 
-1. Select the **lab16-setup.azcli** file, and then click **Open**.
+    The deployment will start.
 
-    A notification will appear when the file upload has completed.
+1. Once the deployment has completed, in the left navigation area, to review any output values from the template,  click **Outputs**.
 
-1. To verify that the correct file has uploaded in Azure Cloud Shell, enter the following command:
+    Make a note of the outputs for use later:
 
-    ```bash
-    ls
-    ```
+    * connectionString
+    * deviceConnectionString
+    * devicePrimaryKey
 
-    The `ls` command lists the content of the current directory. You should see the lab16-setup.azcli file listed.
-
-1. To create a directory for this lab that contains the setup script and then move into that directory, enter the following Bash commands:
-
-    ```bash
-    mkdir lab16
-    mv lab16-setup.azcli lab16
-    cd lab16
-    ```
-
-1. To ensure that **lab16-setup.azcli** has the execute permission, enter the following command:
-
-    ```bash
-    chmod +x lab16-setup.azcli
-    ```
-
-1. On the Cloud Shell toolbar, to enable access to the lab16-setup.azcli file, click **Open Editor** (second button from the right - **{ }**).
-
-1. In the **FILES** list, to expand the lab16 folder and open the script file, click **lab16**, and then click **lab16-setup.azcli**.
-
-    The editor will now show the contents of the **lab16-setup.azcli** file.
-
-1. In the editor, update the `{your-id}` and `{your-location}` assigned values.
-
-    In the reference sample below, you need to set `{your-id}` to the Unique ID you created at the start of this course - i.e. **cah191211**, and set `{your-location}` to the location that makes sense for your resources.
-
-    ```bash
-    #!/bin/bash
-
-    # Change these values!
-    YourID="{your-id}"
-    Location="{your-location}"
-    ```
-
-    > **Note**:  The `{your-location}` variable should be set to the short name for the region where you are deploying all of your resources. You can see a list of the available locations and their short-names (the **Name** column) by entering this command:
-
-    ```bash
-    az account list-locations -o Table
-
-    DisplayName           Latitude    Longitude    Name
-    --------------------  ----------  -----------  ------------------
-    East Asia             22.267      114.188      eastasia
-    Southeast Asia        1.283       103.833      southeastasia
-    Central US            41.5908     -93.6208     centralus
-    East US               37.3719     -79.8164     eastus
-    East US 2             36.6681     -78.3889     eastus2
-    ```
-
-1. In the top-right of the editor window, to save the changes made to the file and close the editor, click **...**, and then click **Close Editor**.
-
-    If prompted to save, click **Save** and the editor will close.
-
-    > **Note**:  You can use **CTRL+S** to save at any time and **CTRL+Q** to close the editor.
-
-1. To create the resources required for this lab, enter the following command:
-
-    ```bash
-    ./lab16-setup.azcli
-    ```
-
-    This script can take a few minutes to run. You will see output as each step completes.
-
-    The script will first create a resource group named **rg-az220** and an IoT Hub named **iot-az220-training-{your-id}**. If they already exist, a corresponding message will be displayed. The script will then add a device with an ID of **sensor-th-0155** to the IoT hub and display the device connection string.
-
-1. Notice that, once the script has completed, the connection string for the device is displayed.
-
-    The connection string starts with "HostName="
-
-1. Copy the connection string into a text document, and note that it is for the **sensor-th-0155** device.
-
-    Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
+The resources have now been created.
 
 ### Exercise 2: Examine code for a simulated device that implements firmware update
 

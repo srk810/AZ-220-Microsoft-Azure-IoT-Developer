@@ -95,6 +95,8 @@ To ensure these resources are available, complete the following tasks.
 
 1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
 
+1. In the **Course ID** field, enter **az220**.
+
 1. To validate the template, click **Review and create**.
 
 1. If validation passes, click **Create**.
@@ -103,7 +105,14 @@ To ensure these resources are available, complete the following tasks.
 
 1. Once the deployment has completed, in the left navigation area, to review any output values from the template,  click **Outputs**.
 
-    Make a note of any outputs as necessary.
+    Make a note of the outputs for use later:
+
+    * deviceConnectionString
+    * devicePrimaryKey
+    * eventHubsCompatibleEndpoint
+    * eventHubsCompatiblePath
+    * iotHubSasKey
+    * serviceConnectionString
 
 The resources have now been created.
 

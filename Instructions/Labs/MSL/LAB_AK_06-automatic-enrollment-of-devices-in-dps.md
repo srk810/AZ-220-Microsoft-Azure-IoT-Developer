@@ -64,6 +64,8 @@ To ensure these resources are available, complete the following tasks.
 
 1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
 
+1. In the **Course ID** field, enter **az220**.
+
 1. To validate the template, click **Review and create**.
 
 1. If validation passes, click **Create**.

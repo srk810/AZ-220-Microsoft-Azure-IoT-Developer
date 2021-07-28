@@ -83,6 +83,8 @@ To ensure these resources are available, complete the following tasks.
 
 1. In the **Your ID** field, enter the unique ID you created in Exercise 1.
 
+1. In the **Course ID** field, enter **az220**.
+
 1. To validate the template, click **Review and create**.
 
 1. If validation passes, click **Create**.
@@ -91,9 +93,12 @@ To ensure these resources are available, complete the following tasks.
 
 1. Once the deployment has completed, in the left navigation area, to review any output values from the template,  click **Outputs**.
 
-1. Copy the **sensor-v-3000** output into a text document, and note that it is for the **sensor-v-3000** device.
+    Make a note of the outputs for use later:
 
-    Once you have saved the connection string to a location where you can find it easily, you will be ready to continue with the lab.
+    * connectionString
+    * deviceConnectionString
+
+The resources have now been created.
 
 ### Exercise 2: Write Code to generate Vibration Telemetry
 
